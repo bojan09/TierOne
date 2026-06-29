@@ -22,6 +22,9 @@ export interface LessonChromeProps {
   next: LessonLink | null;
   objectives?: string[];
   children: ReactNode;
+  /** Server-authoritative completion override (spine usage). */
+  isCompletedOverride?: boolean;
+  onComplete?: () => void;
 }
 
 /** The legacy layout, surfaced through a typed contract. */

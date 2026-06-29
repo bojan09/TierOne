@@ -27,10 +27,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    /* Path alias — mirrors vite.config alias */
-    "baseUrl": ".",
+    /* Path alias — mirrors vite.config alias. No baseUrl needed (TS 5.4+
+       resolves paths relative to this tsconfig), avoiding the TS7 deprecation. */
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]

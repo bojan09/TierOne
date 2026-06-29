@@ -6,12 +6,12 @@ import {
   lessonHref,
 } from '@/features/curriculum/selectors';
 import { isLessonLocked } from '@/features/curriculum/locking';
-import { useProgressView } from '@/features/progress/useProgressView';
+import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
 
 export default function CourseView() {
   const { courseSlug } = useParams();
   const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
-  const { completedSet, isLessonCompleted } = useProgressView();
+  const { completedSet, isLessonCompleted } = useAcademyProgress();
 
   if (!course) {
     return (

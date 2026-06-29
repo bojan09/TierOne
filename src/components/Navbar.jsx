@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import AuthButton from './AuthButton.jsx'
 
 // ─── Consolidated nav — 3 top-level dropdowns + right cluster ─────────────────
 // Pattern: Logo | [Courses ▾] [IT Models ▾] [Tools ▾]   →   [Search] [XP] [CTA]
@@ -487,6 +488,7 @@ export default function Navbar({ onOpenSearch }) {
               </Link>
 
               {/* CTA */}
+              <AuthButton />
               <Link to="/dashboard" className="btn-primary text-[13px] px-4 py-2 whitespace-nowrap">
                 My Progress
               </Link>

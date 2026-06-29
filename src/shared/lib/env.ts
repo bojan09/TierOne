@@ -22,11 +22,14 @@ export function getSupabaseConfig(): SupabaseConfig {
   if (cached) return cached;
 
   const url = import.meta.env.VITE_SUPABASE_URL?.trim();
-  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY?.trim();
+  const anonKey = (
+    import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
+    import.meta.env.VITE_SUPABASE_ANON_KEY
+  )?.trim();
 
   const missing: string[] = [];
   if (!url) missing.push('VITE_SUPABASE_URL');
-  if (!anonKey) missing.push('VITE_SUPABASE_ANON_KEY');
+  if (!anonKey) missing.push('VITE_SUPABASE_PUBLISHABLE_KEY');
 
   if (missing.length > 0) {
     throw new Error(
@@ -44,6 +47,11 @@ export function getSupabaseConfig(): SupabaseConfig {
 export function hasSupabaseConfig(): boolean {
   return (
     Boolean(import.meta.env.VITE_SUPABASE_URL?.trim()) &&
-    Boolean(import.meta.env.VITE_SUPABASE_ANON_KEY?.trim())
+    Boolean(
+      (
+        import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ??
+        import.meta.env.VITE_SUPABASE_ANON_KEY
+      )?.trim(),
+    )
   );
 }

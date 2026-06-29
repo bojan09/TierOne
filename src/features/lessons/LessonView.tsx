@@ -10,7 +10,7 @@ import {
   getLessonBySlug,
 } from '@/features/curriculum/selectors';
 import { isLessonLocked } from '@/features/curriculum/locking';
-import { useProgressView } from '@/features/progress/useProgressView';
+import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
 
 function Centered({ children }: { children: React.ReactNode }) {
   return <div className="max-w-screen-md mx-auto px-4 py-20 text-center">{children}</div>;
@@ -40,7 +40,7 @@ function LessonLoading() {
 
 export default function LessonView() {
   const { courseSlug, lessonSlug } = useParams();
-  const { completedSet } = useProgressView();
+  const { completedSet, completeLesson } = useAcademyProgress();
 
   const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
   const lesson = course && lessonSlug ? getLessonBySlug(course, lessonSlug) : undefined;
@@ -78,6 +78,8 @@ export default function LessonView() {
       breadcrumbs={getLessonBreadcrumbs(course, lesson)}
       prev={prev}
       next={next}
+      isCompletedOverride={completedSet.has(lesson.id)}
+      onComplete={() => void completeLesson(lesson.id)}
     >
       <Suspense fallback={<LessonLoading />}>
         <Body />

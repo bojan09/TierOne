@@ -1,5 +1,91 @@
 # Changelog
 
+## Phase 4 — Server-authoritative progress & gamification
+
+XP, levels, streaks, and badges now live in the database and are computed server-side. Clients can read their progress but cannot forge it.
+
+### Added — database (`supabase/migrations/0002_progress.sql`)
+
+- **`curriculum_lessons`** — minimal XP authority (id, slug, title, track, xp). Seeded with the slice's 3 lessons; P5 expands it (generated from the spine). Read-only to clients.
+- **`lesson_progress`** — per (user, lesson). Read-own via RLS; **no client write grants** — completion only happens through the RPC.
+- **`user_stats`** — denormalised rollup (total_xp, level, streak, last_study_date, earned_badges). Read-own; **never client-writable**.
+- **`level_for_xp(xp)`** — single source of level thresholds (mirrored in TS for display only).
+- **`complete_lesson(lesson_id)`** — `SECURITY DEFINER` RPC, the only path that awards XP. Idempotent (re-completion is a no-op), recomputes total XP authoritatively (drift-proof), updates streak, and awards badges. Returns the updated `user_stats`.
+
+### Added — client (`src/features/progress/`)
+
+- `ProgressProvider` (Supabase-backed) + `context.ts` + `useAcademyProgress` — reads completed lessons + stats, routes completion through the RPC. Replaces the localStorage `useProgressView` bridge (removed).
+- `LessonView`/`CourseView`/`LearnHome` now use server progress.
+
+### Changed
+
+- `LessonLayout` gained optional `onComplete` / `isCompletedOverride` props. The spine passes them so completion is server-authoritative; legacy lesson pages omit them and keep their localStorage behaviour unchanged.
+- `main.jsx` wraps the app in `<ProgressProvider>` (inside `<AuthProvider>`).
+- `database.ts` extended with the progress tables, `lesson_status` enum, and RPC signatures.
+
+### Verified
+
+- **Both migrations applied to a real local Postgres 16; 9 assertions passed:** XP award (40 → 90), idempotent re-completion, streak + first-lesson badge, unknown-lesson rejected, **clients blocked from writing `user_stats` and `lesson_progress` directly**, stats unchanged after blocked writes, and per-user isolation.
+- `tsc --noEmit`, `eslint`, `vite build` all green.
+
+### Notes / deferred
+
+- Two localized casts at the supabase generic boundary (hand-authored `database.ts` vs the newer client); they're removed by running `supabase gen types` against the project.
+- **localStorage → Supabase import deferred to P5.** It only becomes useful once the full lesson set (with matching ids) is seeded; importing now would match almost nothing.
+- The legacy Dashboard still reflects only localStorage XP; it's replaced by real analytics in P10. Spine `/learn` progress is the server-authoritative source.
+
+### Requires the developer to run
+
+1. Apply `0002_progress.sql` (after `0001`).
+2. Re-test `/learn`: complete a lesson while signed in → XP/level/streak update and persist across reload; the next lesson unlocks.
+
+---
+
+## Phase 3 — Authentication, profiles & RLS
+
+First backend phase. Adds real accounts, server-side identity, and a default-deny security model.
+
+### Added — database (`supabase/migrations/0001_profiles.sql`)
+
+- **Enums** `app_role` (`student`/`admin`) and `track` (`helpdesk`/`sysadmin`).
+- **`profiles`** table, 1:1 with `auth.users`, cascade-deleted with the user.
+- **`is_admin()`** — `SECURITY DEFINER` so admin checks bypass RLS and can't trigger recursive policy evaluation.
+- **Default-deny RLS** — `anon` gets nothing; `authenticated` can read/insert only their own row and may update **only `display_name` and `track`** (column-level grant), so a user cannot self-promote to admin. Admins read all rows.
+- **`handle_new_user()` trigger** — auto-provisions a profile on signup, deriving `display_name` from Google metadata or the email local-part.
+
+### Added — client auth (`src/features/auth/`)
+
+- `AuthProvider` — session lifecycle, profile fetch, and `signInWithPassword` / `signUp` / `signInWithMagicLink` / `signInWithGoogle` / `signOut`. Degrades gracefully (no white screen) if env is missing.
+- `context.ts`, `useAuth`, typed `types.ts`.
+- `RequireAuth` — protected-route wrapper; redirects to `/login` preserving the attempted path.
+- `LoginPage` — password, magic link, and Google, with sign-in/sign-up toggle.
+- `AuthCallback` — OAuth/magic-link landing.
+- `AuthButton` in the navbar (sign in / sign out + display name).
+
+### Changed
+
+- `main.jsx` wraps the app in `<AuthProvider>`. `/login` and `/auth/callback` routes added; the `/learn` Academy is now behind `RequireAuth`.
+- Env now reads `VITE_SUPABASE_PUBLISHABLE_KEY` (preferred) with `VITE_SUPABASE_ANON_KEY` fallback.
+- `src/shared/types/database.ts` replaced with a real (hand-authored) schema type matching the migration; regenerate via `supabase gen types` once the CLI is linked.
+
+### Verified
+
+- **Migration applied to a real local Postgres 16** with a Supabase `auth` stub; 7 assertions passed: trigger provisioning + defaults, per-user row isolation, allowed `display_name` edit, **blocked role escalation**, admin read-all, non-admin isolation, anon denied.
+- `tsc --noEmit`, `eslint`, `vite build` all green.
+
+### Requires the developer to run (cannot be done from the build sandbox)
+
+1. Apply `0001_profiles.sql` (Supabase SQL editor or `supabase db push`).
+2. Supabase → Auth → URL Configuration: add redirect URLs `http://localhost:5173/auth/callback` and the production equivalent.
+3. Live check: Google sign-in, email/password signup (confirm email if confirmation is on), magic link, and that `/learn` redirects to `/login` when signed out.
+
+### Notes
+
+- Entry bundle 267 → 487 kB (gzip 81 → 138 kB) because `supabase-js` now loads on startup for the session check. Optimizable later via vendor-splitting; deferred (P13).
+- Progress is still localStorage; P4 swaps it for server-authoritative progress and wires `profiles.track`.
+
+---
+
 ## Phase 2.2 — Legacy lazy-loading + route-manifest migration
 
 Completes P2's bundle goal without touching lesson content.

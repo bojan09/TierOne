@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import type { Track } from '@/shared/types';
 import { curriculum } from '@/content/curriculum';
 import { courseHref, getOrderedLessons } from '@/features/curriculum/selectors';
-import { useProgressView } from '@/features/progress/useProgressView';
+import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
 
 const TRACK_LABELS: Record<Track, string> = {
   helpdesk: 'Help Desk / Tier-1 Support',
@@ -12,7 +12,7 @@ const TRACK_LABELS: Record<Track, string> = {
 const TRACK_ORDER: Track[] = ['helpdesk', 'sysadmin'];
 
 export default function LearnHome() {
-  const { isLessonCompleted } = useProgressView();
+  const { isLessonCompleted } = useAcademyProgress();
 
   return (
     <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-10 py-10">

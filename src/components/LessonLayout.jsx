@@ -44,11 +44,18 @@ export default function LessonLayout({
   next = null,
   objectives = [],
   children,
+  // Optional server-authoritative overrides (spine-driven usage). When omitted,
+  // the legacy localStorage path below is used unchanged (legacy lesson pages).
+  isCompletedOverride = null,
+  onComplete = null,
 }) {
   const { state, completeLesson, setLastVisited } = useProgress()
   const navigate = useNavigate()
 
-  const isCompleted = state.completedLessons.includes(lessonId)
+  const usingOverride = typeof onComplete === 'function'
+  const isCompleted = usingOverride
+    ? Boolean(isCompletedOverride)
+    : state.completedLessons.includes(lessonId)
   const [justCompleted, setJustCompleted] = useState(false)
 
   // Track last visited
@@ -64,7 +71,11 @@ export default function LessonLayout({
 
   const handleComplete = () => {
     if (isCompleted) return
-    completeLesson(lessonId, xp)
+    if (usingOverride) {
+      onComplete()
+    } else {
+      completeLesson(lessonId, xp)
+    }
     setJustCompleted(true)
     fireXPToast(xp, `${title} complete!`)
   }
