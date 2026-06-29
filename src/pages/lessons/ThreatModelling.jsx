@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -250,31 +249,7 @@ export default function ThreatModelling() {
   const toggle = (idx) => setSelectedStride(prev => prev === idx ? null : idx)
 
   return (
-    <LessonLayout
-      lessonId="sec-02"
-      courseId="cybersecurity"
-      title="Threat Modelling"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={70}
-      readTime="~30 min"
-      icon="🎯"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'Threat Modelling' },
-      ]}
-      prev={{ title: 'CIA Triad & Security Models',    href: '/cybersecurity/cia-triad' }}
-      next={{ title: 'Windows Server Hardening',        href: '/cybersecurity/windows-hardening' }}
-      objectives={[
-        'Apply the STRIDE framework to identify threats in any system',
-        'Understand the MITRE ATT&CK matrix structure: Tactics, Techniques, Sub-techniques',
-        'Define and reduce attack surfaces',
-        'Use the DREAD model to prioritise threat remediation',
-        'Conduct a basic threat model on the lab environment',
-        'Map real attack scenarios to STRIDE categories and MITRE ATT&CK',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -466,6 +441,6 @@ export default function ThreatModelling() {
         <Quiz lessonId="sec-02" title="Threat Modelling Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

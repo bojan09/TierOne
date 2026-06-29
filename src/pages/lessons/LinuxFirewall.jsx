@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -254,31 +253,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxFirewall() {
   return (
-    <LessonLayout
-      lessonId="linux-08"
-      courseId="linux"
-      title="Firewall with iptables & ufw"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={90}
-      readTime="~35 min"
-      icon="🛡️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'Firewall with iptables & ufw' },
-      ]}
-      prev={{ title: 'SSH & Remote Access',         href: '/linux/ssh' }}
-      next={{ title: 'Disk Management & LVM',        href: '/linux/disk' }}
-      objectives={[
-        'Understand Netfilter, iptables tables, chains, and rules',
-        'Write iptables rules for common server hardening scenarios',
-        'Manage the Ubuntu firewall with ufw for daily operations',
-        'Persist iptables rules across reboots',
-        'Implement rate limiting to defend against brute force',
-        'Log and monitor blocked traffic',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -438,6 +413,6 @@ export default function LinuxFirewall() {
         <Quiz lessonId="linux-08" title="Linux Firewall Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

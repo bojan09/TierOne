@@ -8,7 +8,6 @@ const COURSES = [
   { label: 'Cybersecurity',       href: '/cybersecurity',        icon: '🛡️' },
   { label: 'Python for SysAdmins',href: '/python',               icon: '🐍' },
   { label: 'PowerShell',          href: '/powershell',           icon: '⚡' },
-  { label: 'DevOps',              href: '/devops',               icon: '🔧' },
   { label: 'Troubleshooting',     href: '/troubleshooting',      icon: '🔍' },
   { label: 'Windows Desktop',     href: '/windows',              icon: '💻' },
   { label: 'Unix',                href: '/unix',                 icon: '🖤' },
@@ -70,7 +69,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-sm text-slate-400 leading-relaxed">
-              Production-quality IT training for sysadmins, DevOps engineers,
+              Practical IT training for help desk technicians and sysadmins,
               and infrastructure professionals. Built on real lab environments.
             </p>
             <div className="space-y-2">
@@ -190,7 +189,7 @@ export default function Footer() {
         <div className="border-t border-surface-700/60 py-6 flex flex-col sm:flex-row
                         items-center justify-between gap-3">
           <p className="text-xs text-slate-500">
-            © {new Date().getFullYear()} SysAdminPro · Built for IT professionals ·
+            © {new Date().getFullYear()} TierZero · Built for IT professionals ·
             <span className="text-slate-600 ml-1">Phase 17 Complete · 82/82 Lessons</span>
           </p>
           <div className="flex items-center gap-2 flex-wrap justify-center">

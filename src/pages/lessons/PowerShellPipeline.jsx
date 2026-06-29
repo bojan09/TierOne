@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -282,31 +281,7 @@ function LabStep({ number, description, command, output }) {
 
 export default function PowerShellPipeline() {
   return (
-    <LessonLayout
-      lessonId="ps-02"
-      courseId="powershell"
-      title="Working with Objects & the Pipeline"
-      courseTitle="PowerShell"
-      courseHref="/powershell"
-      xp={70}
-      readTime="~30 min"
-      icon="🔗"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'PowerShell', href: '/powershell' },
-        { label: 'Objects & the Pipeline' },
-      ]}
-      prev={{ title: 'PowerShell Fundamentals',        href: '/powershell/fundamentals' }}
-      next={{ title: 'Scripts, Functions & Modules',   href: '/powershell/scripting' }}
-      objectives={[
-        'Master the five core pipeline cmdlets: Where-Object, Select-Object, ForEach-Object, Sort-Object, Group-Object',
-        'Build multi-stage pipelines that filter, transform, and aggregate data',
-        'Create calculated properties with hashtable expressions',
-        'Use Measure-Object for fast statistics on any object set',
-        'Chain pipelines into real sysadmin one-liners',
-        'Format and export pipeline output to CSV, JSON, and HTML',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -481,6 +456,6 @@ Write-Host "Report saved" -ForegroundColor Green`,
         <Quiz lessonId="ps-02" title="Objects & the Pipeline Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

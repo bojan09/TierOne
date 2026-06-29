@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -274,31 +273,7 @@ function LabStep({ number, description, command, output }) {
 
 export default function PowerShellFundamentals() {
   return (
-    <LessonLayout
-      lessonId="ps-01"
-      courseId="powershell"
-      title="PowerShell Fundamentals"
-      courseTitle="PowerShell"
-      courseHref="/powershell"
-      xp={50}
-      readTime="~25 min"
-      icon="⚡"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'PowerShell', href: '/powershell' },
-        { label: 'Fundamentals' },
-      ]}
-      prev={null}
-      next={{ title: 'Working with Objects & the Pipeline', href: '/powershell/pipeline' }}
-      objectives={[
-        'Understand what makes PowerShell different from cmd and bash',
-        'Use the Help system to learn any cmdlet',
-        'Work with the object pipeline',
-        'Understand variables, types, and comparison operators',
-        'Set up the execution policy correctly',
-        'Write and run your first .ps1 script',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -511,6 +486,6 @@ export default function PowerShellFundamentals() {
         <Quiz lessonId="ps-01" title="PowerShell Fundamentals Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

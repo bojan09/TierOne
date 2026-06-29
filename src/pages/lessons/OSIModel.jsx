@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -65,30 +64,7 @@ export default function OSIModel() {
   const [selected, setSelected] = useState(null)
 
   return (
-    <LessonLayout
-      lessonId="net-01"
-      courseId="networking"
-      title="The OSI Model"
-      courseTitle="Network Fundamentals"
-      courseHref="/networking"
-      xp={60}
-      readTime="~25 min"
-      icon="📐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Networking', href: '/networking' },
-        { label: 'The OSI Model' },
-      ]}
-      prev={null}
-      next={{ title: 'TCP/IP & the Internet Protocol Suite', href: '/networking/tcp-ip' }}
-      objectives={[
-        'Name and explain all 7 OSI layers from memory',
-        'Map real protocols to their correct layers',
-        'Understand PDU names at each layer',
-        'Apply OSI as a troubleshooting framework',
-        'Know which devices operate at which layers',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -261,6 +237,6 @@ export default function OSIModel() {
         <Quiz lessonId="net-01" title="OSI Model Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

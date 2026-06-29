@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -186,31 +185,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WindowsTroubleshooting() {
   return (
-    <LessonLayout
-      lessonId="trouble-02"
-      courseId="troubleshooting"
-      title="Windows Troubleshooting"
-      courseTitle="Troubleshooting"
-      courseHref="/troubleshooting"
-      xp={80}
-      readTime="~35 min"
-      icon="🖥️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Troubleshooting', href: '/troubleshooting' },
-        { label: 'Windows Troubleshooting' },
-      ]}
-      prev={{ title: 'The Troubleshooting Methodology', href: '/troubleshooting/methodology' }}
-      next={{ title: 'Linux Troubleshooting',           href: '/troubleshooting/linux' }}
-      objectives={[
-        'Navigate Event Viewer and identify critical event patterns',
-        'Use SFC and DISM to repair Windows system files',
-        'Diagnose service failures using PowerShell and Event Viewer',
-        'Troubleshoot slow boot and login issues with built-in tools',
-        'Resolve common network share and SMB connectivity failures',
-        'Use Sysinternals tools for advanced process and file diagnostics',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -345,6 +320,6 @@ export default function WindowsTroubleshooting() {
         <Quiz lessonId="trouble-02" title="Windows Troubleshooting Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

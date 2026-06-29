@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -189,31 +188,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function PSRemoting() {
   return (
-    <LessonLayout
-      lessonId="ps-05"
-      courseId="powershell"
-      title="Remote Management with PSRemoting"
-      courseTitle="PowerShell"
-      courseHref="/powershell"
-      xp={80}
-      readTime="~30 min"
-      icon="🌐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'PowerShell', href: '/powershell' },
-        { label: 'PSRemoting' },
-      ]}
-      prev={{ title: 'Active Directory Automation', href: '/powershell/active-directory' }}
-      next={{ title: 'File System & Registry',     href: '/powershell/filesystem' }}
-      objectives={[
-        'Enable and configure WinRM for PowerShell Remoting',
-        'Use Enter-PSSession for interactive remote administration',
-        'Run commands on dozens of servers simultaneously with Invoke-Command',
-        'Create persistent sessions (PSSessions) for efficient multi-command workflows',
-        'Pass local variables into remote script blocks',
-        'Build a multi-server management script',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -270,6 +245,6 @@ export default function PSRemoting() {
         <Quiz lessonId="ps-05" title="PSRemoting Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

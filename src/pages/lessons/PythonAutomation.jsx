@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -363,31 +362,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function PythonAutomation() {
   return (
-    <LessonLayout
-      lessonId="py-02"
-      courseId="python"
-      title="File System Automation"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      xp={70}
-      readTime="~30 min"
-      icon="📁"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Python for SysAdmins', href: '/python' },
-        { label: 'File System Automation' },
-      ]}
-      prev={{ title: 'Python Basics for SysAdmins', href: '/python/basics' }}
-      next={{ title: 'Working with Subprocess', href: '/python/subprocess' }}
-      objectives={[
-        'Navigate and manipulate the filesystem using pathlib',
-        'Automate file operations: copy, move, rename, delete, compress',
-        'Parse log files and extract data using Python',
-        'Build a practical log rotation and cleanup script',
-        'Handle errors gracefully in file operations',
-        'Write a real disk space monitor with email alerting',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -492,6 +467,6 @@ export default function PythonAutomation() {
         <Quiz lessonId="py-02" title="File System Automation Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

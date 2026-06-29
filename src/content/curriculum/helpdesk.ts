@@ -1,86 +1,137 @@
-import type { Course, Lesson, Module } from '@/shared/types';
+import type { Course, Lesson, LockRule, Module } from '@/shared/types';
 
 /**
- * Help Desk track — "IT Support Foundations" course (vertical slice for P2).
- *
- * This is the seed of the entry-level Help Desk track (expanded in P5). It
- * exists to prove the full data-driven pipeline end to end: spine -> routing
- * -> lazy-loaded body -> lock rules -> prev/next, against real content.
- *
- * Lesson `slug` values MUST match keys in the lesson registry
- * (src/features/lessons/registry.ts).
+ * Help Desk / Tier-1 track. Spine-native: lesson `slug`s map to body modules
+ * in the lesson registry. Server XP authority is seeded from these same values
+ * (supabase/migrations/0003_seed_helpdesk.sql).
  */
 
-const COURSE_ID = 'helpdesk-foundations';
-const MODULE_ID = 'hdf-getting-started';
+interface Seed {
+  id: string;
+  slug: string;
+  title: string;
+  xp: number;
+  minutes: number;
+}
 
-export const helpdeskLessons: Lesson[] = [
-  {
-    id: 'hdf-01',
-    slug: 'what-is-it-support',
-    title: 'What IT Support Actually Is',
-    courseId: COURSE_ID,
-    moduleId: MODULE_ID,
+const courses: Course[] = [];
+const modules: Module[] = [];
+const lessons: Lesson[] = [];
+
+function addCourse(
+  course: Omit<Course, 'moduleIds' | 'track' | 'difficulty'>,
+  moduleId: string,
+  moduleSlug: string,
+  moduleTitle: string,
+  seeds: Seed[],
+) {
+  const built: Lesson[] = seeds.map((s, i) => ({
+    id: s.id,
+    slug: s.slug,
+    title: s.title,
+    courseId: course.id,
+    moduleId,
+    order: i + 1,
+    xp: s.xp,
+    track: 'helpdesk',
+    difficulty: 'beginner',
+    estimatedMinutes: s.minutes,
+    lockRule: (i === 0 ? { type: 'none' } : { type: 'sequential' }) as LockRule,
+    hasQuiz: false,
+  }));
+  lessons.push(...built);
+  modules.push({
+    id: moduleId,
+    slug: moduleSlug,
+    title: moduleTitle,
+    courseId: course.id,
     order: 1,
-    xp: 40,
-    track: 'helpdesk',
-    difficulty: 'beginner',
-    estimatedMinutes: 12,
-    lockRule: { type: 'none' },
-    hasQuiz: false,
-  },
-  {
-    id: 'hdf-02',
-    slug: 'troubleshooting-methodology',
-    title: 'A Repeatable Troubleshooting Method',
-    courseId: COURSE_ID,
-    moduleId: MODULE_ID,
-    order: 2,
-    xp: 50,
-    track: 'helpdesk',
-    difficulty: 'beginner',
-    estimatedMinutes: 15,
-    lockRule: { type: 'sequential' },
-    hasQuiz: false,
-  },
-  {
-    id: 'hdf-03',
-    slug: 'tickets-and-documentation',
-    title: 'Writing Tickets People Can Use',
-    courseId: COURSE_ID,
-    moduleId: MODULE_ID,
-    order: 3,
-    xp: 50,
-    track: 'helpdesk',
-    difficulty: 'beginner',
-    estimatedMinutes: 14,
-    lockRule: { type: 'sequential' },
-    hasQuiz: false,
-  },
-];
+    lessonIds: built.map((l) => l.id),
+  });
+  courses.push({ ...course, track: 'helpdesk', difficulty: 'beginner', moduleIds: [moduleId] });
+}
 
-export const helpdeskModules: Module[] = [
+addCourse(
   {
-    id: MODULE_ID,
-    slug: 'getting-started',
-    title: 'Getting Started on the Help Desk',
-    courseId: COURSE_ID,
-    order: 1,
-    lessonIds: helpdeskLessons.map((l) => l.id),
-  },
-];
-
-export const helpdeskCourses: Course[] = [
-  {
-    id: COURSE_ID,
+    id: 'helpdesk-foundations',
     slug: 'it-support-foundations',
     title: 'IT Support Foundations',
     description:
       'The mindset, method, and habits of an effective Tier-1 support technician — the foundation everything else builds on.',
     icon: '🎧',
-    track: 'helpdesk',
-    difficulty: 'beginner',
     order: 1,
-    moduleIds: helpdeskModules.map((m) => m.id),
   },
-];
+  'hdf-getting-started',
+  'getting-started',
+  'Getting Started on the Help Desk',
+  [
+    { id: 'hdf-01', slug: 'what-is-it-support', title: 'What IT Support Actually Is', xp: 40, minutes: 12 },
+    { id: 'hdf-02', slug: 'troubleshooting-methodology', title: 'A Repeatable Troubleshooting Method', xp: 50, minutes: 15 },
+    { id: 'hdf-03', slug: 'tickets-and-documentation', title: 'Writing Tickets People Can Use', xp: 50, minutes: 14 },
+  ],
+);
+
+addCourse(
+  {
+    id: 'hardware-and-os',
+    slug: 'hardware-and-os',
+    title: 'Hardware & Operating Systems',
+    description:
+      'Recognise the parts of a machine and how operating systems manage them — the physical and software ground floor of support.',
+    icon: '🖥️',
+    order: 2,
+  },
+  'hwos-m1',
+  'the-basics',
+  'Machines & Operating Systems',
+  [
+    { id: 'hwos-01', slug: 'hardware-essentials', title: 'Inside the Machine: Hardware Essentials', xp: 40, minutes: 12 },
+    { id: 'hwos-02', slug: 'operating-systems-overview', title: 'Operating Systems at a Glance', xp: 45, minutes: 12 },
+    { id: 'hwos-03', slug: 'files-users-permissions', title: 'Files, Users & Permissions', xp: 50, minutes: 13 },
+  ],
+);
+
+addCourse(
+  {
+    id: 'networking-basics',
+    slug: 'networking-basics',
+    title: 'Networking Basics for Support',
+    description:
+      'A working mental model of how devices reach the network — and a repeatable ladder for diagnosing connectivity.',
+    icon: '🌐',
+    order: 3,
+  },
+  'net-m1',
+  'networks-for-support',
+  'Networks for Support',
+  [
+    { id: 'net-01', slug: 'how-networks-work', title: 'How Networks Actually Work', xp: 45, minutes: 13 },
+    { id: 'net-02', slug: 'connectivity-troubleshooting', title: 'Diagnosing Connectivity Problems', xp: 55, minutes: 15 },
+    { id: 'net-03', slug: 'wifi-vpn-remote', title: 'Wi-Fi, VPN & Remote Work', xp: 50, minutes: 13 },
+  ],
+);
+
+addCourse(
+  {
+    id: 'workplace-it',
+    slug: 'workplace-it',
+    title: 'Workplace IT: Accounts, M365 & Tickets',
+    description:
+      'The day-to-day of corporate support: identities and access, the Microsoft 365 stack, email, and communicating like a pro.',
+    icon: '🏢',
+    order: 4,
+  },
+  'work-m1',
+  'daily-support',
+  'The Daily Work',
+  [
+    { id: 'work-01', slug: 'active-directory-basics', title: 'Active Directory for Tier-1', xp: 55, minutes: 14 },
+    { id: 'work-02', slug: 'microsoft-365-essentials', title: 'Microsoft 365 Essentials', xp: 50, minutes: 13 },
+    { id: 'work-03', slug: 'email-troubleshooting', title: 'Troubleshooting Email & Outlook', xp: 55, minutes: 14 },
+    { id: 'work-04', slug: 'customer-communication', title: 'Customer Communication & Escalation', xp: 45, minutes: 12 },
+  ],
+);
+
+export const helpdeskCourses = courses;
+export const helpdeskModules = modules;
+export const helpdeskLessons = lessons;

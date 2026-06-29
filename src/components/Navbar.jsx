@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import AuthButton from './AuthButton.jsx'
+import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
 
 // ─── Consolidated nav — 3 top-level dropdowns + right cluster ─────────────────
 // Pattern: Logo | [Courses ▾] [IT Models ▾] [Tools ▾]   →   [Search] [XP] [CTA]
@@ -44,7 +45,6 @@ const NAV_ITEMS = [
         items: [
           { label: 'Networking',    href: '/networking',    desc: 'TCP/IP, VLANs, routing' },
           { label: 'Cybersecurity', href: '/cybersecurity', desc: 'Hardening, firewalls, IR' },
-          { label: 'DevOps',        href: '/devops',        desc: 'Docker, K8s, Terraform' },
           { label: 'Python',        href: '/python',        desc: 'Automation scripting' },
         ],
       },
@@ -393,12 +393,13 @@ function MobileMenu({ open, onClose, onOpenSearch }) {
 export default function Navbar({ onOpenSearch }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled]     = useState(false)
+  const { stats } = useAcademyProgress()
   const { pathname } = useLocation()
 
   // Live XP from localStorage
   const [xp, setXP] = useState(() => {
     try {
-      const s = JSON.parse(localStorage.getItem('sysadminpro_progress') || '{}')
+      const s = JSON.parse(localStorage.getItem('tierzero_progress') || '{}')
       return s.totalXP ?? 0
     } catch { return 0 }
   })
@@ -407,7 +408,7 @@ export default function Navbar({ onOpenSearch }) {
   useEffect(() => {
     const sync = () => {
       try {
-        const s = JSON.parse(localStorage.getItem('sysadminpro_progress') || '{}')
+        const s = JSON.parse(localStorage.getItem('tierzero_progress') || '{}')
         setXP(s.totalXP ?? 0)
       } catch {}
     }
@@ -484,7 +485,7 @@ export default function Navbar({ onOpenSearch }) {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-green
                                  group-hover:animate-pulse flex-shrink-0" />
-                {xp.toLocaleString()} XP
+                {(stats?.totalXp ?? xp).toLocaleString()} XP
               </Link>
 
               {/* CTA */}

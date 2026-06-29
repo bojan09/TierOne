@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -85,15 +84,7 @@ function LabStep({ number, description, command, language='powershell', output }
 
 export default function WS2025RDS() {
   return (
-    <LessonLayout
-      lessonId="ws2025-09" courseId="windows-server-2025"
-      title="Remote Desktop Services" courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025" xp={90} readTime="~35 min" icon="🖥️"
-      breadcrumbs={[{label:'Home',href:'/'},{label:'Windows Server 2025',href:'/windows-server-2025'},{label:'Remote Desktop Services'}]}
-      prev={{ title:'File Services & DFS', href:'/windows-server-2025/file-services' }}
-      next={{ title:'Server Backup & Recovery', href:'/windows-server-2025/backup' }}
-      objectives={['Install and configure RDS roles','Publish RemoteApp applications','Configure RD Gateway for external access','Understand RDS CAL licensing','Monitor RDS sessions with PowerShell','Troubleshoot common RDS connection issues']}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>Remote Desktop Services delivers Windows desktops and applications to users from a central server — essential for remote work scenarios, legacy application hosting, and centralised desktop management.</p>
@@ -128,6 +119,6 @@ export default function WS2025RDS() {
         <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
         <Quiz lessonId="ws2025-09" title="Remote Desktop Services Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -155,7 +155,7 @@ export default function CoursePage({
   prereqs = [],
   breadcrumbs = [],
 }) {
-  const [progress]  = useLocalStorage('sysadminpro_progress', null)
+  const [progress]  = useLocalStorage('tierzero_progress', null)
   const [view, setView] = useState('list') // 'list' | 'grid'
 
   const completedLessons = progress?.completedLessons ?? []

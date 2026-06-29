@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -72,15 +71,7 @@ function LabStep({ number, description, command, language='bash', output }) {
 
 export default function UnixPOSIXShell() {
   return (
-    <LessonLayout
-      lessonId="unix-02" courseId="unix"
-      title="POSIX Shell Scripting" courseTitle="Unix"
-      courseHref="/unix" xp={70} readTime="~30 min" icon="🖥️"
-      breadcrumbs={[{label:'Home',href:'/'},{label:'Unix',href:'/unix'},{label:'POSIX Shell Scripting'}]}
-      prev={{ title:'Unix Philosophy & History', href:'/unix/philosophy' }}
-      next={{ title:'BSD Unix Systems',          href:'/unix/bsd' }}
-      objectives={['Write POSIX-compliant sh scripts that run on any Unix system','Use set -euo pipefail for robust error handling','Handle signals and cleanup with trap','Write portable conditionals, loops, and functions','Use heredocs for embedded configuration','Test scripts for portability with dash']}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>POSIX shell scripting is the skill that makes your scripts work everywhere — Linux, macOS, FreeBSD, Solaris. A script written to the POSIX standard with #!/bin/sh runs on any certified system without modification.</p>
@@ -106,6 +97,6 @@ export default function UnixPOSIXShell() {
         <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
         <Quiz lessonId="unix-02" title="POSIX Shell Scripting Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -167,31 +166,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function NetworkingRouting() {
   return (
-    <LessonLayout
-      lessonId="net-05"
-      courseId="networking"
-      title="Routing Fundamentals"
-      courseTitle="Network Fundamentals"
-      courseHref="/networking"
-      xp={90}
-      readTime="~40 min"
-      icon="🗺️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Networking', href: '/networking' },
-        { label: 'Routing Fundamentals' },
-      ]}
-      prev={{ title: 'VLANs & Switching',    href: '/networking/vlans' }}
-      next={{ title: 'DNS Deep Dive',         href: '/networking/dns' }}
-      objectives={[
-        'Explain how routers make forwarding decisions using routing tables',
-        'Configure static routes and default routes on Linux',
-        'Understand administrative distance and longest-prefix matching',
-        'Compare OSPF and BGP at a conceptual level',
-        'Trace a packet\'s path through multiple routers using traceroute',
-        'Diagnose routing problems with ip route and ip route get',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -315,6 +290,6 @@ export default function NetworkingRouting() {
         <Quiz lessonId="net-05" title="Routing Fundamentals Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

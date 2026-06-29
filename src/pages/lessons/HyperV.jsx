@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -217,31 +216,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function HyperV() {
   return (
-    <LessonLayout
-      lessonId="ws2025-06"
-      courseId="windows-server-2025"
-      title="Hyper-V Virtualisation"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={100}
-      readTime="~35 min"
-      icon="⚙️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Server 2025', href: '/windows-server-2025' },
-        { label: 'Hyper-V Virtualisation' },
-      ]}
-      prev={{ title: 'Group Policy Management', href: '/windows-server-2025/group-policy' }}
-      next={{ title: 'File Services & DFS',      href: '/windows-server-2025/file-services' }}
-      objectives={[
-        'Understand Type-1 vs Type-2 hypervisors and Hyper-V architecture',
-        'Install Hyper-V and configure virtual switches',
-        'Create and configure Generation 2 virtual machines',
-        'Manage checkpoints, snapshots, and VM states',
-        'Configure Dynamic Memory and virtual CPUs',
-        'Use Live Migration concepts and Hyper-V Replica',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -455,6 +430,6 @@ export default function HyperV() {
         <Quiz lessonId="ws2025-06" title="Hyper-V Virtualisation Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

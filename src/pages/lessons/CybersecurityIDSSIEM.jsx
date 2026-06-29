@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -188,31 +187,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function CybersecurityIDSSIEM() {
   return (
-    <LessonLayout
-      lessonId="sec-07"
-      courseId="cybersecurity"
-      title="Intrusion Detection & SIEM"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={100}
-      readTime="~40 min"
-      icon="👁️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'Intrusion Detection & SIEM' },
-      ]}
-      prev={{ title: 'PKI, SSL/TLS & Certificates', href: '/cybersecurity/pki' }}
-      next={{ title: 'Vulnerability Scanning',      href: '/cybersecurity/vuln-scanning' }}
-      objectives={[
-        'Distinguish IDS vs IPS and their respective use cases',
-        'Understand SIEM architecture: collection, correlation, alerting',
-        'Configure centralized log collection with rsyslog',
-        'Understand Wazuh as an open-source SIEM/XDR platform',
-        'Write basic Snort/Suricata-style detection rules',
-        'Understand alert fatigue and how to tune detection rules',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -293,6 +268,6 @@ export default function CybersecurityIDSSIEM() {
         <Quiz lessonId="sec-07" title="IDS & SIEM Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

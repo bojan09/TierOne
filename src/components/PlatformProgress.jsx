@@ -9,7 +9,6 @@ const ALL_COURSES = [
   { id:'windows-server-2025', label:'WS 2025',      icon:'🖥️', href:'/windows-server-2025', color:'#6366f1', ids:['ws2025-01','ws2025-02','ws2025-03','ws2025-04','ws2025-05','ws2025-06','ws2025-07','ws2025-08','ws2025-09','ws2025-10','ws2025-11','ws2025-12'] },
   { id:'linux',               label:'Linux',         icon:'🐧', href:'/linux',               color:'#10b981', ids:['linux-01','linux-02','linux-03','linux-04','linux-05','linux-06','linux-07','linux-08','linux-09','linux-10'] },
   { id:'cybersecurity',       label:'Cybersecurity', icon:'🛡️', href:'/cybersecurity',       color:'#ef4444', ids:['sec-01','sec-02','sec-03','sec-04','sec-05','sec-06','sec-07','sec-08','sec-09','sec-10'] },
-  { id:'devops',              label:'DevOps',        icon:'🔧', href:'/devops',              color:'#a78bfa', ids:['devops-01','devops-02','devops-03','devops-04','devops-05','devops-06','devops-07','devops-08'] },
   { id:'networking',          label:'Networking',    icon:'🌐', href:'/networking',          color:'#22d3ee', ids:['net-01','net-02','net-03','net-04','net-05','net-06','net-07','net-08'] },
   { id:'python',              label:'Python',        icon:'🐍', href:'/python',              color:'#fbbf24', ids:['py-01','py-02','py-03','py-04','py-05','py-06','py-07','py-08','py-09'] },
   { id:'powershell',          label:'PowerShell',    icon:'⚡', href:'/powershell',          color:'#818cf8', ids:['ps-01','ps-02','ps-03','ps-04','ps-05','ps-06','ps-07','ps-08'] },

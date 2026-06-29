@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -164,31 +163,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WindowsArchitecture() {
   return (
-    <LessonLayout
-      lessonId="win-01"
-      courseId="windows"
-      title="Windows 10/11 Architecture"
-      courseTitle="Windows Desktop"
-      courseHref="/windows"
-      xp={50}
-      readTime="~20 min"
-      icon="🏗️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Desktop', href: '/windows' },
-        { label: 'Windows Architecture' },
-      ]}
-      prev={null}
-      next={{ title: 'User Accounts & Permissions', href: '/windows/permissions' }}
-      objectives={[
-        'Understand the Windows NT kernel and its role in the OS',
-        'Map the Windows architecture: kernel mode vs user mode',
-        'Trace the Windows boot sequence from firmware to desktop',
-        'Understand the Registry structure and key hives',
-        'Explain processes, threads, and the role of core system processes',
-        'Use Task Manager and Process Explorer to inspect the running system',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -352,6 +327,6 @@ export default function WindowsArchitecture() {
         <Quiz lessonId="win-01" title="Windows Architecture Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

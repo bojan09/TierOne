@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -233,31 +232,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function PythonLogParsing() {
   return (
-    <LessonLayout
-      lessonId="py-05"
-      courseId="python"
-      title="Parsing Logs & Text Processing"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      xp={80}
-      readTime="~35 min"
-      icon="📋"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Python for SysAdmins', href: '/python' },
-        { label: 'Parsing Logs & Text Processing' },
-      ]}
-      prev={{ title: 'Network Automation',  href: '/python/networking' }}
-      next={{ title: 'Scheduled Tasks',     href: '/python/scheduling' }}
-      objectives={[
-        'Parse structured and semi-structured log files with regex',
-        'Use named capture groups for readable, maintainable parsers',
-        'Analyse nginx, SSH, and syslog formats',
-        'Build frequency tables with collections.Counter',
-        'Process multi-gigabyte log files efficiently with generators',
-        'Generate HTML reports from parsed log data',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -310,6 +285,6 @@ export default function PythonLogParsing() {
         <Quiz lessonId="py-05" title="Log Parsing Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

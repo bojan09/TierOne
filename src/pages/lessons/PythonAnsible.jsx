@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -154,24 +153,7 @@ const QUIZ_QUESTIONS = [
 
 export default function PythonAnsible() {
   return (
-    <LessonLayout
-      lessonId="py-08"
-      courseId="python"
-      title="Python + Ansible Integration"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      icon="🤖"
-      xp={90}
-      readTime="~40 min"
-      objectives={[
-        'Run Ansible playbooks from Python using subprocess',
-        'Use the ansible-runner library for structured output',
-        'Build dynamic inventory generators in Python',
-        'Combine Python logic with Ansible automation',
-      ]}
-      prev={{ title: 'Scheduling & Cron Automation', href: '/python/scheduling' }}
-      next={{ title: 'Building CLI Tools',           href: '/python/cli-tool' }}
-    >
+    <>
 
       {/* ── Overview ── */}
       <section className="mb-10">
@@ -265,6 +247,6 @@ export default function PythonAnsible() {
       {/* ── Quiz ── */}
       <Quiz lessonId="py-08" questions={QUIZ_QUESTIONS} />
 
-    </LessonLayout>
+    </>
   )
 }

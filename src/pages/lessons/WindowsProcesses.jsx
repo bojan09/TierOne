@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -143,31 +142,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WindowsProcesses() {
   return (
-    <LessonLayout
-      lessonId="win-04"
-      courseId="windows"
-      title="Task Manager, Services & Processes"
-      courseTitle="Windows Desktop"
-      courseHref="/windows"
-      xp={70}
-      readTime="~30 min"
-      icon="⚡"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Desktop', href: '/windows' },
-        { label: 'Processes & Services' },
-      ]}
-      prev={{ title: 'Registry Deep Dive',       href: '/windows/registry' }}
-      next={{ title: 'Networking in Windows',    href: '/windows/networking' }}
-      objectives={[
-        'Navigate Task Manager\'s Performance, Details, and Services tabs effectively',
-        'Understand svchost.exe and why multiple instances are normal',
-        'Manage Windows services via services.msc and PowerShell',
-        'Use Resource Monitor for deeper CPU, memory, and I/O analysis',
-        'Identify high-CPU and memory-leaking processes',
-        'Know when and how to safely terminate a process',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -235,6 +210,6 @@ export default function WindowsProcesses() {
         <Quiz lessonId="win-04" title="Processes & Services Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

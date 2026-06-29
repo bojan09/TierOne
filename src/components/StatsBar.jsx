@@ -45,7 +45,7 @@ function useProgressStats() {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem('sysadminpro_progress')
+      const raw = localStorage.getItem('tierzero_progress')
       if (!raw) return
       const data = JSON.parse(raw)
       const completed   = Array.isArray(data.completedLessons) ? data.completedLessons.length : 0

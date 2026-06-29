@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -83,15 +82,7 @@ function LabStep({ number, description, command, language='powershell', output }
 
 export default function WS2025WAC() {
   return (
-    <LessonLayout
-      lessonId="ws2025-11" courseId="windows-server-2025"
-      title="Windows Admin Center" courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025" xp={60} readTime="~25 min" icon="🌐"
-      breadcrumbs={[{label:'Home',href:'/'},{label:'Windows Server 2025',href:'/windows-server-2025'},{label:'Windows Admin Center'}]}
-      prev={{ title:'Server Backup & Recovery', href:'/windows-server-2025/backup' }}
-      next={{ title:'Server Hardening',         href:'/windows-server-2025/hardening' }}
-      objectives={['Install WAC in gateway mode on DC01','Add servers to the WAC management inventory','Explore the key management tools: Performance Monitor, Event Viewer, Storage','Use WAC to manage services, certificates, and firewall rules','Install a WAC extension','Understand WAC RBAC and access control']}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>Windows Admin Center is Microsoft's modern, browser-based replacement for the fragmented world of MMC snap-ins, Server Manager, and constant RDP sessions. Install it once on a management server and manage your entire Windows fleet from a browser — no RDP required.</p>
@@ -146,6 +137,6 @@ export default function WS2025WAC() {
         <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
         <Quiz lessonId="ws2025-11" title="Windows Admin Center Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

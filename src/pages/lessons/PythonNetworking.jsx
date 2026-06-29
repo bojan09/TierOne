@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -241,31 +240,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function PythonNetworking() {
   return (
-    <LessonLayout
-      lessonId="py-04"
-      courseId="python"
-      title="Network Automation with Python"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      xp={80}
-      readTime="~35 min"
-      icon="🌐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Python for SysAdmins', href: '/python' },
-        { label: 'Network Automation' },
-      ]}
-      prev={{ title: 'Working with Subprocess', href: '/python/subprocess' }}
-      next={{ title: 'Parsing Logs',            href: '/python/log-parsing' }}
-      objectives={[
-        'Test TCP port connectivity with the socket module',
-        'Make HTTP API calls with the requests library',
-        'Automate SSH connections to remote servers with paramiko',
-        'Build a multi-server connectivity checker with parallel execution',
-        'Call REST APIs for infrastructure monitoring',
-        'Handle network errors and timeouts gracefully',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -320,6 +295,6 @@ export default function PythonNetworking() {
         <Quiz lessonId="py-04" title="Network Automation Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

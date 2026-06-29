@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -296,31 +295,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxDisk() {
   return (
-    <LessonLayout
-      lessonId="linux-09"
-      courseId="linux"
-      title="Disk Management & LVM"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={80}
-      readTime="~35 min"
-      icon="💾"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'Disk Management & LVM' },
-      ]}
-      prev={{ title: 'Firewall with iptables & ufw', href: '/linux/firewall' }}
-      next={{ title: 'Linux Server Hardening',       href: '/linux/hardening' }}
-      objectives={[
-        'Inspect block devices and partition tables with lsblk and fdisk',
-        'Create partitions and format filesystems',
-        'Mount filesystems temporarily and persistently via /etc/fstab',
-        'Understand the three LVM layers: PV, VG, LV',
-        'Create LVM volumes and extend them live without downtime',
-        'Manage swap space and understand Linux memory management',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -471,6 +446,6 @@ sdb           8:16    20G   disk             ← Unpartitioned new disk`}</pre>
         <Quiz lessonId="linux-09" title="Disk Management & LVM Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -263,31 +262,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxNetworking() {
   return (
-    <LessonLayout
-      lessonId="linux-06"
-      courseId="linux"
-      title="Linux Networking"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={80}
-      readTime="~35 min"
-      icon="🌐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'Linux Networking' },
-      ]}
-      prev={{ title: 'systemd & Service Management', href: '/linux/systemd' }}
-      next={{ title: 'SSH & Remote Access',          href: '/linux/ssh' }}
-      objectives={[
-        'Read and interpret ip addr, ip route, and ss output',
-        'Configure static IPs persistently using Netplan',
-        'Manage routing tables and add static routes',
-        'Diagnose connectivity with ping, traceroute, dig, and tcpdump',
-        'Understand Linux network namespaces and bonding concepts',
-        'Read and configure /etc/hosts and /etc/resolv.conf',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -442,6 +417,6 @@ export default function LinuxNetworking() {
         <Quiz lessonId="linux-06" title="Linux Networking Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

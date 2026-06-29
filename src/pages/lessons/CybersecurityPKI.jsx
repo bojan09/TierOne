@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -46,14 +45,14 @@ const CODE_CYBERSECURITYPKI_2 = `mkdir -p ~/lab-ca && cd ~/lab-ca
 # Generate CA key and root certificate
 openssl genrsa -out lab-ca.key 4096
 openssl req -new -x509 -days 3650 -key lab-ca.key -out lab-ca.crt \\
-  -subj '/CN=Lab Internal CA/O=SysAdminPro Lab/C=US'
+  -subj '/CN=Lab Internal CA/O=TierZero Lab/C=US'
 
 # Verify the CA cert
 openssl x509 -in lab-ca.crt -noout -text | grep -E 'Subject:|Not After'
 echo 'Lab CA created successfully'`
 const CODE_CYBERSECURITYPKI_3 = `Generating RSA private key, 4096 bit long modulus
 ....
-Subject: CN=Lab Internal CA, O=SysAdminPro Lab, C=US
+Subject: CN=Lab Internal CA, O=TierZero Lab, C=US
 Not After : Jan 14 11:00:00 2035 GMT
 Lab CA created successfully`
 const CODE_CYBERSECURITYPKI_4 = `cd ~/lab-ca
@@ -78,7 +77,7 @@ openssl x509 -in dc01.crt -noout -text |
 const CODE_CYBERSECURITYPKI_5 = `dc01.crt: OK  <- chain verified successfully
 
 Subject: CN=dc01.lab.local, O=Lab
-Issuer: CN=Lab Internal CA, O=SysAdminPro Lab, C=US
+Issuer: CN=Lab Internal CA, O=TierZero Lab, C=US
 Not After : Jan 15 11:00:00 2026 GMT
 DNS:dc01.lab.local, DNS:dc01, IP Address:192.168.100.10`
 
@@ -178,31 +177,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function CybersecurityPKI() {
   return (
-    <LessonLayout
-      lessonId="sec-06"
-      courseId="cybersecurity"
-      title="PKI, SSL/TLS & Certificates"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={80}
-      readTime="~35 min"
-      icon="🔑"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'PKI, SSL/TLS & Certificates' },
-      ]}
-      prev={{ title: 'Firewall Configuration', href: '/cybersecurity/firewall' }}
-      next={{ title: 'Intrusion Detection & SIEM', href: '/cybersecurity/ids-siem' }}
-      objectives={[
-        'Understand the PKI trust hierarchy: Root CA → Intermediate CA → End-Entity',
-        'Trace the TLS handshake and understand what each step achieves',
-        'Create a self-signed certificate and an internal CA with openssl',
-        'Inspect and validate certificates from the command line',
-        'Configure nginx with a proper TLS setup',
-        'Identify common TLS misconfigurations and how to fix them',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -277,6 +252,6 @@ export default function CybersecurityPKI() {
         <Quiz lessonId="sec-06" title="PKI, SSL/TLS & Certificates Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

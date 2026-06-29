@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useLocalStorage } from '../hooks/useLocalStorage.js'
 
 export default function ResumeBanner() {
-  const [progress] = useLocalStorage('sysadminpro_progress', null)
+  const [progress] = useLocalStorage('tierzero_progress', null)
 
   const lastVisited = progress?.lastVisited
 

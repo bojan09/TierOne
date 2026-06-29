@@ -153,7 +153,7 @@ const CODE_DOCKERCONTAINERS_8 = `mkdir -p ~/docker-lab && cd ~/docker-lab
 cat > index.html << 'EOF'
 <!DOCTYPE html>
 <html>
-  <head><title>SysAdminPro Lab</title></head>
+  <head><title>TierZero Lab</title></head>
   <body>
     <h1>🐳 Docker Lab Running!</h1>
     <p>Served from a custom Docker image.</p>
@@ -172,7 +172,7 @@ docker build -t lab-web:v1 .
 
 # Run it
 docker run -d -p 8081:80 --name lab-web lab-web:v1
-curl http://localhost:8081 | grep "SysAdminPro"`
+curl http://localhost:8081 | grep "TierZero"`
 const CODE_DOCKERCONTAINERS_9 = `Successfully built 7a8b9c0d1e2f
 Successfully tagged lab-web:v1
 

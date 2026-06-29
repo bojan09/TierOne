@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -157,30 +156,7 @@ function LabStep({ number, description, command, output }) {
 
 export default function LinuxFilesystem() {
   return (
-    <LessonLayout
-      lessonId="linux-01"
-      courseId="linux"
-      title="Linux File System Hierarchy"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={50}
-      readTime="~20 min"
-      icon="📁"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'File System Hierarchy' },
-      ]}
-      prev={null}
-      next={{ title: 'Shell Basics & Command Line', href: '/linux/shell' }}
-      objectives={[
-        'Understand the FHS (Filesystem Hierarchy Standard)',
-        'Know the purpose of every top-level directory',
-        'Navigate and inspect the filesystem with confidence',
-        'Understand hard links vs symbolic links',
-        'Use df and du to analyse disk usage',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -339,6 +315,6 @@ export default function LinuxFilesystem() {
         <Quiz lessonId="linux-01" title="Linux Filesystem Hierarchy Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

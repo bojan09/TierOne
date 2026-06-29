@@ -1,12 +1,12 @@
 import React, { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useProgress, getLevelForXP } from '../hooks/useProgress.js'
+import { curriculum } from '@/content/curriculum'
 
 const COURSES = [
   { id:'windows-server-2025', icon:'🖥️', title:'Windows Server 2025', description:'Active Directory, DHCP, DNS, Group Policy, Hyper-V, RDS, backup, and server hardening.', href:'/windows-server-2025', totalXP:1090, lessonCount:12, readTime:'~6 hrs', badge:'Most Popular', badgeColor:'bg-brand-500/20 text-brand-300 border-brand-500/30', accent:'from-brand-500 to-brand-700', category:'server', lessonIds:['ws2025-01','ws2025-02','ws2025-03','ws2025-04','ws2025-05','ws2025-06','ws2025-07','ws2025-08','ws2025-09','ws2025-10','ws2025-11','ws2025-12'] },
   { id:'linux', icon:'🐧', title:'Linux Fundamentals', description:'Shell mastery, filesystem, permissions, systemd, networking, SSH, firewall, disk, and hardening.', href:'/linux', totalXP:760, lessonCount:10, readTime:'~5 hrs', badge:null, accent:'from-emerald-500 to-emerald-700', category:'os', lessonIds:['linux-01','linux-02','linux-03','linux-04','linux-05','linux-06','linux-07','linux-08','linux-09','linux-10'] },
   { id:'cybersecurity', icon:'🛡️', title:'Cybersecurity', description:'CIA triad, hardening, firewalls, PKI/TLS, IDS/SIEM, vulnerability scanning, and AD security.', href:'/cybersecurity', totalXP:900, lessonCount:10, readTime:'~7 hrs', badge:'High Demand', badgeColor:'bg-accent-red/10 text-accent-red border-accent-red/20', accent:'from-accent-red to-red-700', category:'security', lessonIds:['sec-01','sec-02','sec-03','sec-04','sec-05','sec-06','sec-07','sec-08','sec-09','sec-10'] },
-  { id:'devops', icon:'🔧', title:'DevOps', description:'Docker, CI/CD, Terraform, Ansible, Kubernetes, and Prometheus & Grafana monitoring.', href:'/devops', totalXP:750, lessonCount:8, readTime:'~8 hrs', badge:'Career Booster', badgeColor:'bg-accent-purple/10 text-accent-purple border-accent-purple/20', accent:'from-accent-purple to-purple-700', category:'devops', lessonIds:['devops-01','devops-02','devops-03','devops-04','devops-05','devops-06','devops-07','devops-08'] },
   { id:'networking', icon:'🌐', title:'Network Fundamentals', description:'OSI model, TCP/IP, subnetting, VLANs, routing, DNS, wireless, and troubleshooting.', href:'/networking', totalXP:620, lessonCount:8, readTime:'~4 hrs', badge:null, accent:'from-accent-cyan to-cyan-700', category:'networking', lessonIds:['net-01','net-02','net-03','net-04','net-05','net-06','net-07','net-08'] },
   { id:'python', icon:'🐍', title:'Python for SysAdmins', description:'Automation, subprocess, network scripts, log parsing, monitoring, Ansible, and CLI tools.', href:'/python', totalXP:730, lessonCount:9, readTime:'~5 hrs', badge:null, accent:'from-yellow-500 to-yellow-700', category:'scripting', lessonIds:['py-01','py-02','py-03','py-04','py-05','py-06','py-07','py-08','py-09'] },
   { id:'powershell', icon:'⚡', title:'PowerShell', description:'Pipeline, scripting, AD management, remoting, DSC, filesystem, registry, and reporting.', href:'/powershell', totalXP:630, lessonCount:8, readTime:'~4 hrs', badge:null, accent:'from-brand-400 to-indigo-700', category:'scripting', lessonIds:['ps-01','ps-02','ps-03','ps-04','ps-05','ps-06','ps-07','ps-08'] },
@@ -23,14 +23,13 @@ const CATEGORIES = [
   { id:'server', label:'Server' },
   { id:'os', label:'OS & Desktop' },
   { id:'security', label:'Security' },
-  { id:'devops', label:'DevOps' },
   { id:'networking', label:'Networking' },
   { id:'scripting', label:'Scripting' },
   { id:'ops', label:'Operations' },
 ]
 
 const FEATURES = [
-  { icon:'🧪', title:'VMware Lab Exercises', desc:'Every lesson includes hands-on exercises on real virtual machines — not toy examples.' },
+  { icon:'🎫', title:'Real Support Scenarios', desc:'Practice the work itself — troubleshooting, tickets, and customer communication, not just theory.' },
   { icon:'🏆', title:'XP & Achievements', desc:'Earn XP and unlock badges as you complete lessons and pass quizzes.' },
   { icon:'🔒', title:'Sequential Unlocking', desc:'Lessons unlock as you complete them — building real knowledge layer by layer.' },
   { icon:'📊', title:'Progress Tracking', desc:'Your progress is saved locally. Pick up exactly where you left off.' },
@@ -117,35 +116,35 @@ export default function Home() {
           <div className="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-4 py-1.5 mb-6 fade-up">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
             <span className="text-xs font-semibold text-brand-300 tracking-wide">
-              {TOTAL_LESSONS} lessons · 10 complete courses · Production-quality IT training
+              Two tracks · Help Desk → SysAdmin · Hands-on, job-focused
             </span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-4 fade-up" style={{ animationDelay:'60ms' }}>
-            Master Enterprise IT.<br />
-            <span className="bg-gradient-to-r from-brand-400 to-accent-cyan bg-clip-text text-transparent">Learn by doing.</span>
+            Break into IT.<br />
+            <span className="bg-gradient-to-r from-brand-400 to-accent-cyan bg-clip-text text-transparent">Then go further.</span>
           </h1>
 
           <p className="text-slate-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto mb-8 fade-up" style={{ animationDelay:'120ms' }}>
-            A complete SysAdmin learning platform with hands-on VMware labs, XP progression, and real-world scenarios — covering Windows Server, Linux, Cybersecurity, DevOps, and more.
+            Start from zero on the Help Desk track and build real Tier-1 support skills — troubleshooting, ticketing, Windows, networking, and M365 — then climb into the SysAdmin track. Structured lessons, real scenarios, and XP that tracks your progress.
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center mb-10 fade-up" style={{ animationDelay:'180ms' }}>
-            <Link to={hasStarted ? '/dashboard' : '/windows-server-2025/intro'} className="btn-primary">
-              {hasStarted ? 'Resume Learning →' : 'Start for Free →'}
+            <Link to={hasStarted ? '/learn' : '/login'} className="btn-primary">
+              {hasStarted ? 'Resume learning →' : 'Start learning free →'}
             </Link>
-            <Link to="/dashboard" className="btn-secondary">
-              {hasStarted ? 'View Progress' : 'Browse All Courses'}
+            <Link to="/learn" className="btn-secondary">
+              Explore the Academy
             </Link>
           </div>
 
-          {/* Platform stats strip */}
+          {/* Platform stats strip — driven by the curriculum spine (honest, auto-updates) */}
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 py-4 border-t border-b border-surface-700/40 fade-up" style={{ animationDelay:'240ms' }}>
             {[
-              { v:`${TOTAL_LESSONS}`, l:'Lessons', i:'📚' },
-              { v:'10', l:'Courses', i:'🗂️' },
-              { v:TOTAL_XP.toLocaleString(), l:'Total XP Available', i:'⭐' },
-              { v:'82', l:'Lab Exercises', i:'🧪' },
+              { v:'2', l:'Tracks', i:'🎯' },
+              { v:`${curriculum.courses.length}`, l:'Courses', i:'🗂️' },
+              { v:`${curriculum.lessons.length}`, l:'Lessons', i:'📚' },
+              { v:`${curriculum.lessons.reduce((s,l)=>s+l.xp,0).toLocaleString()}`, l:'XP Available', i:'⭐' },
             ].map(s => (
               <div key={s.l} className="text-center px-2">
                 <div className="text-lg sm:text-xl font-black text-white font-mono">{s.i} {s.v}</div>
@@ -287,11 +286,11 @@ export default function Home() {
               : 'Start with Windows Server 2025 — the most in-demand enterprise skill — or jump to whichever topic you need right now.'}
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <Link to={hasStarted ? '/dashboard' : '/windows-server-2025/intro'} className="btn-primary">
-              {hasStarted ? 'Resume Learning →' : 'Start for Free →'}
+            <Link to={hasStarted ? '/learn' : '/login'} className="btn-primary">
+              {hasStarted ? 'Resume learning →' : 'Start learning free →'}
             </Link>
-            <Link to="/dashboard" className="btn-secondary">
-              {hasStarted ? 'View Progress' : 'Browse All Courses'}
+            <Link to="/learn" className="btn-secondary">
+              {hasStarted ? 'View progress' : 'Explore the Academy'}
             </Link>
           </div>
         </div>

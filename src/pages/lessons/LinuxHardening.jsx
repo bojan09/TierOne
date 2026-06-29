@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -290,31 +289,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxHardening() {
   return (
-    <LessonLayout
-      lessonId="linux-10"
-      courseId="linux"
-      title="Linux Server Hardening"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={100}
-      readTime="~45 min"
-      icon="🔒"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'Linux Server Hardening' },
-      ]}
-      prev={{ title: 'Disk Management & LVM', href: '/linux/disk' }}
-      next={null}
-      objectives={[
-        'Apply kernel hardening parameters with sysctl',
-        'Configure fail2ban for SSH and service brute-force protection',
-        'Understand and configure AppArmor profiles',
-        'Harden /tmp and shared directories with secure mount options',
-        'Audit the system with Lynis and act on findings',
-        'Apply CIS Benchmark Level 1 controls to Ubuntu Server',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -397,6 +372,6 @@ export default function LinuxHardening() {
         <Quiz lessonId="linux-10" title="Linux Server Hardening Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -146,31 +145,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function TroubleshootingMethodology() {
   return (
-    <LessonLayout
-      lessonId="trouble-01"
-      courseId="troubleshooting"
-      title="The Troubleshooting Methodology"
-      courseTitle="Troubleshooting"
-      courseHref="/troubleshooting"
-      xp={50}
-      readTime="~20 min"
-      icon="🧠"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Troubleshooting', href: '/troubleshooting' },
-        { label: 'The Methodology' },
-      ]}
-      prev={null}
-      next={{ title: 'Windows Troubleshooting', href: '/troubleshooting/windows' }}
-      objectives={[
-        'Apply a structured, repeatable troubleshooting methodology',
-        'Use OSI-layer thinking to narrow down network and connectivity problems',
-        'Practise divide-and-conquer to eliminate problem areas rapidly',
-        'Know when to escalate and how to do it effectively',
-        'Document problems and solutions professionally',
-        'Avoid the most common troubleshooting anti-patterns',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -303,6 +278,6 @@ export default function TroubleshootingMethodology() {
         <Quiz lessonId="trouble-01" title="Troubleshooting Methodology Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

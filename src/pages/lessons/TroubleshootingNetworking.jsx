@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -187,31 +186,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function TroubleshootingNetworking() {
   return (
-    <LessonLayout
-      lessonId="trouble-04"
-      courseId="troubleshooting"
-      title="Network Troubleshooting"
-      courseTitle="Troubleshooting"
-      courseHref="/troubleshooting"
-      xp={80}
-      readTime="~35 min"
-      icon="🌐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Troubleshooting', href: '/troubleshooting' },
-        { label: 'Network Troubleshooting' },
-      ]}
-      prev={{ title: 'Linux Troubleshooting',      href: '/troubleshooting/linux' }}
-      next={{ title: 'Active Directory Issues',     href: '/troubleshooting/active-directory' }}
-      objectives={[
-        'Apply OSI-layer methodology to any connectivity problem',
-        'Use ping, traceroute, mtr for path analysis',
-        'Diagnose DNS issues with nslookup and dig',
-        'Test TCP connectivity at the port level',
-        'Capture and filter packets with tcpdump',
-        'Interpret Wireshark captures for application-layer diagnosis',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -295,6 +270,6 @@ export default function TroubleshootingNetworking() {
         <Quiz lessonId="trouble-04" title="Network Troubleshooting Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -184,31 +183,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function DNS() {
   return (
-    <LessonLayout
-      lessonId="ws2025-04"
-      courseId="windows-server-2025"
-      title="DNS Server Configuration"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={80}
-      readTime="~30 min"
-      icon="🌐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Server 2025', href: '/windows-server-2025' },
-        { label: 'DNS Server Configuration' },
-      ]}
-      prev={{ title: 'DHCP Server Configuration', href: '/windows-server-2025/dhcp' }}
-      next={{ title: 'Group Policy Management',   href: '/windows-server-2025/group-policy' }}
-      objectives={[
-        'Understand DNS resolution — recursive vs iterative queries',
-        'Know all major DNS record types and their purposes',
-        'Configure forward and reverse lookup zones',
-        'Set up DNS forwarders and conditional forwarders',
-        'Verify AD-integrated DNS health',
-        'Troubleshoot common DNS failures',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -431,6 +406,6 @@ export default function DNS() {
         <Quiz lessonId="ws2025-04" title="DNS Server Configuration Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

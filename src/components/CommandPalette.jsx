@@ -15,7 +15,6 @@ const PAGES = [
   { type: 'page', label: 'Networking',            href: '/networking',          icon: '🌐', desc: 'TCP/IP, VLANs, routing' },
   { type: 'page', label: 'Cybersecurity',         href: '/cybersecurity',       icon: '🛡️', desc: 'Hardening, firewalls, IR' },
   { type: 'page', label: 'Python for SysAdmins',  href: '/python',              icon: '🐍', desc: 'Automation scripting' },
-  { type: 'page', label: 'DevOps',                href: '/devops',              icon: '🔧', desc: 'CI/CD, Docker, K8s' },
   { type: 'page', label: 'IT Models',             href: '/it-models',           icon: '📐', desc: 'OSI, TCP/IP, ITIL, Zero Trust' },
   { type: 'page', label: 'Cheat Sheets',          href: '/cheatsheets',         icon: '📋', desc: 'Quick-reference guides' },
   { type: 'page', label: 'Troubleshooting',       href: '/troubleshooting',     icon: '🔍', desc: 'Diagnostic methodology' },

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -279,31 +278,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function PythonSubprocess() {
   return (
-    <LessonLayout
-      lessonId="py-03"
-      courseId="python"
-      title="Working with Subprocess"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      xp={70}
-      readTime="~30 min"
-      icon="⚙️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Python for SysAdmins', href: '/python' },
-        { label: 'Working with Subprocess' },
-      ]}
-      prev={{ title: 'File System Automation', href: '/python/filesystem' }}
-      next={{ title: 'Network Automation',     href: '/python/networking' }}
-      objectives={[
-        'Use subprocess.run() safely to execute system commands',
-        'Capture stdout and stderr for parsing and logging',
-        'Handle command failures gracefully with check=True and try/except',
-        'Stream real-time output from long-running processes with Popen',
-        'Build a multi-server command execution wrapper',
-        'Avoid shell injection vulnerabilities',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -363,6 +338,6 @@ export default function PythonSubprocess() {
         <Quiz lessonId="py-03" title="Subprocess Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Eager shell + first-paint page.
 import Layout from './layout/Layout.jsx';
@@ -17,7 +17,7 @@ import LoginPage from './features/auth/LoginPage.tsx';
 import AuthCallback from './features/auth/AuthCallback.tsx';
 
 // Lazily-loaded legacy route manifest (replaces ~110 hand-wired routes).
-import { pageRoutes, lessonRoutes, placeholderRoutes } from './app/routes.jsx';
+import { pageRoutes, lessonRoutes, placeholderRoutes, legacyCourseRedirects } from './app/routes.jsx';
 
 /**
  * All non-shell routes are lazily code-split. The single <Suspense> boundary
@@ -57,6 +57,11 @@ export default function App() {
         {/* Section "coming soon" placeholders */}
         {placeholderRoutes.map(({ path, title }) => (
           <Route key={path} path={path} element={<Placeholder title={title} />} />
+        ))}
+
+        {/* Legacy course-index URLs → spine Academy */}
+        {legacyCourseRedirects.map((key) => (
+          <Route key={key} path={key} element={<Navigate to={`/learn/${key}`} replace />} />
         ))}
 
         {/* 404 */}

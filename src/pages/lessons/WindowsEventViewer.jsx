@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -153,31 +152,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WindowsEventViewer() {
   return (
-    <LessonLayout
-      lessonId="win-06"
-      courseId="windows"
-      title="Windows Event Viewer & Logging"
-      courseTitle="Windows Desktop"
-      courseHref="/windows"
-      xp={80}
-      readTime="~30 min"
-      icon="📋"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Desktop', href: '/windows' },
-        { label: 'Event Viewer & Logging' },
-      ]}
-      prev={{ title: 'Networking in Windows', href: '/windows/networking' }}
-      next={null}
-      objectives={[
-        'Navigate Event Viewer and its key log channels',
-        'Know the critical security event IDs: 4624, 4625, 4648, 4672, 4688',
-        'Use Get-WinEvent with FilterHashtable for efficient log queries',
-        'Create Custom Views and saved filters in Event Viewer',
-        'Enable process creation auditing (Event ID 4688)',
-        'Forward events to a central collector with WEF',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -260,6 +235,6 @@ export default function WindowsEventViewer() {
         <Quiz lessonId="win-06" title="Event Viewer & Logging Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

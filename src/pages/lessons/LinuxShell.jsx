@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -324,31 +323,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxShell() {
   return (
-    <LessonLayout
-      lessonId="linux-02"
-      courseId="linux"
-      title="Shell Basics & Command Line"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={60}
-      readTime="~25 min"
-      icon="🖥️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'Shell Basics & Command Line' },
-      ]}
-      prev={{ title: 'Linux File System Hierarchy', href: '/linux/filesystem' }}
-      next={{ title: 'Users, Groups & Permissions',  href: '/linux/permissions' }}
-      objectives={[
-        'Navigate the filesystem with confidence using cd, ls, and pwd',
-        'Understand stdin, stdout, and stderr — the three standard streams',
-        'Use pipes and redirection to build command pipelines',
-        'Search files and text with grep, find, and awk',
-        'Master essential text processing tools: sort, cut, uniq, wc',
-        'Write and run your first bash script',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -451,6 +426,6 @@ export default function LinuxShell() {
         <Quiz lessonId="linux-02" title="Shell Basics Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

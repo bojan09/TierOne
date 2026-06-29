@@ -1,5 +1,59 @@
 # Changelog
 
+## Phase 5.5 — Legacy migration: both tracks spine-native
+
+- **73 of 74 legacy SysAdmin lessons stripped to pure spine bodies** (scripted, conservative transform; LessonLayout wrapper removed, content kept). 1 file (`TroubleshootingNetworking`) skipped — it never used LessonLayout — and is left out of the spine.
+- **SysAdmin track generated** (`src/content/curriculum/sysadmin.ts`): 9 courses (Windows, Windows Server 2025, Linux, Unix, Networking, PowerShell, Python, Cybersecurity, Troubleshooting), 73 lessons, sequential locking.
+- **Registry re-keyed by lesson id** (globally unique, avoids cross-course slug collisions); `LessonView` now resolves bodies by id. Help Desk + SysAdmin bodies both lazy-loaded.
+- **Server seed** `0004_seed_sysadmin.sql` (73 lessons, 5,720 XP). Validated on local PG → totals: helpdesk 13/630 + sysadmin 73/5,720 = **86 lessons / 6,350 XP**.
+- **Legacy routes retired:** `lessonRoutes` and `placeholderRoutes` emptied; legacy course-index URLs (`/windows`, `/linux`, …) now **redirect to `/learn/<course>`** so existing links/menus keep working.
+- Both tracks now render under `/learn` with the same server-authoritative completion + XP model.
+
+### Notes / deferred
+- **localStorage→Supabase import dropped:** the spine re-keyed lesson ids, so legacy local ids no longer map; new completions already persist to the server (P5.2). Documented rather than built.
+- Migrated SysAdmin lesson bodies still contain their original (localStorage-based) `<Quiz>` blocks; these are superseded by the real quiz system in **P6**.
+- The legacy Home course grid still renders (functional via redirects, stale per-card numbers); `LearnHome` is the real spine-driven browse page. Cleanup deferred to polish (P13).
+- 1 orphaned lesson URL (`/networking/troubleshooting`) now 404s.
+
+---
+
+# Changelog
+
+## Phase 5.4 — Help Desk track build-out
+
+- **Help Desk track expanded to 13 lessons across 4 courses** (spine-native): IT Support Foundations, Hardware & Operating Systems, Networking Basics for Support, Workplace IT (Accounts, M365 & Tickets). 10 new lesson bodies authored as pure content modules; spine + lazy registry rewritten.
+- **Server seed:** `0003_seed_helpdesk.sql` upserts all 13 lessons into `curriculum_lessons` (XP authority). Idempotent; validated on local PG (13 lessons, 630 XP).
+- **DevOps fully cut** from the UI: routes (manifest), navbar, footer, command palette, dashboard course list, and home grid.
+- Hero stats now read 4 courses / 13 lessons / 630 XP automatically (spine-driven).
+- Each lesson code-splits into its own chunk. Gates green.
+
+### Deferred to P5.5
+- Migrating the ~70 legacy SysAdmin lesson pages to pure spine bodies + SysAdmin spine track; retiring the legacy lesson route manifest + Home course grid; the localStorage→Supabase progress import (needs matching ids from the full seed).
+
+---
+
+# Changelog
+
+## Phase 5.1–5.3 — Rebrand, progress fix, landing redesign
+
+### P5.1 Rebrand → TierZero
+- All "SysAdminPro/SysAdmin Pro" → **TierZero** across UI + content; localStorage keys and `*.dev` text renamed.
+- Level titles retitled to a tier-themed, two-track ladder (Tier-0 Initiate → Infrastructure Architect), thresholds aligned with `level_for_xp` (legacy `LEVELS` + new `src/features/gamification/levels.ts`, both mirroring the SQL).
+
+### P5.2 Progress visibility fix
+- Navbar XP chip and the **My Progress** dashboard (Total XP, Level + ring, Lessons Done, Day Streak, Badges) now read **server `user_stats`** when signed in, falling back to legacy localStorage when signed out. Fixes "completed lesson doesn't show in My Progress."
+- Dashboard "lessons done" denominator now reflects the real curriculum total, not a hardcoded 82.
+
+### P5.3 Landing redesign + honest info
+- New hero: two-track positioning (Help Desk → SysAdmin), new copy + CTAs ("Start learning free" → /login, "Explore the Academy" → /learn).
+- Removed false/dropped-scope claims: DevOps course + tab, "VMware Lab Exercises", inflated "82 lessons / 10 courses / 6,670 XP". Hero stats are now **spine-driven** (auto-update as content is seeded).
+
+Gates: typecheck/lint/build green.
+
+---
+
+# Changelog
+
 ## Phase 4 — Server-authoritative progress & gamification
 
 XP, levels, streaks, and badges now live in the database and are computed server-side. Clients can read their progress but cannot forge it.

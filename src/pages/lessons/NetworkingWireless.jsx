@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -169,31 +168,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function NetworkingWireless() {
   return (
-    <LessonLayout
-      lessonId="net-08"
-      courseId="networking"
-      title="Wireless Networking"
-      courseTitle="Network Fundamentals"
-      courseHref="/networking"
-      xp={80}
-      readTime="~35 min"
-      icon="📡"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Networking', href: '/networking' },
-        { label: 'Wireless Networking' },
-      ]}
-      prev={{ title: 'Network Troubleshooting', href: '/networking/troubleshooting' }}
-      next={null}
-      objectives={[
-        'Understand 802.11 standards and the evolution from Wi-Fi 4 to Wi-Fi 6E',
-        'Compare WPA2-Personal vs WPA2-Enterprise and choose correctly',
-        'Explain the 2.4 GHz vs 5 GHz vs 6 GHz tradeoffs',
-        'Understand wireless security threats: evil twin, deauth, rogue AP',
-        'Configure Wi-Fi on Linux with nmcli and iw',
-        'Diagnose wireless connectivity issues systematically',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -342,6 +317,6 @@ export default function NetworkingWireless() {
         <Quiz lessonId="net-08" title="Wireless Networking Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

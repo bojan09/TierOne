@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -190,31 +189,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function CybersecurityFirewall() {
   return (
-    <LessonLayout
-      lessonId="sec-05"
-      courseId="cybersecurity"
-      title="Firewall Configuration"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={80}
-      readTime="~35 min"
-      icon="🔥"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'Firewall Configuration' },
-      ]}
-      prev={{ title: 'Linux Server Hardening',   href: '/cybersecurity/linux-hardening' }}
-      next={{ title: 'PKI, SSL/TLS & Certificates', href: '/cybersecurity/pki' }}
-      objectives={[
-        'Understand stateful vs stateless packet filtering',
-        'Configure UFW (Uncomplicated Firewall) for Ubuntu servers',
-        'Write iptables rules and understand the filter table chains',
-        'Design a DMZ network architecture',
-        'Restrict service access by source IP (management network principle)',
-        'Audit firewall rules and detect misconfigurations',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -272,6 +247,6 @@ export default function CybersecurityFirewall() {
         <Quiz lessonId="sec-05" title="Firewall Configuration Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

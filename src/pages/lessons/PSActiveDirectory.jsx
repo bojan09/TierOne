@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -286,31 +285,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function PSActiveDirectory() {
   return (
-    <LessonLayout
-      lessonId="ps-04"
-      courseId="powershell"
-      title="Active Directory Automation"
-      courseTitle="PowerShell"
-      courseHref="/powershell"
-      xp={100}
-      readTime="~45 min"
-      icon="🏢"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'PowerShell', href: '/powershell' },
-        { label: 'Active Directory Automation' },
-      ]}
-      prev={{ title: 'Scripts, Functions & Modules', href: '/powershell/scripting' }}
-      next={{ title: 'Remote Management with PSRemoting', href: '/powershell/remoting' }}
-      objectives={[
-        'Query users, groups, computers, and OUs with Get-AD* cmdlets',
-        'Create and modify AD objects in bulk from CSV',
-        'Manage group membership at scale',
-        'Generate AD audit reports with structured output',
-        'Find stale accounts and enforce account policies',
-        'Use the ActiveDirectory module\'s filter system efficiently',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -383,6 +358,6 @@ export default function PSActiveDirectory() {
         <Quiz lessonId="ps-04" title="AD Automation Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

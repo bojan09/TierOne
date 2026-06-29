@@ -78,7 +78,7 @@ export default function StudyTimer({ onClose }) {
 
   // Stats
   const [totalFocusMins, setTotalFocusMins] = useState(() => {
-    try { return parseInt(localStorage.getItem('sysadminpro_focus_mins') || '0', 10) } catch { return 0 }
+    try { return parseInt(localStorage.getItem('tierzero_focus_mins') || '0', 10) } catch { return 0 }
   })
 
   const intervalRef = useRef(null)
@@ -126,12 +126,12 @@ export default function StudyTimer({ onClose }) {
 
       const focusMins = totalFocusMins + Math.floor(preset.seconds / 60)
       setTotalFocusMins(focusMins)
-      try { localStorage.setItem('sysadminpro_focus_mins', String(focusMins)) } catch {}
+      try { localStorage.setItem('tierzero_focus_mins', String(focusMins)) } catch {}
     }
 
     // Browser notification
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('SysAdminPro ⏱️', {
+      new Notification('TierZero ⏱️', {
         body: isFocus
           ? `Focus session done! +${preset.xp} XP earned. Time for a break.`
           : 'Break over — ready to focus again!',
@@ -168,11 +168,11 @@ export default function StudyTimer({ onClose }) {
   // ── Update document title while running ───────────────────────────────────
   useEffect(() => {
     if (running) {
-      document.title = `${fmt(remaining)} — SysAdminPro`
+      document.title = `${fmt(remaining)} — TierZero`
     } else {
-      document.title = 'SysAdminPro'
+      document.title = 'TierZero'
     }
-    return () => { document.title = 'SysAdminPro' }
+    return () => { document.title = 'TierZero' }
   }, [running, remaining])
 
   const isFocus = preset.type === 'focus'

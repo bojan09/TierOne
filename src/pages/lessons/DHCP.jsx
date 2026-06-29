@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -152,31 +151,7 @@ function LabStep({ number, description, command, output }) {
 
 export default function DHCP() {
   return (
-    <LessonLayout
-      lessonId="ws2025-03"
-      courseId="windows-server-2025"
-      title="DHCP Server Configuration"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={80}
-      readTime="~30 min"
-      icon="📡"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Server 2025', href: '/windows-server-2025' },
-        { label: 'DHCP Server Configuration' },
-      ]}
-      prev={{ title: 'Active Directory & Domain Services', href: '/windows-server-2025/active-directory' }}
-      next={{ title: 'DNS Server Configuration', href: '/windows-server-2025/dns' }}
-      objectives={[
-        'Understand the DHCP DORA handshake process',
-        'Install and authorise a DHCP server in AD',
-        'Create and configure scopes and exclusions',
-        'Set up DHCP reservations for servers and printers',
-        'Configure DHCP failover for high availability',
-        'Troubleshoot common DHCP failures',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -351,6 +326,6 @@ export default function DHCP() {
         <Quiz lessonId="ws2025-03" title="DHCP Server Configuration Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

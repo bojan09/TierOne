@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -147,30 +146,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function CIATriad() {
   return (
-    <LessonLayout
-      lessonId="sec-01"
-      courseId="cybersecurity"
-      title="The CIA Triad & Security Models"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={50}
-      readTime="~20 min"
-      icon="🛡️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'CIA Triad & Security Models' },
-      ]}
-      prev={null}
-      next={{ title: 'Threat Modelling', href: '/cybersecurity/threat-modelling' }}
-      objectives={[
-        'Define the three pillars of the CIA Triad with real examples',
-        'Map common attacks to the CIA principles they violate',
-        'Understand Zero Trust and why the perimeter model failed',
-        'Apply Least Privilege and Defence in Depth in practice',
-        'Recognise security models used in enterprise environments',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -443,6 +419,6 @@ export default function CIATriad() {
         <Quiz lessonId="sec-01" title="CIA Triad & Security Models Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

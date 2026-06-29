@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -165,31 +164,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function NetworkingDNS() {
   return (
-    <LessonLayout
-      lessonId="net-06"
-      courseId="networking"
-      title="DNS Deep Dive"
-      courseTitle="Network Fundamentals"
-      courseHref="/networking"
-      xp={70}
-      readTime="~30 min"
-      icon="📖"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Networking', href: '/networking' },
-        { label: 'DNS Deep Dive' },
-      ]}
-      prev={{ title: 'Routing Fundamentals',       href: '/networking/routing' }}
-      next={{ title: 'Network Troubleshooting',    href: '/networking/troubleshooting' }}
-      objectives={[
-        'Explain the DNS resolution process from query to answer',
-        'Know all major DNS record types and their purpose',
-        'Use dig to query every record type and interpret the output',
-        'Understand DNS TTL and its impact on change propagation',
-        'Create and verify DNS records in Windows AD-integrated DNS',
-        'Troubleshoot common DNS failures methodically',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -278,6 +253,6 @@ export default function NetworkingDNS() {
         <Quiz lessonId="net-06" title="DNS Deep Dive Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -190,31 +189,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function TroubleshootingActiveDirectory() {
   return (
-    <LessonLayout
-      lessonId="trouble-05"
-      courseId="troubleshooting"
-      title="Active Directory Issues"
-      courseTitle="Troubleshooting"
-      courseHref="/troubleshooting"
-      xp={90}
-      readTime="~40 min"
-      icon="🏢"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Troubleshooting', href: '/troubleshooting' },
-        { label: 'Active Directory Issues' },
-      ]}
-      prev={{ title: 'Network Troubleshooting',   href: '/troubleshooting/networking' }}
-      next={{ title: 'Performance & Capacity',    href: '/troubleshooting/performance' }}
-      objectives={[
-        'Run dcdiag to perform comprehensive DC health checks',
-        'Diagnose and repair AD replication failures with repadmin',
-        'Fix broken SYSVOL replication using DFSRDIAG',
-        'Resolve the "trust relationship failed" computer account issue',
-        'Diagnose Group Policy problems with gpresult',
-        'Check Kerberos and DNS health — the two AD dependencies',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -308,6 +283,6 @@ export default function TroubleshootingActiveDirectory() {
         <Quiz lessonId="trouble-05" title="Active Directory Issues Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

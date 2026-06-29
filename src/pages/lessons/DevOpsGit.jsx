@@ -94,7 +94,7 @@ EOF
 
 # Create README
 echo '# Lab Scripts' > README.md
-echo 'Automation scripts for the SysAdminPro lab environment.' >> README.md
+echo 'Automation scripts for the TierZero lab environment.' >> README.md
 
 # Stage and commit
 git add .

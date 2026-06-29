@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -195,31 +194,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WS2025FileServices() {
   return (
-    <LessonLayout
-      lessonId="ws2025-07"
-      courseId="windows-server-2025"
-      title="File Services & DFS"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={80}
-      readTime="~35 min"
-      icon="📁"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Server 2025', href: '/windows-server-2025' },
-        { label: 'File Services & DFS' },
-      ]}
-      prev={{ title: 'Hyper-V Virtualisation',  href: '/windows-server-2025/hyper-v' }}
-      next={{ title: 'Windows Firewall',         href: '/windows-server-2025/firewall' }}
-      objectives={[
-        'Install and configure the File Server role',
-        'Create SMB shares with correct share and NTFS permissions',
-        'Enable Access-Based Enumeration and shadow copies',
-        'Configure DFS Namespace for unified file access',
-        'Audit file access with Object Access auditing',
-        'Manage quotas and FSRM for capacity control',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -279,6 +254,6 @@ export default function WS2025FileServices() {
         <Quiz lessonId="ws2025-07" title="File Services & DFS Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

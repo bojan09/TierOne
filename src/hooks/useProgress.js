@@ -3,12 +3,16 @@ import { useLocalStorage } from './useLocalStorage.js'
 
 // ─── XP thresholds per level ──────────────────────────────────────────────────
 export const LEVELS = [
-  { level: 1, title: 'Junior SysAdmin',    minXP: 0,    color: 'text-slate-400' },
-  { level: 2, title: 'SysAdmin',           minXP: 200,  color: 'text-accent-green' },
-  { level: 3, title: 'Mid SysAdmin',       minXP: 500,  color: 'text-accent-cyan' },
-  { level: 4, title: 'Senior SysAdmin',    minXP: 1000, color: 'text-brand-400' },
-  { level: 5, title: 'Principal Engineer', minXP: 2000, color: 'text-accent-amber' },
-  { level: 6, title: 'Infrastructure Pro', minXP: 3500, color: 'text-accent-purple' },
+  { level: 1,  title: 'Tier-0 Initiate',          minXP: 0,     color: 'text-slate-400' },
+  { level: 2,  title: 'Help Desk Trainee',        minXP: 100,   color: 'text-accent-green' },
+  { level: 3,  title: 'Help Desk Technician',     minXP: 250,   color: 'text-accent-cyan' },
+  { level: 4,  title: 'Support Specialist',       minXP: 500,   color: 'text-brand-400' },
+  { level: 5,  title: 'Senior Support',           minXP: 1000,  color: 'text-accent-amber' },
+  { level: 6,  title: 'Junior SysAdmin',          minXP: 2000,  color: 'text-accent-purple' },
+  { level: 7,  title: 'SysAdmin',                 minXP: 3500,  color: 'text-brand-300' },
+  { level: 8,  title: 'Senior SysAdmin',          minXP: 5500,  color: 'text-accent-cyan' },
+  { level: 9,  title: 'Infrastructure Engineer',  minXP: 8000,  color: 'text-accent-amber' },
+  { level: 10, title: 'Infrastructure Architect', minXP: 11000, color: 'text-accent-purple' },
 ]
 
 export function getLevelForXP(xp) {
@@ -51,7 +55,7 @@ const DEFAULT_STATE = {
 }
 
 export function useProgress() {
-  const [state, setState] = useLocalStorage('sysadminpro_progress', DEFAULT_STATE)
+  const [state, setState] = useLocalStorage('tierzero_progress', DEFAULT_STATE)
 
   // ── Add XP ──────────────────────────────────────────────────────────────────
   const addXP = useCallback((amount) => {

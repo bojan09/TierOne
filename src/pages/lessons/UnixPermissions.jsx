@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -62,15 +61,7 @@ function LabStep({ number, description, command, language='bash', output }) {
 
 export default function UnixPermissions() {
   return (
-    <LessonLayout
-      lessonId="unix-04" courseId="unix"
-      title="Unix File Permissions & ACLs" courseTitle="Unix"
-      courseHref="/unix" xp={70} readTime="~25 min" icon="🔒"
-      breadcrumbs={[{label:'Home',href:'/'},{label:'Unix',href:'/unix'},{label:'Unix Permissions & ACLs'}]}
-      prev={{ title:'BSD Unix Systems',     href:'/unix/bsd' }}
-      next={{ title:'Process Management',   href:'/unix/processes' }}
-      objectives={['Read octal and symbolic permission strings fluently','Set SUID, SGID, and sticky bits correctly','Use getfacl and setfacl for extended ACL management','Configure umask for appropriate default permissions','Audit a system for dangerous permission misconfigurations','Understand permission portability across Unix variants']}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>Unix permissions are the original access control model — defined by POSIX and implemented identically across Linux, macOS, FreeBSD, and all Unix systems. Understanding them deeply means you can work on any Unix-like system without re-learning permission concepts.</p>
@@ -96,6 +87,6 @@ export default function UnixPermissions() {
         <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
         <Quiz lessonId="unix-04" title="Unix Permissions & ACLs Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

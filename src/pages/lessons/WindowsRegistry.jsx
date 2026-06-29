@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -56,17 +55,17 @@ UBR            : 2033
 Name            Value
 SecurityHealth  C:\\Windows\\System32\\SecurityHealthSystray.exe`
 const CODE_WINDOWSREGISTRY_4 = `# Create a custom app registry key
-New-Item 'HKLM:\\SOFTWARE\\SysAdminPro' -Force | Out-Null
-Set-ItemProperty 'HKLM:\\SOFTWARE\\SysAdminPro' -Name 'Version' -Value '1.0'
-Set-ItemProperty 'HKLM:\\SOFTWARE\\SysAdminPro' -Name 'InstallDate' -Value (Get-Date -Format 'yyyy-MM-dd')
-Set-ItemProperty 'HKLM:\\SOFTWARE\\SysAdminPro' -Name 'Enabled' -Value 1 -Type DWord
+New-Item 'HKLM:\\SOFTWARE\\TierZero' -Force | Out-Null
+Set-ItemProperty 'HKLM:\\SOFTWARE\\TierZero' -Name 'Version' -Value '1.0'
+Set-ItemProperty 'HKLM:\\SOFTWARE\\TierZero' -Name 'InstallDate' -Value (Get-Date -Format 'yyyy-MM-dd')
+Set-ItemProperty 'HKLM:\\SOFTWARE\\TierZero' -Name 'Enabled' -Value 1 -Type DWord
 
 # Export as backup
-reg export 'HKLM\\SOFTWARE\\SysAdminPro' C:\\reg-backup.reg /y
+reg export 'HKLM\\SOFTWARE\\TierZero' C:\\reg-backup.reg /y
 Write-Host 'Exported to C:\\reg-backup.reg'
 
 # Verify
-Get-ItemProperty 'HKLM:\\SOFTWARE\\SysAdminPro'`
+Get-ItemProperty 'HKLM:\\SOFTWARE\\TierZero'`
 const CODE_WINDOWSREGISTRY_5 = `Exported to C:\\reg-backup.reg
 Version     : 1.0
 InstallDate : 2025-01-15
@@ -158,31 +157,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WindowsRegistry() {
   return (
-    <LessonLayout
-      lessonId="win-03"
-      courseId="windows"
-      title="Windows Registry Deep Dive"
-      courseTitle="Windows Desktop"
-      courseHref="/windows"
-      xp={70}
-      readTime="~30 min"
-      icon="🗄️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Desktop', href: '/windows' },
-        { label: 'Registry Deep Dive' },
-      ]}
-      prev={{ title: 'User Accounts & Permissions', href: '/windows/permissions' }}
-      next={{ title: 'Task Manager, Services & Processes', href: '/windows/processes' }}
-      objectives={[
-        'Understand the registry hive structure and what each hive stores',
-        'Know the 5 registry value types and when each is used',
-        'Navigate and edit the registry safely with regedit and reg.exe',
-        'Audit startup entries for malware persistence',
-        'Export, import, and compare registry keys',
-        'Use PowerShell to read and write registry values programmatically',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -251,6 +226,6 @@ export default function WindowsRegistry() {
         <Quiz lessonId="win-03" title="Windows Registry Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

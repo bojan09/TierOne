@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -63,15 +62,7 @@ function LabStep({ number, description, command, language='bash', output }) {
 
 export default function UnixBSD() {
   return (
-    <LessonLayout
-      lessonId="unix-03" courseId="unix"
-      title="BSD Unix Systems" courseTitle="Unix"
-      courseHref="/unix" xp={60} readTime="~25 min" icon="🗄️"
-      breadcrumbs={[{label:'Home',href:'/'},{label:'Unix',href:'/unix'},{label:'BSD Unix Systems'}]}
-      prev={{ title:'POSIX Shell Scripting', href:'/unix/posix-shell' }}
-      next={{ title:'Unix File Permissions', href:'/unix/permissions' }}
-      objectives={['Distinguish FreeBSD, OpenBSD, and NetBSD use cases','Understand BSD licensing vs GPL','Use pkg to manage packages on FreeBSD','Understand the base system vs ports separation','Know why OpenBSD is the gold standard for security','Recognise BSD-derived systems in enterprise environments']}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>BSD Unix systems power some of the world's most critical infrastructure: Netflix uses FreeBSD for CDN servers, Apple's macOS is BSD-derived, and OpenBSD is the security gold standard. Understanding BSD is essential context for any serious Unix/Linux professional.</p>
@@ -115,6 +106,6 @@ export default function UnixBSD() {
         <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
         <Quiz lessonId="unix-03" title="BSD Unix Systems Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -144,31 +143,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function NetworkingVLANs() {
   return (
-    <LessonLayout
-      lessonId="net-04"
-      courseId="networking"
-      title="VLANs & Switching"
-      courseTitle="Network Fundamentals"
-      courseHref="/networking"
-      xp={80}
-      readTime="~35 min"
-      icon="🔀"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Networking', href: '/networking' },
-        { label: 'VLANs & Switching' },
-      ]}
-      prev={{ title: 'Subnetting & CIDR',    href: '/networking/subnetting' }}
-      next={{ title: 'Routing Fundamentals', href: '/networking/routing' }}
-      objectives={[
-        'Explain how VLANs segment Layer 2 networks and why this matters',
-        'Distinguish access ports from trunk ports and configure each',
-        'Understand 802.1Q tagging and the native VLAN',
-        'Configure inter-VLAN routing with a router-on-a-stick',
-        'Understand Spanning Tree Protocol and why it exists',
-        'Model VLAN configurations in the VMware lab using virtual switches',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -338,6 +313,6 @@ export default function NetworkingVLANs() {
         <Quiz lessonId="net-04" title="VLANs & Switching Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

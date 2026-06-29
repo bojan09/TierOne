@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -265,31 +264,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxSSH() {
   return (
-    <LessonLayout
-      lessonId="linux-07"
-      courseId="linux"
-      title="SSH & Remote Access"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={70}
-      readTime="~25 min"
-      icon="🔐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'SSH & Remote Access' },
-      ]}
-      prev={{ title: 'Linux Networking', href: '/linux/networking' }}
-      next={{ title: 'Firewall with iptables & ufw', href: '/linux/firewall' }}
-      objectives={[
-        'Generate and deploy SSH key pairs securely',
-        'Harden sshd_config following production best practices',
-        'Configure SSH client config for multiple hosts',
-        'Set up SSH tunnelling and jump hosts',
-        'Implement fail2ban for brute-force protection',
-        'Audit active SSH sessions and connections',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -444,6 +419,6 @@ export default function LinuxSSH() {
         <Quiz lessonId="linux-07" title="SSH & Remote Access Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

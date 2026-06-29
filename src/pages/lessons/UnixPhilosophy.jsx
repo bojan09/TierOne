@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -185,31 +184,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function UnixPhilosophy() {
   return (
-    <LessonLayout
-      lessonId="unix-01"
-      courseId="unix"
-      title="Unix Philosophy & History"
-      courseTitle="Unix"
-      courseHref="/unix"
-      xp={40}
-      readTime="~15 min"
-      icon="📜"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Unix', href: '/unix' },
-        { label: 'Unix Philosophy & History' },
-      ]}
-      prev={null}
-      next={{ title: 'POSIX Shell Scripting', href: '/unix/posix-shell' }}
-      objectives={[
-        'Understand the Unix philosophy and why it produced better software',
-        'Trace Unix history from Bell Labs through modern operating systems',
-        'Distinguish the two main Unix lineages: System V and BSD',
-        'Explain the "everything is a file" abstraction',
-        'Understand POSIX standards and why they matter for portability',
-        'Identify how Unix principles apply to Linux and macOS today',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -339,6 +314,6 @@ export default function UnixPhilosophy() {
         <Quiz lessonId="unix-01" title="Unix Philosophy & History Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={20} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

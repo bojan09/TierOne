@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -203,31 +202,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxPackages() {
   return (
-    <LessonLayout
-      lessonId="linux-04"
-      courseId="linux"
-      title="Package Management"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={60}
-      readTime="~20 min"
-      icon="📦"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'Package Management' },
-      ]}
-      prev={{ title: 'Users, Groups & Permissions', href: '/linux/permissions' }}
-      next={{ title: 'systemd & Service Management', href: '/linux/systemd' }}
-      objectives={[
-        'Use apt to install, update, remove, and search for packages',
-        'Understand repositories, sources.list, and PPAs',
-        'Pin package versions with apt-mark hold',
-        'Use dpkg for low-level package operations',
-        'Compare apt/dpkg with yum/dnf for RHEL-based systems',
-        'Manage snap and flatpak packages',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -318,6 +293,6 @@ export default function LinuxPackages() {
         <Quiz lessonId="linux-04" title="Package Management Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

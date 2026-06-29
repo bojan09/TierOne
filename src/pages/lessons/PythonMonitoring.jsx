@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -70,7 +69,7 @@ def send_email_alert(subject, body, to, smtp_host='localhost'):
 def send_slack_alert(message, webhook_url):
     payload = {
         'text': message,
-        'username': 'SysAdminPro Monitor',
+        'username': 'TierZero Monitor',
         'icon_emoji': ':rotating_light:'
     }
     try:
@@ -276,31 +275,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function PythonMonitoring() {
   return (
-    <LessonLayout
-      lessonId="py-07"
-      courseId="python"
-      title="Infrastructure Monitoring Scripts"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      xp={90}
-      readTime="~35 min"
-      icon="📊"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Python for SysAdmins', href: '/python' },
-        { label: 'Infrastructure Monitoring Scripts' },
-      ]}
-      prev={{ title: 'Scheduled Tasks & Cron', href: '/python/scheduling' }}
-      next={{ title: 'Ansible & Python',       href: '/python/ansible' }}
-      objectives={[
-        'Use psutil to collect CPU, memory, disk, and network metrics',
-        'Build a continuous monitoring loop with threshold alerting',
-        'Implement cooldown logic to prevent alert flooding',
-        'Send alerts via email (smtplib) and Slack (webhooks)',
-        'Write metrics to structured JSON logs for trend analysis',
-        'Create a production-ready monitoring daemon',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -359,6 +334,6 @@ export default function PythonMonitoring() {
         <Quiz lessonId="py-07" title="Infrastructure Monitoring Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

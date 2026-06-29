@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -203,31 +202,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function CybersecurityLinuxHardening() {
   return (
-    <LessonLayout
-      lessonId="sec-04"
-      courseId="cybersecurity"
-      title="Linux Server Hardening"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={100}
-      readTime="~40 min"
-      icon="🐧"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'Linux Server Hardening' },
-      ]}
-      prev={{ title: 'Windows Server Hardening',   href: '/cybersecurity/windows-hardening' }}
-      next={{ title: 'Firewall Configuration',      href: '/cybersecurity/firewall' }}
-      objectives={[
-        'Apply CIS Ubuntu Linux Benchmark Level 1 controls',
-        'Configure automatic security updates with unattended-upgrades',
-        'Harden /tmp, /var/tmp with secure mount options',
-        'Enable and configure auditd for kernel-level auditing',
-        'Remove unnecessary packages and disable unneeded services',
-        'Configure sysctl network and kernel hardening parameters',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -314,6 +289,6 @@ export default function CybersecurityLinuxHardening() {
         <Quiz lessonId="sec-04" title="Linux Server Hardening Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -161,31 +160,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function CybersecurityVulnScanning() {
   return (
-    <LessonLayout
-      lessonId="sec-08"
-      courseId="cybersecurity"
-      title="Vulnerability Scanning"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={90}
-      readTime="~35 min"
-      icon="🔬"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'Vulnerability Scanning' },
-      ]}
-      prev={{ title: 'Intrusion Detection & SIEM', href: '/cybersecurity/ids-siem' }}
-      next={{ title: 'Incident Response',         href: '/cybersecurity/incident-response' }}
-      objectives={[
-        'Understand CVE and CVSS scoring to prioritise remediation',
-        'Use nmap for network reconnaissance and service enumeration',
-        'Run OpenVAS/Greenbone for comprehensive vulnerability assessment',
-        'Interpret scan results and build a remediation priority matrix',
-        'Schedule recurring scans and track remediation progress',
-        'Understand authenticated vs unauthenticated scanning',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -265,6 +240,6 @@ export default function CybersecurityVulnScanning() {
         <Quiz lessonId="sec-08" title="Vulnerability Scanning Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

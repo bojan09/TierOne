@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -221,31 +220,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxPermissions() {
   return (
-    <LessonLayout
-      lessonId="linux-03"
-      courseId="linux"
-      title="Users, Groups & Permissions"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={70}
-      readTime="~30 min"
-      icon="👤"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'Users, Groups & Permissions' },
-      ]}
-      prev={{ title: 'Shell Basics & Command Line', href: '/linux/shell' }}
-      next={{ title: 'Package Management',          href: '/linux/packages' }}
-      objectives={[
-        'Read and interpret Linux permission strings (rwxr-xr-x)',
-        'Use chmod with both octal and symbolic notation',
-        'Create and manage users and groups',
-        'Understand and configure sudo access safely',
-        'Know the special permission bits: SUID, SGID, and sticky bit',
-        'Audit file permissions for security misconfigurations',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -398,6 +373,6 @@ export default function LinuxPermissions() {
         <Quiz lessonId="linux-03" title="Users, Groups & Permissions Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -222,31 +221,7 @@ function LabStep({ number, command, description, output }) {
 // ─── The lesson ───────────────────────────────────────────────────────────────
 export default function ActiveDirectory() {
   return (
-    <LessonLayout
-      lessonId="ws2025-02"
-      courseId="windows-server-2025"
-      title="Active Directory & Domain Services"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={100}
-      readTime="~45 min"
-      icon="🏢"
-      breadcrumbs={[
-        { label: 'Home',                  href: '/' },
-        { label: 'Windows Server 2025',   href: '/windows-server-2025' },
-        { label: 'Active Directory' },
-      ]}
-      prev={{ title: 'Introduction to Windows Server 2025', href: '/windows-server-2025/intro' }}
-      next={{ title: 'DHCP Server Configuration',           href: '/windows-server-2025/dhcp' }}
-      objectives={[
-        'Understand the AD DS architecture and core components',
-        'Install the AD DS role via PowerShell',
-        'Promote a server to Domain Controller',
-        'Create OUs, users, and security groups',
-        'Understand LDAP, Kerberos, and SYSVOL',
-        'Complete the VMware lab exercise',
-      ]}
-    >
+    <>
 
       {/* ══════════════════════════════════════════════════════════
           SECTION 1 — OVERVIEW
@@ -649,6 +624,6 @@ export default function ActiveDirectory() {
         />
       </section>
 
-    </LessonLayout>
+    </>
   )
 }

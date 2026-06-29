@@ -15,7 +15,7 @@ function getLast7Days() {
 const DAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 export default function StreakTracker({ compact = false }) {
-  const [progress] = useLocalStorage('sysadminpro_progress', null)
+  const [progress] = useLocalStorage('tierzero_progress', null)
 
   const streak      = progress?.streak ?? 0
   const lastDate    = progress?.lastStudyDate ?? null

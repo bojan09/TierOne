@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -176,31 +175,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WindowsNetworking() {
   return (
-    <LessonLayout
-      lessonId="win-05"
-      courseId="windows"
-      title="Networking in Windows"
-      courseTitle="Windows Desktop"
-      courseHref="/windows"
-      xp={70}
-      readTime="~30 min"
-      icon="🌐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Desktop', href: '/windows' },
-        { label: 'Networking in Windows' },
-      ]}
-      prev={{ title: 'Task Manager, Services & Processes', href: '/windows/processes' }}
-      next={{ title: 'Event Viewer & Logging',             href: '/windows/event-viewer' }}
-      objectives={[
-        'Use ipconfig, ping, tracert, and netstat for network diagnostics',
-        'Configure IP addresses and DNS with PowerShell (NetTCPIP)',
-        'Test TCP port connectivity with Test-NetConnection',
-        'Read and manipulate the routing table',
-        'Diagnose DNS resolution with nslookup and Resolve-DnsName',
-        'Capture network traffic with Windows built-in tools',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -252,6 +227,6 @@ export default function WindowsNetworking() {
         <Quiz lessonId="win-05" title="Networking in Windows Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -179,31 +178,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WindowsPermissions() {
   return (
-    <LessonLayout
-      lessonId="win-02"
-      courseId="windows"
-      title="User Accounts & Permissions"
-      courseTitle="Windows Desktop"
-      courseHref="/windows"
-      xp={60}
-      readTime="~25 min"
-      icon="👤"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Desktop', href: '/windows' },
-        { label: 'User Accounts & Permissions' },
-      ]}
-      prev={{ title: 'Windows Architecture', href: '/windows/architecture' }}
-      next={{ title: 'Registry Deep Dive',   href: '/windows/registry' }}
-      objectives={[
-        'Manage local user accounts and groups with PowerShell and GUI',
-        'Understand NTFS permissions, ACLs, and inheritance',
-        'Configure UAC and understand the elevation model',
-        'Use icacls and Get-Acl to audit and set permissions',
-        'Understand the difference between Everyone and Authenticated Users',
-        'Troubleshoot access denied errors systematically',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -286,6 +261,6 @@ export default function WindowsPermissions() {
         <Quiz lessonId="win-02" title="User Accounts & Permissions Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

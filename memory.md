@@ -1,6 +1,6 @@
-# Memory — IT Academy rebuild (through Phase 4)
+# Memory — IT Academy rebuild (through Phase 5.5)
 
-Last updated: 2026-06-29 08:55 UTC
+Last updated: 2026-06-29 13:30 UTC
 
 ## What was built
 
@@ -25,17 +25,22 @@ Last updated: 2026-06-29 08:55 UTC
 
 ## Current state
 
-- All gates green (typecheck/lint/build).
-- **P4 done — server-authoritative progress:** migration `0002_progress.sql` (`curriculum_lessons` XP authority + seed, `lesson_progress`, `user_stats`, `level_for_xp()`, `complete_lesson()` RPC) **validated on local PG (9 assertions, incl. clients blocked from writing stats/progress)**. Client: `src/features/progress/` ProgressProvider/context/useAcademyProgress; spine views use it; `LessonLayout` got optional `onComplete`/`isCompletedOverride` (spine = server-authoritative, legacy pages unchanged). `useProgressView` removed. `main.jsx` wraps `<ProgressProvider>` inside `<AuthProvider>`.
-- tsconfig `baseUrl` removed (TS7 deprecation fixed); `@/*` paths resolve relative to tsconfig.
-- Known: 2 localized casts at supabase generic boundary in ProgressProvider (hand-authored database.ts vs client 2.108); removed by `supabase gen types`.
-- Entry bundle ~489 kB (gzip 139).
-- **Developer must still:** apply `0001` then `0002` to the project; configure Auth redirect URLs; live-test sign-in AND lesson completion (XP persists, next lesson unlocks).
-- Legacy Dashboard still shows only localStorage XP (replaced in P10). Legacy lesson pages still localStorage + self-render (migrate P5). DevOps still live (dropped P5).
-- localStorage->Supabase progress import deferred to P5 (ids won't match until full seed).
+- All gates green. **Both tracks spine-native.** Help Desk 13 lessons/4 courses; SysAdmin 73 lessons/9 courses (migrated from legacy pages, stripped to pure bodies). Total 86 lessons / 6,350 XP.
+- Registry keyed by **lesson id** (`src/features/lessons/registry.ts`); `LessonView` resolves body by `lesson.id`. SysAdmin spine auto-generated `src/content/curriculum/sysadmin.ts`; aggregated in `content/curriculum/index.ts`.
+- Seeds: 0003 (helpdesk) + 0004 (sysadmin) validated on local PG (13/630 + 73/5720). Developer must apply 0003 + 0004 to project (after 0001/0002).
+- Legacy lesson/placeholder routes retired in `src/app/routes.jsx`; legacy course-index URLs redirect to `/learn/<course>` (App.jsx `legacyCourseRedirects`). Utility pageRoutes kept.
+- Hero stats spine-driven (now 13 courses / 86 lessons / 6,350 XP).
+- Migration script: /tmp/migrate.py (transform pattern: strip `<LessonLayout …>`→`<>`, `</LessonLayout>`→`</>`, drop import; validated by build).
+
+### Known debt / deferred
+- localStorage→Supabase import **dropped** (id re-keying mismatch; new completions persist server-side already).
+- Migrated SysAdmin bodies still contain legacy localStorage `<Quiz>` blocks → replaced in P6.
+- Legacy Home course grid still renders (works via redirects, stale numbers) → polish (P13). Unused legacy CoursePage component now dead.
+- 1 lesson skipped (`TroubleshootingNetworking`, non-template) — orphaned, `/networking/troubleshooting` 404s.
+- 2 supabase-generic casts in ProgressProvider (removed by `supabase gen types`).
 
 ## Next session starts with
 
-**P5 — Content repackaging + Help Desk track authoring.** Reorganize the 82 legacy lessons into the two tracks (helpdesk/sysadmin); **cut DevOps** (remove its routes/lessons); fold cybersecurity/hardening into both tracks. Migrate legacy lesson pages to pure spine bodies (strip self-rendered LessonLayout; metadata into the spine) and expand `curriculum_lessons` seed (generate from the spine). Author the entry-level Help Desk gaps. Retire `src/app/routes.jsx` lessonRoutes as lessons move to `/learn`. Do the deferred localStorage->Supabase import now that ids match. Alternatively P6 (quizzes) if content reorg is deprioritized.
+**P6 — Quizzes & assessments → MVP.** Structured quiz data + server-graded `submit_quiz` RPC (needs correct answers in DB), wire to lessons (`hasQuiz`), gate next-lesson unlock on passing where desired, surface results on the dashboard. Remove/replace the legacy `<Quiz>` blocks left in migrated SysAdmin bodies. Reaching P6 completes the MVP cut line.
 
 ## Open questions

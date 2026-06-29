@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -211,31 +210,7 @@ function LabStep({ number, description, command, language='powershell', output }
 
 export default function PSDSC() {
   return (
-    <LessonLayout
-      lessonId="ps-07"
-      courseId="powershell"
-      title="Desired State Configuration"
-      courseTitle="PowerShell"
-      courseHref="/powershell"
-      xp={100}
-      readTime="~40 min"
-      icon="⚙️"
-      breadcrumbs={[
-        { label:'Home', href:'/' },
-        { label:'PowerShell', href:'/powershell' },
-        { label:'Desired State Configuration' },
-      ]}
-      prev={{ title:'File System & Registry Automation', href:'/powershell/filesystem' }}
-      next={{ title:'Reporting & Scheduled Automation',  href:'/powershell/reporting' }}
-      objectives={[
-        'Understand DSC\'s declarative model vs imperative scripting',
-        'Write a DSC configuration that installs roles and sets system state',
-        'Compile a configuration to a .mof file and apply it locally',
-        'Configure the Local Configuration Manager (LCM)',
-        'Use Test-DscConfiguration for compliance checking',
-        'Understand Push vs Pull mode for fleet management',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -292,6 +267,6 @@ export default function PSDSC() {
         <Quiz lessonId="ps-07" title="Desired State Configuration Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

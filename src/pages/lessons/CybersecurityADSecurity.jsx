@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -85,15 +84,7 @@ function LabStep({ number, description, command, language='powershell', output }
 
 export default function CybersecurityADSecurity() {
   return (
-    <LessonLayout
-      lessonId="sec-10" courseId="cybersecurity"
-      title="Active Directory Security" courseTitle="Cybersecurity"
-      courseHref="/cybersecurity" xp={120} readTime="~50 min" icon="🏢"
-      breadcrumbs={[{label:'Home',href:'/'},{label:'Cybersecurity',href:'/cybersecurity'},{label:'Active Directory Security'}]}
-      prev={{ title:'Incident Response', href:'/cybersecurity/incident-response' }}
-      next={null}
-      objectives={['Understand Kerberoasting and how to detect/prevent it','Explain Pass-the-Hash and Pass-the-Ticket attacks','Apply the AD tiering model for privileged access','Audit AD for attack paths using PowerShell','Protect the KRBTGT account','Implement Protected Users security group']}
-    >
+    <>
       <section><h2>Overview</h2><p>Active Directory is the highest-value target in a Windows enterprise environment. Compromising it means game over — every user, every server, every resource is accessible. This lesson covers the attack techniques defenders must understand to protect AD effectively.</p></section>
       <section>
         <h2>Kerberoasting Detection & Prevention</h2>
@@ -121,6 +112,6 @@ export default function CybersecurityADSecurity() {
         <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Cybersecurity course.</p>
         <Quiz lessonId="sec-10" title="Active Directory Security Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={60} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

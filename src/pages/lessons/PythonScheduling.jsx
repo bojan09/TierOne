@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -223,31 +222,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function PythonScheduling() {
   return (
-    <LessonLayout
-      lessonId="py-06"
-      courseId="python"
-      title="Scheduled Tasks & Cron Automation"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      xp={70}
-      readTime="~30 min"
-      icon="⏰"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Python for SysAdmins', href: '/python' },
-        { label: 'Scheduled Tasks & Cron' },
-      ]}
-      prev={{ title: 'Parsing Logs',            href: '/python/log-parsing' }}
-      next={{ title: 'Infrastructure Monitoring', href: '/python/monitoring' }}
-      objectives={[
-        'Write production-ready Python scripts for cron execution',
-        'Configure cron jobs with proper output redirection and locking',
-        'Use the schedule library for in-process scheduling',
-        'Handle errors and send alerts in scheduled scripts',
-        'Implement lock files to prevent concurrent execution',
-        'Configure systemd timers as a modern cron alternative',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -337,6 +312,6 @@ export default function PythonScheduling() {
         <Quiz lessonId="py-06" title="Scheduled Tasks & Cron Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

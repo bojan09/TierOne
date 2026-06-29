@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -183,31 +182,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WS2025Intro() {
   return (
-    <LessonLayout
-      lessonId="ws2025-01"
-      courseId="windows-server-2025"
-      title="Introduction to Windows Server 2025"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={50}
-      readTime="~20 min"
-      icon="🖥️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Server 2025', href: '/windows-server-2025' },
-        { label: 'Introduction' },
-      ]}
-      prev={null}
-      next={{ title: 'Active Directory & Domain Services', href: '/windows-server-2025/active-directory' }}
-      objectives={[
-        'Understand Windows Server 2025 editions and use cases',
-        'Know the hardware requirements for lab and production',
-        'Distinguish Server Core from Desktop Experience and choose correctly',
-        'Install Windows Server 2025 in VMware Workstation',
-        'Perform post-installation configuration with sconfig and PowerShell',
-        'Understand roles vs features and install them via PowerShell',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -411,6 +386,6 @@ export default function WS2025Intro() {
         <Quiz lessonId="ws2025-01" title="Windows Server 2025 Introduction Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

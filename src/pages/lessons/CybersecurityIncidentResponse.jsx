@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -190,31 +189,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function CybersecurityIncidentResponse() {
   return (
-    <LessonLayout
-      lessonId="sec-09"
-      courseId="cybersecurity"
-      title="Incident Response"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={100}
-      readTime="~40 min"
-      icon="🚨"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'Incident Response' },
-      ]}
-      prev={{ title: 'Vulnerability Scanning',      href: '/cybersecurity/vuln-scanning' }}
-      next={{ title: 'Active Directory Security',   href: '/cybersecurity/ad-security' }}
-      objectives={[
-        'Apply the NIST 6-phase incident response lifecycle',
-        'Collect volatile evidence before containment',
-        'Isolate a compromised system without destroying evidence',
-        'Conduct eradication: remove malware, close backdoors, reset credentials',
-        'Document incidents with proper chain of custody',
-        'Run a blameless post-incident review',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -290,6 +265,6 @@ export default function CybersecurityIncidentResponse() {
         <Quiz lessonId="sec-09" title="Incident Response Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

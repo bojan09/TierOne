@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -204,31 +203,7 @@ function SubnetDivider() {
 
 export default function NetworkingSubnetting() {
   return (
-    <LessonLayout
-      lessonId="net-03"
-      courseId="networking"
-      title="Subnetting & CIDR"
-      courseTitle="Network Fundamentals"
-      courseHref="/networking"
-      xp={90}
-      readTime="~40 min"
-      icon="🔢"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Networking', href: '/networking' },
-        { label: 'Subnetting & CIDR' },
-      ]}
-      prev={{ title: 'TCP/IP & the Internet Protocol Suite', href: '/networking/tcp-ip' }}
-      next={{ title: 'VLANs & Switching',                   href: '/networking/vlans' }}
-      objectives={[
-        'Calculate network address, broadcast, and host range for any CIDR block',
-        'Divide a network into equal or variable-sized subnets',
-        'Apply VLSM to right-size subnets and avoid address waste',
-        'Identify all RFC 1918 private ranges and special-purpose addresses',
-        'Use ipcalc and Python to automate subnet calculations',
-        'Design a subnetting scheme for a multi-site lab network',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -371,6 +346,6 @@ export default function NetworkingSubnetting() {
         <Quiz lessonId="net-03" title="Subnetting & CIDR Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

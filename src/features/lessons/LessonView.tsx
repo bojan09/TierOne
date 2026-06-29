@@ -44,7 +44,7 @@ export default function LessonView() {
 
   const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
   const lesson = course && lessonSlug ? getLessonBySlug(course, lessonSlug) : undefined;
-  const Body = lessonSlug ? getLessonBody(lessonSlug) : undefined;
+  const Body = lesson ? getLessonBody(lesson.id) : undefined;
 
   if (!course || !lesson || !Body) return <NotFound />;
 

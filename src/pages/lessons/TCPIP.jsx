@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -248,31 +247,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function TCPIP() {
   return (
-    <LessonLayout
-      lessonId="net-02"
-      courseId="networking"
-      title="TCP/IP & the Internet Protocol Suite"
-      courseTitle="Network Fundamentals"
-      courseHref="/networking"
-      xp={70}
-      readTime="~30 min"
-      icon="🌐"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Networking', href: '/networking' },
-        { label: 'TCP/IP & Subnetting' },
-      ]}
-      prev={{ title: 'The OSI Model',          href: '/networking/osi-model' }}
-      next={{ title: 'Subnetting & CIDR',      href: '/networking/subnetting' }}
-      objectives={[
-        'Understand the TCP/IP model layers and how they map to OSI',
-        'Explain the TCP three-way handshake and four-way teardown',
-        'Know when to use TCP vs UDP for different applications',
-        'Calculate network address, broadcast, and host ranges from CIDR notation',
-        'Use the interactive subnet calculator for fast calculations',
-        'Analyse TCP connections with ss and packet captures',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -507,6 +482,6 @@ export default function TCPIP() {
         <Quiz lessonId="net-02" title="TCP/IP & Subnetting Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

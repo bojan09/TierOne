@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -307,31 +306,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function PowerShellScripting() {
   return (
-    <LessonLayout
-      lessonId="ps-03"
-      courseId="powershell"
-      title="Scripts, Functions & Modules"
-      courseTitle="PowerShell"
-      courseHref="/powershell"
-      xp={80}
-      readTime="~35 min"
-      icon="📝"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'PowerShell', href: '/powershell' },
-        { label: 'Scripts, Functions & Modules' },
-      ]}
-      prev={{ title: 'Objects & the Pipeline',       href: '/powershell/pipeline' }}
-      next={{ title: 'Active Directory Automation',  href: '/powershell/active-directory' }}
-      objectives={[
-        'Write production-quality functions with parameters and validation',
-        'Use [CmdletBinding()] to create advanced functions',
-        'Implement proper error handling with try/catch',
-        'Structure reusable scripts with regions and comment-based help',
-        'Build and import a PowerShell module',
-        'Use -WhatIf and -Confirm for safe destructive operations',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -413,6 +388,6 @@ export default function PowerShellScripting() {
         <Quiz lessonId="ps-03" title="Scripts, Functions & Modules Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

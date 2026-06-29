@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -265,31 +264,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function PythonCLITool() {
   return (
-    <LessonLayout
-      lessonId="py-09"
-      courseId="python"
-      title="Building a SysAdmin CLI Tool"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      xp={90}
-      readTime="~40 min"
-      icon="🛠️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Python for SysAdmins', href: '/python' },
-        { label: 'Building a SysAdmin CLI Tool' },
-      ]}
-      prev={{ title: 'Ansible & Python', href: '/python/ansible' }}
-      next={null}
-      objectives={[
-        'Structure a professional CLI tool with argparse subcommands',
-        'Use the Rich library for beautiful terminal output',
-        'Implement proper exit codes for shell and CI integration',
-        'Write reusable sysadmin utilities that follow Unix philosophy',
-        'Package a CLI tool for distribution to team members',
-        'Add configuration file support with configparser',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -346,6 +321,6 @@ export default function PythonCLITool() {
         <Quiz lessonId="py-09" title="Building a SysAdmin CLI Tool Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

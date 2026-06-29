@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -215,31 +214,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function GroupPolicy() {
   return (
-    <LessonLayout
-      lessonId="ws2025-05"
-      courseId="windows-server-2025"
-      title="Group Policy Management"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={120}
-      readTime="~40 min"
-      icon="🔧"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Server 2025', href: '/windows-server-2025' },
-        { label: 'Group Policy Management' },
-      ]}
-      prev={{ title: 'DNS Server Configuration',    href: '/windows-server-2025/dns' }}
-      next={{ title: 'Hyper-V Virtualisation',       href: '/windows-server-2025/hyper-v' }}
-      objectives={[
-        'Understand GPO structure, processing order (LSDOU), and precedence',
-        'Create, link, and configure GPOs via GPMC and PowerShell',
-        'Deploy drive mappings, desktop restrictions, and security settings',
-        'Use gpresult and gpupdate to diagnose and force policy application',
-        'Implement security baselines using GPO',
-        'Understand WMI filtering and loopback processing',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -452,6 +427,6 @@ export default function GroupPolicy() {
         <Quiz lessonId="ws2025-05" title="Group Policy Management Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={60} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

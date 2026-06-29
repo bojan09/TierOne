@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -74,15 +73,7 @@ function LabStep({ number, description, command, language='bash', output }) {
 
 export default function UnixProcesses() {
   return (
-    <LessonLayout
-      lessonId="unix-05" courseId="unix"
-      title="Process & Signal Management" courseTitle="Unix"
-      courseHref="/unix" xp={70} readTime="~25 min" icon="⚡"
-      breadcrumbs={[{label:'Home',href:'/'},{label:'Unix',href:'/unix'},{label:'Process & Signal Management'}]}
-      prev={{ title:'Unix File Permissions', href:'/unix/permissions' }}
-      next={null}
-      objectives={['Use ps, top, and htop to inspect processes','Send signals with kill, pkill, and killall','Use job control: bg, fg, jobs, nohup, disown','Write parallel shell scripts with & and wait','Understand zombie processes and the process lifecycle','Use pgrep and pkill for process management by name']}
-    >
+    <>
       <section><h2>Overview</h2><p>Unix process management is a POSIX-standard model: every process has a PID, parent PID, owner, and state. Signals are the inter-process communication mechanism. Understanding this model lets you manage processes, write parallel scripts, and diagnose runaway or stuck processes on any Unix system.</p></section>
       <section>
         <h2>Process & Signal Reference</h2>
@@ -105,6 +96,6 @@ export default function UnixProcesses() {
         <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Unix course.</p>
         <Quiz lessonId="unix-05" title="Process & Signal Management Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -182,31 +181,7 @@ function LabStep({ number, description, command, language='powershell', output }
 
 export default function WS2025Backup() {
   return (
-    <LessonLayout
-      lessonId="ws2025-10"
-      courseId="windows-server-2025"
-      title="Server Backup & Recovery"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={80}
-      readTime="~35 min"
-      icon="💾"
-      breadcrumbs={[
-        { label:'Home', href:'/' },
-        { label:'Windows Server 2025', href:'/windows-server-2025' },
-        { label:'Backup & Recovery' },
-      ]}
-      prev={{ title:'Remote Desktop Services', href:'/windows-server-2025/rds' }}
-      next={{ title:'Windows Admin Center',   href:'/windows-server-2025/wac' }}
-      objectives={[
-        'Apply the 3-2-1 backup rule to Windows Server environments',
-        'Define RTO and RPO and use them to design backup schedules',
-        'Install Windows Server Backup and configure scheduled jobs',
-        'Back up Active Directory System State',
-        'Perform a file and folder restore from a backup',
-        'Schedule and document regular restore tests',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -293,6 +268,6 @@ export default function WS2025Backup() {
         <Quiz lessonId="ws2025-10" title="Server Backup & Recovery Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -197,31 +196,7 @@ function LabStep({ number, description, command, language='powershell', output }
 
 export default function WS2025Hardening() {
   return (
-    <LessonLayout
-      lessonId="ws2025-12"
-      courseId="windows-server-2025"
-      title="Server Hardening & Best Practices"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={120}
-      readTime="~45 min"
-      icon="🔐"
-      breadcrumbs={[
-        { label:'Home', href:'/' },
-        { label:'Windows Server 2025', href:'/windows-server-2025' },
-        { label:'Server Hardening' },
-      ]}
-      prev={{ title:'Windows Admin Center', href:'/windows-server-2025/wac' }}
-      next={null}
-      objectives={[
-        'Apply CIS Benchmark and Microsoft Security Baseline controls',
-        'Disable legacy protocols: SMBv1, NTLM, TLS 1.0/1.1',
-        'Enable SMB signing and encryption',
-        'Configure Windows Defender and attack surface reduction rules',
-        'Apply least-privilege to service accounts with gMSA',
-        'Audit hardening status with PowerShell',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -274,6 +249,6 @@ export default function WS2025Hardening() {
         <Quiz lessonId="ws2025-12" title="Server Hardening Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={60} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

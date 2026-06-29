@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -272,31 +271,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxSystemd() {
   return (
-    <LessonLayout
-      lessonId="linux-05"
-      courseId="linux"
-      title="systemd & Service Management"
-      courseTitle="Linux Fundamentals"
-      courseHref="/linux"
-      xp={80}
-      readTime="~35 min"
-      icon="⚙️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Linux Fundamentals', href: '/linux' },
-        { label: 'systemd & Service Management' },
-      ]}
-      prev={{ title: 'Package Management',         href: '/linux/packages' }}
-      next={{ title: 'Linux Networking',            href: '/linux/networking' }}
-      objectives={[
-        'Manage services with systemctl — start, stop, enable, disable, status',
-        'Read and interpret systemctl status output',
-        'Query service logs with journalctl',
-        'Write custom unit files for your own services',
-        'Create systemd timers as cron replacements',
-        'Troubleshoot failed services using journald and systemd targets',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -373,6 +348,6 @@ export default function LinuxSystemd() {
         <Quiz lessonId="linux-05" title="systemd & Service Management Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useProgress, getLevelForXP, BADGES, LEVELS } from '../hooks/useProgress.js'
+import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
+import { curriculum } from '@/content/curriculum'
 import ProgressBar from '../components/ProgressBar.jsx'
 import CourseProgressRing from '../components/CourseProgressRing.jsx'
 import PlatformProgress from '../components/PlatformProgress.jsx'
@@ -223,12 +225,18 @@ function QuizRow({ lessonId, score, passed, date }) {
 // ─── Dashboard page ───────────────────────────────────────────────────────────
 export default function Dashboard() {
   const { state, reset } = useProgress()
+  const academy = useAcademyProgress()
   const [confirmReset, setConfirmReset] = useState(false)
 
-  const { totalXP, completedLessons, earnedBadges, quizScores, streak } = state
+  const { completedLessons, quizScores } = state
+  // Server-authoritative when signed in; fall back to legacy localStorage.
+  const totalXP      = academy.stats?.totalXp ?? state.totalXP
+  const streak       = academy.stats?.streak ?? state.streak
+  const earnedBadges = academy.stats?.earnedBadges ?? state.earnedBadges
   const { current: level, next: nextLevel, progress: levelProgress } = getLevelForXP(totalXP)
 
-  const totalCompleted   = completedLessons.length
+  const totalCompleted   = academy.stats ? academy.completedSet.size : completedLessons.length
+  const totalLessons     = curriculum.lessons.length
   const totalQuizzes     = Object.keys(quizScores).length
   const totalQuizPassed  = Object.values(quizScores).filter(q => q.passed).length
   const avgQuizScore     = totalQuizzes
@@ -299,7 +307,7 @@ export default function Dashboard() {
                     sub="experience points" />
           <StatCard icon="📚" label="Lessons Done"   value={totalCompleted}
                     color="text-accent-green"  borderColor="border-accent-green/60"
-                    sub={`of 82 lessons`} />
+                    sub={`of ${totalLessons} lessons`} />
           <StatCard icon="🔥" label="Day Streak"     value={streak}
                     color="text-orange-400"    borderColor="border-orange-500/60"
                     sub="consecutive days" />

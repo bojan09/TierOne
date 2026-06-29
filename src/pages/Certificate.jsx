@@ -72,7 +72,7 @@ function CertificateCard({ name, course, xp, level, badges, completedDate, certI
           </p>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight
                           print:text-black leading-tight">
-            {name || 'SysAdmin Pro Student'}
+            {name || 'TierZero Student'}
           </h1>
           <p className="text-xs text-slate-400 print:text-gray-600 uppercase tracking-widest">
             has successfully completed
@@ -120,14 +120,14 @@ function CertificateCard({ name, course, xp, level, badges, completedDate, certI
               ID: {certId}
             </p>
             <p className="text-[9px] text-slate-600 print:text-gray-400">
-              sysadminpro.dev/verify
+              tierzero.dev/verify
             </p>
           </div>
           <div className="text-right">
             <div className="w-28 h-px bg-surface-600 print:bg-gray-300 mb-1.5 ml-auto" />
             <p className="text-[10px] text-slate-500 print:text-gray-500">Platform</p>
             <p className="text-xs text-brand-400 print:text-blue-700 font-semibold">
-              SysAdminPro
+              TierZero
             </p>
           </div>
         </div>

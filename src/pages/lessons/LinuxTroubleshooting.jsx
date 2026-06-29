@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -211,31 +210,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function LinuxTroubleshooting() {
   return (
-    <LessonLayout
-      lessonId="trouble-03"
-      courseId="troubleshooting"
-      title="Linux Troubleshooting"
-      courseTitle="Troubleshooting"
-      courseHref="/troubleshooting"
-      xp={80}
-      readTime="~35 min"
-      icon="🐧"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Troubleshooting', href: '/troubleshooting' },
-        { label: 'Linux Troubleshooting' },
-      ]}
-      prev={{ title: 'Windows Troubleshooting', href: '/troubleshooting/windows' }}
-      next={{ title: 'Network Troubleshooting',  href: '/troubleshooting/networking' }}
-      objectives={[
-        'Diagnose service failures with systemctl and journalctl',
-        'Use dmesg to find kernel and hardware issues',
-        'Identify CPU, memory, and disk bottlenecks',
-        'Find and kill rogue processes',
-        'Trace system calls with strace for deep debugging',
-        'Diagnose disk space issues including deleted-but-open files',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -300,6 +275,6 @@ export default function LinuxTroubleshooting() {
         <Quiz lessonId="trouble-03" title="Linux Troubleshooting Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

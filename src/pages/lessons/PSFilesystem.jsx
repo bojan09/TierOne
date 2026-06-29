@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -213,31 +212,7 @@ function LabStep({ number, description, command, language='powershell', output }
 
 export default function PSFilesystem() {
   return (
-    <LessonLayout
-      lessonId="ps-06"
-      courseId="powershell"
-      title="File System & Registry Automation"
-      courseTitle="PowerShell"
-      courseHref="/powershell"
-      xp={70}
-      readTime="~30 min"
-      icon="📁"
-      breadcrumbs={[
-        { label:'Home', href:'/' },
-        { label:'PowerShell', href:'/powershell' },
-        { label:'File System & Registry Automation' },
-      ]}
-      prev={{ title:'Remote Management (PSRemoting)', href:'/powershell/remoting' }}
-      next={{ title:'Desired State Configuration',    href:'/powershell/dsc' }}
-      objectives={[
-        'Navigate and manipulate the filesystem with Get-ChildItem, Copy-Item, Move-Item',
-        'Search file content recursively with Select-String',
-        'Automate log cleanup and archiving with date-based filters',
-        'Read and write the Windows Registry using the HKLM: PSDrive',
-        'Compare directory trees and find differences with Compare-Object',
-        'Build a disk usage report script',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -295,6 +270,6 @@ export default function PSFilesystem() {
         <Quiz lessonId="ps-06" title="File System & Registry Automation Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

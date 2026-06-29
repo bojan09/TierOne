@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
@@ -202,31 +201,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function WindowsFirewall() {
   return (
-    <LessonLayout
-      lessonId="ws2025-08"
-      courseId="windows-server-2025"
-      title="Windows Firewall & Security"
-      courseTitle="Windows Server 2025"
-      courseHref="/windows-server-2025"
-      xp={100}
-      readTime="~35 min"
-      icon="🛡️"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Windows Server 2025', href: '/windows-server-2025' },
-        { label: 'Windows Firewall & Security' },
-      ]}
-      prev={{ title: 'File Services & DFS',       href: '/windows-server-2025/file-services' }}
-      next={{ title: 'Remote Desktop Services',   href: '/windows-server-2025/rds' }}
-      objectives={[
-        'Understand the three firewall profiles and when each applies',
-        'Create, modify, and audit firewall rules via PowerShell',
-        'Configure application and service-based rules',
-        'Implement Connection Security Rules with IPsec',
-        'Deploy firewall rules via Group Policy at scale',
-        'Audit and troubleshoot firewall issues',
-      ]}
-    >
+    <>
       {/* ── OVERVIEW ── */}
       <section>
         <h2>Overview</h2>
@@ -437,6 +412,6 @@ export default function WindowsFirewall() {
         <Quiz lessonId="ws2025-08" title="Windows Firewall & Security Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

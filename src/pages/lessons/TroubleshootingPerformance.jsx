@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -218,31 +217,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function TroubleshootingPerformance() {
   return (
-    <LessonLayout
-      lessonId="trouble-06"
-      courseId="troubleshooting"
-      title="Performance & Capacity Issues"
-      courseTitle="Troubleshooting"
-      courseHref="/troubleshooting"
-      xp={80}
-      readTime="~35 min"
-      icon="📈"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Troubleshooting', href: '/troubleshooting' },
-        { label: 'Performance & Capacity Issues' },
-      ]}
-      prev={{ title: 'Active Directory Issues', href: '/troubleshooting/active-directory' }}
-      next={null}
-      objectives={[
-        'Identify CPU bottlenecks using top, vmstat, and mpstat',
-        'Diagnose memory pressure and swap thrashing',
-        'Find disk I/O bottlenecks with iostat and iotop',
-        'Identify network bandwidth consumers with iftop and nethogs',
-        'Read and interpret load average correctly',
-        'Build a capacity baseline to detect degradation over time',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -306,6 +281,6 @@ export default function TroubleshootingPerformance() {
         <Quiz lessonId="trouble-06" title="Performance & Capacity Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

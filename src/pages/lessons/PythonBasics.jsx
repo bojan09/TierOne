@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -296,31 +295,7 @@ function LabStep({ number, description, command, language = 'bash', output }) {
 
 export default function PythonBasics() {
   return (
-    <LessonLayout
-      lessonId="py-01"
-      courseId="python"
-      title="Python Basics for SysAdmins"
-      courseTitle="Python for SysAdmins"
-      courseHref="/python"
-      xp={50}
-      readTime="~25 min"
-      icon="🐍"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Python for SysAdmins', href: '/python' },
-        { label: 'Python Basics' },
-      ]}
-      prev={null}
-      next={{ title: 'File System Automation', href: '/python/filesystem' }}
-      objectives={[
-        'Set up Python and a virtual environment correctly',
-        'Understand Python\'s key data types: str, int, list, dict, bool',
-        'Write functions, conditionals, and loops from a sysadmin perspective',
-        'Read from and write to files using context managers',
-        'Handle errors gracefully with try/except',
-        'Structure a reusable Python script with if __name__ == "__main__"',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -396,6 +371,6 @@ export default function PythonBasics() {
         <Quiz lessonId="py-01" title="Python Basics Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

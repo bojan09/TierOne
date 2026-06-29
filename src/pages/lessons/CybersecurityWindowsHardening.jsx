@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -219,31 +218,7 @@ function LabStep({ number, description, command, language = 'powershell', output
 
 export default function CybersecurityWindowsHardening() {
   return (
-    <LessonLayout
-      lessonId="sec-03"
-      courseId="cybersecurity"
-      title="Windows Server Hardening"
-      courseTitle="Cybersecurity"
-      courseHref="/cybersecurity"
-      xp={100}
-      readTime="~40 min"
-      icon="🔒"
-      breadcrumbs={[
-        { label: 'Home', href: '/' },
-        { label: 'Cybersecurity', href: '/cybersecurity' },
-        { label: 'Windows Server Hardening' },
-      ]}
-      prev={{ title: 'Threat Modelling',     href: '/cybersecurity/threat-modelling' }}
-      next={{ title: 'Linux Server Hardening', href: '/cybersecurity/linux-hardening' }}
-      objectives={[
-        'Apply CIS Benchmark Level 1 controls to Windows Server 2025',
-        'Reduce attack surface by removing unused roles and features',
-        'Configure account and password policies via Group Policy',
-        'Enable and configure Windows security auditing',
-        'Understand and enable Credential Guard and Windows Defender',
-        'Apply privileged access tiering principles',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -338,6 +313,6 @@ export default function CybersecurityWindowsHardening() {
         <Quiz lessonId="sec-03" title="Windows Server Hardening Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

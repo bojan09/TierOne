@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import Quiz from '../../components/Quiz.jsx'
 
@@ -243,31 +242,7 @@ function LabStep({ number, description, command, language='powershell', output }
 
 export default function PSReporting() {
   return (
-    <LessonLayout
-      lessonId="ps-08"
-      courseId="powershell"
-      title="Reporting & Scheduled Automation"
-      courseTitle="PowerShell"
-      courseHref="/powershell"
-      xp={80}
-      readTime="~35 min"
-      icon="📊"
-      breadcrumbs={[
-        { label:'Home', href:'/' },
-        { label:'PowerShell', href:'/powershell' },
-        { label:'Reporting & Scheduled Automation' },
-      ]}
-      prev={{ title:'Desired State Configuration', href:'/powershell/dsc' }}
-      next={null}
-      objectives={[
-        'Generate professional HTML reports with ConvertTo-Html and CSS styling',
-        'Export structured data to CSV and JSON for Excel and external tools',
-        'Schedule scripts as Windows Scheduled Tasks',
-        'Send email alerts with SMTP from PowerShell',
-        'Build a daily server health report that emails itself',
-        'Use transcript logging to audit automation runs',
-      ]}
-    >
+    <>
       <section>
         <h2>Overview</h2>
         <p>
@@ -330,6 +305,6 @@ export default function PSReporting() {
         <Quiz lessonId="ps-08" title="Reporting & Scheduled Automation Quiz"
               questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
       </section>
-    </LessonLayout>
+    </>
   )
 }

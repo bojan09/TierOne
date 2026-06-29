@@ -1,29 +1,98 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 
-/**
- * Maps a lesson `slug` to a lazily-imported body component. Each dynamic
- * import becomes its own bundle chunk, so lesson content is only downloaded
- * when a student opens that lesson. This is what breaks the monolithic bundle.
- *
- * Lesson bodies are pure content (no chrome) — the chrome is supplied by the
- * spine-driven LessonView via LessonChrome.
- *
- * As lessons migrate to the spine, they are registered here.
- */
+// AUTO-GENERATED registry (P5.5). Keyed by lesson id (globally unique).
+
 type LazyBody = LazyExoticComponent<ComponentType>;
 
 export const lessonRegistry: Record<string, LazyBody> = {
-  'what-is-it-support': lazy(
-    () => import('@/content/lessons/helpdesk/what-is-it-support.jsx'),
-  ),
-  'troubleshooting-methodology': lazy(
-    () => import('@/content/lessons/helpdesk/troubleshooting-methodology.jsx'),
-  ),
-  'tickets-and-documentation': lazy(
-    () => import('@/content/lessons/helpdesk/tickets-and-documentation.jsx'),
-  ),
+  'hdf-01': lazy(() => import('@/content/lessons/helpdesk/what-is-it-support.jsx')),
+  'hdf-02': lazy(() => import('@/content/lessons/helpdesk/troubleshooting-methodology.jsx')),
+  'hdf-03': lazy(() => import('@/content/lessons/helpdesk/tickets-and-documentation.jsx')),
+  'hwos-01': lazy(() => import('@/content/lessons/helpdesk/hardware-essentials.jsx')),
+  'hwos-02': lazy(() => import('@/content/lessons/helpdesk/operating-systems-overview.jsx')),
+  'hwos-03': lazy(() => import('@/content/lessons/helpdesk/files-users-permissions.jsx')),
+  'net-01': lazy(() => import('@/content/lessons/helpdesk/how-networks-work.jsx')),
+  'net-02': lazy(() => import('@/content/lessons/helpdesk/connectivity-troubleshooting.jsx')),
+  'net-03': lazy(() => import('@/content/lessons/helpdesk/wifi-vpn-remote.jsx')),
+  'work-01': lazy(() => import('@/content/lessons/helpdesk/active-directory-basics.jsx')),
+  'work-02': lazy(() => import('@/content/lessons/helpdesk/microsoft-365-essentials.jsx')),
+  'work-03': lazy(() => import('@/content/lessons/helpdesk/email-troubleshooting.jsx')),
+  'work-04': lazy(() => import('@/content/lessons/helpdesk/customer-communication.jsx')),
+  'windows-01': lazy(() => import('../../pages/lessons/WindowsArchitecture.jsx')),
+  'windows-02': lazy(() => import('../../pages/lessons/WindowsPermissions.jsx')),
+  'windows-03': lazy(() => import('../../pages/lessons/WindowsRegistry.jsx')),
+  'windows-04': lazy(() => import('../../pages/lessons/WindowsProcesses.jsx')),
+  'windows-05': lazy(() => import('../../pages/lessons/WindowsNetworking.jsx')),
+  'windows-06': lazy(() => import('../../pages/lessons/WindowsEventViewer.jsx')),
+  'windows-server-2025-01': lazy(() => import('../../pages/lessons/WS2025Intro.jsx')),
+  'windows-server-2025-02': lazy(() => import('../../pages/lessons/ActiveDirectory.jsx')),
+  'windows-server-2025-03': lazy(() => import('../../pages/lessons/DHCP.jsx')),
+  'windows-server-2025-04': lazy(() => import('../../pages/lessons/DNS.jsx')),
+  'windows-server-2025-05': lazy(() => import('../../pages/lessons/GroupPolicy.jsx')),
+  'windows-server-2025-06': lazy(() => import('../../pages/lessons/HyperV.jsx')),
+  'windows-server-2025-07': lazy(() => import('../../pages/lessons/WS2025FileServices.jsx')),
+  'windows-server-2025-08': lazy(() => import('../../pages/lessons/WindowsFirewall.jsx')),
+  'windows-server-2025-09': lazy(() => import('../../pages/lessons/WS2025RDS.jsx')),
+  'windows-server-2025-10': lazy(() => import('../../pages/lessons/WS2025Backup.jsx')),
+  'windows-server-2025-11': lazy(() => import('../../pages/lessons/WS2025WAC.jsx')),
+  'windows-server-2025-12': lazy(() => import('../../pages/lessons/WS2025Hardening.jsx')),
+  'linux-01': lazy(() => import('../../pages/lessons/LinuxFilesystem.jsx')),
+  'linux-02': lazy(() => import('../../pages/lessons/LinuxShell.jsx')),
+  'linux-03': lazy(() => import('../../pages/lessons/LinuxPermissions.jsx')),
+  'linux-04': lazy(() => import('../../pages/lessons/LinuxPackages.jsx')),
+  'linux-05': lazy(() => import('../../pages/lessons/LinuxSystemd.jsx')),
+  'linux-06': lazy(() => import('../../pages/lessons/LinuxNetworking.jsx')),
+  'linux-07': lazy(() => import('../../pages/lessons/LinuxSSH.jsx')),
+  'linux-08': lazy(() => import('../../pages/lessons/LinuxFirewall.jsx')),
+  'linux-09': lazy(() => import('../../pages/lessons/LinuxDisk.jsx')),
+  'linux-10': lazy(() => import('../../pages/lessons/LinuxHardening.jsx')),
+  'unix-01': lazy(() => import('../../pages/lessons/UnixPhilosophy.jsx')),
+  'unix-02': lazy(() => import('../../pages/lessons/UnixPOSIXShell.jsx')),
+  'unix-03': lazy(() => import('../../pages/lessons/UnixBSD.jsx')),
+  'unix-04': lazy(() => import('../../pages/lessons/UnixPermissions.jsx')),
+  'unix-05': lazy(() => import('../../pages/lessons/UnixProcesses.jsx')),
+  'networking-01': lazy(() => import('../../pages/lessons/OSIModel.jsx')),
+  'networking-02': lazy(() => import('../../pages/lessons/TCPIP.jsx')),
+  'networking-03': lazy(() => import('../../pages/lessons/NetworkingSubnetting.jsx')),
+  'networking-04': lazy(() => import('../../pages/lessons/NetworkingVLANs.jsx')),
+  'networking-05': lazy(() => import('../../pages/lessons/NetworkingRouting.jsx')),
+  'networking-06': lazy(() => import('../../pages/lessons/NetworkingDNS.jsx')),
+  'networking-07': lazy(() => import('../../pages/lessons/NetworkingWireless.jsx')),
+  'powershell-01': lazy(() => import('../../pages/lessons/PowerShellFundamentals.jsx')),
+  'powershell-02': lazy(() => import('../../pages/lessons/PowerShellPipeline.jsx')),
+  'powershell-03': lazy(() => import('../../pages/lessons/PowerShellScripting.jsx')),
+  'powershell-04': lazy(() => import('../../pages/lessons/PSActiveDirectory.jsx')),
+  'powershell-05': lazy(() => import('../../pages/lessons/PSRemoting.jsx')),
+  'powershell-06': lazy(() => import('../../pages/lessons/PSFilesystem.jsx')),
+  'powershell-07': lazy(() => import('../../pages/lessons/PSDSC.jsx')),
+  'powershell-08': lazy(() => import('../../pages/lessons/PSReporting.jsx')),
+  'python-01': lazy(() => import('../../pages/lessons/PythonBasics.jsx')),
+  'python-02': lazy(() => import('../../pages/lessons/PythonAutomation.jsx')),
+  'python-03': lazy(() => import('../../pages/lessons/PythonSubprocess.jsx')),
+  'python-04': lazy(() => import('../../pages/lessons/PythonNetworking.jsx')),
+  'python-05': lazy(() => import('../../pages/lessons/PythonLogParsing.jsx')),
+  'python-06': lazy(() => import('../../pages/lessons/PythonScheduling.jsx')),
+  'python-07': lazy(() => import('../../pages/lessons/PythonMonitoring.jsx')),
+  'python-08': lazy(() => import('../../pages/lessons/PythonAnsible.jsx')),
+  'python-09': lazy(() => import('../../pages/lessons/PythonCLITool.jsx')),
+  'cybersecurity-01': lazy(() => import('../../pages/lessons/CIATriad.jsx')),
+  'cybersecurity-02': lazy(() => import('../../pages/lessons/ThreatModelling.jsx')),
+  'cybersecurity-03': lazy(() => import('../../pages/lessons/CybersecurityWindowsHardening.jsx')),
+  'cybersecurity-04': lazy(() => import('../../pages/lessons/CybersecurityLinuxHardening.jsx')),
+  'cybersecurity-05': lazy(() => import('../../pages/lessons/CybersecurityFirewall.jsx')),
+  'cybersecurity-06': lazy(() => import('../../pages/lessons/CybersecurityPKI.jsx')),
+  'cybersecurity-07': lazy(() => import('../../pages/lessons/CybersecurityIDSSIEM.jsx')),
+  'cybersecurity-08': lazy(() => import('../../pages/lessons/CybersecurityVulnScanning.jsx')),
+  'cybersecurity-09': lazy(() => import('../../pages/lessons/CybersecurityIncidentResponse.jsx')),
+  'cybersecurity-10': lazy(() => import('../../pages/lessons/CybersecurityADSecurity.jsx')),
+  'troubleshooting-01': lazy(() => import('../../pages/lessons/TroubleshootingMethodology.jsx')),
+  'troubleshooting-02': lazy(() => import('../../pages/lessons/WindowsTroubleshooting.jsx')),
+  'troubleshooting-03': lazy(() => import('../../pages/lessons/LinuxTroubleshooting.jsx')),
+  'troubleshooting-04': lazy(() => import('../../pages/lessons/TroubleshootingNetworking.jsx')),
+  'troubleshooting-05': lazy(() => import('../../pages/lessons/TroubleshootingActiveDirectory.jsx')),
+  'troubleshooting-06': lazy(() => import('../../pages/lessons/TroubleshootingPerformance.jsx')),
 };
 
-export function getLessonBody(slug: string): LazyBody | undefined {
-  return lessonRegistry[slug];
+export function getLessonBody(id: string): LazyBody | undefined {
+  return lessonRegistry[id];
 }
