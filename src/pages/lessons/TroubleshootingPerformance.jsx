@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_TROUBLESHOOTINGPERFORMANCE_1 = `# ── Load average ────────────────────────────────────────────
@@ -120,7 +119,6 @@ uptime`
 const CODE_TROUBLESHOOTINGPERFORMANCE_7 = `load average: 0.85, 0.22, 0.07  <- load jumped
 USER  PID  %CPU  COMMAND
 root  9876  99.8  python3   <- our artificial load`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -275,12 +273,7 @@ export default function TroubleshootingPerformance() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Troubleshooting course.</p>
-        <Quiz lessonId="trouble-06" title="Performance & Capacity Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PYTHONCLITOOL_1 = `#!/usr/bin/env python3
@@ -168,7 +167,6 @@ const CODE_PYTHONCLITOOL_5 = `      Disk Usage
  389   LDAP     [green]OPEN[/]
  3389  RDP      [green]OPEN[/]`
 
-
 const QUIZ_QUESTIONS = [
   {
     id: 'q1',
@@ -315,12 +313,7 @@ export default function PythonCLITool() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Python course.</p>
-        <Quiz lessonId="py-09" title="Building a SysAdmin CLI Tool Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </>
   )
 }

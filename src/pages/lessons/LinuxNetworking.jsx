@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -185,7 +184,6 @@ const CODE_LINUXNETWORKING_12 = `10:15:22 192.168.100.20.52341 > 192.168.100.10.
 10:15:22 192.168.100.10.53 > 192.168.100.20.52341: A 192.168.100.10
 10:15:23 192.168.100.20.51422 > 192.168.100.10.53: A? google.com
 10:15:23 192.168.100.10.53 > 192.168.100.20.51422: A 142.250.80.46 (forwarded)`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -411,12 +409,7 @@ export default function LinuxNetworking() {
       </section>
 
       {/* ── QUIZ ── */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="linux-06" title="Linux Networking Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

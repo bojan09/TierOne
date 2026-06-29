@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -156,7 +155,6 @@ cat /etc/iptables/rules.v4
 sudo reboot
 # (reconnect via SSH)
 sudo ufw status verbose`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -407,12 +405,7 @@ export default function LinuxFirewall() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="linux-08" title="Linux Firewall Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </>
   )
 }

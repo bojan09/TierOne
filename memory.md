@@ -1,6 +1,6 @@
-# Memory — IT Academy rebuild (through Phase 5.5)
+# Memory — IT Academy rebuild (through Phase 5.5.1)
 
-Last updated: 2026-06-29 13:30 UTC
+Last updated: 2026-06-29 14:30 UTC
 
 ## What was built
 
@@ -34,7 +34,7 @@ Last updated: 2026-06-29 13:30 UTC
 
 ### Known debt / deferred
 - localStorage→Supabase import **dropped** (id re-keying mismatch; new completions persist server-side already).
-- Migrated SysAdmin bodies still contain legacy localStorage `<Quiz>` blocks → replaced in P6.
+- Legacy `<Quiz>` blocks removed from all migrated bodies (P5.5.1); real quizzes come in P6.
 - Legacy Home course grid still renders (works via redirects, stale numbers) → polish (P13). Unused legacy CoursePage component now dead.
 - 1 lesson skipped (`TroubleshootingNetworking`, non-template) — orphaned, `/networking/troubleshooting` 404s.
 - 2 supabase-generic casts in ProgressProvider (removed by `supabase gen types`).

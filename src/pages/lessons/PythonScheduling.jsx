@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PYTHONSCHEDULING_1 = `# Edit with: crontab -e
@@ -125,7 +124,6 @@ const CODE_PYTHONSCHEDULING_5 = `*/5 * * * * python3 /opt/scripts/health-check.p
 
 cron.service - Regular background program processing daemon
    Active: active (running)`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -306,12 +304,7 @@ export default function PythonScheduling() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="py-06" title="Scheduled Tasks & Cron Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

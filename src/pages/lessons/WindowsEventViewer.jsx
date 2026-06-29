@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WINDOWSEVENTVIEWER_1 = `# ── Recent errors (server-side filtered — fast) ───────────────
@@ -65,7 +64,6 @@ if ($cleared) {
 } else {
     Write-Host 'OK: Audit log intact (no clearing events found)' -ForegroundColor Green
 }`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -229,12 +227,7 @@ export default function WindowsEventViewer() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Windows Desktop course.</p>
-        <Quiz lessonId="win-06" title="Event Viewer & Logging Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

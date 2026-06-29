@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_NETWORKINGROUTING_1 = `# ── View routing table ───────────────────────────────────────
@@ -69,7 +68,6 @@ const CODE_NETWORKINGROUTING_5 = `172.16.50.0/24 via 192.168.100.1 dev ens33
 
 172.16.50.100 via 192.168.100.1 dev ens33 src 192.168.100.20
   cache`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -284,12 +282,7 @@ export default function NetworkingRouting() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="net-05" title="Routing Fundamentals Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </>
   )
 }

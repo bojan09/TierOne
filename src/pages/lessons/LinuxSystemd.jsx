@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_LINUXSYSTEMD_1 = `# ── Service lifecycle ────────────────────────────────────────
@@ -175,7 +174,6 @@ systemctl list-timers healthcheck.timer`
 const CODE_LINUXSYSTEMD_10 = `NEXT                         LEFT     LAST  PASSED  UNIT
 Thu 2025-01-15 11:05:00 UTC  4min 59s  n/a    n/a   healthcheck.timer`
 
-
 const QUIZ_QUESTIONS = [
   {
     id: 'q1',
@@ -342,12 +340,7 @@ export default function LinuxSystemd() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="linux-05" title="systemd & Service Management Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_CYBERSECURITYVULNSCANNING_1 = `# ── Discovery ────────────────────────────────────────────────
@@ -63,7 +62,6 @@ const CODE_CYBERSECURITYVULNSCANNING_5 = `Host script results:
 |_   message_signing: required  <- good security posture
 
 Scan saved to /tmp/lab-scan.xml`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -234,12 +232,7 @@ export default function CybersecurityVulnScanning() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="sec-08" title="Vulnerability Scanning Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </>
   )
 }

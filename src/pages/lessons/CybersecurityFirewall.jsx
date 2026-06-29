@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_CYBERSECURITYFIREWALL_1 = `# ── Initial secure setup ─────────────────────────────────────
@@ -92,7 +91,6 @@ const CODE_CYBERSECURITYFIREWALL_6 = `connected
 Jan 15 11:00:00 srv01 kernel: [UFW BLOCK] IN=ens33 OUT=
   SRC=10.0.2.2 DST=192.168.100.20 PROTO=TCP DPT=22
   <- blocked connection attempt from outside the allowed subnet`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -241,12 +239,7 @@ export default function CybersecurityFirewall() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="sec-05" title="Firewall Configuration Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

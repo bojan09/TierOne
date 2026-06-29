@@ -82,12 +82,12 @@ function Logo() {
       <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center
                       shadow-glow-sm group-hover:bg-brand-400 transition-colors duration-200">
         <svg viewBox="0 0 24 24" fill="none" className="w-[18px] h-[18px]">
-          <path d="M4 6h16M4 10h10M4 14h12" stroke="white" strokeWidth="2" strokeLinecap="round"/>
-          <circle cx="20" cy="14" r="2.5" fill="white"/>
+          <path d="M5 7l4 5-4 5" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+          <path d="M12.5 17H19" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
         </svg>
       </div>
       <span className="font-bold text-white text-[15px] tracking-tight leading-none">
-        SysAdmin<span className="text-brand-400">Pro</span>
+        Tier<span className="text-brand-400">Zero</span>
       </span>
     </Link>
   )

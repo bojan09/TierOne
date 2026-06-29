@@ -16,14 +16,16 @@ export function useLocalStorage(key, initialValue) {
   })
 
   const setValue = useCallback((value) => {
-    try {
-      const valueToStore = value instanceof Function ? value(storedValue) : value
-      setStoredValue(valueToStore)
-      window.localStorage.setItem(key, JSON.stringify(valueToStore))
-    } catch (err) {
-      console.warn(`useLocalStorage: failed to set "${key}"`, err)
-    }
-  }, [key, storedValue])
+    setStoredValue((prev) => {
+      const valueToStore = value instanceof Function ? value(prev) : value
+      try {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore))
+      } catch (err) {
+        console.warn(`useLocalStorage: failed to persist "${key}"`, err)
+      }
+      return valueToStore
+    })
+  }, [key])
 
   const removeValue = useCallback(() => {
     try {

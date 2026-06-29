@@ -1,7 +1,6 @@
 import React from 'react'
 import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_DEVOPSCICD_1 = `name: CI/CD Pipeline
@@ -166,7 +165,6 @@ echo 'Push to GitHub to trigger the workflow!'`
 const CODE_DEVOPSCICD_5 = `[main abc1234] ci: add GitHub Actions CI pipeline
  2 files changed, 25 insertions(+)
 Push to GitHub to trigger the workflow!`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -359,12 +357,7 @@ export default function DevOpsCICD() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="devops-04" title="CI/CD with GitHub Actions Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </LessonLayout>
   )
 }

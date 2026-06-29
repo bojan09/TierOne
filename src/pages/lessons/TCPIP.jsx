@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_TCPIP_1 = `# On Ubuntu Server — check IP configuration
@@ -57,7 +56,6 @@ ESTAB     0       0       192.168.100.20:22     192.168.100.10:54321
   6 LISTEN
   2 ESTABLISHED
   0 TIME-WAIT`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -476,12 +474,7 @@ export default function TCPIP() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="net-02" title="TCP/IP & Subnetting Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PYTHONMONITORING_1 = `import psutil
@@ -179,7 +178,6 @@ const CODE_PYTHONMONITORING_5 = `{
 }
 OK: Disk at 15.3%`
 
-
 const QUIZ_QUESTIONS = [
   {
     id: 'q1',
@@ -328,12 +326,7 @@ export default function PythonMonitoring() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="py-07" title="Infrastructure Monitoring Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </>
   )
 }

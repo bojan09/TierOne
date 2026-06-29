@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── All code snippets extracted as top-level constants ──────────────────────
 // (Required: inline array.join patterns inside JSX props crash Babel + esbuild)
@@ -245,7 +244,6 @@ export default function PythonAnsible() {
       </section>
 
       {/* ── Quiz ── */}
-      <Quiz lessonId="py-08" questions={QUIZ_QUESTIONS} />
 
     </>
   )

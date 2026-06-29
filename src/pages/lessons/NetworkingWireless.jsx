@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_NETWORKINGWIRELESS_1 = `# ── Scan for networks ────────────────────────────────────────
@@ -71,7 +70,6 @@ network={
 EOF`
 const CODE_NETWORKINGWIRELESS_5 = `wpa_supplicant v2.10
 EAP methods: EAP-TLS EAP-PEAP EAP-TTLS EAP-PWD EAP-SIM`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -311,12 +309,7 @@ export default function NetworkingWireless() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Networking course.</p>
-        <Quiz lessonId="net-08" title="Wireless Networking Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

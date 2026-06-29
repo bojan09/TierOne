@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_LINUXHARDENING_1 = `# Apply immediately: sudo sysctl -p /etc/sysctl.d/99-hardening.conf
@@ -193,7 +192,6 @@ const CODE_LINUXHARDENING_9 = `! Found shell without timeout [AUTH-9328]
 * Set a password on GRUB bootloader
 * Configure /tmp with noexec option`
 
-
 const QUIZ_QUESTIONS = [
   {
     id: 'q1',
@@ -366,12 +364,7 @@ export default function LinuxHardening() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Linux course.</p>
-        <Quiz lessonId="linux-10" title="Linux Server Hardening Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </>
   )
 }

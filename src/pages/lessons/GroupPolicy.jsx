@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -117,7 +116,6 @@ Invoke-GPUpdate -Computer "WS01" -Force  # Remote refresh
 Backup-GPO -All -Path C:\\\\GPO-Backups
 Restore-GPO -Name "My-Policy" -Path C:\\\\GPO-Backups
 Import-GPO -BackupGpoName "My-Policy" -Path C:\\\\GPO-Backups -TargetName "My-Policy" -CreateIfNeeded`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -421,12 +419,7 @@ export default function GroupPolicy() {
       </section>
 
       {/* ── QUIZ ── */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="ws2025-05" title="Group Policy Management Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={60} />
-      </section>
+      
     </>
   )
 }

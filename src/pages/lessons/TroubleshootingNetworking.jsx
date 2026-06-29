@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_TROUBLESHOOTINGNETWORKING_1 = `# Step 1: Does hostname resolve at all?
@@ -89,7 +88,6 @@ const CODE_TROUBLESHOOTINGNETWORKING_6 = `11:00:01 192.168.100.20.48291 > 192.16
 11:00:01 192.168.100.10.53 > 192.168.100.20.48291: A 192.168.100.10
 11:00:02 192.168.100.20.51234 > 192.168.100.10.53: SRV? _ldap._tcp.lab.local.
 11:00:02 192.168.100.10.53 > 192.168.100.20.51234: SRV dc01.lab.local.:389`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -264,12 +262,7 @@ export default function TroubleshootingNetworking() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="trouble-04" title="Network Troubleshooting Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

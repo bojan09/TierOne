@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_CYBERSECURITYWINDOWSHARDENING_1 = `# Audit installed roles and features
@@ -121,7 +120,6 @@ Spooler Stopped Disabled    ✔ PrintNightmare mitigated
 
 System audit policy
 Logon: Success and Failure   ✔`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -307,12 +305,7 @@ export default function CybersecurityWindowsHardening() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="sec-03" title="Windows Server Hardening Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </>
   )
 }

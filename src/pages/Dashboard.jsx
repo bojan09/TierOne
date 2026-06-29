@@ -5,7 +5,6 @@ import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
 import { curriculum } from '@/content/curriculum'
 import ProgressBar from '../components/ProgressBar.jsx'
 import CourseProgressRing from '../components/CourseProgressRing.jsx'
-import PlatformProgress from '../components/PlatformProgress.jsx'
 import StreakTracker from '../components/StreakTracker.jsx'
 import Breadcrumb from '../components/Breadcrumb.jsx'
 import StudyTimer from '../components/StudyTimer.jsx'
@@ -324,8 +323,55 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* ── PLATFORM PROGRESS OVERVIEW ── */}
-      <PlatformProgress completedLessons={completedLessons} />
+      {/* ── YOUR TRACKS (spine-driven) ── */}
+      <div className="card p-6 mb-6">
+        <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-5">
+          Your Tracks
+        </p>
+        {(['helpdesk', 'sysadmin']).map((track) => {
+          const trackCourses = curriculum.courses
+            .filter((c) => c.track === track)
+            .sort((a, b) => a.order - b.order)
+          if (!trackCourses.length) return null
+          const trackLessons = curriculum.lessons.filter((l) => l.track === track)
+          const trackDone = trackLessons.filter((l) => academy.completedSet.has(l.id)).length
+          return (
+            <div key={track} className="mb-6 last:mb-0">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-bold text-white">
+                  {track === 'helpdesk' ? 'Help Desk / Tier-1' : 'SysAdmin (Advanced)'}
+                </h3>
+                <span className="text-xs font-mono text-slate-500">
+                  {trackDone} / {trackLessons.length} lessons
+                </span>
+              </div>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {trackCourses.map((c) => {
+                  const ls = curriculum.lessons.filter((l) => l.courseId === c.id)
+                  const done = ls.filter((l) => academy.completedSet.has(l.id)).length
+                  const pct = ls.length ? Math.round((done / ls.length) * 100) : 0
+                  return (
+                    <Link
+                      key={c.id}
+                      to={`/learn/${c.slug}`}
+                      className="card p-3 block hover:border-brand-500/40 transition-colors"
+                    >
+                      <div className="flex items-center gap-2.5 mb-2">
+                        <span className="text-lg">{c.icon}</span>
+                        <span className="text-[13px] font-semibold text-white truncate flex-1">{c.title}</span>
+                        <span className="text-[11px] font-mono text-slate-500">{done}/{ls.length}</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-surface-700 overflow-hidden">
+                        <div className="h-full bg-brand-500 transition-all" style={{ width: `${pct}%` }} />
+                      </div>
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
+          )
+        })}
+      </div>
 
       {/* ── COURSE RINGS OVERVIEW ── */}
       <div className="card p-6 mb-6">

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_UNIXPROCESSES_1 = `# ── Inspect processes ────────────────────────────────────
@@ -49,7 +48,6 @@ const CODE_UNIXPROCESSES_3 = `[1] 1234
 [2]+  Running    sleep 60 &
 Both jobs cleaned up`
 
-
 const QUIZ_QUESTIONS = [
   { id:'q1', question:'What is the difference between SIGTERM and SIGKILL?', options:['They are identical signals','SIGTERM (15) politely requests the process to terminate — the process can catch it, clean up, and exit gracefully; SIGKILL (9) is sent directly to the kernel and cannot be caught, blocked, or ignored — the process is immediately destroyed without cleanup','SIGTERM kills the process group; SIGKILL kills only the named process','SIGKILL requires root; SIGTERM can be sent by any user'], correct:1, explanation:'Always try SIGTERM first: kill PID (default is SIGTERM). The well-behaved process closes files, releases locks, flushes buffers, and exits. Give it 5-10 seconds. Only use SIGKILL (kill -9 PID or kill -KILL PID) if the process is stuck and not responding to SIGTERM. SIGKILL-ing a process can leave: temporary files, lock files, open database transactions, and incomplete I/O. It is a last resort.' },
   { id:'q2', question:'What does "jobs" show in a shell session and how do you bring a background job to the foreground?', options:['It lists all system processes','jobs lists processes started in the current shell session that are running in the background (with &) or have been suspended (Ctrl+Z); fg %N brings job N to the foreground, bg %N resumes a suspended job in the background','jobs lists scheduled cron tasks','It shows CPU usage for each running program'], correct:1, explanation:'Unix job control: command & runs it in background. Ctrl+Z suspends a running process (SIGTSTP). jobs shows all background/suspended jobs with their job numbers. fg %1 brings job 1 to the foreground. bg %1 resumes job 1 in the background. The job number (%N) is shell-local — different from the PID. disown %N removes a job from the shell\'s job table so it survives shell exit (unlike plain backgrounding).' },
@@ -91,11 +89,7 @@ export default function UnixProcesses() {
           </div>
         </div>
       </section>
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Unix course.</p>
-        <Quiz lessonId="unix-05" title="Process & Signal Management Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_DEVOPSTERRAFORM_1 = `# ── Provider configuration ───────────────────────────────────
@@ -120,7 +119,6 @@ const CODE_DEVOPSTERRAFORM_5 = `Terraform used the selected providers to generat
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 
 app01.txt  db01.txt  web01.txt`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -293,12 +291,7 @@ export default function DevOpsTerraform() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="devops-05" title="Terraform Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </LessonLayout>
   )
 }

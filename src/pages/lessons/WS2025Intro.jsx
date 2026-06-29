@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WS2025INTRO_1 = `# Launch Server Configuration tool (or it opens automatically on Core)
@@ -95,7 +94,6 @@ Uninstall-WindowsFeature -Name Telnet-Client
 # Web-Server            → IIS Web Server
 # RDS-RD-Server         → Remote Desktop Session Host
 # GPMC                  → Group Policy Management Console`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -380,12 +378,7 @@ export default function WS2025Intro() {
         <CodeBlock title="Managing roles and features with PowerShell" language="powershell" code={CODE_WS2025INTRO_9} />
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="ws2025-01" title="Windows Server 2025 Introduction Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
-      </section>
+      
     </>
   )
 }

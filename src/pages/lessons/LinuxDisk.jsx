@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_LINUXDISK_1 = `# ── Block device tree ───────────────────────────────────────
@@ -42,7 +41,6 @@ sudo fdisk /dev/sdb   # Interactive partitioner
 sudo partprobe /dev/sdb
 lsblk /dev/sdb     # Verify partition appears
 
-
 # ═══ STEP 2: Create filesystem ════════════════════════════════
 sudo mkfs.ext4 -L "datastore" /dev/sdb1    # ext4 with label
 sudo mkfs.xfs  -L "faststore" /dev/sdb2    # XFS (preferred for large files)
@@ -50,12 +48,10 @@ sudo mkfs.xfs  -L "faststore" /dev/sdb2    # XFS (preferred for large files)
 # Get UUID for fstab (UUIDs survive device renames)
 sudo blkid /dev/sdb1
 
-
 # ═══ STEP 3: Mount temporarily ════════════════════════════════
 sudo mkdir -p /mnt/datastore
 sudo mount /dev/sdb1 /mnt/datastore
 df -h /mnt/datastore     # Verify mounted
-
 
 # ═══ STEP 4: Make mount permanent (add to /etc/fstab) ═════════
 # Get UUID
@@ -71,12 +67,10 @@ sudo pvcreate /dev/sdb /dev/sdc    # Initialise two disks as PVs
 sudo pvs                            # List PVs with sizes
 sudo pvdisplay /dev/sdb             # Detailed PV info
 
-
 # ═══ STEP 2: Create volume group ═════════════════════════════
 sudo vgcreate vgdata /dev/sdb /dev/sdc    # Create VG spanning two disks
 sudo vgs                                    # List VGs
 sudo vgdisplay vgdata                       # Detailed VG info (free extents)
-
 
 # ═══ STEP 3: Create logical volumes ══════════════════════════
 sudo lvcreate -L 20G -n lvapp  vgdata    # Fixed size: 20GB volume
@@ -86,7 +80,6 @@ sudo lvcreate -l 100%FREE -n lvbackup vgdata  # Use ALL remaining space
 sudo lvs                              # List all LVs
 sudo lvdisplay /dev/vgdata/lvapp      # Detailed info
 
-
 # ═══ STEP 4: Format and mount ════════════════════════════════
 sudo mkfs.ext4 /dev/vgdata/lvapp
 sudo mkfs.xfs  /dev/vgdata/lvlogs
@@ -94,7 +87,6 @@ sudo mkfs.xfs  /dev/vgdata/lvlogs
 sudo mkdir -p /app /var/log/app
 sudo mount /dev/vgdata/lvapp  /app
 sudo mount /dev/vgdata/lvlogs /var/log/app
-
 
 # ═══ STEP 5: Add to fstab for persistence ════════════════════
 echo "/dev/vgdata/lvapp  /app         ext4  defaults  0 2" | sudo tee -a /etc/fstab
@@ -208,7 +200,6 @@ sudo pvremove /dev/sdb
 sudo lvcreate -L 2G -s -n mysnap /dev/myvg/mylv   # Create snapshot
 sudo mount /dev/myvg/mysnap /mnt/snapshot          # Mount snapshot
 sudo lvconvert --merge /dev/myvg/mysnap            # Revert to snapshot`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -440,12 +431,7 @@ sdb           8:16    20G   disk             ← Unpartitioned new disk`}</pre>
         <CodeBlock title="Disk & LVM command cheat sheet" language="bash" code={CODE_LINUXDISK_15} />
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="linux-09" title="Disk Management & LVM Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

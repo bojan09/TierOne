@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_NETWORKINGVLANS_1 = `sudo apt install vlan -y
@@ -46,7 +45,6 @@ sudo netplan apply
 ip route show | grep 10.10`
 const CODE_NETWORKINGVLANS_5 = `10.10.10.0/24 dev ens33.10 proto kernel scope link src 10.10.10.1
 10.10.20.0/24 dev ens33.20 proto kernel scope link src 10.10.20.1`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -307,12 +305,7 @@ export default function NetworkingVLANs() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="net-04" title="VLANs & Switching Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

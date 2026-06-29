@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_LINUXSHELL_1 = `# ── Where am I / What's here ────────────────────────────────
@@ -232,7 +231,6 @@ const CODE_LINUXSHELL_11 = `Log Summary:
   ERROR: 6
   WARN: 4`
 
-
 const QUIZ_QUESTIONS = [
   {
     id: 'q1',
@@ -420,12 +418,7 @@ export default function LinuxShell() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="linux-02" title="Shell Basics Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
-      </section>
+      
     </>
   )
 }

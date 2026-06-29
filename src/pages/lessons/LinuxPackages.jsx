@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_LINUXPACKAGES_1 = `# ── Package index ────────────────────────────────────────────
@@ -105,7 +104,6 @@ sudo apt upgrade --dry-run 2>&1 | grep -E 'hold|nginx'`
 const CODE_LINUXPACKAGES_9 = `nginx
 The following packages have been kept back:
   nginx`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -287,12 +285,7 @@ export default function LinuxPackages() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="linux-04" title="Package Management Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
-      </section>
+      
     </>
   )
 }

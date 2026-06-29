@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WINDOWSARCHITECTURE_1 = `# OS and kernel version
@@ -66,7 +65,6 @@ CurrentBuild   : 19045
 SecurityHealth : C:\\Windows\\System32\\SecurityHealthSystray.exe
 
 2847`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -321,12 +319,7 @@ export default function WindowsArchitecture() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="win-01" title="Windows Architecture Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
-      </section>
+      
     </>
   )
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -15,7 +14,6 @@ COPY requirements.txt .
 
 # Install dependencies into a prefix directory
 RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
-
 
 # ── Stage 2: Final minimal image ────────────────────────────
 FROM python:3.11-slim
@@ -269,7 +267,6 @@ docker compose build                   # Rebuild images
 # ── Cleanup ──────────────────────────────────────────────────
 docker system prune                    # Remove unused resources
 docker system prune -a --volumes -f    # Nuclear option`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -583,12 +580,7 @@ export default function DockerContainers() {
       </section>
 
       {/* ── QUIZ ── */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="devops-03" title="Docker Containers Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </LessonLayout>
   )
 }

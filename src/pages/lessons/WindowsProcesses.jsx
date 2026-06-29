@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WINDOWSPROCESSES_1 = `# ── View services ────────────────────────────────────────────
@@ -55,7 +54,6 @@ if ($stopped) {
 } else {
     Write-Host 'All automatic services are running ✓' -ForegroundColor Green
 }`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -204,12 +202,7 @@ export default function WindowsProcesses() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="win-04" title="Processes & Services Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

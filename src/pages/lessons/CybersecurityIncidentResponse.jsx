@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_CYBERSECURITYINCIDENTRESPONSE_1 = `# Run as Administrator. Save output to an external drive or network share.
@@ -92,7 +91,6 @@ const CODE_CYBERSECURITYINCIDENTRESPONSE_5 = `Id     Name        StartTime      
 
 System contained — outbound traffic blocked
 Eradication complete`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -259,12 +257,7 @@ export default function CybersecurityIncidentResponse() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="sec-09" title="Incident Response Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PSREMOTING_1 = `# On the REMOTE server (or via Group Policy)
@@ -96,7 +95,6 @@ const CODE_PSREMOTING_6 = `Computer  OS                         FreeRAM_GB  Free
 --------  --                         ----------  -----------  ------------
 DC01      Windows Server 2025 Std    1.82        42.7         67
 DC01      Windows Server 2025 Std    1.82        42.7         67`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -239,12 +237,7 @@ export default function PSRemoting() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="ps-05" title="PSRemoting Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

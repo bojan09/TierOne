@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_UNIXPHILOSOPHY_1 = `# ── Devices ──────────────────────────────────────────────────
@@ -87,7 +86,6 @@ SwapTotal:   2097148 kB
 
 === CPU count ===
 2`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -308,12 +306,7 @@ export default function UnixPhilosophy() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="unix-01" title="Unix Philosophy & History Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={20} />
-      </section>
+      
     </>
   )
 }

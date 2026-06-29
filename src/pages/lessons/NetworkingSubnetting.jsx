@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_NETWORKINGSUBNETTING_1 = `sudo apt install ipcalc -y
@@ -43,7 +42,6 @@ Subnets (/26):
   192.168.100.64/26   first=192.168.100.65  last=192.168.100.126
   192.168.100.128/26  first=192.168.100.129 last=192.168.100.190
   192.168.100.192/26  first=192.168.100.193 last=192.168.100.254`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -340,12 +338,7 @@ export default function NetworkingSubnetting() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="net-03" title="Subnetting & CIDR Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </>
   )
 }

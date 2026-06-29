@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_THREATMODELLING_1 = `# On DC01 — enumerate all listening ports and services
@@ -64,7 +63,6 @@ Write-Host "Threat: $($threat.Name)"
 Write-Host "DREAD Score: $total / 50 — $(if($total -gt 40){'CRITICAL'}elseif($total -gt 25){'HIGH'}else{'MEDIUM'})" -ForegroundColor $(if($total -gt 40){'Red'}elseif($total -gt 25){'Yellow'}else{'Green'})`
 const CODE_THREATMODELLING_7 = `Threat: RDP Brute Force on Domain Controller
 DREAD Score: 43 / 50 — CRITICAL`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -435,12 +433,7 @@ export default function ThreatModelling() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="sec-02" title="Threat Modelling Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

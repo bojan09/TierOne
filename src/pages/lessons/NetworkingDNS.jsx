@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_NETWORKINGDNS_1 = `# ── Basic queries ────────────────────────────────────────────
@@ -67,7 +66,6 @@ Add-DnsServerResourceRecordPtr -ZoneName '100.168.192.in-addr.arpa' \`\`
 const CODE_NETWORKINGDNS_5 = `# From Ubuntu after creating records:
 webserver.lab.local.   <- CNAME target
 webserver.lab.local.   <- PTR result`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -247,12 +245,7 @@ export default function NetworkingDNS() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="net-06" title="DNS Deep Dive Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

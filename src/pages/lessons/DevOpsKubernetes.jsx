@@ -1,7 +1,6 @@
 import React from 'react'
 import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_DEVOPSKUBERNETES_1 = `# ── Deployment ───────────────────────────────────────────────
@@ -119,7 +118,6 @@ pod/nginx-7c79c4bf97-def34   1/1     Running   0
 
 NAME    TYPE       CLUSTER-IP     PORT(S)        AGE
 nginx   NodePort   10.43.200.50   80:32456/TCP   5s`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -329,12 +327,7 @@ export default function DevOpsKubernetes() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="devops-07" title="Kubernetes Fundamentals Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={60} />
-      </section>
+      
     </LessonLayout>
   )
 }

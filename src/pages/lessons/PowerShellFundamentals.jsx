@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -191,7 +190,6 @@ DNS      Running
 NTDS     Running
 W32Time  Running
 Netlogon Running`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -480,12 +478,7 @@ export default function PowerShellFundamentals() {
       </section>
 
       {/* ── QUIZ ── */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="ps-01" title="PowerShell Fundamentals Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
-      </section>
+      
     </>
   )
 }

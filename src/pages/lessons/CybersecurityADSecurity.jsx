@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_CYBERSECURITYADSECURITY_1 = `# Find accounts with SPNs (potential Kerberoasting targets)
@@ -60,7 +59,6 @@ const CODE_CYBERSECURITYADSECURITY_4 = `Kerberoastable accounts: 0  <- good, no 
 Name           SamAccountName  LastLogonDate
 Administrator  Administrator   01/15/2025`
 
-
 const QUIZ_QUESTIONS = [
   { id:'q1', question:'What is Kerberoasting?', options:['A brute-force attack against the Kerberos KDC','An offline attack that requests Kerberos service tickets for SPNs, then cracks the ticket hash offline to recover the service account password — no special privileges needed to request tickets','A real-time attack that intercepts Kerberos traffic','An attack that forges Kerberos tickets using a compromised KDC key'], correct:1, explanation:'Kerberoasting: any authenticated domain user can request a TGS (Ticket Granting Service) ticket for any SPN (Service Principal Name). The ticket is encrypted with the service account\'s NTLM hash. The attacker requests the ticket, saves it, and cracks it offline with Hashcat/John. Service accounts with weak passwords are vulnerable. Mitigations: use long (25+ char) random passwords for service accounts, use gMSAs (automatic rotation), monitor for unusual TGS requests (Event ID 4769).' },
   { id:'q2', question:'What is a Pass-the-Hash (PtH) attack?', options:['Passing a password through a hash function before storing it','Using a captured NTLM hash directly to authenticate without knowing the plaintext password — if you have the hash, you can authenticate as that user to any system accepting NTLM','Cracking a password hash to recover the plaintext','Replacing a legitimate hash in the SAM database'], correct:1, explanation:'NTLM authentication uses the password hash directly — not a derived token. If an attacker extracts NTLM hashes from LSASS memory (using Mimikatz) or the SAM database, they can use those hashes to authenticate as those users without ever cracking the passwords. Mitigations: Credential Guard (isolates hashes from LSASS), Protected Users security group (disables NTLM for members), restrict lateral movement with firewall rules between workstations.' },
@@ -107,11 +105,7 @@ export default function CybersecurityADSecurity() {
           </div>
         </div>
       </section>
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Cybersecurity course.</p>
-        <Quiz lessonId="sec-10" title="Active Directory Security Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={60} />
-      </section>
+      
     </>
   )
 }

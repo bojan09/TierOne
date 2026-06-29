@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PSREPORTING_1 = `$css = @'
@@ -145,7 +144,6 @@ Get-ScheduledTask -TaskName DailyHealthReport | Select-Object TaskName, State`
 const CODE_PSREPORTING_7 = `TaskName           State
 --------           -----
 DailyHealthReport  Ready`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -299,12 +297,7 @@ export default function PSReporting() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the PowerShell course.</p>
-        <Quiz lessonId="ps-08" title="Reporting & Scheduled Automation Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

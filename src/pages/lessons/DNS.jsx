@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -96,7 +95,6 @@ Resolve-DnsName -Name "lab.local" -Type SOA
 ipconfig /displaydns                 # View client cache
 ipconfig /flushdns                   # Clear client cache
 Clear-DnsClientCache                 # PowerShell flush`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -400,12 +398,7 @@ export default function DNS() {
       </section>
 
       {/* ── QUIZ ── */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="ws2025-04" title="DNS Server Configuration Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

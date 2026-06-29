@@ -1,7 +1,6 @@
 import React from 'react'
 import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_DEVOPSANSIBLE_1 = `# /etc/ansible/hosts or project-local inventory.ini
@@ -136,7 +135,6 @@ ok: [localhost] => (item={'key': 'net.ipv4.tcp_syncookies', ...})
 
 PLAY RECAP ****
 localhost : ok=3  changed=0  unreachable=0  failed=0`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -304,12 +302,7 @@ export default function DevOpsAnsible() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="devops-06" title="Ansible Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </LessonLayout>
   )
 }

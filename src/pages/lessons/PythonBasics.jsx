@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PYTHONBASICS_1 = `# Check Python version
@@ -204,7 +203,6 @@ const CODE_PYTHONBASICS_8 = `Scanning 192.168.100.0/24...
   ✔ 192.168.100.10      53/DNS, 389/LDAP, 445/SMB, 3389/RDP
   ✔ 192.168.100.20      22/SSH`
 
-
 const QUIZ_QUESTIONS = [
   {
     id: 'q1',
@@ -365,12 +363,7 @@ export default function PythonBasics() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="py-01" title="Python Basics Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
-      </section>
+      
     </>
   )
 }

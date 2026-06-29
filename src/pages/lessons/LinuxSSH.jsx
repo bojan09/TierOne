@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -177,7 +176,6 @@ systemctl status sshd
 sudo fail2ban-client status sshd            # Jail status
 sudo fail2ban-client get sshd banip         # Banned IPs
 sudo fail2ban-client set sshd unbanip IP    # Unban an IP`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -413,12 +411,7 @@ export default function LinuxSSH() {
       </section>
 
       {/* ── QUIZ ── */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="linux-07" title="SSH & Remote Access Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_UNIXPERMISSIONS_1 = `# Octal notation: chmod ugo
@@ -36,7 +35,6 @@ user:root:rwx
 group::r-x
 mask::rwx
 other::---`
-
 
 const QUIZ_QUESTIONS = [
   { id:'q1', question:'On a BSD system, what does "chmod 4755 program" set?', options:['rwxr-xr-x with no special bits','rwsr-xr-x — SUID set (runs as file owner), full owner access, read/execute for group and others','r-xr-xr-x — read-only for everyone','rwxrwxr-x — write access for group'], correct:1, explanation:'Octal 4755: 4=SUID bit, 7=owner rwx, 5=group r-x, 5=others r-x. The SUID bit (4000) sets the effective UID to the file owner when executed. Combined as 4755: owner has full control (7=rwx), group and others have read/execute (5=r-x), and the SUID bit means the program runs as the file owner regardless of who executes it. Classic example: passwd utility runs as root to modify /etc/shadow.' },
@@ -82,11 +80,7 @@ export default function UnixPermissions() {
           </div>
         </div>
       </section>
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="unix-04" title="Unix Permissions & ACLs Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

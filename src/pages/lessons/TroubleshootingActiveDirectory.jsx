@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_TROUBLESHOOTINGACTIVEDIRECTORY_1 = `# Run all tests on the local DC
@@ -92,7 +91,6 @@ Replication Summary — no failures detected
 
 Name                        NameTarget        Port
 _ldap._tcp.lab.local        dc01.lab.local    389`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -277,12 +275,7 @@ export default function TroubleshootingActiveDirectory() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Troubleshooting course.</p>
-        <Quiz lessonId="trouble-05" title="Active Directory Issues Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </>
   )
 }

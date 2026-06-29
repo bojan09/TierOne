@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_POWERSHELLSCRIPTING_1 = `<#
@@ -210,7 +209,6 @@ $report | Export-Csv 'C:\\ServerAudit.csv' -NoTypeInformation
 $report | Format-Table -AutoSize
 Write-Host "Report saved to C:\\ServerAudit.csv"`
 
-
 const QUIZ_QUESTIONS = [
   {
     id: 'q1',
@@ -382,12 +380,7 @@ export default function PowerShellScripting() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="ps-03" title="Scripts, Functions & Modules Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

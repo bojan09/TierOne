@@ -1,5 +1,16 @@
 # Changelog
 
+## Phase 5.5.1 — Fixes (rebrand gaps, login, dashboard, lessons)
+
+- **Navbar logo** now reads **TierZero** (was a split `SysAdmin`+`Pro` span the rebrand sed missed). Logo glyph + favicon changed to a tech-y terminal-prompt mark.
+- **"Continue with Google"** button now shows the Google logo.
+- **Dashboard** "Your Tracks" section is now spine-driven: real per-course completion for both tracks from server progress (replaces the legacy localStorage `PlatformProgress`).
+- **Lessons:** removed the legacy localStorage `<Quiz>` blocks (and imports) from all migrated lesson bodies — noted P6 debt and the most likely render/runtime error source. Build green.
+
+---
+
+# Changelog
+
 ## Phase 5.5 — Legacy migration: both tracks spine-native
 
 - **73 of 74 legacy SysAdmin lessons stripped to pure spine bodies** (scripted, conservative transform; LessonLayout wrapper removed, content kept). 1 file (`TroubleshootingNetworking`) skipped — it never used LessonLayout — and is left out of the spine.

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WINDOWSREGISTRY_1 = `# ── Read values ──────────────────────────────────────────────
@@ -70,7 +69,6 @@ const CODE_WINDOWSREGISTRY_5 = `Exported to C:\\reg-backup.reg
 Version     : 1.0
 InstallDate : 2025-01-15
 Enabled     : 1`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -220,12 +218,7 @@ export default function WindowsRegistry() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="win-03" title="Windows Registry Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

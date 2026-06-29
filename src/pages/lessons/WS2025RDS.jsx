@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WS2025RDS_1 = `# Quick deployment — all roles on one server (lab/small environments)
@@ -34,7 +33,6 @@ Enable-NetFirewallRule -DisplayGroup 'Remote Desktop'
 
 # Who is connected right now?
 query session /server:DC01`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -114,11 +112,7 @@ export default function WS2025RDS() {
           </div>
         </div>
       </section>
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="ws2025-09" title="Remote Desktop Services Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={45} />
-      </section>
+      
     </>
   )
 }

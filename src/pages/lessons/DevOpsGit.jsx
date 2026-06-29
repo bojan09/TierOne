@@ -1,7 +1,6 @@
 import React from 'react'
 import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_DEVOPSGIT_1 = `# ── Initial setup (once) ─────────────────────────────────────
@@ -132,7 +131,6 @@ const CODE_DEVOPSGIT_8 = `*   b4c5d6e merge: health-check feature
 | * 9a8b7c6 feat: add system health check script
 |/
 * a1b2c3d init: initial repository setup with .gitignore`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -368,12 +366,7 @@ export default function DevOpsGit() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="devops-02" title="Git & Version Control Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
-      </section>
+      
     </LessonLayout>
   )
 }

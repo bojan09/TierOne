@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WS2025FILESERVICES_1 = `# Install File Services role
@@ -97,7 +96,6 @@ AllStaff    Disk  Company-wide file share
 NETLOGON    Disk  Logon server share
 SYSVOL      Disk  Logon server share
 IPC$        IPC   Remote IPC`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -248,12 +246,7 @@ export default function WS2025FileServices() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="ws2025-07" title="File Services & DFS Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

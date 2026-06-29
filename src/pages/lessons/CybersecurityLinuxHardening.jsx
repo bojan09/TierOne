@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_CYBERSECURITYLINUXHARDENING_1 = `sudo apt install unattended-upgrades apt-listchanges -y
@@ -105,7 +104,6 @@ type=PATH msg=audit(1705312200.123:456): item=0 name='/etc/shadow'
 
 Jan 15 11:30:00 srv01 sudo: user : TTY=pts/0 ; PWD=/home/user
   USER=root ; COMMAND=/bin/cat /etc/shadow`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -283,12 +281,7 @@ export default function CybersecurityLinuxHardening() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="sec-04" title="Linux Server Hardening Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </>
   )
 }

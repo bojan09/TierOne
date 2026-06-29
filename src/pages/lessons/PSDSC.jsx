@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PSDSC_1 = `# A configuration is a special function decorated with 'Configuration'
@@ -113,7 +112,6 @@ ResourceId              InDesiredState
 ----------              --------------
 [Service]WinRM          True
 [Service]DNS            True`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -261,12 +259,7 @@ export default function PSDSC() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="ps-07" title="Desired State Configuration Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </>
   )
 }

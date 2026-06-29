@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_UNIXPOSIXSHELL_1 = `#!/bin/sh
@@ -47,7 +46,6 @@ dash myscript.sh
 # Check for bashisms that break portability
 shellcheck --shell=sh myscript.sh`
 
-
 const QUIZ_QUESTIONS = [
   { id:'q1', question:'What is the key difference between $() and backtick command substitution?', options:['They are identical','"$() is POSIX-standard and supports nesting; backticks are legacy and cannot be nested — always use $() in new scripts"','$() works in bash only; backticks work in all shells','Backticks expand variables; $() does not'], correct:1, explanation:'Both capture command output. $() is POSIX-standard, clearly readable, and supports nesting: $(echo $(date)). Backtick substitution `cmd` is legacy, harder to read (confusable with single quotes), and cannot be nested. All modern POSIX shells support $(). Never use backticks in new scripts.' },
   { id:'q2', question:'What does "set -euo pipefail" at the top of a shell script do?', options:['Sets environment variables e, u, o, and pipefail','Makes the script exit on any unhandled error (-e), treat unset variables as errors (-u), and fail the whole pipeline if any command in a pipe fails (pipefail)','Sets the script to run with elevated privileges','Enables debugging mode that traces every command'], correct:1, explanation:'"set -e": exit immediately if any command returns non-zero. "set -u": treat unset variables as errors (catches typos like $USRE). "set -o pipefail": without this, "false | true" succeeds because the last command succeeded. Combined as "set -euo pipefail" at the script top, this is the de-facto safety belt for production shell scripts.' },
@@ -92,11 +90,7 @@ export default function UnixPOSIXShell() {
           </div>
         </div>
       </section>
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="unix-02" title="POSIX Shell Scripting Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

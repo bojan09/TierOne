@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -59,7 +58,6 @@ Remove-DhcpServerv4Reservation -ScopeId 192.168.100.0 -IPAddress x.x.x.x
 Get-DhcpServerInDC
 Get-DhcpServerv4Statistics
 netsh dhcp server show all`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -320,12 +318,7 @@ export default function DHCP() {
       </section>
 
       {/* ── QUIZ ── */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="ws2025-03" title="DHCP Server Configuration Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

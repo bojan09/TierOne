@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PYTHONSUBPROCESS_1 = `import subprocess
@@ -182,7 +181,6 @@ const CODE_PYTHONSUBPROCESS_5 = `  192.168.100.10: ONLINE
   nginx: STOPPED
   cron: active`
 
-
 const QUIZ_QUESTIONS = [
   {
     id: 'q1',
@@ -332,12 +330,7 @@ export default function PythonSubprocess() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="py-03" title="Subprocess Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

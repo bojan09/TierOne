@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_TROUBLESHOOTINGMETHODOLOGY_1 = `# L1: Is the interface up?
@@ -48,7 +47,6 @@ dig @192.168.100.10: 142.250.80.46 ← DC01 DNS works fine ✔
 
 Root cause: /etc/resolv.conf pointed to a non-existent DNS server.
 Fix: restored correct DNS server (192.168.100.10).`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -272,12 +270,7 @@ export default function TroubleshootingMethodology() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="trouble-01" title="Troubleshooting Methodology Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
-      </section>
+      
     </>
   )
 }

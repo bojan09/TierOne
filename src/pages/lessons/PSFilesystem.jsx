@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PSFILESYSTEM_1 = `# ── Navigation ───────────────────────────────────────────────
@@ -115,7 +114,6 @@ SecurityHealth  C:\\Windows\\System32\\SecurityHealthSystray.exe
 
 === HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run ===
   (empty)`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -264,12 +262,7 @@ export default function PSFilesystem() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="ps-06" title="File System & Registry Automation Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

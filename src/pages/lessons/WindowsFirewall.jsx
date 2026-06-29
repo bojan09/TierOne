@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -104,7 +103,6 @@ Set-NetFirewallProfile -Profile Domain -LogAllowed True
 netsh advfirewall export "C:\\fw-backup.wfw"
 netsh advfirewall import "C:\\fw-backup.wfw"
 netsh advfirewall reset   # Factory reset (dangerous!)`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -406,12 +404,7 @@ export default function WindowsFirewall() {
         <CodeBlock title="Windows Firewall PowerShell Commands" language="powershell" code={CODE_WINDOWSFIREWALL_11} />
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="ws2025-08" title="Windows Firewall & Security Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_CYBERSECURITYIDSSIEM_1 = `# ── On the LOG SERVER (collector) ────────────────────────────
@@ -90,7 +89,6 @@ sudo grep 'UFW BLOCK' /var/log/ufw.log |
     if($i~/^SRC=/) src=substr($i,5);
     if($i~/^DPT=/) dpt=substr($i,5)}
     print src, dpt}' | sort | head -10`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -262,12 +260,7 @@ export default function CybersecurityIDSSIEM() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="sec-07" title="IDS & SIEM Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </>
   )
 }

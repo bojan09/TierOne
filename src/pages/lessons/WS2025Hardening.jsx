@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WS2025HARDENING_1 = `# ── SMBv1 (EternalBlue / WannaCry vector) ────────────────────
@@ -99,7 +98,6 @@ const CODE_WS2025HARDENING_6 = `EncryptData  RequireSecuritySignature
 True         True
 
 DC01 hardening complete`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -243,12 +241,7 @@ export default function WS2025Hardening() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the Windows Server 2025 course.</p>
-        <Quiz lessonId="ws2025-12" title="Server Hardening Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={60} />
-      </section>
+      
     </>
   )
 }

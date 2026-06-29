@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_WINDOWSTROUBLESHOOTING_1 = `# Last 50 errors in System log
@@ -88,7 +87,6 @@ The component store is repairable.
 The operation completed successfully.
 
 Windows Resource Protection did not find any integrity violations.`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -314,12 +312,7 @@ export default function WindowsTroubleshooting() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="trouble-02" title="Windows Troubleshooting Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

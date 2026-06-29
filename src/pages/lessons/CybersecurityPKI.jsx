@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_CYBERSECURITYPKI_1 = `# ── Inspect a certificate ────────────────────────────────────
@@ -80,7 +79,6 @@ Subject: CN=dc01.lab.local, O=Lab
 Issuer: CN=Lab Internal CA, O=TierZero Lab, C=US
 Not After : Jan 15 11:00:00 2026 GMT
 DNS:dc01.lab.local, DNS:dc01, IP Address:192.168.100.10`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -246,12 +244,7 @@ export default function CybersecurityPKI() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="sec-06" title="PKI, SSL/TLS & Certificates Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

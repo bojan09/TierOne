@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -95,7 +94,6 @@ repadmin /replsummary
 repadmin /showrepl
 dcdiag /test:replications /v
 netdom query fsmo`
-
 
 // ─── Quiz questions ───────────────────────────────────────────────────────────
 const QUIZ_QUESTIONS = [
@@ -609,20 +607,7 @@ export default function ActiveDirectory() {
       {/* ══════════════════════════════════════════════════════════
           SECTION 9 — QUIZ
       ══════════════════════════════════════════════════════════ */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">
-          5 questions covering the key concepts from this lesson.
-          Score ≥70% to pass and earn your bonus XP.
-        </p>
-        <Quiz
-          lessonId="ws2025-02"
-          title="Active Directory & Domain Services Quiz"
-          questions={QUIZ_QUESTIONS}
-          passingScore={70}
-          xpReward={50}
-        />
-      </section>
+      
 
     </>
   )

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_UNIXBSD_1 = `# Bootstrap pkg if first run
@@ -37,7 +36,6 @@ which pkg 2>/dev/null || echo 'pkg not available (Linux system)'
 
 # macOS/BSD users have 'sw_vers' for version info
 # sw_vers          # on macOS only`
-
 
 const QUIZ_QUESTIONS = [
   { id:'q1', question:'What is the main licensing difference between BSD and Linux?', options:['There is no licensing difference','BSD uses the permissive BSD/MIT license allowing use in proprietary products without source disclosure; Linux uses the GPL which requires derivative works to be open source','BSD requires commercial licenses; Linux is free','GPL allows commercial use; BSD does not'], correct:1, explanation:'The BSD license (2-clause or 3-clause) allows anyone to use, modify, and redistribute the code — even in closed-source commercial products — with minimal requirements (attribution). The GPL (Linux kernel) requires that derivative works also be GPL-licensed. Apple used BSD networking code in macOS without open-sourcing all of macOS. Sony uses FreeBSD in PlayStation OS. This licensing flexibility drives BSD adoption in commercial products.' },
@@ -101,11 +99,7 @@ export default function UnixBSD() {
           </div>
         </div>
       </section>
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="unix-03" title="BSD Unix Systems Quiz" questions={QUIZ_QUESTIONS} passingScore={70} xpReward={30} />
-      </section>
+      
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
@@ -69,7 +68,6 @@ locate nginx.conf     # Fast search using updatedb index
 ln source target      # Hard link
 ln -s source target   # Symbolic link
 readlink -f symlink   # Resolve symlink to real path`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -309,12 +307,7 @@ export default function LinuxFilesystem() {
       </section>
 
       {/* ── QUIZ ── */}
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="linux-01" title="Linux Filesystem Hierarchy Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={25} />
-      </section>
+      
     </>
   )
 }

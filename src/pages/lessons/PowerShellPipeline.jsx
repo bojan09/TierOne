@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_POWERSHELLPIPELINE_1 = `# Basic comparison filter
@@ -184,7 +183,6 @@ Get-Service |
 Get-Service | Where-Object Status -eq 'Running' |
   Group-Object { if ($_.DependentServices.Count -gt 0) {'Has Dependents'} else {'No Dependents'} } |
   Select-Object Name, Count`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -450,12 +448,7 @@ Write-Host "Report saved" -ForegroundColor Green`,
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to earn bonus XP.</p>
-        <Quiz lessonId="ps-02" title="Objects & the Pipeline Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={35} />
-      </section>
+      
     </>
   )
 }

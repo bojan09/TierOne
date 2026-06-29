@@ -1,6 +1,5 @@
 import React from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_PYTHONLOGPARSING_1 = `import re
@@ -135,7 +134,6 @@ const CODE_PYTHONLOGPARSING_4 = `=== Top 10 SSH failure sources ===
 
 === Successful logins ===
   user                   3 login(s)`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -279,12 +277,7 @@ export default function PythonLogParsing() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to unlock the next lesson.</p>
-        <Quiz lessonId="py-05" title="Log Parsing Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={40} />
-      </section>
+      
     </>
   )
 }

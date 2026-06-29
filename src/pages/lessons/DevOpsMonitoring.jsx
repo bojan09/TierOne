@@ -1,7 +1,6 @@
 import React from 'react'
 import LessonLayout from '../../components/LessonLayout.jsx'
 import CodeBlock from '../../components/CodeBlock.jsx'
-import Quiz from '../../components/Quiz.jsx'
 
 // ── Code snippet constants (extracted from JSX props) ──
 const CODE_DEVOPSMONITORING_1 = `version: '3.8'
@@ -133,7 +132,6 @@ const CODE_DEVOPSMONITORING_7 = `node_cpu_seconds_total{cpu='0',mode='idle'} 123
 node_cpu_seconds_total{cpu='0',mode='system'} 234.56
 
 ['node', 'prometheus']   <- both targets UP`
-
 
 const QUIZ_QUESTIONS = [
   {
@@ -320,12 +318,7 @@ export default function DevOpsMonitoring() {
         </div>
       </section>
 
-      <section>
-        <h2>Lesson Quiz</h2>
-        <p className="mb-6 text-slate-400 text-sm">5 questions · Pass at 70% to complete the DevOps course.</p>
-        <Quiz lessonId="devops-08" title="Prometheus & Grafana Quiz"
-              questions={QUIZ_QUESTIONS} passingScore={70} xpReward={50} />
-      </section>
+      
     </LessonLayout>
   )
 }
