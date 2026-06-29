@@ -1,0 +1,13 @@
+dist
+node_modules
+coverage
+package-lock.json
+# Legacy content not yet migrated; excluded to avoid mass reformatting.
+# Removed from this list per-directory as content migrates in later phases.
+src/pages
+src/components
+src/hooks
+src/data
+src/layout
+src/App.jsx
+src/main.jsx
