@@ -1,5 +1,56 @@
 # Changelog
 
+## Phase 6.2 — Quiz rollout across the full Help Desk track
+
+- **All 13 Help Desk lessons now have server-graded quizzes** (`hasQuiz` enabled across the track). New seed `0007_seed_quizzes_helpdesk_rest.sql` adds 30 original questions for the remaining 10 lessons (Hardware & OS, Networking Basics, Workplace IT). With 0006, that's **39 questions / 13 lessons**, validated on local PG (grading + pass/fail verified).
+- Questions are original, written to the same CompTIA A+ / Tier-1 scope as the provided reference material (the scanned A+ PDFs / 7-Day `.docx` guides could not be imported — image-only PDFs and the `.docx` files don't open as valid Word packages — so nothing was copied from them).
+- Help Desk track quiz coverage is complete → **MVP cut line reached.**
+
+### Deferred (optional P6.3)
+- Pass-to-unlock (gate the next lesson on a passed quiz); quiz results on the dashboard; quizzes for the SysAdmin track.
+
+---
+
+# Changelog
+
+## Phase 6.1 — Quizzes & assessments (server-graded, vertical slice)
+
+**Backend (`0005_quizzes.sql`, validated on local PG):**
+- Tables `lesson_quizzes` (pass %, bonus XP), `quiz_questions` (answer key locked — no client grant), `quiz_attempts` (read-own). Default-deny RLS.
+- `get_lesson_quiz(lesson_id)` serves questions WITHOUT the answer key (definer).
+- `submit_quiz(lesson_id, answers[])` grades server-side, records the attempt, returns score + per-question correctness (never the key).
+- `_recompute_user_stats()` is now the single authoritative rollup: `total_xp = completed-lesson XP + one-time bonus per passed quiz`. `complete_lesson` was redefined to delegate to it, so lesson and quiz XP can't drift. Verified: pass = +25 once, wrong resubmit = no double-award, later lesson completion retains the bonus, fail = 0.
+- Seed `0006_seed_quizzes_helpdesk.sql`: quizzes for the 3 IT Support Foundations lessons.
+
+**Client:**
+- `features/quiz/` — typed `get_lesson_quiz`/`submit_quiz` wrappers + a server-graded `Quiz` component (per-question right/wrong feedback, pass banner, retry).
+- `ProgressProvider` exposes `refresh()`; a passing quiz refreshes XP so the navbar/dashboard update immediately.
+- Wired into `LessonView` via `lesson.hasQuiz` (enabled for hdf-01/02/03).
+
+Gates green. Remaining for full P6: author quiz data across the rest of Help Desk (and optionally SysAdmin); optional pass-to-unlock.
+
+---
+
+# Changelog
+
+## Phase 5.5.3 — Lesson list alignment + favicon
+
+- **Fixed list misalignment in lessons.** `.lesson-content ul li` / `ol li` used `display:flex`, which split `<li><strong>Term</strong> — text</li>` into separate columns (bold term wrapping in a narrow column, description floating beside it). Switched to relative positioning with absolutely-placed markers so inline `<strong>` + text flow normally on one line. Affects every lesson.
+- **Favicon** cache-busted (`/favicon.svg?v=2`) so the browser tab shows the terminal-prompt mark that matches the navbar logo (the old icon was a stale browser-cached favicon).
+
+---
+
+# Changelog
+
+## Phase 5.5.2 — Fix: infinite render loop on lessons
+
+- **"Maximum update depth exceeded" fixed.** Root cause: `useLocalStorage`'s `setValue` was memoized on `[key, storedValue]`, so its identity changed on every state update. That cascaded through `useProgress.setLastVisited` into `LessonLayout`'s `useEffect` (which lists it as a dependency), creating an infinite set-state loop. `setValue` now uses the functional updater and depends only on `[key]`, so it's stable.
+- Silenced the React Router v7 future-flag warnings via `future={{ v7_startTransition, v7_relativeSplatPath }}`.
+
+---
+
+# Changelog
+
 ## Phase 5.5.1 — Fixes (rebrand gaps, login, dashboard, lessons)
 
 - **Navbar logo** now reads **TierZero** (was a split `SysAdmin`+`Pro` span the rebrand sed missed). Logo glyph + favicon changed to a tech-y terminal-prompt mark.

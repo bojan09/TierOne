@@ -12,6 +12,7 @@ interface Seed {
   title: string;
   xp: number;
   minutes: number;
+  hasQuiz?: boolean;
 }
 
 const courses: Course[] = [];
@@ -37,7 +38,7 @@ function addCourse(
     difficulty: 'beginner',
     estimatedMinutes: s.minutes,
     lockRule: (i === 0 ? { type: 'none' } : { type: 'sequential' }) as LockRule,
-    hasQuiz: false,
+    hasQuiz: Boolean(s.hasQuiz),
   }));
   lessons.push(...built);
   modules.push({
@@ -65,9 +66,9 @@ addCourse(
   'getting-started',
   'Getting Started on the Help Desk',
   [
-    { id: 'hdf-01', slug: 'what-is-it-support', title: 'What IT Support Actually Is', xp: 40, minutes: 12 },
-    { id: 'hdf-02', slug: 'troubleshooting-methodology', title: 'A Repeatable Troubleshooting Method', xp: 50, minutes: 15 },
-    { id: 'hdf-03', slug: 'tickets-and-documentation', title: 'Writing Tickets People Can Use', xp: 50, minutes: 14 },
+    { id: 'hdf-01', hasQuiz: true, slug: 'what-is-it-support', title: 'What IT Support Actually Is', xp: 40, minutes: 12 },
+    { id: 'hdf-02', hasQuiz: true, slug: 'troubleshooting-methodology', title: 'A Repeatable Troubleshooting Method', xp: 50, minutes: 15 },
+    { id: 'hdf-03', hasQuiz: true, slug: 'tickets-and-documentation', title: 'Writing Tickets People Can Use', xp: 50, minutes: 14 },
   ],
 );
 
@@ -85,9 +86,9 @@ addCourse(
   'the-basics',
   'Machines & Operating Systems',
   [
-    { id: 'hwos-01', slug: 'hardware-essentials', title: 'Inside the Machine: Hardware Essentials', xp: 40, minutes: 12 },
-    { id: 'hwos-02', slug: 'operating-systems-overview', title: 'Operating Systems at a Glance', xp: 45, minutes: 12 },
-    { id: 'hwos-03', slug: 'files-users-permissions', title: 'Files, Users & Permissions', xp: 50, minutes: 13 },
+    { id: 'hwos-01', hasQuiz: true, slug: 'hardware-essentials', title: 'Inside the Machine: Hardware Essentials', xp: 40, minutes: 12 },
+    { id: 'hwos-02', hasQuiz: true, slug: 'operating-systems-overview', title: 'Operating Systems at a Glance', xp: 45, minutes: 12 },
+    { id: 'hwos-03', hasQuiz: true, slug: 'files-users-permissions', title: 'Files, Users & Permissions', xp: 50, minutes: 13 },
   ],
 );
 
@@ -105,9 +106,9 @@ addCourse(
   'networks-for-support',
   'Networks for Support',
   [
-    { id: 'net-01', slug: 'how-networks-work', title: 'How Networks Actually Work', xp: 45, minutes: 13 },
-    { id: 'net-02', slug: 'connectivity-troubleshooting', title: 'Diagnosing Connectivity Problems', xp: 55, minutes: 15 },
-    { id: 'net-03', slug: 'wifi-vpn-remote', title: 'Wi-Fi, VPN & Remote Work', xp: 50, minutes: 13 },
+    { id: 'net-01', hasQuiz: true, slug: 'how-networks-work', title: 'How Networks Actually Work', xp: 45, minutes: 13 },
+    { id: 'net-02', hasQuiz: true, slug: 'connectivity-troubleshooting', title: 'Diagnosing Connectivity Problems', xp: 55, minutes: 15 },
+    { id: 'net-03', hasQuiz: true, slug: 'wifi-vpn-remote', title: 'Wi-Fi, VPN & Remote Work', xp: 50, minutes: 13 },
   ],
 );
 
@@ -125,10 +126,10 @@ addCourse(
   'daily-support',
   'The Daily Work',
   [
-    { id: 'work-01', slug: 'active-directory-basics', title: 'Active Directory for Tier-1', xp: 55, minutes: 14 },
-    { id: 'work-02', slug: 'microsoft-365-essentials', title: 'Microsoft 365 Essentials', xp: 50, minutes: 13 },
-    { id: 'work-03', slug: 'email-troubleshooting', title: 'Troubleshooting Email & Outlook', xp: 55, minutes: 14 },
-    { id: 'work-04', slug: 'customer-communication', title: 'Customer Communication & Escalation', xp: 45, minutes: 12 },
+    { id: 'work-01', hasQuiz: true, slug: 'active-directory-basics', title: 'Active Directory for Tier-1', xp: 55, minutes: 14 },
+    { id: 'work-02', hasQuiz: true, slug: 'microsoft-365-essentials', title: 'Microsoft 365 Essentials', xp: 50, minutes: 13 },
+    { id: 'work-03', hasQuiz: true, slug: 'email-troubleshooting', title: 'Troubleshooting Email & Outlook', xp: 55, minutes: 14 },
+    { id: 'work-04', hasQuiz: true, slug: 'customer-communication', title: 'Customer Communication & Escalation', xp: 45, minutes: 12 },
   ],
 );
 

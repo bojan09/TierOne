@@ -265,24 +265,24 @@
   @apply space-y-2 my-4;
 }
 .lesson-content ul li {
-  @apply flex items-start gap-2.5 text-slate-300 text-[15px] leading-relaxed;
+  @apply relative pl-6 text-slate-300 text-[15px] leading-relaxed;
 }
 .lesson-content ul li::before {
   content: '▸';
-  @apply text-brand-400 flex-shrink-0 mt-0.5 text-xs;
+  @apply absolute left-0 top-[0.15em] text-brand-400 text-xs;
 }
 .lesson-content ol {
   @apply space-y-2 my-4 list-none;
   counter-reset: lesson-counter;
 }
 .lesson-content ol li {
-  @apply flex items-start gap-3 text-slate-300 text-[15px] leading-relaxed;
+  @apply relative pl-9 text-slate-300 text-[15px] leading-relaxed;
   counter-increment: lesson-counter;
 }
 .lesson-content ol li::before {
   content: counter(lesson-counter);
-  @apply flex-shrink-0 w-5 h-5 rounded-full bg-brand-500/20 text-brand-300 text-[11px]
-         font-bold font-mono flex items-center justify-center mt-0.5;
+  @apply absolute left-0 top-[0.1em] w-5 h-5 rounded-full bg-brand-500/20 text-brand-300 text-[11px]
+         font-bold font-mono inline-flex items-center justify-center;
 }
 .lesson-content strong {
   @apply text-white font-semibold;

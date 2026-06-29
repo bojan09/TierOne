@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import LessonChrome from './LessonChrome';
 import { getLessonBody } from './registry';
+import { Quiz } from '@/features/quiz/Quiz';
 import {
   courseHref,
   getAdjacentLessons,
@@ -84,6 +85,7 @@ export default function LessonView() {
       <Suspense fallback={<LessonLoading />}>
         <Body />
       </Suspense>
+      {lesson.hasQuiz ? <Quiz lessonId={lesson.id} /> : null}
     </LessonChrome>
   );
 }

@@ -44,37 +44,37 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   }
   const client = clientRef.current;
 
-  useEffect(() => {
-    if (!client || !userId) {
-      setCompletedSet(new Set());
-      setStats(null);
-      return;
-    }
-
-    let active = true;
-    setLoading(true);
-
-    void (async () => {
-      // NOTE: explicit casts at the supabase generic boundary. The hand-authored
-      // Database type is a stand-in; `supabase gen types` (run against the live
-      // project) produces types matching this client version and removes these.
+  const loadFor = useCallback(
+    async (active: () => boolean) => {
+      if (!client || !userId) {
+        setCompletedSet(new Set());
+        setStats(null);
+        return;
+      }
+      setLoading(true);
       const [progressRes, statsRes] = await Promise.all([
         client.from('lesson_progress').select('lesson_id').eq('status', 'completed'),
         client.from('user_stats').select('*').eq('user_id', userId).maybeSingle(),
       ]);
-
-      if (!active) return;
+      if (!active()) return;
       const progress = (progressRes.data ?? []) as Array<{ lesson_id: string }>;
       const statsRow = statsRes.data as StatsRow | null;
       setCompletedSet(new Set(progress.map((r) => r.lesson_id)));
       setStats(statsRow ? mapStats(statsRow) : null);
       setLoading(false);
-    })();
+    },
+    [client, userId],
+  );
 
+  useEffect(() => {
+    let active = true;
+    void loadFor(() => active);
     return () => {
       active = false;
     };
-  }, [client, userId]);
+  }, [loadFor]);
+
+  const refresh = useCallback(() => loadFor(() => true), [loadFor]);
 
   const completeLesson = useCallback(
     async (lessonId: string) => {
@@ -99,8 +99,9 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       stats,
       loading,
       completeLesson,
+      refresh,
     }),
-    [completedSet, stats, loading, completeLesson],
+    [completedSet, stats, loading, completeLesson, refresh],
   );
 
   return <ProgressContext.Provider value={value}>{children}</ProgressContext.Provider>;

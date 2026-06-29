@@ -1,6 +1,6 @@
-# Memory — IT Academy rebuild (through Phase 5.5.1)
+# Memory — IT Academy rebuild (through Phase 6.2 / MVP)
 
-Last updated: 2026-06-29 14:30 UTC
+Last updated: 2026-06-29 16:45 UTC
 
 ## What was built
 
@@ -25,22 +25,17 @@ Last updated: 2026-06-29 14:30 UTC
 
 ## Current state
 
-- All gates green. **Both tracks spine-native.** Help Desk 13 lessons/4 courses; SysAdmin 73 lessons/9 courses (migrated from legacy pages, stripped to pure bodies). Total 86 lessons / 6,350 XP.
-- Registry keyed by **lesson id** (`src/features/lessons/registry.ts`); `LessonView` resolves body by `lesson.id`. SysAdmin spine auto-generated `src/content/curriculum/sysadmin.ts`; aggregated in `content/curriculum/index.ts`.
-- Seeds: 0003 (helpdesk) + 0004 (sysadmin) validated on local PG (13/630 + 73/5720). Developer must apply 0003 + 0004 to project (after 0001/0002).
-- Legacy lesson/placeholder routes retired in `src/app/routes.jsx`; legacy course-index URLs redirect to `/learn/<course>` (App.jsx `legacyCourseRedirects`). Utility pageRoutes kept.
-- Hero stats spine-driven (now 13 courses / 86 lessons / 6,350 XP).
-- Migration script: /tmp/migrate.py (transform pattern: strip `<LessonLayout …>`→`<>`, `</LessonLayout>`→`</>`, drop import; validated by build).
+- All gates green. **P6 quizzes live as a vertical slice.** Server-graded: `0005_quizzes.sql` (lesson_quizzes/quiz_questions/quiz_attempts, `get_lesson_quiz`, `submit_quiz`, `_recompute_user_stats`, redefined `complete_lesson`). `0006_seed_quizzes_helpdesk.sql` seeds quizzes for hdf-01/02/03. Validated on local PG (grading, one-time bonus, no drift, fail=0, answer key not exposed).
+- Client `features/quiz/` (api.ts, Quiz.tsx); `ProgressProvider.refresh()` added; `LessonView` renders `<Quiz>` when `lesson.hasQuiz` (true for hdf-01..03).
+- Recent fixes also in: lesson list alignment (CSS flex→relative markers), favicon cache-bust, navbar logo=TierZero, Google logo, infinite-render-loop fix (useLocalStorage stable setter), DevOps cut, both tracks spine-native (86 lessons/6,350 XP base + quiz bonuses).
+- Zips exclude node_modules/dist/.git/.env/.env.example.
 
 ### Known debt / deferred
-- localStorage→Supabase import **dropped** (id re-keying mismatch; new completions persist server-side already).
-- Legacy `<Quiz>` blocks removed from all migrated bodies (P5.5.1); real quizzes come in P6.
-- Legacy Home course grid still renders (works via redirects, stale numbers) → polish (P13). Unused legacy CoursePage component now dead.
-- 1 lesson skipped (`TroubleshootingNetworking`, non-template) — orphaned, `/networking/troubleshooting` 404s.
-- 2 supabase-generic casts in ProgressProvider (removed by `supabase gen types`).
+- Quizzes cover all 13 Help Desk lessons (39 questions; seeds 0006+0007). SysAdmin-track quizzes still pending (optional).
+- localStorage→Supabase import dropped (re-keying). Legacy Home grid via redirects (P13 polish). 2 supabase-generic casts in ProgressProvider + quiz api uses `as never`/`as unknown` at the rpc boundary (removed by `supabase gen types`). 1 orphaned legacy lesson.
 
 ## Next session starts with
 
-**P6 — Quizzes & assessments → MVP.** Structured quiz data + server-graded `submit_quiz` RPC (needs correct answers in DB), wire to lessons (`hasQuiz`), gate next-lesson unlock on passing where desired, surface results on the dashboard. Remove/replace the legacy `<Quiz>` blocks left in migrated SysAdmin bodies. Reaching P6 completes the MVP cut line.
+**MVP reached** (P6 Help Desk quiz coverage complete). Options next: **P6.3** (pass-to-unlock + dashboard quiz results + SysAdmin-track quizzes), or **P7 — Virtual Help Desk** (interactive ticket simulation, the first post-MVP expansion). Developer must apply migrations to the live project in order through **0007**.
 
 ## Open questions
