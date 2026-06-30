@@ -10,6 +10,10 @@ import Placeholder from './shared/ui/Placeholder.jsx';
 import LearnHome from './features/curriculum/LearnHome.tsx';
 import CourseView from './features/curriculum/CourseView.tsx';
 import LessonView from './features/lessons/LessonView.tsx';
+import SimulatorHome from './features/scenario/SimulatorHome.tsx';
+import ScenarioPlayer from './features/scenario/ScenarioPlayer.tsx';
+import LabsHome from './features/labs/LabsHome.tsx';
+import LabPlayer from './features/labs/LabPlayer.tsx';
 
 // Auth.
 import RequireAuth from './features/auth/RequireAuth.tsx';
@@ -42,6 +46,10 @@ export default function App() {
           <Route path="learn" element={<LearnHome />} />
           <Route path="learn/:courseSlug" element={<CourseView />} />
           <Route path="learn/:courseSlug/:lessonSlug" element={<LessonView />} />
+          <Route path="simulator" element={<SimulatorHome />} />
+          <Route path="simulator/:slug" element={<ScenarioPlayer />} />
+          <Route path="labs" element={<LabsHome />} />
+          <Route path="labs/:slug" element={<LabPlayer />} />
         </Route>
 
         {/* Utility + course-index pages */}

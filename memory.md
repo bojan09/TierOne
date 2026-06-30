@@ -1,6 +1,6 @@
-# Memory — IT Academy rebuild (through Phase 6.2 / MVP)
+# Memory — IT Academy rebuild (through Phase 8.1)
 
-Last updated: 2026-06-29 16:45 UTC
+Last updated: 2026-06-29 19:40 UTC
 
 ## What was built
 
@@ -25,17 +25,18 @@ Last updated: 2026-06-29 16:45 UTC
 
 ## Current state
 
-- All gates green. **P6 quizzes live as a vertical slice.** Server-graded: `0005_quizzes.sql` (lesson_quizzes/quiz_questions/quiz_attempts, `get_lesson_quiz`, `submit_quiz`, `_recompute_user_stats`, redefined `complete_lesson`). `0006_seed_quizzes_helpdesk.sql` seeds quizzes for hdf-01/02/03. Validated on local PG (grading, one-time bonus, no drift, fail=0, answer key not exposed).
-- Client `features/quiz/` (api.ts, Quiz.tsx); `ProgressProvider.refresh()` added; `LessonView` renders `<Quiz>` when `lesson.hasQuiz` (true for hdf-01..03).
-- Recent fixes also in: lesson list alignment (CSS flex→relative markers), favicon cache-bust, navbar logo=TierZero, Google logo, infinite-render-loop fix (useLocalStorage stable setter), DevOps cut, both tracks spine-native (86 lessons/6,350 XP base + quiz bonuses).
-- Zips exclude node_modules/dist/.git/.env/.env.example.
+- All gates green. **P7 Virtual Help Desk live as a vertical slice** (scoring model #2, linear staged). Backend `0009_scenarios.sql` (scenarios/stages/options/attempts, `get_scenario`, `submit_scenario`, `_recompute_user_stats` now folds lesson+quiz+scenario XP). Seed `0010_seed_scenario_outlook.sql` (1 scenario, 4 stages). Validated on local PG (answer-key hidden, grading, XP fold).
+- Client `features/scenario/` (api.ts, SimulatorHome at /simulator, ScenarioPlayer at /simulator/:slug). Linked in navbar Academy menu. Behind RequireAuth.
+- Prior: P6.3 pass-to-unlock + dashboard quiz results + SysAdmin Windows quizzes (0008). Quizzes: 57 Qs / 19 lessons. Both tracks spine-native, 86 lessons.
+- Migrations to apply on live project in order through **0010**.
 
 ### Known debt / deferred
-- Quizzes cover all 13 Help Desk lessons (39 questions; seeds 0006+0007). SysAdmin-track quizzes still pending (optional).
-- localStorage→Supabase import dropped (re-keying). Legacy Home grid via redirects (P13 polish). 2 supabase-generic casts in ProgressProvider + quiz api uses `as never`/`as unknown` at the rpc boundary (removed by `supabase gen types`). 1 orphaned legacy lesson.
+- 4 scenarios authored (Outlook, locked account, wifi-no-internet, printer; seeds 0010+0011). More are pure content.
+- All 86 lessons now have quizzes (258 Qs; seeds 0006-0008,0012,0013). Full quiz coverage.
+- localStorage import dropped; legacy Home grid via redirects (P13 polish); supabase-generic casts + `as never`/`as unknown` at rpc boundaries (removed by `supabase gen types`); 1 orphaned legacy lesson.
 
 ## Next session starts with
 
-**MVP reached** (P6 Help Desk quiz coverage complete). Options next: **P6.3** (pass-to-unlock + dashboard quiz results + SysAdmin-track quizzes), or **P7 — Virtual Help Desk** (interactive ticket simulation, the first post-MVP expansion). Developer must apply migrations to the live project in order through **0007**.
+**P8 — Simulated labs** is the next roadmap phase after P7. Alternatively continue content (remaining 6 SysAdmin quiz courses; more scenarios). Migrations now run through **0012**; apply in order on the live project.
 
 ## Open questions

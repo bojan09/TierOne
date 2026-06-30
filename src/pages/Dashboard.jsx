@@ -236,11 +236,16 @@ export default function Dashboard() {
 
   const totalCompleted   = academy.stats ? academy.completedSet.size : completedLessons.length
   const totalLessons     = curriculum.lessons.length
-  const totalQuizzes     = Object.keys(quizScores).length
-  const totalQuizPassed  = Object.values(quizScores).filter(q => q.passed).length
-  const avgQuizScore     = totalQuizzes
-    ? Math.round(Object.values(quizScores).reduce((a, q) => a + q.score, 0) / totalQuizzes)
-    : 0
+  // Server-authoritative quiz rollup (falls back to legacy localStorage when signed out).
+  const quizzesAvailable = curriculum.lessons.filter((l) => l.hasQuiz).length
+  const totalQuizzes     = quizzesAvailable || Object.keys(quizScores).length
+  const totalQuizPassed  = academy.quizStats ? academy.quizStats.passed
+                                             : Object.values(quizScores).filter(q => q.passed).length
+  const avgQuizScore     = academy.quizStats && academy.quizStats.avg
+    ? academy.quizStats.avg
+    : (Object.keys(quizScores).length
+        ? Math.round(Object.values(quizScores).reduce((a, q) => a + q.score, 0) / Object.keys(quizScores).length)
+        : 0)
 
   const courseStats = COURSES.map(c => {
     const done  = c.lessonIds.filter(id => completedLessons.includes(id)).length

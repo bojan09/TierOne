@@ -81,11 +81,14 @@ export default function LessonView() {
       next={next}
       isCompletedOverride={completedSet.has(lesson.id)}
       onComplete={() => void completeLesson(lesson.id)}
+      requiresQuiz={lesson.hasQuiz}
     >
       <Suspense fallback={<LessonLoading />}>
         <Body />
       </Suspense>
-      {lesson.hasQuiz ? <Quiz lessonId={lesson.id} /> : null}
+      {lesson.hasQuiz ? (
+        <Quiz lessonId={lesson.id} onPass={() => void completeLesson(lesson.id)} />
+      ) : null}
     </LessonChrome>
   );
 }

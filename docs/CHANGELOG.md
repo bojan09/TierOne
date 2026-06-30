@@ -1,5 +1,76 @@
 # Changelog
 
+## Phase 8.1 — Simulated labs (vertical slice)
+
+**Backend (`0014_labs.sql`, validated on PG):** `labs` / `lab_steps` / `lab_attempts` (default-deny RLS; step content served via `get_lab`). `complete_lab` records completion idempotently and folds a one-time bonus into the authoritative total via `_recompute_user_stats` — now **lesson + quiz + scenario + lab XP**. Seed `0015` adds the first lab, "Navigate the Linux filesystem" (6 scripted terminal steps).
+
+**Client (`features/labs/`):** `LabsHome` at `/labs`, `LabPlayer` at `/labs/:slug` — a simulated terminal that validates each typed command against the step's pattern, shows simulated output, reveals hints after misses, and calls `complete_lab` on finish (XP refreshes live). Behind RequireAuth; linked from navbar Academy ("Simulated Labs").
+
+Engine is reusable — more labs are pure content (labs + lab_steps seed). Gates green.
+
+---
+
+# Changelog
+
+## Phase 7.3 — SysAdmin quiz fill-out complete
+
+- `0013_seed_quizzes_sysadmin_rest.sql`: quizzes for the final 6 SysAdmin courses (unix, networking, powershell, python, cybersecurity, troubleshooting) — 135 questions, `hasQuiz` enabled.
+- **Every lesson now has a quiz: 258 questions / 86 lessons** (13 Help Desk + 73 SysAdmin). Validated on local PG; gates green.
+
+---
+
+# Changelog
+
+## Phase 7.2 — More tickets + SysAdmin quiz fill-out
+
+**Virtual Help Desk content (`0011_seed_scenarios_batch.sql`):** 3 new tickets — Account locked out, Wi-Fi connected but no internet, Can't print — each a full triage → diagnose → resolve → communicate flow. **4 scenarios total** (64 options), validated on PG.
+
+**SysAdmin quizzes (`0012_seed_quizzes_sysadmin_wsl.sql`):** quizzes added for the **Windows Server 2025 (12)** and **Linux (10)** courses — 66 new questions, `hasQuiz` enabled. With prior seeds: **123 questions / 41 lessons**. (This is part of P13's "SysAdmin track fill-out," done incrementally now.)
+
+Quiz/scenario engines were unchanged — both additions are pure content on the existing server-graded systems. Gates green.
+
+### Remaining SysAdmin quiz courses
+- unix (5), networking (7), powershell (8), python (9), cybersecurity (10), troubleshooting (6) — still to author.
+
+---
+
+# Changelog
+
+## Phase 7.1 — Virtual Help Desk (linear staged sim, vertical slice)
+
+**Backend (`0009_scenarios.sql`, validated on local PG):**
+- Tables `scenarios`, `scenario_stages`, `scenario_options` (answer key — `is_correct`/`points`/`feedback` — has NO client grant), `scenario_attempts` (read-own). Default-deny RLS.
+- `get_scenario(id)` serves the ticket + stages + options WITHOUT the answer key (verified: only id/sort/text exposed).
+- `submit_scenario(id, choices)` grades server-side with partial credit (points per stage), records the attempt, returns per-stage feedback + score.
+- `_recompute_user_stats` redefined again so the authoritative total is now **lesson XP + quiz bonus + scenario bonus** — all three award paths share one total (no drift). Verified: perfect run 100% pass → +60 XP; weak run 0% fail → no bonus.
+- Seed `0010_seed_scenario_outlook.sql`: "Outlook is disconnected" — 4 staged decisions (triage → diagnose → resolve → communicate).
+
+**Client (`features/scenario/`):**
+- `SimulatorHome` (ticket list) at `/simulator`; `ScenarioPlayer` at `/simulator/:slug` — a chat-style ticket that reveals stages progressively, then an end scorecard with per-stage feedback. Passing refreshes XP live.
+- Added under `RequireAuth`; linked from the navbar Academy menu ("Virtual Help Desk").
+
+Scoring model #2 (linear staged) as chosen. Gates green.
+
+### Remaining for P7
+- Author more scenarios (system is complete — content only); optional: light branching, timed mode, scenario list tied to track/skill.
+
+---
+
+# Changelog
+
+## Phase 6.3 — Pass-to-unlock, dashboard quiz results, SysAdmin quiz slice
+
+- **Pass-to-unlock:** lessons with a quiz are now completed by *passing the quiz* (the manual "Mark Complete" buttons are hidden on those lessons; a passing submission marks the lesson complete, awarding lesson XP + the bonus, which unlocks the next lesson via the existing sequential lock). Non-quiz lessons keep the mark-complete button.
+- **Dashboard quiz results:** `ProgressProvider` now fetches `quiz_attempts` and exposes `quizStats` (lessons passed, average best score, best-per-lesson). The dashboard "Quizzes Passed" and "Avg Quiz Score" cards read real server data, with the platform's total available quizzes as the denominator.
+- **SysAdmin cross-track proof:** `0008_seed_quizzes_sysadmin_windows.sql` adds quizzes for the 6 Windows Desktop Administration lessons (18 questions) and enables `hasQuiz` for them. Confirms the quiz system is fully track-agnostic. Total now **57 questions / 19 lessons**, validated on local PG.
+
+### Deferred
+- Quizzes for the remaining 8 SysAdmin courses (~67 lessons) — incremental content authoring (each needs questions written against its lesson; the provided reference PDFs are image-only and can't be auto-mined).
+
+---
+
+# Changelog
+
 ## Phase 6.2 — Quiz rollout across the full Help Desk track
 
 - **All 13 Help Desk lessons now have server-graded quizzes** (`hasQuiz` enabled across the track). New seed `0007_seed_quizzes_helpdesk_rest.sql` adds 30 original questions for the remaining 10 lessons (Hardware & OS, Networking Basics, Workplace IT). With 0006, that's **39 questions / 13 lessons**, validated on local PG (grading + pass/fail verified).

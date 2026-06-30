@@ -1,12 +1,23 @@
 import { createContext } from 'react';
 import type { UserStats } from '@/shared/types';
 
+export interface QuizStats {
+  /** Number of lessons with at least one passing attempt. */
+  passed: number;
+  /** Average of best score per attempted quiz (0-100). */
+  avg: number;
+  /** Best score per lesson id. */
+  bestByLesson: Record<string, number>;
+}
+
 export interface AcademyProgressValue {
   /** Lesson ids the user has completed. */
   completedSet: Set<string>;
   isLessonCompleted: (lessonId: string) => boolean;
   /** Server-computed gamification rollup, or null when signed out / unloaded. */
   stats: UserStats | null;
+  /** Quiz attempt rollup. */
+  quizStats: QuizStats;
   loading: boolean;
   /** Calls the server-authoritative complete_lesson RPC. No-op when signed out. */
   completeLesson: (lessonId: string) => Promise<void>;

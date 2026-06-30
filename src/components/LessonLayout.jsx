@@ -48,6 +48,9 @@ export default function LessonLayout({
   // the legacy localStorage path below is used unchanged (legacy lesson pages).
   isCompletedOverride = null,
   onComplete = null,
+  // When true (lesson has a quiz), completion happens by passing the quiz —
+  // the manual "Mark Complete" buttons are hidden (pass-to-unlock).
+  requiresQuiz = false,
 }) {
   const { state, completeLesson, setLastVisited } = useProgress()
   const navigate = useNavigate()
@@ -132,7 +135,7 @@ export default function LessonLayout({
           <div className="mt-14 pt-8 border-t border-surface-700">
 
             {/* XP completion card */}
-            {!isCompleted && (
+            {!isCompleted && !requiresQuiz && (
               <div className="card p-6 mb-6 border-brand-500/20 bg-brand-500/5">
                 <div className="flex items-center gap-4 flex-wrap">
                   <div className="flex-1 min-w-0">
@@ -150,6 +153,16 @@ export default function LessonLayout({
                     ✓ Mark Complete &amp; Earn XP
                   </button>
                 </div>
+              </div>
+            )}
+
+            {!isCompleted && requiresQuiz && (
+              <div className="card p-6 mb-6 border-brand-500/20 bg-brand-500/5">
+                <p className="font-semibold text-white mb-1">Pass the quiz to complete this lesson</p>
+                <p className="text-sm text-slate-400">
+                  Scroll down and pass the quiz to earn{' '}
+                  <span className="text-accent-amber font-mono font-semibold">+{xp} XP</span> plus a bonus, and unlock the next lesson.
+                </p>
               </div>
             )}
 
@@ -229,7 +242,7 @@ export default function LessonLayout({
                   </div>
                 )}
               </div>
-              {!isCompleted && (
+              {!isCompleted && !requiresQuiz && (
                 <button
                   onClick={handleComplete}
                   className="btn-primary w-full justify-center mt-4 text-xs py-2"

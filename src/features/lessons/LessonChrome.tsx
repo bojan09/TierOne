@@ -25,6 +25,7 @@ export interface LessonChromeProps {
   /** Server-authoritative completion override (spine usage). */
   isCompletedOverride?: boolean;
   onComplete?: () => void;
+  requiresQuiz?: boolean;
 }
 
 /** The legacy layout, surfaced through a typed contract. */

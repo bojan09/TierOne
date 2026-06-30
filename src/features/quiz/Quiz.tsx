@@ -4,6 +4,8 @@ import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
 
 interface QuizProps {
   lessonId: string;
+  /** Called once when the user passes — used to mark the lesson complete. */
+  onPass?: () => void;
 }
 
 /**
@@ -12,7 +14,7 @@ interface QuizProps {
  * bonus and returns per-question correctness. On a pass we refresh progress so
  * the navbar/dashboard reflect the new XP immediately.
  */
-export function Quiz({ lessonId }: QuizProps) {
+export function Quiz({ lessonId, onPass }: QuizProps) {
   const { refresh } = useAcademyProgress();
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -49,7 +51,10 @@ export function Quiz({ lessonId }: QuizProps) {
     setSubmitting(false);
     if (res) {
       setResult(res);
-      if (res.passed) void refresh();
+      if (res.passed) {
+        onPass?.();
+        void refresh();
+      }
     }
   };
 
