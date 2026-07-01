@@ -1,3 +1,4 @@
+/// <reference types="https://esm.sh/@supabase/functions-js/src/edge-runtime.d.ts" />
 // grade-doc — AI-graded documentation practice (Supabase Edge Function, Deno).
 //
 // The provider API key lives ONLY here, as a Supabase secret — never in the

@@ -1,0 +1,8 @@
+{
+  "//": "Deno powers only the Supabase Edge Functions folder; the React app stays on the Node/TypeScript server. Requires the 'Deno' VS Code extension (denoland.vscode-deno).",
+  "deno.enablePaths": ["supabase/functions"],
+  "deno.lint": true,
+  "deno.unstable": false,
+  "editor.formatOnSave": false,
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
+}

@@ -1,6 +1,6 @@
-# Memory — TierZero (through Phase 16 — legacy cleanup)
+# Memory — TierZero (through Phase 17)
 
-Last updated: 2026-06-30 01:45 UTC
+Last updated: 2026-06-30 02:30 UTC
 
 ## Project at a glance
 - React + Vite + TypeScript SPA, server-authoritative via Supabase. Two tracks: **helpdesk** (lead) + **sysadmin**. DevOps cut. Brand: **TierZero**.

@@ -1,5 +1,21 @@
 # Changelog
 
+## Phase 17 — Editor/Deno fix + dependency audit
+
+**Edge Function “Cannot find name 'Deno'” (editor-only, not a runtime bug):** the React app's TypeScript server was analysing a Deno file. Fixed by scoping Deno to the functions folder:
+- Added a Deno type reference at the top of `supabase/functions/grade-doc/index.ts`.
+- Added `supabase/functions/deno.json` and `.vscode/settings.json` (`deno.enablePaths: ["supabase/functions"]`) + `.vscode/extensions.json` recommending the Deno extension.
+- The app build was never affected (`tsconfig` already scopes to `src`).
+
+**npm audit: 7 → 1.** `npm audit fix` (non-breaking) patched **picomatch** (high), **postcss**, and **react-router-dom** (→ 6.30.4, open-redirect). Added an `overrides` pin of **esbuild → 0.25.12** to clear the transitive esbuild advisory without a major bump. Build stays green.
+- **Remaining (1 high): vite dev-server advisories** (path traversal in optimised-deps `.map`, plus two Windows-only dev-server issues). **Dev-server only — no effect on the production build or the deployed app.** Fixable only by upgrading to vite 7/8 (breaking; requires Node 20.19+), tracked as an optional migration.
+
+No migration change (through 0028).
+
+---
+
+# Changelog
+
 ## Phase 16 — Legacy cleanup
 
 Removed **19 provably-dead files** (verified zero inbound imports before deletion; gates green after):
