@@ -14,6 +14,11 @@ import SimulatorHome from './features/scenario/SimulatorHome.tsx';
 import ScenarioPlayer from './features/scenario/ScenarioPlayer.tsx';
 import LabsHome from './features/labs/LabsHome.tsx';
 import LabPlayer from './features/labs/LabPlayer.tsx';
+import InterviewPrep from './features/interview/InterviewPrep.tsx';
+import Analytics from './features/analytics/Analytics.tsx';
+import Certificates from './features/certificates/Certificates.tsx';
+import DocPractice from './features/docs/DocPractice.tsx';
+import VerifyCertificate from './features/certificates/VerifyCertificate.tsx';
 
 // Auth.
 import RequireAuth from './features/auth/RequireAuth.tsx';
@@ -40,6 +45,7 @@ export default function App() {
         {/* Auth */}
         <Route path="login" element={<LoginPage />} />
         <Route path="auth/callback" element={<AuthCallback />} />
+        <Route path="verify/:code" element={<VerifyCertificate />} />
 
         {/* Data-driven Academy — requires authentication */}
         <Route element={<RequireAuth />}>
@@ -50,6 +56,10 @@ export default function App() {
           <Route path="simulator/:slug" element={<ScenarioPlayer />} />
           <Route path="labs" element={<LabsHome />} />
           <Route path="labs/:slug" element={<LabPlayer />} />
+          <Route path="interview" element={<InterviewPrep />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="certificates" element={<Certificates />} />
+          <Route path="practice" element={<DocPractice />} />
         </Route>
 
         {/* Utility + course-index pages */}

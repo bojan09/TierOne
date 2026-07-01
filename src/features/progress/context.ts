@@ -8,6 +8,8 @@ export interface QuizStats {
   avg: number;
   /** Best score per lesson id. */
   bestByLesson: Record<string, number>;
+  /** Lesson ids with at least one passing attempt. */
+  passedIds: string[];
 }
 
 export interface AcademyProgressValue {

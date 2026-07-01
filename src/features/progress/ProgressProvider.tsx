@@ -37,7 +37,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
   const [completedSet, setCompletedSet] = useState<Set<string>>(new Set());
   const [stats, setStats] = useState<UserStats | null>(null);
-  const [quizStats, setQuizStats] = useState<QuizStats>({ passed: 0, avg: 0, bestByLesson: {} });
+  const [quizStats, setQuizStats] = useState<QuizStats>({ passed: 0, avg: 0, bestByLesson: {}, passedIds: [] });
   const [loading, setLoading] = useState(false);
 
   const clientRef = useRef<AppSupabaseClient | null>(null);
@@ -51,7 +51,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
       if (!client || !userId) {
         setCompletedSet(new Set());
         setStats(null);
-        setQuizStats({ passed: 0, avg: 0, bestByLesson: {} });
+        setQuizStats({ passed: 0, avg: 0, bestByLesson: {}, passedIds: [] });
         return;
       }
       setLoading(true);
@@ -80,7 +80,7 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
         : 0;
       setCompletedSet(new Set(progress.map((r) => r.lesson_id)));
       setStats(statsRow ? mapStats(statsRow) : null);
-      setQuizStats({ passed: passedLessons.size, avg, bestByLesson });
+      setQuizStats({ passed: passedLessons.size, avg, bestByLesson, passedIds: [...passedLessons] });
       setLoading(false);
     },
     [client, userId],

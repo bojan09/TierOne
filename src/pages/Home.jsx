@@ -1,45 +1,65 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useProgress, getLevelForXP } from '../hooks/useProgress.js'
 import { curriculum } from '@/content/curriculum'
+import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
 
-const COURSES = [
-  { id:'windows-server-2025', icon:'🖥️', title:'Windows Server 2025', description:'Active Directory, DHCP, DNS, Group Policy, Hyper-V, RDS, backup, and server hardening.', href:'/windows-server-2025', totalXP:1090, lessonCount:12, readTime:'~6 hrs', badge:'Most Popular', badgeColor:'bg-brand-500/20 text-brand-300 border-brand-500/30', accent:'from-brand-500 to-brand-700', category:'server', lessonIds:['ws2025-01','ws2025-02','ws2025-03','ws2025-04','ws2025-05','ws2025-06','ws2025-07','ws2025-08','ws2025-09','ws2025-10','ws2025-11','ws2025-12'] },
-  { id:'linux', icon:'🐧', title:'Linux Fundamentals', description:'Shell mastery, filesystem, permissions, systemd, networking, SSH, firewall, disk, and hardening.', href:'/linux', totalXP:760, lessonCount:10, readTime:'~5 hrs', badge:null, accent:'from-emerald-500 to-emerald-700', category:'os', lessonIds:['linux-01','linux-02','linux-03','linux-04','linux-05','linux-06','linux-07','linux-08','linux-09','linux-10'] },
-  { id:'cybersecurity', icon:'🛡️', title:'Cybersecurity', description:'CIA triad, hardening, firewalls, PKI/TLS, IDS/SIEM, vulnerability scanning, and AD security.', href:'/cybersecurity', totalXP:900, lessonCount:10, readTime:'~7 hrs', badge:'High Demand', badgeColor:'bg-accent-red/10 text-accent-red border-accent-red/20', accent:'from-accent-red to-red-700', category:'security', lessonIds:['sec-01','sec-02','sec-03','sec-04','sec-05','sec-06','sec-07','sec-08','sec-09','sec-10'] },
-  { id:'networking', icon:'🌐', title:'Network Fundamentals', description:'OSI model, TCP/IP, subnetting, VLANs, routing, DNS, wireless, and troubleshooting.', href:'/networking', totalXP:620, lessonCount:8, readTime:'~4 hrs', badge:null, accent:'from-accent-cyan to-cyan-700', category:'networking', lessonIds:['net-01','net-02','net-03','net-04','net-05','net-06','net-07','net-08'] },
-  { id:'python', icon:'🐍', title:'Python for SysAdmins', description:'Automation, subprocess, network scripts, log parsing, monitoring, Ansible, and CLI tools.', href:'/python', totalXP:730, lessonCount:9, readTime:'~5 hrs', badge:null, accent:'from-yellow-500 to-yellow-700', category:'scripting', lessonIds:['py-01','py-02','py-03','py-04','py-05','py-06','py-07','py-08','py-09'] },
-  { id:'powershell', icon:'⚡', title:'PowerShell', description:'Pipeline, scripting, AD management, remoting, DSC, filesystem, registry, and reporting.', href:'/powershell', totalXP:630, lessonCount:8, readTime:'~4 hrs', badge:null, accent:'from-brand-400 to-indigo-700', category:'scripting', lessonIds:['ps-01','ps-02','ps-03','ps-04','ps-05','ps-06','ps-07','ps-08'] },
-  { id:'troubleshooting', icon:'🔬', title:'Troubleshooting', description:'Structured methodology for Windows, Linux, networking, Active Directory, and performance.', href:'/troubleshooting', totalXP:480, lessonCount:6, readTime:'~3 hrs', badge:null, accent:'from-accent-amber to-orange-700', category:'ops', lessonIds:['trouble-01','trouble-02','trouble-03','trouble-04','trouble-05','trouble-06'] },
-  { id:'windows', icon:'🪟', title:'Windows Desktop', description:'Architecture, user permissions, registry, processes, networking, and event viewer & logging.', href:'/windows', totalXP:380, lessonCount:6, readTime:'~3 hrs', badge:null, accent:'from-sky-400 to-sky-700', category:'os', lessonIds:['win-01','win-02','win-03','win-04','win-05','win-06'] },
-  { id:'unix', icon:'🖥️', title:'Unix Systems', description:'Unix philosophy, POSIX shell scripting, BSD systems, permissions, and process management.', href:'/unix', totalXP:330, lessonCount:5, readTime:'~3 hrs', badge:null, accent:'from-slate-400 to-slate-600', category:'os', lessonIds:['unix-01','unix-02','unix-03','unix-04','unix-05'] },
+// Spine-driven course cards. Counts, XP, links and progress all derive from the
+// curriculum spine + server progress — no hardcoded lists to drift out of date.
+const COURSES = curriculum.courses
+  .slice()
+  .sort((a, b) => (a.track === b.track ? a.order - b.order : a.track === 'helpdesk' ? -1 : 1))
+  .map((c) => {
+    const lessons = curriculum.lessons.filter((l) => l.courseId === c.id)
+    return {
+      id: c.id,
+      slug: c.slug,
+      icon: c.icon,
+      title: c.title,
+      description: c.description,
+      track: c.track,
+      href: `/learn/${c.slug}`,
+      lessonIds: lessons.map((l) => l.id),
+      lessonCount: lessons.length,
+      totalXP: lessons.reduce((s, l) => s + (l.xp ?? 0), 0),
+    }
+  })
+
+const TOTAL_LESSONS = curriculum.lessons.length
+
+const TRACK_TABS = [
+  { id: 'all', label: 'All Courses' },
+  { id: 'helpdesk', label: 'Help Desk' },
+  { id: 'sysadmin', label: 'SysAdmin' },
 ]
 
-const TOTAL_LESSONS = COURSES.reduce((s, c) => s + c.lessonCount, 0)
-const TOTAL_XP      = COURSES.reduce((s, c) => s + c.totalXP, 0)
-
-const CATEGORIES = [
-  { id:'all', label:'All Courses' },
-  { id:'server', label:'Server' },
-  { id:'os', label:'OS & Desktop' },
-  { id:'security', label:'Security' },
-  { id:'networking', label:'Networking' },
-  { id:'scripting', label:'Scripting' },
-  { id:'ops', label:'Operations' },
-]
+const TRACK_BADGE = {
+  helpdesk: { label: 'Help Desk', cls: 'bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20' },
+  sysadmin: { label: 'SysAdmin', cls: 'bg-accent-purple/10 text-accent-purple border-accent-purple/20' },
+}
 
 const FEATURES = [
-  { icon:'🎫', title:'Real Support Scenarios', desc:'Practice the work itself — troubleshooting, tickets, and customer communication, not just theory.' },
-  { icon:'🏆', title:'XP & Achievements', desc:'Earn XP and unlock badges as you complete lessons and pass quizzes.' },
-  { icon:'🔒', title:'Sequential Unlocking', desc:'Lessons unlock as you complete them — building real knowledge layer by layer.' },
-  { icon:'📊', title:'Progress Tracking', desc:'Your progress is saved locally. Pick up exactly where you left off.' },
-  { icon:'📖', title:'Glossary Engine', desc:'Key terms highlighted throughout lessons with instant tooltip definitions on hover.' },
-  { icon:'📋', title:'Cheat Sheets', desc:'Command references, port tables, and troubleshooting guides always a click away.' },
+  { icon: '🎫', title: 'Virtual Help Desk', desc: 'Work real support tickets end to end — triage, diagnose, resolve, and communicate like the job demands.' },
+  { icon: '💻', title: 'Simulated Labs', desc: 'Practice real commands in a safe in-browser terminal — nothing to install, nothing to break.' },
+  { icon: '📝', title: 'AI Documentation Feedback', desc: 'Write resolution notes and KB articles, then get scored against a professional rubric.' },
+  { icon: '🎯', title: 'Interview Prep', desc: 'Rehearse the behavioral and technical questions you\'ll actually be asked, with model answers.' },
+  { icon: '📊', title: 'Career Readiness', desc: 'A live employability score shows exactly how job-ready you are and what to do next.' },
+  { icon: '🏅', title: 'Verifiable Certificates', desc: 'Finish a track and claim a shareable certificate employers can verify by code.' },
+]
+
+const QUICK_ACCESS = [
+  { href: '/learn', icon: '📚', label: 'Academy', desc: 'All lessons & tracks' },
+  { href: '/simulator', icon: '🎫', label: 'Help Desk', desc: 'Practice tickets' },
+  { href: '/labs', icon: '💻', label: 'Labs', desc: 'Terminal practice' },
+  { href: '/practice', icon: '📝', label: 'Doc Practice', desc: 'AI-graded writing' },
+  { href: '/interview', icon: '🎯', label: 'Interview Prep', desc: 'Common questions' },
+  { href: '/analytics', icon: '📊', label: 'Career Readiness', desc: 'Employability score' },
+  { href: '/certificates', icon: '🏅', label: 'Certificates', desc: 'Proof of skills' },
+  { href: '/dashboard', icon: '👤', label: 'My Progress', desc: 'XP & badges' },
 ]
 
 function ProgressPill({ completed, total }) {
+  if (completed === 0 || total === 0) return null
   const pct = Math.round((completed / total) * 100)
-  if (completed === 0) return null
   const color = pct === 100 ? 'from-accent-green to-emerald-400' : 'from-brand-500 to-brand-400'
   return (
     <div className="mt-3">
@@ -47,36 +67,38 @@ function ProgressPill({ completed, total }) {
         <span>{completed}/{total} lessons</span><span>{pct}%</span>
       </div>
       <div className="h-1.5 rounded-full bg-surface-700 overflow-hidden">
-        <div className={`h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700`}
-             style={{ width: `${pct}%` }} />
+        <div className={`h-full rounded-full bg-gradient-to-r ${color} transition-all duration-700`} style={{ width: `${pct}%` }} />
       </div>
     </div>
   )
 }
 
-function CourseCard({ course, completedLessons }) {
-  const completed  = course.lessonIds.filter(id => completedLessons.includes(id)).length
-  const total      = course.lessonIds.length
+function CourseCard({ course, completedSet }) {
+  const completed = course.lessonIds.filter((id) => completedSet.has(id)).length
+  const total = course.lessonCount
   const isComplete = completed === total && total > 0
+  const badge = TRACK_BADGE[course.track]
   return (
-    <Link to={course.href}
+    <Link
+      to={course.href}
       className="course-card block group relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
-      aria-label={`${course.title} — ${total} lessons`}>
-      <div className={`course-card-accent bg-gradient-to-r ${course.accent}`} />
+      aria-label={`${course.title} — ${total} lessons`}
+    >
       <div className="pt-4 pb-5 px-4">
         <div className="flex items-start justify-between gap-2 mb-3">
           <span className="text-2xl leading-none">{course.icon}</span>
           <div className="flex items-center gap-1.5 flex-wrap justify-end">
-            {isComplete && <span className="tag text-[10px] bg-accent-green/10 text-accent-green border-accent-green/20 py-0.5">✓ Complete</span>}
-            {course.badge && !isComplete && <span className={`tag text-[10px] border ${course.badgeColor} py-0.5`}>{course.badge}</span>}
+            {isComplete ? (
+              <span className="tag text-[10px] bg-accent-green/10 text-accent-green border-accent-green/20 py-0.5">✓ Complete</span>
+            ) : (
+              <span className={`tag text-[10px] border py-0.5 ${badge.cls}`}>{badge.label}</span>
+            )}
           </div>
         </div>
         <h3 className="font-bold text-white text-sm leading-snug mb-1.5 group-hover:text-brand-300 transition-colors">{course.title}</h3>
         <p className="text-slate-400 text-[12px] leading-relaxed line-clamp-2 mb-3">{course.description}</p>
         <div className="flex items-center gap-3 text-[11px] text-slate-500 font-mono">
           <span>{course.lessonCount} lessons</span>
-          <span className="text-slate-700">·</span>
-          <span>{course.readTime}</span>
           <span className="text-slate-700">·</span>
           <span className="text-accent-amber">{course.totalXP} XP</span>
         </div>
@@ -87,110 +109,64 @@ function CourseCard({ course, completedLessons }) {
 }
 
 export default function Home() {
-  const { progress } = useProgress()
-  const completedLessons = progress?.completedLessons ?? []
-  const xp               = progress?.xp ?? 0
-  const level            = getLevelForXP(xp)
-  const completedCount   = completedLessons.length
-  const overallPct       = Math.round((completedCount / TOTAL_LESSONS) * 100)
-  const hasStarted       = completedCount > 0
+  const { completedSet, stats } = useAcademyProgress()
+  const xp = stats?.totalXp ?? 0
+  const completedCount = completedSet.size
+  const hasStarted = completedCount > 0
 
-  const [activeCategory, setActiveCategory] = useState('all')
-
-  const filteredCourses = useMemo(() =>
-    activeCategory === 'all' ? COURSES : COURSES.filter(c => c.category === activeCategory),
-    [activeCategory])
-
-  const spotlightCourses = COURSES.filter(c =>
-    ['windows-server-2025','cybersecurity','devops','linux'].includes(c.id))
+  const [activeTrack, setActiveTrack] = useState('all')
+  const filteredCourses = useMemo(
+    () => (activeTrack === 'all' ? COURSES : COURSES.filter((c) => c.track === activeTrack)),
+    [activeTrack],
+  )
+  const spotlightCourses = COURSES.slice(0, 4)
 
   return (
     <div className="min-h-screen">
-
       {/* ── HERO ── */}
       <section className="relative overflow-hidden border-b border-surface-700/50">
-        <div className="absolute inset-0 pointer-events-none select-none" style={{ backgroundImage:'linear-gradient(rgba(99,102,241,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.04) 1px,transparent 1px)', backgroundSize:'40px 40px' }} />
-        <div className="absolute inset-0 pointer-events-none" style={{ background:'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(99,102,241,0.12) 0%, transparent 70%)' }} />
-
+        <div className="absolute inset-0 pointer-events-none select-none" style={{ backgroundImage: 'linear-gradient(rgba(99,102,241,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.04) 1px,transparent 1px)', backgroundSize: '40px 40px' }} />
+        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(99,102,241,0.12) 0%, transparent 70%)' }} />
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-24 sm:pb-16 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-4 py-1.5 mb-6 fade-up">
             <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
-            <span className="text-xs font-semibold text-brand-300 tracking-wide">
-              Two tracks · Help Desk → SysAdmin · Hands-on, job-focused
-            </span>
+            <span className="text-xs font-semibold text-brand-300 tracking-wide">Two tracks · Help Desk → SysAdmin · Hands-on, job-focused</span>
           </div>
-
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight mb-4 fade-up" style={{ animationDelay:'60ms' }}>
-            Break into IT.<br />
-            <span className="bg-gradient-to-r from-brand-400 to-accent-cyan bg-clip-text text-transparent">Then go further.</span>
+          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight mb-5 fade-up">
+            Break into IT, <span className="text-brand-400">one skill at a time.</span>
           </h1>
-
-          <p className="text-slate-400 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto mb-8 fade-up" style={{ animationDelay:'120ms' }}>
-            Start from zero on the Help Desk track and build real Tier-1 support skills — troubleshooting, ticketing, Windows, networking, and M365 — then climb into the SysAdmin track. Structured lessons, real scenarios, and XP that tracks your progress.
+          <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed fade-up">
+            TierZero turns real IT work into hands-on practice — {TOTAL_LESSONS} lessons, live support tickets,
+            terminal labs, and AI feedback — so you learn the job, not just the theory.
           </p>
-
-          <div className="flex flex-wrap gap-3 justify-center mb-10 fade-up" style={{ animationDelay:'180ms' }}>
+          <div className="flex flex-wrap gap-3 justify-center fade-up">
             <Link to={hasStarted ? '/learn' : '/login'} className="btn-primary">
               {hasStarted ? 'Resume learning →' : 'Start learning free →'}
             </Link>
-            <Link to="/learn" className="btn-secondary">
-              Explore the Academy
-            </Link>
+            <Link to="/learn" className="btn-secondary">Explore the Academy</Link>
           </div>
-
-          {/* Platform stats strip — driven by the curriculum spine (honest, auto-updates) */}
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 py-4 border-t border-b border-surface-700/40 fade-up" style={{ animationDelay:'240ms' }}>
-            {[
-              { v:'2', l:'Tracks', i:'🎯' },
-              { v:`${curriculum.courses.length}`, l:'Courses', i:'🗂️' },
-              { v:`${curriculum.lessons.length}`, l:'Lessons', i:'📚' },
-              { v:`${curriculum.lessons.reduce((s,l)=>s+l.xp,0).toLocaleString()}`, l:'XP Available', i:'⭐' },
-            ].map(s => (
-              <div key={s.l} className="text-center px-2">
-                <div className="text-lg sm:text-xl font-black text-white font-mono">{s.i} {s.v}</div>
-                <div className="text-[11px] text-slate-500 mt-0.5 uppercase tracking-widest">{s.l}</div>
-              </div>
-            ))}
-          </div>
-
-          {/* Personal progress strip — only shown when user has started */}
-          {hasStarted && (
-            <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3 fade-up" style={{ animationDelay:'300ms' }}>
-              {[
-                { v:completedCount, l:'Lessons Done', c:'text-brand-300' },
-                { v:xp, l:'XP Earned', c:'text-accent-amber' },
-                { v:`${overallPct}%`, l:'Overall Progress', c:'text-accent-green' },
-                { v:level.name, l:'Current Level', c:'text-accent-purple' },
-              ].map(s => (
-                <div key={s.l} className="card py-3 px-4 text-center">
-                  <p className={`text-lg font-black font-mono ${s.c}`}>{s.v}</p>
-                  <p className="text-[10px] text-slate-500 uppercase tracking-widest mt-0.5">{s.l}</p>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
       {/* ── SPOTLIGHT ── */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-6">
-        <div className="flex items-end justify-between mb-6 flex-wrap gap-3">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex items-end justify-between mb-5">
           <div>
-            <p className="text-xs font-semibold text-brand-400 uppercase tracking-widest font-mono mb-1">Most popular</p>
-            <h2 className="section-title">Start here</h2>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest font-mono mb-1">Start here</p>
+            <h2 className="section-title">Popular starting points</h2>
           </div>
-          <Link to="/dashboard" className="btn-ghost text-sm">All courses →</Link>
+          <Link to="/learn" className="btn-ghost text-sm">All courses →</Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {spotlightCourses.map((course, i) => (
-            <div key={course.id} className="fade-up" style={{ animationDelay:`${i * 60}ms` }}>
-              <CourseCard course={course} completedLessons={completedLessons} />
+            <div key={course.id} className="fade-up" style={{ animationDelay: `${i * 60}ms` }}>
+              <CourseCard course={course} completedSet={completedSet} />
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── ALL COURSES + FILTER TABS ── */}
+      {/* ── ALL COURSES + TRACK TABS ── */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex items-end justify-between mb-5 flex-wrap gap-3">
           <div>
@@ -198,28 +174,32 @@ export default function Home() {
             <h2 className="section-title">All Learning Paths</h2>
           </div>
           <p className="text-slate-500 text-xs font-mono">
-            {filteredCourses.length} courses · {filteredCourses.reduce((s,c) => s + c.lessonCount, 0)} lessons
+            {filteredCourses.length} courses · {filteredCourses.reduce((s, c) => s + c.lessonCount, 0)} lessons
           </p>
         </div>
-
-        <div className="flex flex-wrap gap-2 mb-6">
-          {CATEGORIES.map(cat => (
-            <button key={cat.id} onClick={() => setActiveCategory(cat.id)}
+        <div className="flex flex-wrap gap-2 mb-6" role="tablist" aria-label="Filter courses by track">
+          {TRACK_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={activeTrack === tab.id}
+              onClick={() => setActiveTrack(tab.id)}
               className={[
                 'px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150',
-                activeCategory === cat.id
+                activeTrack === tab.id
                   ? 'bg-brand-500/20 text-brand-300 border-brand-500/40'
                   : 'bg-surface-800 text-slate-400 border-surface-700 hover:border-surface-600 hover:text-slate-300',
-              ].join(' ')}>
-              {cat.label}
+              ].join(' ')}
+            >
+              {tab.label}
             </button>
           ))}
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {filteredCourses.map((course, i) => (
-            <div key={course.id} className="fade-up" style={{ animationDelay:`${i * 50}ms` }}>
-              <CourseCard course={course} completedLessons={completedLessons} />
+            <div key={course.id} className="fade-up" style={{ animationDelay: `${i * 50}ms` }}>
+              <CourseCard course={course} completedSet={completedSet} />
             </div>
           ))}
         </div>
@@ -229,13 +209,13 @@ export default function Home() {
       <section className="border-t border-surface-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <p className="text-xs font-semibold text-slate-500 uppercase tracking-widest font-mono text-center mb-2">What makes this different</p>
-          <h2 className="section-title text-center mb-2">Built for real sysadmins</h2>
+          <h2 className="section-title text-center mb-2">Practice the job, not just the theory</h2>
           <p className="text-slate-400 text-sm text-center mb-10 max-w-xl mx-auto leading-relaxed">
-            Every lesson includes VMware lab exercises, real-world scenarios, and commands you'll use on the job — not toy examples.
+            Every track pairs lessons with the real work — tickets, terminals, documentation, and interviews — and tracks your progress to hire-ready.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {FEATURES.map((f, i) => (
-              <div key={f.title} className="card p-6 fade-up" style={{ animationDelay:`${i * 80}ms` }}>
+              <div key={f.title} className="card p-6 fade-up" style={{ animationDelay: `${i * 80}ms` }}>
                 <span className="text-3xl mb-3 block">{f.icon}</span>
                 <h3 className="font-bold text-white text-sm mb-1.5">{f.title}</h3>
                 <p className="text-slate-400 text-xs leading-relaxed">{f.desc}</p>
@@ -250,18 +230,8 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <h2 className="section-title mb-6">Quick Access</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {[
-              { href:'/cheatsheets',  icon:'📋', label:'Cheat Sheets',  desc:'Command references' },
-              { href:'/glossary',     icon:'📖', label:'Glossary',      desc:'70+ IT definitions' },
-              { href:'/it-models',    icon:'🗂️', label:'IT Models',     desc:'OSI, ITIL, CIA…' },
-              { href:'/port-lookup',  icon:'🔌', label:'Port Lookup',   desc:'Common port numbers' },
-              { href:'/vmware-setup', icon:'🖥️', label:'VMware Setup',  desc:'Lab environment guide' },
-              { href:'/dashboard',    icon:'📊', label:'Dashboard',     desc:'Progress & badges' },
-              { href:'/certificate',  icon:'🏅', label:'Certificates',  desc:'Course completion' },
-              { href:'/search',       icon:'🔍', label:'Search',        desc:'Find any lesson' },
-            ].map(t => (
-              <Link key={t.href} to={t.href}
-                className="card p-4 flex flex-col gap-2 hover:border-brand-600/40 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400">
+            {QUICK_ACCESS.map((t) => (
+              <Link key={t.href} to={t.href} className="card p-4 flex flex-col gap-2 hover:border-brand-600/40 group focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400">
                 <span className="text-2xl">{t.icon}</span>
                 <div>
                   <p className="font-semibold text-white text-sm group-hover:text-brand-300 transition-colors">{t.label}</p>
@@ -283,19 +253,18 @@ export default function Home() {
           <p className="text-slate-400 mb-6 text-sm leading-relaxed max-w-lg mx-auto">
             {hasStarted
               ? `You've completed ${completedCount} lessons and earned ${xp} XP. The next lesson is waiting.`
-              : 'Start with Windows Server 2025 — the most in-demand enterprise skill — or jump to whichever topic you need right now.'}
+              : 'Start with the Help Desk track — the fastest path to your first IT role — or jump to whichever skill you need right now.'}
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
             <Link to={hasStarted ? '/learn' : '/login'} className="btn-primary">
               {hasStarted ? 'Resume learning →' : 'Start learning free →'}
             </Link>
-            <Link to="/learn" className="btn-secondary">
-              {hasStarted ? 'View progress' : 'Explore the Academy'}
+            <Link to="/analytics" className="btn-secondary">
+              {hasStarted ? 'View career readiness' : 'See how it works'}
             </Link>
           </div>
         </div>
       </section>
-
     </div>
   )
 }

@@ -69,6 +69,7 @@ addCourse(
     { id: 'hdf-01', hasQuiz: true, slug: 'what-is-it-support', title: 'What IT Support Actually Is', xp: 40, minutes: 12 },
     { id: 'hdf-02', hasQuiz: true, slug: 'troubleshooting-methodology', title: 'A Repeatable Troubleshooting Method', xp: 50, minutes: 15 },
     { id: 'hdf-03', hasQuiz: true, slug: 'tickets-and-documentation', title: 'Writing Tickets People Can Use', xp: 50, minutes: 14 },
+    { id: 'hdf-04', hasQuiz: true, slug: 'command-line-basics', title: 'Command-Line Basics for Support', xp: 50, minutes: 14 },
   ],
 );
 
@@ -89,6 +90,8 @@ addCourse(
     { id: 'hwos-01', hasQuiz: true, slug: 'hardware-essentials', title: 'Inside the Machine: Hardware Essentials', xp: 40, minutes: 12 },
     { id: 'hwos-02', hasQuiz: true, slug: 'operating-systems-overview', title: 'Operating Systems at a Glance', xp: 45, minutes: 12 },
     { id: 'hwos-03', hasQuiz: true, slug: 'files-users-permissions', title: 'Files, Users & Permissions', xp: 50, minutes: 13 },
+    { id: 'hwos-04', hasQuiz: true, slug: 'windows-tools', title: 'Windows Tools & the Control Panel', xp: 50, minutes: 13 },
+    { id: 'hwos-05', hasQuiz: true, slug: 'backup-and-recovery', title: 'Backup & Data Recovery', xp: 50, minutes: 13 },
   ],
 );
 
@@ -130,6 +133,49 @@ addCourse(
     { id: 'work-02', hasQuiz: true, slug: 'microsoft-365-essentials', title: 'Microsoft 365 Essentials', xp: 50, minutes: 13 },
     { id: 'work-03', hasQuiz: true, slug: 'email-troubleshooting', title: 'Troubleshooting Email & Outlook', xp: 55, minutes: 14 },
     { id: 'work-04', hasQuiz: true, slug: 'customer-communication', title: 'Customer Communication & Escalation', xp: 45, minutes: 12 },
+    { id: 'work-05', hasQuiz: true, slug: 'collaboration-teams-sharepoint', title: 'Collaboration: Teams, SharePoint & OneDrive', xp: 50, minutes: 13 },
+  ],
+);
+
+addCourse(
+  {
+    id: 'security-essentials',
+    slug: 'security-essentials',
+    title: 'Security Essentials for Support',
+    description:
+      'The security every Tier-1 technician needs on the front line — spotting threats, protecting accounts and data, and responding when something goes wrong. Aligned to CompTIA A+ security topics.',
+    icon: '🔒',
+    order: 5,
+  },
+  'sec-m1',
+  'security-for-support',
+  'Security on the Front Line',
+  [
+    { id: 'hdsec-01', hasQuiz: true, slug: 'malware-and-phishing', title: 'Malware, Phishing & Social Engineering', xp: 50, minutes: 14 },
+    { id: 'hdsec-02', hasQuiz: true, slug: 'authentication-and-passwords', title: 'Authentication, MFA & Passwords', xp: 50, minutes: 13 },
+    { id: 'hdsec-03', hasQuiz: true, slug: 'physical-and-data-security', title: 'Physical & Data Security', xp: 50, minutes: 13 },
+    { id: 'hdsec-04', hasQuiz: true, slug: 'secure-disposal-and-byod', title: 'Secure Disposal, Mobile & BYOD', xp: 50, minutes: 13 },
+  ],
+);
+
+addCourse(
+  {
+    id: 'devices-and-peripherals',
+    slug: 'devices-and-peripherals',
+    title: 'Devices & Peripherals',
+    description:
+      'The hardware users actually touch — laptops and phones, printers, monitors and peripherals — plus supporting them remotely. High-volume, everyday help-desk work, aligned to CompTIA A+ hardware topics.',
+    icon: '🖨️',
+    order: 6,
+  },
+  'dev-m1',
+  'devices-for-support',
+  'Devices, Displays & Remote Support',
+  [
+    { id: 'hddev-01', hasQuiz: true, slug: 'laptops-and-mobile-devices', title: 'Laptops & Mobile Devices', xp: 50, minutes: 13 },
+    { id: 'hddev-02', hasQuiz: true, slug: 'printers-and-scanners', title: 'Printers & Scanners', xp: 50, minutes: 13 },
+    { id: 'hddev-03', hasQuiz: true, slug: 'peripherals-and-displays', title: 'Peripherals & Display Connectivity', xp: 50, minutes: 13 },
+    { id: 'hddev-04', hasQuiz: true, slug: 'remote-support-tools', title: 'Remote Support Tools', xp: 50, minutes: 12 },
   ],
 );
 

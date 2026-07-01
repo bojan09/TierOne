@@ -1,5 +1,182 @@
 # Changelog
 
+## Phase 16 — Legacy cleanup
+
+Removed **19 provably-dead files** (verified zero inbound imports before deletion; gates green after):
+- 9 orphaned lesson bodies in `src/pages/lessons/` — the 7 cut **DevOps** lessons, `DockerContainers`, and a duplicate `NetworkingTroubleshootingLesson` (the source of the old `/networking/troubleshooting` 404).
+- 10 legacy course-index pages in `src/pages/` (Cybersecurity, DevOps, Linux, Networking, PowerShell, Python, Troubleshooting, Unix, Windows, WindowsServer2025) — all superseded by the spine-driven `/learn` routes + `legacyCourseRedirects`.
+
+Verified safe: the lesson registry still imports all **73** sysadmin lesson bodies from `src/pages/lessons/`; nothing referenced the deleted files.
+
+### Still deferred (needs a scoped refactor, not a delete)
+- The legacy localStorage `useProgress` hook is **still live** — used by the routed legacy `Dashboard`/`Certificate` pages and the shared `Quiz`/`LessonLayout`/`LevelBadge`/`StudyTimer` components. Migrating those to server progress (`useAcademyProgress`) and retiring `useProgress` is a proper phase, not a cleanup.
+- Cosmetic: move the 73 sysadmin bodies from `pages/lessons/` into `content/lessons/sysadmin/` for consistency.
+- `supabase gen types` + drop temporary RPC casts (needs network).
+
+No migration change (through 0028).
+
+---
+
+# Changelog
+
+## Phase 15.4 — More Help Desk scenarios & labs
+
+Pure DB content (Simulator/Labs pages list from the DB — no app code change).
+
+**Scenarios (`0027`) — 3 new tickets, now 7 total:**
+- Suspicious email (phishing / BEC) — ties to Security Essentials
+- Second monitor "No Signal" (dock/display) — ties to Devices & Peripherals
+- Can't find a shared file / OneDrive not syncing — ties to Collaboration
+
+**Labs (`0028`) — 2 new command-line labs, now 3 total:**
+- Diagnose connectivity from the command line (ipconfig, ping, nslookup, flushdns, renew)
+- Windows support command toolkit (hostname, whoami, tasklist, sfc, gpupdate)
+
+Validated on PG (scenario grading 100% on correct path; labs fetch with intact regex/output). Gates green. Apply migrations through **0028**.
+
+---
+
+# Changelog
+
+## Phase 15.3 — Help Desk expansion: gap-fillers (batch 3)
+
+Four lessons added into existing courses to close real Tier-1 gaps:
+- **Command-Line Basics for Support** → IT Support Foundations
+- **Windows Tools & the Control Panel** → Hardware & Operating Systems
+- **Backup & Data Recovery** → Hardware & Operating Systems
+- **Collaboration: Teams, SharePoint & OneDrive** → Workplace IT
+
+Full pipeline each (appended to existing spine course arrays + JSX body + registry + `curriculum_lessons` seed `0025` + quiz seed `0026`, 12 Qs, quiz-gated). Validated on PG; gates green.
+
+**Help Desk: 21 → 25 lessons across 6 courses. Platform: 98 lessons / 294 quiz questions.** Apply migrations through **0026**.
+
+This completes **P15** — the Help Desk track grew from 13 to **25 lessons**, a full A+-aligned entry-level curriculum (Foundations, Hardware & OS, Networking, Workplace IT, Security Essentials, Devices & Peripherals).
+
+---
+
+# Changelog
+
+## Phase 15.2 — Help Desk expansion: Devices & Peripherals (batch 2)
+
+New A+-aligned Help Desk course **Devices & Peripherals** (🖨️, order 6), 4 lessons:
+- Laptops & Mobile Devices
+- Printers & Scanners
+- Peripherals & Display Connectivity
+- Remote Support Tools
+
+Full pipeline each (spine + JSX body + registry + `curriculum_lessons` seed `0023` + quiz seed `0024`, 12 Qs, quiz-gated). Validated on PG; gates green.
+
+**Help Desk: 17 → 21 lessons. Platform: 94 lessons / 282 quiz questions.** Apply migrations through **0024**.
+
+### P15 remaining
+- Gap-fillers in existing courses (Windows tools/Control Panel, backup & data protection) — optional final batch.
+
+---
+
+# Changelog
+
+## Phase 15.1 — Help Desk expansion: Security Essentials (batch 1)
+
+New A+-aligned Help Desk course **Security Essentials for Support** (🔒, order 5), 4 lessons:
+- Malware, Phishing & Social Engineering
+- Authentication, MFA & Passwords
+- Physical & Data Security
+- Secure Disposal, Mobile & BYOD
+
+Full lesson pipeline per lesson: spine entry (`helpdesk.ts`) + JSX body (`content/lessons/helpdesk/`) + registry mapping + `curriculum_lessons` XP seed (`0021`) + 3-question quiz (`0022`, 12 Qs total, quiz-gated). Validated on PG (grading 100% on correct answers); gates green.
+
+**Help Desk track: 13 → 17 lessons. Platform total: 86 → 90 lessons, 258 → 270 quiz questions.** Apply migrations through **0022**.
+
+### P15 remaining (next batches)
+- Course 2: **Devices & Peripherals** (laptops/mobile, printers/scanners, peripheral & display connectivity, remote-support tools).
+- Gap-fillers in existing courses (Windows tools/Control Panel, backup & data protection).
+
+---
+
+# Changelog
+
+## Phase 14.1 — Hardening & deployment
+
+- **Security audit (automated over all migrations): no gaps.** Every one of the 18 tables has RLS + default-deny; users see only their own rows; answer keys (`quiz_questions`, `scenario_options`) have no client grant and are served/graded via `SECURITY DEFINER` RPCs; all 15 definer functions pin `set search_path = public`; `user_stats` is read-only to clients; `profiles` blocks role escalation; only `verify_certificate` is anon-executable. Documented in `docs/SECURITY.md`.
+- **Edge Function CORS** now honours an `ALLOWED_ORIGIN` secret (default `*`) so production can restrict origins.
+- **Production security headers** shipped via `public/_headers` (X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy, HSTS); CSP provided as a tested-recommendation in the deploy guide.
+- **`docs/DEPLOYMENT.md`**: ordered go-live checklist (migrations 0001–0020, auth redirect URLs, optional `grade-doc` deploy + secrets, frontend env/build, headers, post-deploy smoke test).
+- **Secret scan clean** — no keys in source; `.env`/`.env.example` gitignored and excluded from ZIPs.
+
+Gates green. No migration change (through 0020). This completes the P1–P14 roadmap.
+
+---
+
+# Changelog
+
+## Phase 13.1 — Polish: spine-driven Home, vendor split, a11y baseline
+
+- **Landing page is now spine-driven.** The old hardcoded course grid (stale lesson counts, legacy lesson ids that never matched, dead links) is replaced by cards generated from the curriculum spine: accurate lesson counts and XP, correct `/learn/:slug` links, **real server progress** (via `useAcademyProgress` instead of localStorage), and a Help Desk / SysAdmin track filter. Features and Quick Access copy/links refreshed to the actual product (tickets, labs, doc practice, interview prep, career readiness, certificates).
+- **Bundle vendor-split.** Vite `manualChunks` splits `@supabase`, React/Router, and other deps into long-cacheable vendor chunks. **Entry chunk 539 kB → 157 kB** (vendor-supabase 206 kB, vendor-react 152 kB load/cache separately).
+- **Accessibility baseline verified:** skip-to-content link + `main` landmark, `lang="en"`, aria-labelled icon buttons, focus-visible rings, and role=tablist on the new track filter.
+
+Gates green. No migration change (still through 0020).
+
+### Still open in P13 (developer / later)
+- Run `supabase gen types typescript --project-id esfmeeclqctegnitbkpg` and drop the temporary RPC casts (`as never` / `as unknown`) — needs network to supabase.co, so it's a developer step.
+- Optional: retire now-unused legacy redirect pages + the localStorage `useProgress` hook once nothing references them.
+
+---
+
+# Changelog
+
+## Phase 12.1 — AI-graded documentation practice
+
+Closes the P9 deferral. Learners write real IT docs (resolution notes, KB articles) and get graded against a rubric.
+
+- **DB (`0019`,`0020`, validated on PG):** `doc_exercises` (rubric + model answer, readable) and `doc_submissions` (content + AI score/feedback, RLS select-own; also backs the daily cap). Seeded 3 help-desk exercises.
+- **Edge Function `grade-doc` (Deno):** holds the provider key as a **Supabase secret** (never in the client). **Provider-agnostic / OpenAI-compatible**, so any free tier works (Groq, Gemini's compatible endpoint, OpenRouter). Verifies the caller's JWT, enforces a per-user **daily cap** (default 10) and a 4000-char limit, grades, and stores the submission. See `supabase/functions/grade-doc/README.md` for deploy + `supabase secrets set`.
+- **Client `features/docs/` at `/practice`:** scenario + task, editor, submit → AI score, per-criterion ✓/✗ + notes, and a reveal-able model answer.
+- **Graceful "regular" mode:** if no key is configured (or the function isn't deployed / provider hiccups), the app automatically falls back to a rubric self-check + model answer — so the feature is useful before/without AI.
+
+**Cannot be fully validated in the build sandbox** (Deno + external network): the DB + client are validated and green; deploy `grade-doc` and set secrets on the live project to enable AI grading. Apply migrations through **0020**.
+
+---
+
+# Changelog
+
+## Phase 11.1 — Certificates
+
+- **Backend `0018_certificates.sql`** (validated on PG): `certificates` table (one per user+track, unique verification `code`, holder name snapshot; RLS select-own). `claim_certificate(track)` SECURITY DEFINER **server-verifies** every track lesson is completed before issuing — idempotent (re-claim returns the same code). `verify_certificate(code)` is public (anon-executable) returning holder name / track / date.
+- Code generation uses core `md5(random()||clock_timestamp())` — no pgcrypto dependency. Policies made re-runnable (drop-if-exists).
+- **Client `features/certificates/`**: `/certificates` (claim when a track is fully complete, otherwise progress; view earned), a branded printable `CertificateView` (Print / Save PDF), and a **public** `/verify/:code` page for employers.
+- Linked from navbar Academy ("Certificates").
+
+Gates green. Apply migrations through **0018**.
+
+---
+
+# Changelog
+
+## Phase 10.1 — Learning analytics & employability dashboard
+
+- **`/analytics` (Career Readiness)** — a 0–100 **job-readiness score** (weighted: Help Desk lessons 40%, Help Desk quizzes passed 30%, tickets resolved 20%, labs completed 10%) with a labelled tier, a transparent component breakdown, a **14-day activity chart** (lesson completions + quiz/scenario/lab attempts), **skills-coverage** bars per course for both tracks, and a **recommended next step**.
+- `features/analytics/` (api.ts aggregates scenario/lab/lesson/quiz timestamps; Analytics.tsx). No new tables — reads existing data. `quizStats` now also exposes `passedIds` (per-lesson pass set) for track-level breakdown.
+- Linked from navbar Academy ("Career Readiness").
+
+Gates green. No new migration (still through 0017).
+
+---
+
+# Changelog
+
+## Phase 9.1 — Interview Prep (vertical slice)
+
+- **Backend** `0016_interview_prep.sql` + seed `0017` (12 questions: 4 behavioral, 8 technical across both tracks). Readable study content — no grading/XP.
+- **Client** `features/interview/`: `/interview` flashcard deck — category filter (All/Behavioral/Technical), reveal sample answer + "a good answer hits" key points, prev/next, session-local reviewed counter. Linked from navbar Academy ("Interview Prep").
+- Documentation-writing practice (free-text grading) deferred to pair with P12 AI grading.
+
+Gates green. Apply migrations through **0017**.
+
+---
+
+# Changelog
+
 ## Phase 8.1 — Simulated labs (vertical slice)
 
 **Backend (`0014_labs.sql`, validated on PG):** `labs` / `lab_steps` / `lab_attempts` (default-deny RLS; step content served via `get_lab`). `complete_lab` records completion idempotently and folds a one-time bonus into the authoritative total via `_recompute_user_stats` — now **lesson + quiz + scenario + lab XP**. Seed `0015` adds the first lab, "Navigate the Linux filesystem" (6 scripted terminal steps).

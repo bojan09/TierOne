@@ -16,6 +16,10 @@ const NAV_ITEMS = [
       { label: 'Browse all tracks',      href: '/learn',                        desc: 'The full Academy' },
       { label: 'Virtual Help Desk',      href: '/simulator',                    desc: 'Practice on real tickets · new' },
       { label: 'Simulated Labs',         href: '/labs',                         desc: 'Hands-on terminal practice · new' },
+      { label: 'Interview Prep',         href: '/interview',                    desc: 'Practice interview questions · new' },
+      { label: 'Documentation Practice', href: '/practice',                     desc: 'Write docs, get AI feedback · new' },
+      { label: 'Career Readiness',       href: '/analytics',                    desc: 'Your employability snapshot · new' },
+      { label: 'Certificates',           href: '/certificates',                 desc: 'Earn proof of your skills · new' },
     ],
   },
   {

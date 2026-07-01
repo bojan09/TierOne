@@ -850,3 +850,11 @@ button:focus-visible, a:focus-visible {
   .print-only { display: block; }
 }
 .print-only { display: none; }
+
+/* Print: isolate the certificate when using Print / Save PDF */
+@media print {
+  body * { visibility: hidden; }
+  .cert-print, .cert-print * { visibility: visible; }
+  .cert-print { position: absolute; inset: 0; margin: auto; border: none; }
+  .cert-actions { display: none !important; }
+}
