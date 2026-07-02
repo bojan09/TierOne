@@ -1,4 +1,6 @@
-import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
+import { lazy, createElement, type ComponentType, type LazyExoticComponent } from 'react';
+import StructuredLesson from '@/content/lessons/StructuredLesson';
+import { structuredLessons } from '@/content/lessons/structured';
 
 // AUTO-GENERATED registry (P5.5). Keyed by lesson id (globally unique).
 
@@ -105,6 +107,16 @@ export const lessonRegistry: Record<string, LazyBody> = {
   'troubleshooting-06': lazy(() => import('../../pages/lessons/TroubleshootingPerformance.jsx')),
 };
 
-export function getLessonBody(id: string): LazyBody | undefined {
-  return lessonRegistry[id];
+const structuredCache: Record<string, ComponentType> = {};
+
+export function getLessonBody(id: string): LazyBody | ComponentType | undefined {
+  if (lessonRegistry[id]) return lessonRegistry[id];
+  const content = structuredLessons[id];
+  if (!content) return undefined;
+  if (!structuredCache[id]) {
+    const Comp: ComponentType = () => createElement(StructuredLesson, { content });
+    (Comp as { displayName?: string }).displayName = `StructuredLesson_${id}`;
+    structuredCache[id] = Comp;
+  }
+  return structuredCache[id];
 }

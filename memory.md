@@ -1,6 +1,40 @@
-# Memory — TierZero (through Phase 17)
+# Memory — TierZero (through Phase 18)
 
-Last updated: 2026-06-30 02:30 UTC
+Last updated: 2026-07-02
+
+## PHASE 18 COMPLETE — Windows Server 2025 mastery expansion
+
+Delivered the accepted WinServer expansion: **11 new sub-courses, 67 lessons, 201 quiz questions, 2 capstone labs.** Gates green; migrations 0029/0030/0031 validated + idempotent on PG16.
+
+**Data-driven lesson model (P18.1) — reusable for future big content sets:**
+- `src/content/lessons/model.ts` = `LessonContent {intro, sections:[{h,p?,ul?,code?,note?}], practice?}` (Bullet = string | {b,t}).
+- `src/content/lessons/StructuredLesson.tsx` renders it to the same semantic markup as JSX bodies (inherits `.lesson-content`), with tip/warn/info notes, code blocks, and a "🧪 Try it yourself" practice callout.
+- `src/content/lessons/structured/*` = generated per-area maps aggregated in `index.ts` into `structuredLessons`.
+- `getLessonBody(id)` (registry.ts) tries the JSX registry first, then falls back to `structuredLessons[id]` via `createElement(StructuredLesson,{content})` (registry stays .ts). Existing JSX lessons untouched.
+
+**Generation pipeline (idempotent, re-runnable):**
+- Manifest `/home/claude/p18_manifest.json`; emitter `/home/claude/emit_p18.py` writes structured TS + replaces spine region between `// P18-GENERATED-START/END` in `sysadmin.ts` (addCourse blocks, track sysadmin) + writes seeds 0029 (curriculum_lessons, sort_order 2001+) and 0030 (lesson_quizzes 70/30 + quiz_questions).
+- Authoring scripts `/home/claude/p18_author_1..5.py` append courses to the manifest; re-run all authors + emitter to rebuild. (These live in /home/claude, NOT in the repo/zip.)
+
+**Sub-courses (ids):** ws-foundations(6), ws-active-directory(8), ws-group-policy(6), ws-dns-dhcp(7), ws-file-storage(6), ws-hyperv(6), ws-security(7), ws-powershell(6), ws-backup-ha(5), ws-remote-access(5), ws-monitoring(5). Original 12-lesson `windows-server-2025` course retained unchanged (protects existing progress).
+
+**Capstone labs (0031, sysadmin track):** `lab-ws-ad-ps` (bulk AD via PowerShell, 7 steps), `lab-ws-dns-dhcp` (stand up DNS+DHCP, 7 steps). Lab command matching made **case-insensitive** (LabPlayer.tsx: `new RegExp(pattern,'i')`) — safe, only loosens existing lowercase patterns.
+
+**Next per IMPROVEMENT-PLAN:** P19 Networking (7→~35), P20 Help Desk Tier 2, P21 lesson-UX (sidebar/prev-next/TOC/diagrams), P22 engagement+search, P23 authoring tooling + light/dark + a11y. The P18 structured model + emitter should be reused/generalised for P19/P20.
+
+## ACCEPTED DIRECTION — mastery/job-readiness, depth over breadth (see docs/IMPROVEMENT-PLAN.md)
+
+Stan wants the curriculum expanded substantially; several sections are too shallow. Locked expansion targets:
+- **Windows Server 2025: 12 -> ~75 lessons**, split into sub-courses (Foundations/Install, Active Directory, Group Policy, DNS & DHCP, File & Storage, Hyper-V, Networking & Remote Access, Security & Hardening, PowerShell Automation, Backup/Recovery/HA, Monitoring & Troubleshooting, Capstone projects) + labs + enterprise scenarios + a project per sub-course.
+- **Networking: 7 -> ~35 lessons** (OSI/TCP-IP, IPv4 subnetting multi-lesson, IPv6, switching/VLAN/STP, routing, wireless, services, VPNs, firewalls, WAN, monitoring, packet analysis, troubleshooting) + CLI/subnetting/packet labs.
+- **Help Desk: 25 -> ~45**, add a **Tier 2 Support** track (advanced Windows troubleshooting, advanced AD, M365 admin incl. Intune, ITIL/escalation, scripting for support, print server, endpoint mgmt) + Tier 2 scenarios/labs/projects.
+- Cross-platform: grow labs 3->20+, scenarios 7->25+, interview Qs 12->60+, doc exercises 3->15+; each lesson should end with a hands-on task, not just a quiz; add per-track capstone PROJECTS.
+
+**Design/UX accepted:** group Academy menu into Learn/Practice/Career; left sidebar course tree in /learn; global content search; in-lesson prev/next + TOC + reading time; reusable callout/code components; **add SVG diagrams to lessons** (currently text-only); readable max line length + type scale; surface streaks/daily goal + skill-tree/learning-path view + badge showcase; first-run onboarding; light/dark toggle; deeper a11y (ARIA live quiz results, keyboard flow, focus mgmt on route change, reduced-motion); consider a content-authoring generator/CLI to speed the manual lesson pipeline.
+
+**Build sequence:** P18 WinServer expansion, P19 Networking, P20 Help Desk Tier 2, P21 lesson-experience UX, P22 engagement + search, P23 authoring tooling + light/dark + a11y. Each phase buildable + validated migrations (continue from 0028) + ZIP.
+
+**Also decided (P17.1):** grade-doc Edge Function is OPTIONAL — /practice degrades to intentional self-assessment mode without it; not required to launch. Docker not required to deploy functions (only the local emulator needs it) — deploy via `npx supabase functions deploy`, or run the function directly with Deno against the hosted project.
 
 ## Project at a glance
 - React + Vite + TypeScript SPA, server-authoritative via Supabase. Two tracks: **helpdesk** (lead) + **sysadmin**. DevOps cut. Brand: **TierZero**.

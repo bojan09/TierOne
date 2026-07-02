@@ -64,7 +64,7 @@ export default function LabPlayer() {
 
     let ok = false;
     try {
-      ok = new RegExp(current.accept_pattern).test(cmd);
+      ok = new RegExp(current.accept_pattern, 'i').test(cmd);
     } catch {
       ok = false;
     }

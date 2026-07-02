@@ -119,7 +119,11 @@ function ResultView({ result, exercise }: { result: GradeResult; exercise: DocEx
       <div className="space-y-4">
         <div className="rounded-2xl border border-surface-700 bg-surface-800/40 p-5">
           <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3">
-            Self-check — did your answer cover these?
+            Self-assessment — grade your own answer
+          </p>
+          <p className="text-xs text-slate-400 mb-3">
+            Professional technicians review their own documentation before it ships. Check your answer
+            against each point below, then compare it with the model answer.
           </p>
           <ul className="space-y-2">
             {exercise.criteria.map((c, i) => (
@@ -129,9 +133,6 @@ function ResultView({ result, exercise }: { result: GradeResult; exercise: DocEx
               </li>
             ))}
           </ul>
-          <p className="text-xs text-slate-500 mt-4">
-            AI grading isn't enabled on this deployment — compare your answer with the model answer below.
-          </p>
         </div>
         <ModelAnswer exercise={exercise} />
       </div>

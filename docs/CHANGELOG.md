@@ -1,5 +1,34 @@
 # Changelog
 
+## Phase 18 — Windows Server 2025 mastery expansion
+
+Expanded Windows Server from 12 lessons into a full **11-sub-course track (67 new lessons, 201 quiz questions)**, plus 2 hands-on capstone labs. Depth-over-breadth: every lesson ends with a graded quiz and a hands-on 'Try it yourself' task.
+
+**P18.1 — data-driven lesson model (infrastructure).** Added a structured content model so large lesson sets need no per-file JSX:
+- `src/content/lessons/model.ts` (LessonContent types) + `StructuredLesson.tsx` (renders to the same semantic markup, inheriting `.lesson-content` styling).
+- `src/content/lessons/structured/*` — generated content maps aggregated in `index.ts`.
+- `getLessonBody(id)` now falls back to structured content when a lesson isn't in the JSX registry — existing JSX lessons are untouched.
+- Authoring pipeline: `p18_manifest.json` + `emit_p18.py` generate the content TS, the spine region (between `// P18-GENERATED` markers in `sysadmin.ts`), and the seed migrations — idempotent and re-runnable.
+
+**P18.2 — sub-courses (67 lessons):** Foundations & Deployment (6), Active Directory Deep Dive (8), Group Policy Mastery (6), DNS & DHCP In Depth (7), File & Storage Services (6), Hyper-V & Virtualization (6), Server Security & Hardening (7), PowerShell Automation (6), Backup/Recovery & HA (5), Networking & Remote Access (5), Monitoring & Troubleshooting (5). The original 12-lesson `windows-server-2025` course is retained as-is (no id/progress changes).
+
+**P18.3 — capstone labs:** two simulated PowerShell labs (bulk Active Directory administration; standing up DNS & DHCP). Lab command matching is now case-insensitive.
+
+**Migrations:** 0029 (curriculum_lessons), 0030 (quizzes), 0031 (labs) — all validated on Postgres 16 and idempotent.
+
+---
+
+# Changelog
+
+## Phase 17.1 — Doc Practice self-assessment copy + improvement plan
+
+- `/practice` regular mode reworded as an intentional **self-assessment** ("grade your own answer" against the rubric + model answer) rather than hinting AI is missing. Build green.
+- Added **`docs/IMPROVEMENT-PLAN.md`** — accepted direction for content, design, and a major curriculum expansion (Windows Server 2025 12→~75, Networking 7→~35, Help Desk 25→~45 incl. a Tier 2 track), with a P18–P23 build sequence. Depth/mastery over breadth.
+
+---
+
+# Changelog
+
 ## Phase 17 — Editor/Deno fix + dependency audit
 
 **Edge Function “Cannot find name 'Deno'” (editor-only, not a runtime bug):** the React app's TypeScript server was analysing a Deno file. Fixed by scoping Deno to the functions folder:

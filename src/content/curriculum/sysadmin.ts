@@ -115,6 +115,108 @@ addCourse({ id:'troubleshooting', slug:'troubleshooting', title:"Advanced Troubl
     { id:'troubleshooting-06', hasQuiz:true, slug:'performance', title:"Performance & Capacity Issues", xp:80, minutes:35 },
 ]);
 
+// P18-GENERATED-START
+addCourse({ id:'ws-active-directory', slug:'ws-active-directory', title:"Active Directory Deep Dive", description:"Master Active Directory Domain Services end to end — architecture, domains and forests, OUs, groups, FSMO roles, replication, trusts, and health maintenance.", icon:'🏛️', order:20 }, 'ws-ad-m1', [
+    { id:'ws-ad-01', hasQuiz:true, slug:'architecture', title:"AD DS Architecture & Installation", xp:90, minutes:30 },
+    { id:'ws-ad-02', hasQuiz:true, slug:'domains-forests', title:"Domains, Trees & Forests", xp:90, minutes:30 },
+    { id:'ws-ad-03', hasQuiz:true, slug:'ous-delegation', title:"Organizational Units & Delegation", xp:90, minutes:28 },
+    { id:'ws-ad-04', hasQuiz:true, slug:'groups-scopes', title:"Users, Groups & Group Scopes", xp:90, minutes:30 },
+    { id:'ws-ad-05', hasQuiz:true, slug:'fsmo', title:"FSMO Roles", xp:95, minutes:28 },
+    { id:'ws-ad-06', hasQuiz:true, slug:'sites-replication', title:"Sites, Subnets & Replication", xp:95, minutes:30 },
+    { id:'ws-ad-07', hasQuiz:true, slug:'trusts', title:"Trusts", xp:90, minutes:26 },
+    { id:'ws-ad-08', hasQuiz:true, slug:'maintenance', title:"AD Maintenance & Health", xp:95, minutes:28 }
+]);
+
+addCourse({ id:'ws-group-policy', slug:'ws-group-policy', title:"Group Policy Mastery", description:"Control Windows at scale with Group Policy — architecture, processing order, security settings, preferences, deployment, and troubleshooting.", icon:'⚙️', order:21 }, 'ws-gp-m1', [
+    { id:'ws-gp-01', hasQuiz:true, slug:'architecture', title:"Group Policy Architecture", xp:85, minutes:26 },
+    { id:'ws-gp-02', hasQuiz:true, slug:'processing-order', title:"Processing Order & Precedence", xp:90, minutes:28 },
+    { id:'ws-gp-03', hasQuiz:true, slug:'security-settings', title:"Security Settings & Admin Templates", xp:90, minutes:28 },
+    { id:'ws-gp-04', hasQuiz:true, slug:'preferences', title:"Group Policy Preferences", xp:85, minutes:26 },
+    { id:'ws-gp-05', hasQuiz:true, slug:'deployment', title:"Folder Redirection & Software Deployment", xp:90, minutes:26 },
+    { id:'ws-gp-06', hasQuiz:true, slug:'troubleshooting', title:"Troubleshooting Group Policy", xp:90, minutes:26 }
+]);
+
+addCourse({ id:'ws-dns-dhcp', slug:'ws-dns-dhcp', title:"DNS & DHCP In Depth", description:"Run the two services every Windows network depends on — authoritative DNS (zones, records, forwarding, security) and DHCP (scopes, high availability, troubleshooting).", icon:'🌐', order:22 }, 'ws-dns-m1', [
+    { id:'ws-dns-01', hasQuiz:true, slug:'dns-zones', title:"DNS Fundamentals & Zones", xp:90, minutes:28 },
+    { id:'ws-dns-02', hasQuiz:true, slug:'dns-records', title:"DNS Record Types", xp:85, minutes:26 },
+    { id:'ws-dns-03', hasQuiz:true, slug:'forwarders', title:"Forwarders, Conditional Forwarders & Recursion", xp:90, minutes:26 },
+    { id:'ws-dns-04', hasQuiz:true, slug:'dns-security', title:"DNS Security & Maintenance", xp:90, minutes:26 },
+    { id:'ws-dhcp-01', hasQuiz:true, slug:'dhcp-scopes', title:"DHCP Fundamentals & Scopes", xp:85, minutes:26 },
+    { id:'ws-dhcp-02', hasQuiz:true, slug:'dhcp-ha', title:"DHCP High Availability", xp:90, minutes:26 },
+    { id:'ws-dhcp-03', hasQuiz:true, slug:'dhcp-troubleshooting', title:"DHCP Management & Troubleshooting", xp:85, minutes:24 }
+]);
+
+addCourse({ id:'ws-file-storage', slug:'ws-file-storage', title:"File & Storage Services", description:"Deliver reliable file services — NTFS and share permissions, DFS, quotas and file screening, Storage Spaces, iSCSI, deduplication, and shadow copies.", icon:'🗂️', order:23 }, 'ws-fs-m1', [
+    { id:'ws-fs-01', hasQuiz:true, slug:'permissions', title:"NTFS & Share Permissions", xp:90, minutes:28 },
+    { id:'ws-fs-02', hasQuiz:true, slug:'dfs', title:"DFS Namespaces & Replication", xp:90, minutes:26 },
+    { id:'ws-fs-03', hasQuiz:true, slug:'fsrm', title:"File Server Resource Manager (Quotas & Screening)", xp:85, minutes:24 },
+    { id:'ws-fs-04', hasQuiz:true, slug:'storage-spaces', title:"Storage Spaces & Resiliency", xp:90, minutes:26 },
+    { id:'ws-fs-05', hasQuiz:true, slug:'iscsi', title:"iSCSI & Shared Storage", xp:85, minutes:24 },
+    { id:'ws-fs-06', hasQuiz:true, slug:'dedup-vss', title:"Deduplication & Shadow Copies", xp:85, minutes:24 }
+]);
+
+addCourse({ id:'ws-hyperv', slug:'ws-hyperv', title:"Hyper-V & Virtualization", description:"Virtualise workloads with Hyper-V — the hypervisor, virtual switches, VM and virtual-disk configuration, checkpoints, and live migration and replication for availability and DR.", icon:'🧱', order:24 }, 'ws-hv-m1', [
+    { id:'ws-hv-01', hasQuiz:true, slug:'basics', title:"Hyper-V Basics & Installation", xp:90, minutes:26 },
+    { id:'ws-hv-02', hasQuiz:true, slug:'virtual-switches', title:"Virtual Switches & Networking", xp:90, minutes:26 },
+    { id:'ws-hv-03', hasQuiz:true, slug:'vm-config', title:"Creating & Configuring VMs", xp:90, minutes:26 },
+    { id:'ws-hv-04', hasQuiz:true, slug:'virtual-disks', title:"Virtual Disks & Storage", xp:85, minutes:24 },
+    { id:'ws-hv-05', hasQuiz:true, slug:'checkpoints', title:"Checkpoints & VM Management", xp:85, minutes:22 },
+    { id:'ws-hv-06', hasQuiz:true, slug:'live-migration', title:"Live Migration & Replica", xp:90, minutes:24 }
+]);
+
+addCourse({ id:'ws-security', slug:'ws-security', title:"Server Security & Hardening", description:"Harden Windows Server for the enterprise — least-privilege and tiered admin, LAPS, Defender and firewall, BitLocker and Credential Guard, patching, auditing, and hardening baselines.", icon:'🛡️', order:25 }, 'ws-sec-m1', [
+    { id:'ws-sec-01', hasQuiz:true, slug:'principles', title:"Security Principles & Tiered Admin", xp:90, minutes:24 },
+    { id:'ws-sec-02', hasQuiz:true, slug:'laps', title:"Local Admin Passwords & LAPS", xp:85, minutes:22 },
+    { id:'ws-sec-03', hasQuiz:true, slug:'defender-firewall', title:"Windows Defender & Firewall", xp:85, minutes:24 },
+    { id:'ws-sec-04', hasQuiz:true, slug:'bitlocker', title:"BitLocker & Credential Guard", xp:85, minutes:22 },
+    { id:'ws-sec-05', hasQuiz:true, slug:'patching', title:"Patching & Update Management", xp:85, minutes:22 },
+    { id:'ws-sec-06', hasQuiz:true, slug:'auditing', title:"Auditing & Security Logging", xp:85, minutes:22 },
+    { id:'ws-sec-07', hasQuiz:true, slug:'hardening', title:"Attack Surface Reduction & Baselines", xp:90, minutes:22 }
+]);
+
+addCourse({ id:'ws-powershell', slug:'ws-powershell', title:"PowerShell Automation for Windows Server", description:"Automate Windows Server with PowerShell — cmdlets and the object pipeline, remoting, bulk administration, scheduled reporting, and an introduction to Desired State Configuration.", icon:'⌨️', order:26 }, 'ws-ps-m1', [
+    { id:'ws-ps-01', hasQuiz:true, slug:'fundamentals', title:"PowerShell for Server Admins", xp:90, minutes:24 },
+    { id:'ws-ps-02', hasQuiz:true, slug:'pipeline', title:"Filtering, Formatting & the Pipeline", xp:85, minutes:24 },
+    { id:'ws-ps-03', hasQuiz:true, slug:'managing', title:"Managing Servers with Cmdlets", xp:90, minutes:24 },
+    { id:'ws-ps-04', hasQuiz:true, slug:'remoting', title:"PowerShell Remoting", xp:90, minutes:24 },
+    { id:'ws-ps-05', hasQuiz:true, slug:'bulk', title:"Bulk Administration & Scripting", xp:95, minutes:26 },
+    { id:'ws-ps-06', hasQuiz:true, slug:'dsc-reporting', title:"Scheduling, Reporting & DSC", xp:90, minutes:24 }
+]);
+
+addCourse({ id:'ws-backup-ha', slug:'ws-backup-ha', title:"Backup, Recovery & High Availability", description:"Keep services running and data recoverable — backup fundamentals, Windows Server Backup, restore scenarios, failover clustering, and disaster-recovery planning.", icon:'💾', order:27 }, 'ws-bk-m1', [
+    { id:'ws-bk-01', hasQuiz:true, slug:'fundamentals', title:"Backup Fundamentals", xp:85, minutes:22 },
+    { id:'ws-bk-02', hasQuiz:true, slug:'windows-server-backup', title:"Windows Server Backup", xp:85, minutes:22 },
+    { id:'ws-bk-03', hasQuiz:true, slug:'restore', title:"Restore & Recovery Scenarios", xp:90, minutes:22 },
+    { id:'ws-bk-04', hasQuiz:true, slug:'clustering', title:"Failover Clustering Basics", xp:90, minutes:24 },
+    { id:'ws-bk-05', hasQuiz:true, slug:'dr-planning', title:"Disaster Recovery Planning", xp:90, minutes:22 }
+]);
+
+addCourse({ id:'ws-foundations', slug:'ws-foundations', title:"Foundations & Deployment", description:"Start strong with Windows Server — editions and licensing, Server Core vs Desktop, initial configuration, modern management tools, roles and features, and deployment at scale.", icon:'🏗️', order:19 }, 'ws-fnd-m1', [
+    { id:'ws-fnd-01', hasQuiz:true, slug:'editions', title:"Editions, Licensing & Installation", xp:85, minutes:24 },
+    { id:'ws-fnd-02', hasQuiz:true, slug:'server-core', title:"Server Core vs Desktop Experience", xp:90, minutes:24 },
+    { id:'ws-fnd-03', hasQuiz:true, slug:'initial-config', title:"Initial Server Configuration", xp:85, minutes:22 },
+    { id:'ws-fnd-04', hasQuiz:true, slug:'management-tools', title:"Server Manager & Windows Admin Center", xp:85, minutes:22 },
+    { id:'ws-fnd-05', hasQuiz:true, slug:'roles-features', title:"Roles & Features", xp:85, minutes:22 },
+    { id:'ws-fnd-06', hasQuiz:true, slug:'deployment', title:"Deployment at Scale", xp:90, minutes:24 }
+]);
+
+addCourse({ id:'ws-remote-access', slug:'ws-remote-access', title:"Networking & Remote Access", description:"Connect and extend the network with Windows Server — host networking, RRAS and VPN, RADIUS/NPS, modern Always On VPN, and Remote Desktop Services.", icon:'🔌', order:28 }, 'ws-ras-m1', [
+    { id:'ws-ras-01', hasQuiz:true, slug:'server-networking', title:"Server Networking Configuration", xp:85, minutes:22 },
+    { id:'ws-ras-02', hasQuiz:true, slug:'rras-vpn', title:"Routing & Remote Access (VPN)", xp:90, minutes:24 },
+    { id:'ws-ras-03', hasQuiz:true, slug:'nps-radius', title:"Network Policy Server & RADIUS", xp:90, minutes:22 },
+    { id:'ws-ras-04', hasQuiz:true, slug:'always-on-vpn', title:"Always On VPN & Modern Remote Access", xp:90, minutes:22 },
+    { id:'ws-ras-05', hasQuiz:true, slug:'rds', title:"Remote Desktop Services Basics", xp:85, minutes:22 }
+]);
+
+addCourse({ id:'ws-monitoring', slug:'ws-monitoring', title:"Monitoring & Troubleshooting", description:"Keep servers healthy and fix them fast — Event Viewer, Performance Monitor, services and startup, a systematic troubleshooting method, and the most common server failures.", icon:'📈', order:29 }, 'ws-mon-m1', [
+    { id:'ws-mon-01', hasQuiz:true, slug:'event-viewer', title:"Event Viewer & Logs", xp:85, minutes:22 },
+    { id:'ws-mon-02', hasQuiz:true, slug:'perfmon', title:"Performance Monitor & Baselines", xp:90, minutes:22 },
+    { id:'ws-mon-03', hasQuiz:true, slug:'services-startup', title:"Services, Processes & Startup", xp:80, minutes:20 },
+    { id:'ws-mon-04', hasQuiz:true, slug:'methodology', title:"Troubleshooting Methodology", xp:90, minutes:22 },
+    { id:'ws-mon-05', hasQuiz:true, slug:'common-problems', title:"Common Server Problems", xp:90, minutes:22 }
+]);
+// P18-GENERATED-END
+
 export const sysadminCourses = courses;
 export const sysadminModules = modules;
 export const sysadminLessons = lessons;

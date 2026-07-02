@@ -94,3 +94,8 @@ SPA on Vercel/Netlify + managed Supabase (DB, Auth, Storage, Edge Functions). Cl
 - **`user_stats` drift** — mitigated by updating it only inside the RPCs that write progress.
 - **Scope** — months of work; phase independence allows stopping/reprioritizing at any checkpoint.
 - **Content gap** — the entry-level Help Desk core is largely new authoring (P5), the heaviest lift.
+
+
+## Data-driven lesson model (P18)
+
+Lessons can be authored as structured data (`LessonContent` in `src/content/lessons/model.ts`) instead of hand-written JSX. `StructuredLesson.tsx` renders that data into the same semantic markup as the JSX bodies, so styling is identical. `getLessonBody(id)` resolves the JSX registry first, then falls back to `structuredLessons[id]`. Windows Server content is generated from `p18_manifest.json` via `emit_p18.py`, which writes `src/content/lessons/structured/*`, replaces the region between `// P18-GENERATED-START/END` in `sysadmin.ts`, and emits seed migrations 0029/0030. This keeps large content sets consistent and re-generatable.

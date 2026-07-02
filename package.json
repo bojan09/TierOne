@@ -15,7 +15,6 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.43.1",
-    "deno": "^2.9.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0"
@@ -33,7 +32,6 @@
     "globals": "^15.9.0",
     "postcss": "^8.4.35",
     "prettier": "^3.3.3",
-    "supabase": "^2.109.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.1",
