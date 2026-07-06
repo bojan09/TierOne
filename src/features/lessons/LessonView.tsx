@@ -9,6 +9,7 @@ import {
   getCourseBySlug,
   getLessonBreadcrumbs,
   getLessonBySlug,
+  getOrderedLessons,
 } from '@/features/curriculum/selectors';
 import { isLessonLocked } from '@/features/curriculum/locking';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
@@ -65,6 +66,8 @@ export default function LessonView() {
   }
 
   const { prev, next } = getAdjacentLessons(course, lesson);
+  const ordered = getOrderedLessons(course);
+  const position = ordered.findIndex((l) => l.id === lesson.id) + 1;
 
   return (
     <LessonChrome
@@ -79,6 +82,9 @@ export default function LessonView() {
       breadcrumbs={getLessonBreadcrumbs(course, lesson)}
       prev={prev}
       next={next}
+      difficulty={lesson.difficulty}
+      position={position}
+      total={ordered.length}
       isCompletedOverride={completedSet.has(lesson.id)}
       onComplete={() => void completeLesson(lesson.id)}
       requiresQuiz={lesson.hasQuiz}

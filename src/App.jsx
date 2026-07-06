@@ -8,6 +8,7 @@ import Placeholder from './shared/ui/Placeholder.jsx';
 
 // Data-driven Academy (spine-driven, lazy bodies).
 import LearnHome from './features/curriculum/LearnHome.tsx';
+import LearnLayout from './features/curriculum/LearnLayout.tsx';
 import CourseView from './features/curriculum/CourseView.tsx';
 import LessonView from './features/lessons/LessonView.tsx';
 import SimulatorHome from './features/scenario/SimulatorHome.tsx';
@@ -49,9 +50,11 @@ export default function App() {
 
         {/* Data-driven Academy — requires authentication */}
         <Route element={<RequireAuth />}>
-          <Route path="learn" element={<LearnHome />} />
-          <Route path="learn/:courseSlug" element={<CourseView />} />
-          <Route path="learn/:courseSlug/:lessonSlug" element={<LessonView />} />
+          <Route path="learn" element={<LearnLayout />}>
+            <Route index element={<LearnHome />} />
+            <Route path=":courseSlug" element={<CourseView />} />
+            <Route path=":courseSlug/:lessonSlug" element={<LessonView />} />
+          </Route>
           <Route path="simulator" element={<SimulatorHome />} />
           <Route path="simulator/:slug" element={<ScenarioPlayer />} />
           <Route path="labs" element={<LabsHome />} />

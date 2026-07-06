@@ -7,6 +7,10 @@ export interface LessonSection {
   p?: string[];
   ul?: Bullet[];
   code?: string;
+  /** Optional original inline SVG diagram (authored, trusted content). */
+  svg?: string;
+  /** Optional caption shown under an svg diagram. */
+  caption?: string;
   note?: { kind: 'tip' | 'warn' | 'info'; text: string };
 }
 

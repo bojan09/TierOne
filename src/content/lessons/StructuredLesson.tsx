@@ -47,6 +47,17 @@ export default function StructuredLesson({ content }: { content: LessonContent }
               <code>{s.code}</code>
             </pre>
           )}
+          {s.svg && (
+            <figure className="my-5">
+              <div
+                className="rounded-xl border border-surface-700 bg-[#0b0f17] p-4 overflow-x-auto [&_svg]:mx-auto [&_svg]:block [&_svg]:max-w-full [&_svg]:h-auto"
+                dangerouslySetInnerHTML={{ __html: s.svg }}
+              />
+              {s.caption && (
+                <figcaption className="text-center text-xs text-slate-500 mt-2">{s.caption}</figcaption>
+              )}
+            </figure>
+          )}
           {s.note && (
             <div className={`rounded-xl border px-4 py-3 my-4 ${NOTE_CLASS[s.note.kind]}`}>
               <span className="text-[10px] font-bold uppercase tracking-widest block mb-1">

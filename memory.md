@@ -1,6 +1,71 @@
-# Memory — TierZero (through Phase 18)
+# Memory — TierZero (through Phase 22)
 
-Last updated: 2026-07-02
+Last updated: 2026-07-06
+
+## P22 ENGAGEMENT & SEARCH — COMPLETE (no DB changes)
+
+Frontend phase. Gates green. Onboarding DEFERRED (approved). Recommended defaults used: custom matcher (no Fuse dep), augment /learn, defer onboarding.
+
+**P22.1 global search:** `src/features/search/searchIndex.ts` builds a spine-driven index (curriculum courses + lessons w/ structuredLessons body text + key pages + GLOSSARY_DATA); `searchItems(q,limit)` AND-tokenised scorer (title>body), `defaultItems()`. Replaced the STALE hardcoded index in `src/components/CommandPalette.jsx` (was pointing at deleted legacy routes) — now imports searchIndex; ⌘K wiring already existed in Layout.jsx. Rewrote `src/pages/SearchResults.jsx` (/search) spine-driven. Verified P19/P20 titles in bundle.
+**P22.2 resume+streak:** ResumeBanner (reads localStorage lastVisited, href=window.location.pathname = correct /learn path) rendered atop LearnHome; StreakTracker compact in LearnLayout sidebar (persistent + drawer).
+**P22.3 learning-path:** `src/features/curriculum/LearningPath.tsx` — per-track connected course nodes (complete/active/todo, progress bar, difficulty). LearnHome rewritten to render ResumeBanner + LearningPath per track (replaced flat card grid).
+
+**DEBT (unchanged):** resume/streak use legacy localStorage useProgress (per-device); server-authoritative streak = activity table+RPC, future. Legacy useProgress retirement still pending.
+
+**NEXT: P23** — authoring tooling (generalize/CLI for content pipeline), light/dark theme toggle (currently dark-only), a11y deepening (focus mgmt on route change, ARIA live for quiz results, keyboard flow), + optional server-authoritative streak/onboarding. Pipeline: structured-lesson model + emit_content.py (<phase> config, emits difficulty).
+## P21 LESSON-EXPERIENCE UX — COMPLETE (no DB changes)
+
+Frontend/UX phase. Gates green. NO new/changed migrations (difficulty is client-side spine data only).
+
+**P21.1 in-lesson:** `src/features/lessons/LessonToc.tsx` — TOC via DOM-scan of `.lesson-content` h2s (MutationObserver for lazy bodies + IntersectionObserver scroll-spy); sidebar variant (desktop) + collapsible inline variant (mobile). Added difficulty badge + 'Lesson N of M' to header (LessonLayout.jsx props difficulty/position/total; LessonView computes position via getOrderedLessons; LessonChrome types extended). Prev/next + reading time already existed in legacy LessonLayout.jsx.
+**P21.2 sidebar:** `src/features/curriculum/CourseTree.tsx` (tracks->courses->lessons, completion tick/lock/active) + `LearnLayout.tsx` (persistent left sidebar on xl, slide-over drawer <xl with backdrop/scroll-lock/close-on-route). Routes nested: App.jsx `/learn` now a layout route (index=LearnHome, :courseSlug=CourseView, :courseSlug/:lessonSlug=LessonView). Added @keyframes slideIn to styles/index.css.
+**P21.3 difficulty taxonomy (P20 debt RESOLVED):** addCourse (both helpdesk 5-arg + sysadmin 3-arg) now take optional course.difficulty (default beginner/intermediate resp.); emit_content.py emits difficulty:'X' in course object; manifests patched per-course. Badges on lesson header + LearnHome cards. Map: nw-fundamentals=beginner; ws-active-directory/group-policy/hyperv/security/powershell/backup-ha + nw-routing/nw-security=advanced; rest sysadmin=intermediate; all t2-*=intermediate.
+
+**Still deferred:** legacy useProgress localStorage in LessonLayout.jsx (setLastVisited + non-override completion) NOT retired — spine lessons use override; full retirement is a separate refactor. Original hand-written sysadmin/helpdesk courses keep default difficulty.
+
+**NEXT: P22 engagement + global search** (skill-tree/learning-path view, streaks surfaced, onboarding, real content search over lessons). Then P23 authoring tooling + light/dark + a11y deepening. Pipeline: structured-lesson model + emit_content.py (<phase> config; now also emits difficulty).
+
+## P20 HELP DESK TIER 2 — COMPLETE
+
+Added a Tier 2 track to Help Desk (25 -> 45 lessons): **5 sub-courses / 20 lessons / 60 quizzes / 3 Tier 2 scenarios / 2 labs**, 2 diagrams. Gates green; migrations 0035/0036/0037/0038 validated + idempotent on PG16. Tier-1 untouched.
+
+**Emitter generalized further:** `emit_content.py` now has per-phase `spine_style` ('sysadmin' 3-arg vs 'helpdesk' 5-arg addCourse). helpdesk courses need module_slug + module_title in the manifest. P18/P19 verified to regenerate identically. `// P20-GENERATED` region in helpdesk.ts.
+
+**Sub-courses (t2- ids, track helpdesk, orders 20-24):** t2-windows-troubleshooting(5), t2-active-directory(4), t2-m365-admin(5), t2-network-troubleshooting(3), t2-itil-escalation(3). Areas: t2-windows, t2-ad, t2-m365, t2-network, t2-itil. Titled 'Tier 2: ...'; sort 4001-4020.
+**Scenarios (0037):** sim-t2-boot, sim-t2-m365-license, sim-t2-vpn (4 stages each, Virtual Help Desk schema: scenarios/scenario_stages/scenario_options via CTE join on sort).
+**Labs (0038):** lab-t2-ad-unlock (PowerShell AD recovery), lab-t2-winre (sfc/DISM/bootrec/chkdsk).
+Author scripts /home/claude/p20_author_1..2.py -> p20_manifest.json -> emit_content.py p20.
+
+**KNOWN DEBT:** helpdesk addCourse hardcodes difficulty:'beginner' -> Tier 2 distinguished by title only; a first-class tier/difficulty field is a P21 item.
+
+**NEXT: P21 lesson-experience UX** (left sidebar course tree in /learn, in-lesson prev/next + TOC + reading time, more diagrams, callout components, and the tier/difficulty taxonomy). Then P22 engagement+search, P23 authoring tooling + light/dark + a11y. Structured-lesson model + emit_content.py are the reusable pipeline.
+
+## P19 NETWORKING — COMPLETE
+
+**P19 shipped:** 8 sub-courses / 35 lessons / 105 quizzes / 6 inline SVG diagrams / 2 capstone labs. Gates green; migrations 0032/0033/0034 validated + idempotent on PG16. Decisions taken: diagrams NOW (added `svg`+`caption` to LessonSection + StructuredLesson render) and emitter GENERALIZED (`emit_content.py <phase>` config-driven; index scans all area files; P18 parity verified). Sub-course areas: net-fundamentals, net-ipv4, net-ipv6, net-switching, net-routing, net-wireless, net-security, net-troubleshooting (ids `nw-*`, sort 3001-3035, `// P19-GENERATED` region in sysadmin.ts). Labs: lab-nw-subnet (exact-answer subnetting), lab-nw-cli (CLI tools). Subnetting math verified with Python (ipaddress). Author scripts /home/claude/p19_author_1..3.py -> p19_manifest.json -> emit_content.py p19.
+
+
+Expand Networking 7 -> ~35 lessons on the **sysadmin track**, reusing the P18 structured-lesson pipeline. Existing courses stay untouched (protect progress): sysadmin `networking` course (7 lessons `networking-01..07`, module `networking-m1`, order 5) and helpdesk `networking-basics` (`net-01..03`).
+
+**Locked design:**
+- New lesson id prefix **`nw-`** (verified `net-` and `networking-` are taken — do NOT reuse).
+- New spine region **`// P19-GENERATED-START/END`** in `sysadmin.ts`, separate from the P18 region so P18 is never touched.
+- curriculum_lessons **sort_order base 3001**; track `sysadmin`.
+- Migrations **0032** (curriculum_lessons), **0033** (quizzes), **0034** (labs) — idempotent, PG-validated.
+- Vendor-neutral framing to avoid duplicating P18's Windows DNS/DHCP lessons.
+
+**8 sub-courses (~35 lessons), each lesson = 3 quiz Qs + hands-on task:**
+Network Fundamentals(5), IPv4 Addressing & Subnetting(6, incl. subnetting practice+VLSM), IPv6(3), Switching(5: Ethernet/MAC, VLANs, 802.1Q trunking, STP, port security), Routing(5: concepts, static, dynamic OSPF/EIGRP, inter-VLAN, NAT/PAT), Wireless(3), Network Security & Services(4: firewalls/ACLs, VPN/IPsec, segmentation, DHCP/DNS in-context), Monitoring/Tools/Troubleshooting(4: CLI tools, OSI method, packet analysis, SNMP/NetFlow/syslog).
+
+**Labs (0034, sysadmin):** subnetting practice (regex answer-matching on computed network/broadcast/host), network CLI troubleshooting (ping/traceroute/nslookup/ipconfig/arp); optional 3rd VLAN/trunk sim.
+
+**TWO OPEN DECISIONS before authoring:**
+1. Inline-SVG diagrams now (recommended: add optional `svg` field to LessonSection, ~5 original diagrams — OSI/subnet/VLAN/routing) vs defer to P21.
+2. Emitter: generalize `emit_p18.py` -> `emit_content.py <phase>` config-driven (recommended; P20 also needs it) vs clone to `emit_p19.py`.
+
+**Enrichment note:** project repo has CompTIA Network+ / A+ study guides + networking PDFs — use them to cross-check subnetting math and terminology during authoring (optional, not mandatory).
+
+**Reuse:** same manifest+emitter+StructuredLesson model as P18; author scripts pattern `p19_author_*.py` appending to a `p19_manifest.json`.
 
 ## PHASE 18 COMPLETE — Windows Server 2025 mastery expansion
 

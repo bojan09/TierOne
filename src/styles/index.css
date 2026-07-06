@@ -858,3 +858,9 @@ button:focus-visible, a:focus-visible {
   .cert-print { position: absolute; inset: 0; margin: auto; border: none; }
   .cert-actions { display: none !important; }
 }
+
+/* P21: mobile course-nav drawer slide-in */
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}

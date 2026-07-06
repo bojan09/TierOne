@@ -1,5 +1,79 @@
 # Changelog
 
+## Phase 22 — Engagement & global search
+
+Rebuilt search and completed the retention loop (find → resume → progress). No database changes; onboarding deferred (approved).
+
+**P22.1 — Global search (fixes a broken feature):** the old `/search` and command palette indexed a hardcoded list of *deleted* legacy routes and none of the ~170 spine lessons. Added `src/features/search/searchIndex.ts` — a spine-driven index over every course, lesson (with structured-lesson body text), key app page, and glossary term, with an AND-tokenised scorer (title hits rank above body). Rewired the existing ⌘K `CommandPalette` and rebuilt the `/search` page on top of it. All spine content is now searchable with correct `/learn` links.
+
+**P22.2 — Resume & streak on /learn:** surfaced the existing "Continue where you left off" banner on the Academy landing and a compact day-streak indicator in the course sidebar (persistent + mobile drawer).
+
+**P22.3 — Learning-path view:** replaced the flat course-card grid on `/learn` with a `LearningPath` progression — connected course nodes per track showing complete / in-progress / not-started state, a progress bar, and difficulty.
+
+**Deferred:** first-run onboarding (needs a persistence decision) → later phase.
+**Debt (unchanged):** resume/streak still read the legacy localStorage `useProgress` (per-device). A server-authoritative streak (activity table + RPC) remains a future item.
+
+---
+
+# Changelog
+
+## Phase 21 — Lesson-experience UX
+
+Improved the learning shell without disturbing the ~170 existing lessons. No database changes.
+
+**P21.1 — In-lesson experience:** added a **table of contents** (`LessonToc`) that scans the rendered lesson body for headings (works for both structured and legacy JSX lessons via DOM + MutationObserver), with scroll-spy active highlighting — sticky in the sidebar on desktop, collapsible at the top on mobile. Added a **difficulty badge** and **"Lesson N of M"** position to the lesson header. (Prev/next and reading time already existed.)
+
+**P21.2 — /learn course-tree sidebar:** new `LearnLayout` wraps the `/learn` routes with a persistent left **course tree** (`CourseTree`: tracks → courses → lessons, with completion ticks, lock icons, and active-lesson highlight). Persistent on xl screens; a **slide-over drawer** on smaller screens (toggle bar + backdrop + body-scroll lock + close-on-navigate).
+
+**P21.3 — Difficulty taxonomy (resolves P20 debt):** `difficulty` is now a real per-course value. Both `addCourse` signatures accept an optional `difficulty`; the emitter emits it; the manifests set it per course. Surfaced as badges on the lesson header and `/learn` course cards. Mapping — Networking Fundamentals = beginner; deep WinServer/Networking (AD, GP, Hyper-V, Security, PowerShell, HA, Routing) = advanced; the rest = intermediate; Tier 2 = intermediate.
+
+Verified: P18/P19/P20 regenerate cleanly through the extended emitter; seed migrations are unchanged (difficulty isn't a DB column).
+
+---
+
+# Changelog
+
+## Phase 20 — Help Desk Tier 2 track
+
+Added a full **Tier 2 support track** to Help Desk: **5 sub-courses, 20 lessons, 60 quiz questions**, plus 3 realistic Tier 2 ticket scenarios and 2 capstone labs. Help Desk is now 25 → 45 lessons. Tier-1 content untouched (no id/progress changes).
+
+**P20.1 — emitter generalization:** extended `emit_content.py` with a per-phase `spine_style` so it can emit the Help Desk 5-arg `addCourse(course, moduleId, moduleSlug, moduleTitle, seeds)` as well as the sysadmin 3-arg form. Verified P18/P19 regenerate identically. New `// P20-GENERATED` region in `helpdesk.ts`.
+
+**P20.2 — Tier 2 sub-courses (20 lessons, `t2-` ids):** Advanced Windows Troubleshooting (5), Active Directory for Support (4), Microsoft 365 Administration (5), Tier 2 Network Troubleshooting (3), ITIL & Escalation (3). Titled "Tier 2: …" and ordered after Tier-1. M365 licensing terminology cross-checked against the project reference material. Includes boot-sequence and escalation-path diagrams.
+
+**P20.3 — scenarios (0037):** 3 Tier 2 tickets in the Virtual Help Desk — Windows won't boot, Outlook desktop won't activate (licensing), and VPN-connected-but-no-internal-resources. 4 scored stages each; answer key stays server-side.
+
+**P20.4 — labs (0038):** recover a locked-out account (PowerShell AD), and repair Windows from the command line (sfc / DISM / bootrec / chkdsk).
+
+**Migrations:** 0035 (lessons), 0036 (quizzes), 0037 (scenarios), 0038 (labs) — validated on Postgres 16, idempotent, `t2-` ids, sort 4001–4020, no collisions.
+
+**Note (tech debt):** helpdesk `addCourse` hardcodes `difficulty:'beginner'`, so Tier 2 is distinguished by title only. A first-class `tier`/difficulty field is deferred to the P21 lesson-experience phase.
+
+---
+
+# Changelog
+
+## Phase 19 — Networking mastery expansion
+
+Expanded Networking from 7 → **8 sub-courses, 35 new lessons, 105 quiz questions**, plus 6 original inline SVG diagrams and 2 capstone labs. Depth-over-breadth: every lesson ends with a graded quiz and a hands-on task.
+
+**P19.1 — infrastructure (reused + extended):**
+- Extended the structured lesson model with an optional inline **SVG diagram** field (`svg` + `caption` on `LessonSection`), rendered by `StructuredLesson`. Diagrams are original, trusted content (no external assets).
+- **Generalized the emitter** `emit_p18.py` → `emit_content.py <phase>` (config-driven: spine file, marker, track, migration numbers, sort base). The index aggregator now scans all area files, so phases coexist. Verified P18 regenerates identically.
+- New `// P19-GENERATED` region in `sysadmin.ts`, separate from P18.
+
+**P19.2 — sub-courses (35 lessons):** Network Fundamentals (5), IPv4 Addressing & Subnetting (6), IPv6 Essentials (3), Switching & VLANs (5), Routing (5), Wireless Networking (3), Network Security & Services (4), Monitoring/Tools/Troubleshooting (4). Vendor-neutral to avoid duplicating P18's Windows DNS/DHCP. All subnetting math verified programmatically.
+
+**P19.3 — diagrams:** OSI stack, TCP/IP encapsulation, subnet mask (/27), VLAN trunk, NAT/PAT, TCP three-way handshake.
+
+**P19.4 — capstone labs:** subnetting practice (exact-answer checks against verified values) and network CLI troubleshooting (ping/tracert/nslookup/ipconfig/arp/netstat).
+
+**Migrations:** 0032 (lessons), 0033 (quizzes), 0034 (labs) — validated on Postgres 16, idempotent, `nw-` ids, sort 3001–3035, no collisions with P18. Existing `networking` and `networking-basics` courses untouched.
+
+---
+
+# Changelog
+
 ## Phase 18 — Windows Server 2025 mastery expansion
 
 Expanded Windows Server from 12 lessons into a full **11-sub-course track (67 new lessons, 201 quiz questions)**, plus 2 hands-on capstone labs. Depth-over-breadth: every lesson ends with a graded quiz and a hands-on 'Try it yourself' task.

@@ -22,6 +22,10 @@ export interface LessonChromeProps {
   next: LessonLink | null;
   objectives?: string[];
   children: ReactNode;
+  /** P21: difficulty badge + position within the course. */
+  difficulty?: string;
+  position?: number;
+  total?: number;
   /** Server-authoritative completion override (spine usage). */
   isCompletedOverride?: boolean;
   onComplete?: () => void;

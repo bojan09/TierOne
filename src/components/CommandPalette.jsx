@@ -1,36 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GLOSSARY } from '../data/glossary.js'
-
-// ─── Search index ─────────────────────────────────────────────────────────────
-const PAGES = [
-  { type: 'page', label: 'Home',                  href: '/',                    icon: '🏠', desc: 'Platform home' },
-  { type: 'page', label: 'My Progress Dashboard', href: '/dashboard',           icon: '📊', desc: 'XP, levels, badges, course progress' },
-  { type: 'page', label: 'Glossary',              href: '/glossary',            icon: '📖', desc: '70+ IT terms defined & searchable' },
-  { type: 'page', label: 'Windows Server 2025',   href: '/windows-server-2025', icon: '🖥️', desc: 'AD, DNS, DHCP, Hyper-V' },
-  { type: 'page', label: 'Windows Desktop',       href: '/windows',             icon: '💻', desc: 'Windows OS fundamentals' },
-  { type: 'page', label: 'PowerShell',            href: '/powershell',          icon: '⚡', desc: 'Scripting & automation' },
-  { type: 'page', label: 'Linux Fundamentals',    href: '/linux',               icon: '🐧', desc: 'Shell, fs, permissions' },
-  { type: 'page', label: 'Unix',                  href: '/unix',                icon: '🔩', desc: 'POSIX, BSD, Solaris' },
-  { type: 'page', label: 'Networking',            href: '/networking',          icon: '🌐', desc: 'TCP/IP, VLANs, routing' },
-  { type: 'page', label: 'Cybersecurity',         href: '/cybersecurity',       icon: '🛡️', desc: 'Hardening, firewalls, IR' },
-  { type: 'page', label: 'Python for SysAdmins',  href: '/python',              icon: '🐍', desc: 'Automation scripting' },
-  { type: 'page', label: 'IT Models',             href: '/it-models',           icon: '📐', desc: 'OSI, TCP/IP, ITIL, Zero Trust' },
-  { type: 'page', label: 'Cheat Sheets',          href: '/cheatsheets',         icon: '📋', desc: 'Quick-reference guides' },
-  { type: 'page', label: 'Troubleshooting',       href: '/troubleshooting',     icon: '🔍', desc: 'Diagnostic methodology' },
-  { type: 'page', label: 'VMware Lab Setup',      href: '/vmware-setup',        icon: '🧪', desc: 'Configure your lab environment' },
-  { type: 'page', label: 'Port Lookup',           href: '/port-lookup',         icon: '🔌', desc: 'Search ports & protocols' },
-]
-
-const GLOSSARY_ITEMS = Object.entries(GLOSSARY).map(([term, def]) => ({
-  type:  'glossary',
-  label: term,
-  desc:  def.length > 80 ? def.slice(0, 80) + '…' : def,
-  icon:  '📖',
-  href:  null,
-}))
-
-const ALL_ITEMS = [...PAGES, ...GLOSSARY_ITEMS]
+import { searchItems, defaultItems } from '@/features/search/searchIndex'
 
 function highlight(text, query) {
   if (!query) return text
@@ -54,12 +24,7 @@ export default function CommandPalette({ open, onClose }) {
   const inputRef  = useRef(null)
   const listRef   = useRef(null)
 
-  const results = query.trim()
-    ? ALL_ITEMS.filter(item =>
-        item.label.toLowerCase().includes(query.toLowerCase()) ||
-        item.desc?.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 10)
-    : PAGES.slice(0, 8)
+  const results = query.trim() ? searchItems(query, 10) : defaultItems()
 
   // Focus input when opening
   useEffect(() => {

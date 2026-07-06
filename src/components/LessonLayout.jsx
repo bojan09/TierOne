@@ -4,6 +4,13 @@ import Breadcrumb from './Breadcrumb.jsx'
 import ProgressBar from './ProgressBar.jsx'
 import { useProgress } from '../hooks/useProgress.js'
 import { fireXPToast } from './XPToast.jsx'
+import { LessonTocSidebar, LessonTocInline } from '@/features/lessons/LessonToc'
+
+const DIFFICULTY_STYLE = {
+  beginner: 'text-accent-green border-accent-green/30 bg-accent-green/5',
+  intermediate: 'text-accent-amber border-accent-amber/30 bg-accent-amber/5',
+  advanced: 'text-brand-300 border-brand-500/30 bg-brand-500/5',
+}
 
 /**
  * LessonLayout — the shell every individual lesson page sits inside.
@@ -44,6 +51,10 @@ export default function LessonLayout({
   next = null,
   objectives = [],
   children,
+  // P21: difficulty badge + position within the course.
+  difficulty = null,
+  position = null,
+  total = null,
   // Optional server-authoritative overrides (spine-driven usage). When omitted,
   // the legacy localStorage path below is used unchanged (legacy lesson pages).
   isCompletedOverride = null,
@@ -112,6 +123,20 @@ export default function LessonLayout({
               <span className="flex items-center gap-1 text-xs font-mono text-accent-amber">
                 +{xp} XP
               </span>
+              {difficulty && (
+                <span
+                  className={`text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                    DIFFICULTY_STYLE[difficulty] || DIFFICULTY_STYLE.beginner
+                  }`}
+                >
+                  {difficulty}
+                </span>
+              )}
+              {position && total && (
+                <span className="text-xs text-slate-500">
+                  Lesson {position} of {total}
+                </span>
+              )}
               {isCompleted && (
                 <span className="flex items-center gap-1.5 text-xs text-accent-green font-semibold">
                   <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -127,6 +152,7 @@ export default function LessonLayout({
           </div>
 
           {/* ── Lesson body ── */}
+          <LessonTocInline />
           <div className="lesson-content space-y-12">
             {children}
           </div>
@@ -214,6 +240,11 @@ export default function LessonLayout({
         {/* ── RIGHT — sticky sidebar ── */}
         <aside className="lg:w-64 xl:w-72 flex-shrink-0 no-print" aria-label="Lesson sidebar">
           <div className="lg:sticky lg:top-[78px] space-y-4">
+
+            {/* On-this-page (desktop) */}
+            <div className="hidden lg:block">
+              <LessonTocSidebar />
+            </div>
 
             {/* Lesson progress card */}
             <div className="card p-4">

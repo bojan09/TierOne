@@ -1,26 +1,52 @@
 import type { LessonContent } from '../model';
+import { netfundamentalsLessons } from './net-fundamentals';
+import { netipv4Lessons } from './net-ipv4';
+import { netipv6Lessons } from './net-ipv6';
+import { netroutingLessons } from './net-routing';
+import { netsecurityLessons } from './net-security';
+import { netswitchingLessons } from './net-switching';
+import { nettroubleshootingLessons } from './net-troubleshooting';
+import { netwirelessLessons } from './net-wireless';
+import { t2adLessons } from './t2-ad';
+import { t2itilLessons } from './t2-itil';
+import { t2m365Lessons } from './t2-m365';
+import { t2networkLessons } from './t2-network';
+import { t2windowsLessons } from './t2-windows';
 import { winserveradLessons } from './winserver-ad';
-import { winservergpLessons } from './winserver-gp';
-import { winserverdnsLessons } from './winserver-dns';
-import { winserverstorageLessons } from './winserver-storage';
-import { winserverhypervLessons } from './winserver-hyperv';
-import { winserversecurityLessons } from './winserver-security';
-import { winserverpowershellLessons } from './winserver-powershell';
 import { winserverbackupLessons } from './winserver-backup';
+import { winserverdnsLessons } from './winserver-dns';
 import { winserverfoundationsLessons } from './winserver-foundations';
-import { winserverremoteLessons } from './winserver-remote';
+import { winservergpLessons } from './winserver-gp';
+import { winserverhypervLessons } from './winserver-hyperv';
 import { winservermonitoringLessons } from './winserver-monitoring';
+import { winserverpowershellLessons } from './winserver-powershell';
+import { winserverremoteLessons } from './winserver-remote';
+import { winserversecurityLessons } from './winserver-security';
+import { winserverstorageLessons } from './winserver-storage';
 
 export const structuredLessons: Record<string, LessonContent> = {
+  ...netfundamentalsLessons,
+  ...netipv4Lessons,
+  ...netipv6Lessons,
+  ...netroutingLessons,
+  ...netsecurityLessons,
+  ...netswitchingLessons,
+  ...nettroubleshootingLessons,
+  ...netwirelessLessons,
+  ...t2adLessons,
+  ...t2itilLessons,
+  ...t2m365Lessons,
+  ...t2networkLessons,
+  ...t2windowsLessons,
   ...winserveradLessons,
-  ...winservergpLessons,
-  ...winserverdnsLessons,
-  ...winserverstorageLessons,
-  ...winserverhypervLessons,
-  ...winserversecurityLessons,
-  ...winserverpowershellLessons,
   ...winserverbackupLessons,
+  ...winserverdnsLessons,
   ...winserverfoundationsLessons,
-  ...winserverremoteLessons,
+  ...winservergpLessons,
+  ...winserverhypervLessons,
   ...winservermonitoringLessons,
+  ...winserverpowershellLessons,
+  ...winserverremoteLessons,
+  ...winserversecurityLessons,
+  ...winserverstorageLessons,
 };
