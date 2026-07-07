@@ -1,5 +1,147 @@
 # Changelog
 
+## Phase 29 — Scripting & Automation track (PowerShell + Python)
+
+New `scripting` track for the most-requested skill gap. **2 sub-courses, 12 lessons, 36 quizzes, 2 hands-on labs.**
+- **PowerShell** (`sc-ps-*`): basics & Verb-Noun cmdlets → objects & the pipeline → variables/operators/data → flow control & loops → functions & scripts → practical automation (filter/export/schedule).
+- **Python** (`sc-py-*`): basics → data types & structures → control flow → functions & modules → files & error handling → IT automation (subprocess, parsing, APIs). Lessons include runnable code examples.
+- **Labs:** `lab-sc-ps` (discover → filter → export on the pipeline) and `lab-sc-py` (REPL → loop → pip → run a script), using the existing command-matching LabPlayer.
+
+Track model extended the same proven way as A+: PG enum (`0047`), `Track` type, `scripting.ts` spine, emitter target (`p29`), `TRACK_LABELS/ORDER`, and a 4th onboarding option. Seeds `0048/0049` (lessons/quizzes) + `0050` (labs). Validated on Postgres 16 (`sc-` ids, sort 6001–6012; labs idempotent).
+
+**Note:** onboarding now lists 4 tracks as stacked cards — usable, but a dedicated selector is worth it at 4+ (tracked).
+
+---
+
+# Changelog
+
+## Phase 28.1 — CompTIA A+ track expansion
+
+Doubled the A+ track from 18 → **36 lessons / 108 quizzes** (3 more per domain, appended so existing ids/order are untouched). Added coverage: Display/Video, Printers (7-step laser process), Custom configs & RAID; Network devices, TCP/IP services, Internet types; Mobile connectivity/email, sync & security, laptop hardware; macOS/Linux basics, Windows networking, OS security & users; Wireless auth, the CompTIA 7-step malware-removal process, social engineering & network attacks; Network, Printer, and Mobile/Security troubleshooting. Regenerated seeds 0045/0046, validated on Postgres 16.
+
+---
+
+# Changelog
+
+## Phase 28 — CompTIA A+ track + debt cleanup
+
+**New track — CompTIA A+ (#1):** added a third track (`comptia`) for the entry-level IT certification — high search demand and a natural on-ramp for a free product, grounded in the repo's A+ study guides. **6 domain sub-courses, 18 lessons, 54 quiz questions** (`ca-` ids, sort 5001–5018, beginner): PC Hardware, Networking Basics, Mobile/Virtualization/Cloud, Operating Systems, Security, and Troubleshooting (incl. the A+ 6-step methodology).
+- Track model extended: `Track` type (`common.ts`, `database.ts`), PG enum (`migration 0044`), new `comptia.ts` spine, curriculum index, emitter target (`p28`), and `TRACK_LABELS`/`TRACK_ORDER` across CourseTree/LearnHome/Dashboard, plus a third onboarding option.
+- Content generated through the versioned pipeline (`scripts/manifests/p28.json` → validator → emitter → seeds 0045/0046). Validated on Postgres 16.
+
+**Debt cleanup (#3):** deleted the now-unused `useLocalStorage.js` (progress fully retired the last localStorage store in P24-M2).
+
+**Light theme (#2) — intentionally deferred, not shipped.** A correct light theme needs a semantic-token migration across ~128 files (raw `text-white`/`text-slate-*`/`bg-surface-*` + widespread opacity modifiers). Shipping it blind would risk breaking dark mode and can't be visually verified here. Recommended as a dedicated, QA'd pass (semantic tokens + opacity-safe codemod → dark stays byte-identical → contrast-checked light palette → visual QA).
+
+---
+
+# Changelog
+
+## Phase 27 — Review polish (self-rating + surfacing)
+
+**Self-rated scheduling (migration 0043):** split `submit_review` into `grade_review` (read-only server grading — correctness feedback) + `schedule_review(lesson, quality)` (SM-2 write driven by an Anki-style recall self-rating). The quiz stays for active recall; the rating (Again/Hard/Good/Easy → SM-2 q 1/3/4/5) drives the interval — a better signal than a coarse multiple-choice %. Flow: answer → check → rate (keys 1–4) → next-due. Trusts the self-rating for spacing (SR convention). `submit_review` from 0042 retired.
+
+**Surfacing:** a Navbar 🔁 badge with the due count and a "due for review" pill in the `/learn` sidebar, both driven by `dueReviewCount`.
+
+Validated on Postgres 16: grade is read-only; Easy grows the interval (1→3), Again resets to 1; idempotent.
+
+---
+
+# Changelog
+
+## Phase 26 — Spaced-repetition Review
+
+Turns the activation loop into long-term retention: passed lesson quizzes resurface for review on a spacing schedule.
+
+**Algorithm & schema (migration 0042):** `review_schedule(user_id, lesson_id, due_at, interval_days, ease, reps, lapses, last_reviewed_at)` with simplified **SM-2**. RLS self-select; writes only via SECURITY DEFINER RPCs.
+- `get_due_reviews()` — passed lessons that are unscheduled (= due now) or past due. Lazy seeding, so `submit_quiz` is untouched.
+- `submit_review(lesson_id, answers)` — grades server-side (answer key never leaves the DB), applies SM-2 (pass grows interval 1 → 3 → interval·ease; fail resets to 1 day, ease −0.2 floor 1.3), returns score + next due. **No XP, no quiz_attempt** — mastery stats stay about first pass.
+
+**UI:** `/review` runs the due queue with the quiz renderer + `submit_review`, showing the next-due interval per item. Due count surfaced on the Dashboard (prompt card) and the command palette; exposed app-wide via `useAcademyProgress().dueReviewCount`.
+
+Validated on Postgres 16: due→review→rescheduled-out; interval growth 1→3→9 on consecutive passes; idempotent.
+
+---
+
+# Changelog
+
+## Phase 25 — Onboarding & daily-goal retention loop
+
+Closes the activation gap: new users pick a track and a daily goal on first run, then a daily-goal loop ties the streak/activity data into a reason to return.
+
+**Persistence (migration 0041):** extended `profiles` with `daily_goal` (default 1) and `onboarded_at` (`track` already existed); extended the column-level UPDATE grant. User-owned prefs are written directly under existing self-update RLS — no RPC.
+
+**Auth:** `Profile` gains `dailyGoal` + `onboardedAt`; added `updateProfile()` to the auth context (self-scoped profile writes with optimistic local update).
+
+**Onboarding (`/welcome`):** a 3-step flow (pick track → daily goal → confirm) that writes prefs and routes to the chosen track's first lesson. A guard in `Layout` sends signed-in, not-yet-onboarded users to `/welcome` (exempts `/welcome`, `/login`, `/auth/*`); signed-out users are unaffected.
+
+**Daily-goal loop:** `ProgressProvider` derives `todayCompleted` from `lesson_progress.completed_at` (client-local day; no new schema). New `DailyGoal` card (today's lessons vs goal + streak, celebratory when met) on `/learn` and the Dashboard.
+
+Validated on Postgres 16 (idempotent). Gates green.
+
+**Note:** existing users (`onboarded_at` null) see onboarding once. "Today" is computed client-side from `completed_at` — acceptable for MVP; a timezone-aware server count is a future refinement.
+
+---
+
+# Changelog
+
+## Phase 24 (M3 + Dashboard refresh)
+
+**Dashboard refresh:** replaced the 634-line `Dashboard.jsx` (built entirely on hardcoded, deleted-course data) with a lean ~165-line **spine + server-driven** page. Shows real level/XP-to-next, streak, lessons completed, quizzes passed, earned badges, and per-track course progress from the curriculum — no stale content.
+
+**M3 — accurate streak heatmap (migration 0040):** added `user_activity(user_id, activity_date)` (PK per day, RLS self-select; writes only via the SECURITY DEFINER RPC). Folded activity recording into `set_last_lesson`, so opening any lesson marks the day. `ProgressProvider` now fetches the last ~2 weeks of activity and exposes `activityDates`; `StreakTracker`'s 7-day grid uses real activity instead of the single `last_study_date` approximation.
+
+Validated on Postgres 16 (idempotent; one activity row per day; distinct days accumulate). Gates green.
+
+---
+
+# Changelog
+
+## Phase 24 (M2) — Retire localStorage progress (server-authoritative everywhere)
+
+Eliminated the per-device `tierzero_progress` localStorage store. All progress, XP, level, streak, and badges are now sourced from the server across every consumer. No database changes.
+
+- **`useProgress` is now a thin server-backed shim** over `useAcademyProgress` (same API, so no consumer imports changed). Writes route to server RPCs; XP/quiz writes are no-ops (the server owns them). `LEVELS`/`getLevelForXP`/`BADGES` still exported.
+- **Migrated direct-localStorage readers** `Navbar`, `StatsBar`, `CoursePage` off `tierzero_progress` to server data. (Navbar's cross-tab XP `storage`/`xp-earned` listener is gone — the server is the single source now.)
+- **Deleted** dead legacy `components/Quiz.jsx` (unimported). **Redirected** legacy `/certificate` → `/certificates` (server-driven), removing another localStorage consumer.
+- **StudyTimer** no longer awards client XP (server-authoritative); the pomodoro timer itself is unchanged.
+- `useLocalStorage` is now unused by progress; `tierzero_progress` no longer appears anywhere in `src`.
+
+**Not done (deliberate):** the `useProgress.js` *file* remains as a shim rather than being deleted — removing it would mean rewriting 7 consumers to call `useAcademyProgress` directly for zero functional gain. **Dashboard** still renders stale hardcoded course cards (its stats are now server-driven, but the course list is outdated — a separate content refresh, not a localStorage issue).
+
+---
+
+# Changelog
+
+## Phase 24 (M1) — Server-authoritative streak & resume (cross-device)
+
+Made the daily streak and "continue where you left off" server-authoritative and cross-device, replacing per-device localStorage for these features.
+
+- **Streak:** the server already computed it (`user_stats.streak` via `_recompute_user_stats`) — the UI was just reading the localStorage copy. Repointed `StreakTracker` to `useAcademyProgress().stats.streak` (with date normalization). Streak is now real and consistent across devices.
+- **Resume:** added **migration 0039** — `user_stats.last_lesson_id` + a self-scoped `set_last_lesson(text)` `SECURITY DEFINER` RPC (writes only for `auth.uid()`). `LessonView` records the lesson on open; `ResumeBanner` reads it from the server and **resolves title/href from the spine** (no more stale stored hrefs). Removed the duplicate ResumeBanner on `/learn` (Layout renders it globally).
+
+Validated on Postgres 16 (create + update-on-conflict + idempotent re-run). Gates green.
+
+**Deferred (follow-through):** M2 — migrate the remaining `useProgress` consumers (`LevelBadge`, legacy `Quiz.jsx`, legacy `Dashboard`/`Certificate`) and delete the localStorage hook. M3 (optional) — a `user_activity` table for an accurate 7-day heatmap (the grid still uses the single `last_study_date`). `LessonLayout` still writes an unused localStorage `lastVisited` (harmless; removed with the hook in M2).
+
+---
+
+# Changelog
+
+## Phase 23 — Accessibility & authoring tooling
+
+**P23.1 — A11y deepening:** focus management on route change (moves keyboard/screen-reader focus to `<main>`, with `preventScroll`); `role="status" aria-live="polite"` on quiz results so scores/pass-fail are announced; route-change scroll now respects `prefers-reduced-motion`; declared `color-scheme: dark` for correct native controls/scrollbars. (Skip-link and global reduced-motion/forced-colors blocks already existed.)
+
+**P23.2 — Authoring tooling (pipeline now versioned in the repo):** the content-generation pipeline previously lived only in the sandbox. Added to the repo: `scripts/emit_content.py` (portable, repo-relative, regenerates P18–P20 byte-identically), `scripts/validate_content.py` (fields, quiz shape, difficulty enum, and id/sort collision detection — exits non-zero on error), `scripts/new_phase.py` (scaffolds a phase), `scripts/manifests/{p18,p19,p20}.json` (source of truth), and `docs/CONTENT-PIPELINE.md`.
+
+**P23.3 — Light/dark theme: deferred (deliberate).** The app uses raw scale tokens (`text-white`, `text-slate-*`, `bg-surface-*`) across ~128 files, not semantic tokens. A correct light theme requires a semantic-token refactor + visual QA; shipping it blind would produce invisible-text/contrast bugs. Recommended as a dedicated, QA'd phase (semantic CSS-variable tokens → component migration → toggle with `prefers-color-scheme` + persistence → programmatic WCAG-AA contrast checks).
+
+Also in the repo this session: **`vercel.json`** (SPA rewrite fixing the `/auth/callback` 404 on Vercel + security headers). No database changes in P23.
+
+---
+
+# Changelog
+
 ## Phase 22 — Engagement & global search
 
 Rebuilt search and completed the retention loop (find → resume → progress). No database changes; onboarding deferred (approved).

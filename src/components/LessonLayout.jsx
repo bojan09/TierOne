@@ -72,16 +72,6 @@ export default function LessonLayout({
     : state.completedLessons.includes(lessonId)
   const [justCompleted, setJustCompleted] = useState(false)
 
-  // Track last visited
-  useEffect(() => {
-    setLastVisited({
-      courseId,
-      lessonId,
-      lessonTitle: title,
-      courseTitle,
-      href: window.location.pathname,
-    })
-  }, [lessonId, courseId, title, courseTitle, setLastVisited])
 
   const handleComplete = () => {
     if (isCompleted) return

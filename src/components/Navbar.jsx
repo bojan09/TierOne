@@ -399,33 +399,11 @@ function MobileMenu({ open, onClose, onOpenSearch }) {
 export default function Navbar({ onOpenSearch }) {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled]     = useState(false)
-  const { stats } = useAcademyProgress()
+  const { stats, dueReviewCount } = useAcademyProgress()
   const { pathname } = useLocation()
 
-  // Live XP from localStorage
-  const [xp, setXP] = useState(() => {
-    try {
-      const s = JSON.parse(localStorage.getItem('tierzero_progress') || '{}')
-      return s.totalXP ?? 0
-    } catch { return 0 }
-  })
-
-  // Re-read XP on storage change (cross-tab) + on route change
-  useEffect(() => {
-    const sync = () => {
-      try {
-        const s = JSON.parse(localStorage.getItem('tierzero_progress') || '{}')
-        setXP(s.totalXP ?? 0)
-      } catch {}
-    }
-    window.addEventListener('storage', sync)
-    window.addEventListener('xp-earned', sync)
-    sync()
-    return () => {
-      window.removeEventListener('storage', sync)
-      window.removeEventListener('xp-earned', sync)
-    }
-  }, [pathname])
+  // Live XP from server-authoritative progress
+  const xp = stats?.totalXp ?? 0
 
   useEffect(() => { setMobileOpen(false) }, [pathname])
 
@@ -493,6 +471,19 @@ export default function Navbar({ onOpenSearch }) {
                                  group-hover:animate-pulse flex-shrink-0" />
                 {(stats?.totalXp ?? xp).toLocaleString()} XP
               </Link>
+
+              {/* Review due badge */}
+              {dueReviewCount > 0 && (
+                <Link
+                  to="/review"
+                  title={`${dueReviewCount} lesson${dueReviewCount > 1 ? 's' : ''} due for review`}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500/10
+                             border border-brand-500/30 text-[11px] font-medium text-brand-300
+                             hover:bg-brand-500/20 transition-all duration-150 whitespace-nowrap"
+                >
+                  🔁 {dueReviewCount}
+                </Link>
+              )}
 
               {/* CTA */}
               <AuthButton />

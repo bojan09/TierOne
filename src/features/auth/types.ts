@@ -16,6 +16,12 @@ export interface AuthContextValue {
   signInWithMagicLink: (email: string) => Promise<AuthResult>;
   signInWithGoogle: () => Promise<AuthResult>;
   signOut: () => Promise<void>;
+  /** Update the signed-in user's own profile prefs (track, daily goal, onboarding). */
+  updateProfile: (patch: {
+    track?: Profile['track'];
+    dailyGoal?: number;
+    onboardedAt?: string;
+  }) => Promise<AuthResult>;
 }
 
 /** Normalised result so the UI never has to know about Supabase error shapes. */

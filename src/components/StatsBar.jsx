@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useProgress } from '../hooks/useProgress.js'
 
 /**
  * Reads progress from localStorage and renders live platform statistics.
@@ -41,23 +42,13 @@ const STAT_DEFINITIONS = [
 ]
 
 function useProgressStats() {
-  const [stats, setStats] = useState({ lessonsCompleted: 0, xp: 0, quizzesPassed: 0, streak: 0 })
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem('tierzero_progress')
-      if (!raw) return
-      const data = JSON.parse(raw)
-      const completed   = Array.isArray(data.completedLessons) ? data.completedLessons.length : 0
-      const xp          = typeof data.xp === 'number' ? data.xp : 0
-      const scores      = data.quizScores || {}
-      const passed      = Object.values(scores).filter(s => s?.passed).length
-      const streak      = typeof data.streak === 'number' ? data.streak : 0
-      setStats({ lessonsCompleted: completed, xp, quizzesPassed: passed, streak })
-    } catch {}
-  }, [])
-
-  return stats
+  const { state } = useProgress()
+  return {
+    lessonsCompleted: state.completedLessons.length,
+    xp: state.totalXP,
+    quizzesPassed: Object.values(state.quizScores).filter((s) => s?.passed).length,
+    streak: state.streak,
+  }
 }
 
 export default function StatsBar({ variant = 'hero' }) {

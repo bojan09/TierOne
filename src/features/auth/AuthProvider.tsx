@@ -18,6 +18,8 @@ function mapProfile(row: {
   display_name: string | null;
   role: 'student' | 'admin';
   track: 'helpdesk' | 'sysadmin';
+  daily_goal: number | null;
+  onboarded_at: string | null;
   created_at: string;
 }): Profile {
   return {
@@ -25,6 +27,8 @@ function mapProfile(row: {
     displayName: row.display_name ?? '',
     role: row.role,
     track: row.track,
+    dailyGoal: row.daily_goal ?? 1,
+    onboardedAt: row.onboarded_at ?? null,
     createdAt: row.created_at,
   };
 }
@@ -59,7 +63,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!client) return;
       const { data, error } = await client
         .from('profiles')
-        .select('id, display_name, role, track, created_at')
+        .select('id, display_name, role, track, daily_goal, onboarded_at, created_at')
         .eq('id', userId)
         .single();
       if (error) {
@@ -167,6 +171,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setProfile(null);
   }, [client]);
 
+  const updateProfile = useCallback(
+    async (patch: { track?: Profile['track']; dailyGoal?: number; onboardedAt?: string }) => {
+      const userId = session?.user?.id;
+      if (!client || !userId) return { error: 'Not signed in.' };
+      const row: Record<string, unknown> = {};
+      if (patch.track !== undefined) row.track = patch.track;
+      if (patch.dailyGoal !== undefined) row.daily_goal = patch.dailyGoal;
+      if (patch.onboardedAt !== undefined) row.onboarded_at = patch.onboardedAt;
+      const { error } = await client.from('profiles').update(row as never).eq('id', userId);
+      if (error) return { error: toMessage(error) };
+      setProfile((prev) =>
+        prev
+          ? {
+              ...prev,
+              ...(patch.track !== undefined ? { track: patch.track } : {}),
+              ...(patch.dailyGoal !== undefined ? { dailyGoal: patch.dailyGoal } : {}),
+              ...(patch.onboardedAt !== undefined ? { onboardedAt: patch.onboardedAt } : {}),
+            }
+          : prev,
+      );
+      return { error: null };
+    },
+    [client, session],
+  );
+
   const value = useMemo<AuthContextValue>(
     () => ({
       session,
@@ -178,6 +207,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signInWithMagicLink,
       signInWithGoogle,
       signOut,
+      updateProfile,
     }),
     [
       session,
@@ -189,6 +219,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signInWithMagicLink,
       signInWithGoogle,
       signOut,
+      updateProfile,
     ],
   );
 

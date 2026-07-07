@@ -1,4 +1,10 @@
 import type { LessonContent } from '../model';
+import { cahardwareLessons } from './ca-hardware';
+import { camcLessons } from './ca-mc';
+import { canetLessons } from './ca-net';
+import { caosLessons } from './ca-os';
+import { casecLessons } from './ca-sec';
+import { catsLessons } from './ca-ts';
 import { netfundamentalsLessons } from './net-fundamentals';
 import { netipv4Lessons } from './net-ipv4';
 import { netipv6Lessons } from './net-ipv6';
@@ -7,6 +13,8 @@ import { netsecurityLessons } from './net-security';
 import { netswitchingLessons } from './net-switching';
 import { nettroubleshootingLessons } from './net-troubleshooting';
 import { netwirelessLessons } from './net-wireless';
+import { scpsLessons } from './sc-ps';
+import { scpyLessons } from './sc-py';
 import { t2adLessons } from './t2-ad';
 import { t2itilLessons } from './t2-itil';
 import { t2m365Lessons } from './t2-m365';
@@ -25,6 +33,12 @@ import { winserversecurityLessons } from './winserver-security';
 import { winserverstorageLessons } from './winserver-storage';
 
 export const structuredLessons: Record<string, LessonContent> = {
+  ...cahardwareLessons,
+  ...camcLessons,
+  ...canetLessons,
+  ...caosLessons,
+  ...casecLessons,
+  ...catsLessons,
   ...netfundamentalsLessons,
   ...netipv4Lessons,
   ...netipv6Lessons,
@@ -33,6 +47,8 @@ export const structuredLessons: Record<string, LessonContent> = {
   ...netswitchingLessons,
   ...nettroubleshootingLessons,
   ...netwirelessLessons,
+  ...scpsLessons,
+  ...scpyLessons,
   ...t2adLessons,
   ...t2itilLessons,
   ...t2m365Lessons,

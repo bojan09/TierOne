@@ -1,5 +1,6 @@
-import React, { useState, useEffect, Suspense } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import React, { useState, useEffect, useRef, Suspense } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '@/features/auth/useAuth'
 import Navbar from '../components/Navbar.jsx'
 import Footer from '../components/Footer.jsx'
 import CommandPalette from '../components/CommandPalette.jsx'
@@ -9,11 +10,29 @@ import SkipLink from '../components/SkipLink.jsx'
 
 export default function Layout() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const { session, profile, loading } = useAuth()
   const [paletteOpen, setPaletteOpen] = useState(false)
+  const mainRef = useRef(null)
+
+  // First-run: send signed-in, not-yet-onboarded users to /welcome.
+  useEffect(() => {
+    if (loading) return
+    const exempt =
+      pathname.startsWith('/welcome') ||
+      pathname.startsWith('/login') ||
+      pathname.startsWith('/auth')
+    if (session && profile && !profile.onboardedAt && !exempt) {
+      navigate('/welcome', { replace: true })
+    }
+  }, [session, profile, loading, pathname, navigate])
 
   // Scroll to top on route change
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
+    // A11y: move keyboard/SR focus to the new page's main content.
+    mainRef.current?.focus({ preventScroll: true })
   }, [pathname])
 
   // Keyboard shortcut: Ctrl/Cmd+K opens command palette
@@ -37,7 +56,7 @@ export default function Layout() {
       <ResumeBanner />
 
       {/* id="main-content" is the target for the skip link */}
-      <main id="main-content" className="flex-1 page-enter">
+      <main id="main-content" ref={mainRef} tabIndex={-1} className="flex-1 page-enter outline-none">
         <Suspense
           fallback={
             <div className="flex items-center justify-center min-h-[60vh] text-slate-500">

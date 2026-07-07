@@ -4,7 +4,7 @@ import Breadcrumb from './Breadcrumb.jsx'
 import LessonCard from './LessonCard.jsx'
 import ProgressBar from './ProgressBar.jsx'
 import CourseCompletionBanner from './CourseCompletionBanner.jsx'
-import { useLocalStorage } from '../hooks/useLocalStorage.js'
+import { useProgress } from '../hooks/useProgress.js'
 
 // ─── View toggle ──────────────────────────────────────────────────────────────
 const GridIcon = () => (
@@ -155,7 +155,7 @@ export default function CoursePage({
   prereqs = [],
   breadcrumbs = [],
 }) {
-  const [progress]  = useLocalStorage('tierzero_progress', null)
+  const { state: progress } = useProgress()
   const [view, setView] = useState('list') // 'list' | 'grid'
 
   const completedLessons = progress?.completedLessons ?? []

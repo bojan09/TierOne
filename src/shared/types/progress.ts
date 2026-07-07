@@ -24,5 +24,6 @@ export interface UserStats {
   level: number;
   streak: number;
   lastStudyDate: IsoTimestamp | null;
+  lastLessonId: string | null;
   earnedBadges: string[]; // badge ids
 }

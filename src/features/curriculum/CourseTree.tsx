@@ -9,8 +9,10 @@ import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
 const TRACK_LABELS: Record<Track, string> = {
   helpdesk: 'Help Desk / Tier-1 Support',
   sysadmin: 'SysAdmin (Advanced)',
+  comptia: 'CompTIA A+ (Certification)',
+  scripting: 'Scripting & Automation',
 };
-const TRACK_ORDER: Track[] = ['helpdesk', 'sysadmin'];
+const TRACK_ORDER: Track[] = ['helpdesk', 'sysadmin', 'comptia', 'scripting'];
 
 function CheckIcon() {
   return (

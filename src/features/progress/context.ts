@@ -20,9 +20,17 @@ export interface AcademyProgressValue {
   stats: UserStats | null;
   /** Quiz attempt rollup. */
   quizStats: QuizStats;
+  /** Days (toDateString) the user was active in the last ~2 weeks, for the streak heatmap. */
+  activityDates: Set<string>;
+  /** Lessons the user completed today (local day), for the daily goal. */
+  todayCompleted: number;
+  /** Count of lessons due for spaced review. */
+  dueReviewCount: number;
   loading: boolean;
   /** Calls the server-authoritative complete_lesson RPC. No-op when signed out. */
   completeLesson: (lessonId: string) => Promise<void>;
+  /** Records the most recently opened lesson (server-side resume). No-op when signed out. */
+  setLastLesson: (lessonId: string) => Promise<void>;
   /** Re-fetch completed lessons + stats from the server (e.g. after a quiz pass). */
   refresh: () => Promise<void>;
 }

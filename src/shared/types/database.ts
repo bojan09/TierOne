@@ -11,7 +11,7 @@ export type Json =
   string | number | boolean | null | { [key: string]: Json | undefined } | Json[];
 
 type AppRole = 'student' | 'admin';
-type TrackEnum = 'helpdesk' | 'sysadmin';
+type TrackEnum = 'helpdesk' | 'sysadmin' | 'comptia' | 'scripting';
 type LessonStatusEnum = 'not_started' | 'in_progress' | 'completed';
 
 interface UserStatsRow {

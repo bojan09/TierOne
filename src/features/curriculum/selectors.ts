@@ -13,6 +13,17 @@ export interface LessonLink {
   href: string;
 }
 
+/** Resolve a lesson id back to its lesson + course (for server-side resume). */
+export function getLessonAndCourseById(
+  lessonId: string,
+): { course: Course; lesson: Lesson } | undefined {
+  const lesson = curriculum.lessons.find((l) => l.id === lessonId);
+  if (!lesson) return undefined;
+  const course = curriculum.courses.find((c) => c.id === lesson.courseId);
+  if (!course) return undefined;
+  return { course, lesson };
+}
+
 export function getCourseBySlug(
   slug: string,
   data: Curriculum = curriculum,

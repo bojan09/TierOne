@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import LessonChrome from './LessonChrome';
 import { getLessonBody } from './registry';
@@ -42,11 +42,17 @@ function LessonLoading() {
 
 export default function LessonView() {
   const { courseSlug, lessonSlug } = useParams();
-  const { completedSet, completeLesson } = useAcademyProgress();
+  const { completedSet, completeLesson, setLastLesson } = useAcademyProgress();
 
   const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
   const lesson = course && lessonSlug ? getLessonBySlug(course, lessonSlug) : undefined;
   const Body = lesson ? getLessonBody(lesson.id) : undefined;
+  const lessonId = lesson?.id;
+
+  // Server-authoritative "continue where you left off".
+  useEffect(() => {
+    if (lessonId) setLastLesson(lessonId);
+  }, [lessonId, setLastLesson]);
 
   if (!course || !lesson || !Body) return <NotFound />;
 

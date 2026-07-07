@@ -1,7 +1,117 @@
-# Memory — TierZero (through Phase 22)
+# Memory — TierZero (through Phase 30)
 
 Last updated: 2026-07-06
 
+## P31 THEME POLISH + ONBOARDING GRID
+Light overlay now uses [class*=...] attribute selectors so opacity variants (bg-surface-800/40 etc.) also flip in light mode. Onboarding track list -> responsive grid (sm:grid-cols-2) for 4 tracks. Search index verified covering comptia + scripting (structured body text). Gates green.
+
+## P30 A+ LABS + LIGHT THEME (beta)
+
+**A+ labs (migration 0051):** lab-ca-win-cli (dir/ipconfig /all/ping/sfc /scannow/chkdsk), lab-ca-net-ts (ipconfig /all->ping gateway->ping 8.8.8.8->nslookup->flushdns). track=comptia, 2 labs/10 steps. Validated PG16 idempotent.
+**Light theme (beta):** CSS-overlay approach (NOT full tokenization). src/features/theme/theme.ts (initTheme/currentTheme/toggleTheme; data-theme on <html>, localStorage 'theme', prefers-color-scheme default). ThemeToggle.jsx (sun/moon) in Navbar. initTheme() called in main.jsx pre-render. index.css appended html[data-theme=light] overrides for bg-surface-*/text-white/text-slate-*/border-surface-*/.card/.glass/.btn-secondary/.code-block. DARK UNTOUCHED (overrides scoped to [data-theme=light]).
+KNOWN LIMITS (light beta): opacity variants (bg-surface-800/40 etc.) not overridden (escaped class names) -> minor visual gaps; not full semantic tokenization; NEEDS dev visual QA + polish. A proper tokenization refactor remains the 'correct' long-term path.
+Migrations through 0051. Tracks: helpdesk, sysadmin, comptia, scripting.
+**REMAINING:** onboarding selector rework (4 tracks); light-theme polish (opacity variants, per-page QA); server tz-aware 'today'; useProgress.js shim by design.## P29 SCRIPTING & AUTOMATION TRACK — COMPLETE
+
+FOURTH track 'scripting'. Same pattern as comptia. Migration 0047 (enum add 'scripting'); Track type common.ts+database.ts; spine src/content/curriculum/scripting.ts (track:'scripting', default beginner, // P29-GENERATED); curriculum/index.ts includes scriptingCourses/Modules/Lessons; emitter p29 config (spine_style sysadmin, sort_base 6000, migs 0048/0049). TRACK_LABELS/ORDER updated (scripting:'Scripting & Automation') in CourseTree/LearnHome/Dashboard; Onboarding 4th option added.
+**Content:** 2 courses (sc-powershell-scripting, sc-python-scripting), 12 lessons (sc-ps-01..06, sc-py-01..06), 36 quizzes, code examples in lessons. Author /home/claude/p29_author.py (+scripts/). manifest scripts/manifests/p29.json. sort 6001-6012.
+**Labs (migration 0050):** lab-sc-ps (PowerShell pipeline: Get-Command/Get-Process/Where/Select/Export-Csv), lab-sc-py (python --version/print/for-range/pip install/python file.py). 2 labs, 10 steps. NOTE: SQL single-quote escaping needed for print('...') hint (doubled quotes). Validated PG16, idempotent.
+**Migrations through 0050.**
+
+**OPEN FOLLOW-UPS (still):** LIGHT THEME (dedicated QA'd pass — needs npm run dev); ONBOARDING SELECTOR rework now that there are 4 tracks (stacked cards work but not ideal); A+ labs (A+ still lesson-only); server tz-aware 'today'; useProgress.js shim by design.
+Tracks now: helpdesk, sysadmin, comptia, scripting.## P28.1 A+ EXPANSION — COMPLETE. 36 lessons / 108 quizzes.
+Appended 3 lessons per A+ domain (ids ca-hw-04..06, ca-net-04..06, ca-mc-04..06, ca-os-04..06, ca-sec-04..06, ca-ts-04..06). Author: /home/claude/p28_expand.py (also scripts/) — loads scripts/manifests/p28.json, appends, re-emits. Seeds 0045/0046 regenerated (36/108), validated PG16. sort still 5000-block. Extensible.
+
+**OPEN FOLLOW-UPS (user-flagged):**
+- SCRIPTING TRACK (PowerShell + Python) — user explicitly wants scripting in BOTH. Recommend NEW 'scripting' track (same proven pattern as comptia): extend Track enum, new spine, emitter target, track maps. PowerShell line (basics->cmdlets->pipeline->scripting->automation) + Python line (basics->control flow->files->automation/APIs). Ground in repo PowerShell_7Day_Guide.docx + PowerShellBeginnerCheatSheet.pdf. NOTE existing ws-powershell (P18 sysadmin) + legacy 'python' course.
+- LIGHT THEME — dedicated QA'd pass (semantic tokens + opacity-safe codemod; needs npm run dev visual QA).
+- ONBOARDING 3rd option — added comptia as 3rd onboarding track this session; revisit for polish + whether scripting becomes 4th (selector UI may need rework at 4 tracks).
+- A+ labs (track is lesson-only; add CLI/troubleshooting sims via LabPlayer).
+Migrations through 0046.## P28 COMPTIA A+ TRACK (#1) + CLEANUP (#3) — COMPLETE. LIGHT THEME (#2) DEFERRED.
+
+**New track 'comptia' (#1):** THIRD track added. Track type extended in shared/types/common.ts + database.ts; PG enum via migration 0044 (`alter type public.track add value if not exists 'comptia'`). New spine src/content/curriculum/comptia.ts (modeled on sysadmin.ts, track:'comptia', default difficulty beginner, // P28-GENERATED region). curriculum/index.ts includes comptiaCourses/Modules/Lessons. Emitter p28 config in scripts/emit_content.py (spine_style='sysadmin', spine=comptia.ts, track='comptia', sort_base=5000, migs 0045/0046). TRACK_LABELS/ORDER updated in CourseTree, LearnHome, Dashboard (comptia:'CompTIA A+ (Certification)'); Onboarding got 3rd track option.
+**Content:** 6 sub-courses / 18 lessons / 54 quizzes, ca- ids, sort 5001-5018, beginner. Areas: ca-hardware, ca-net, ca-mc, ca-os, ca-sec, ca-ts. Author: /home/claude/p28_author.py (also copied to scripts/). manifest scripts/manifests/p28.json. Validated PG16 (track=comptia, 18/54). Extensible — add lessons to p28.json + re-emit.
+**Cleanup (#3):** deleted src/hooks/useLocalStorage.js (unused after P24-M2).
+**Migrations through 0046.**
+
+**LIGHT THEME (#2) — DEFERRED (honest call):** needs semantic-token migration across ~128 files (text-white/text-slate/bg-surface + opacity modifiers like bg-surface-800/40 which break under arbitrary CSS-var values). Blind codemod risks breaking DARK too; can't visual-QA here. PLAN for dedicated pass: (1) define semantic CSS vars in :root(dark, =current hex so dark identical) + [data-theme=light]; (2) opacity-safe codemod mapping raw utils->semantic tokens (handle /opacity via rgb(var(--x)/a)); (3) toggle + prefers-color-scheme + persist; (4) programmatic WCAG-AA contrast check; (5) developer visual QA. Do with `npm run dev` available.
+**Other deferred:** server tz-aware 'today'; useProgress.js shim (by design). UI needs dev visual pass (new A+ track in /learn, onboarding 3rd option).
+## P27 REVIEW POLISH — COMPLETE. NOTE: product is a FREE webapp (no monetization).
+
+**Migration 0043:** split review grading from scheduling.
+- grade_review(p_lesson_id,p_answers) -> jsonb {score_pct,correct,total,passed,pass_pct,results}. READ-ONLY (no writes/schedule). Mirrors old grading.
+- schedule_review(p_lesson_id,p_quality int) -> jsonb {interval_days,next_due}. p_quality 0=Again/1=Hard/2=Good/3=Easy -> SM-2 q=1/3/4/5; same SM-2 as 0042. Trusts self-rating (no pass floor).
+- DROP submit_review(text,integer[]) (retired; replaced by grade+schedule).
+Validated PG16: grade read-only; Easy 1->3; Again resets to 1; idempotent.
+**Client:** review/api.ts now gradeReview + scheduleReview (removed submitReview). Review.tsx = two-step flow: answer -> Check answers (gradeReview, shows correctness) -> 'How well did you recall?' Again/Hard/Good/Easy (keys 1-4, useCallback rate) -> scheduleReview -> next-due -> Next. refresh() after schedule to update badge.
+**Surfacing:** Navbar 🔁 badge (dueReviewCount>0 -> Link /review) — added dueReviewCount to Navbar's useAcademyProgress destructure. LearnLayout ReviewPill component ('N due for review' Link) above DailyGoal in persistent sidebar + drawer.
+
+**Migrations through 0043.** dueReviewCount already in provider/context from P26.
+**PRODUCT = FREE webapp** -> monetization dropped from roadmap. Next value levers: content expansion (versioned pipeline), more review/analytics polish, light theme (P23 deferred), a11y. 
+**DEFERRED/DEBT:** light theme; server tz-aware 'today'; useProgress.js shim + useLocalStorage.js unused cleanup. UI needs dev visual pass (/review rating flow, navbar badge, /learn pill).
+## P26 SPACED-REPETITION REVIEW — COMPLETE
+
+**Schema/RPCs (migration 0042):** review_schedule(user_id,lesson_id,due_at,interval_days,ease,reps,lapses,last_reviewed_at) PK(user_id,lesson_id), RLS select-own; writes via SECURITY DEFINER only. Simplified SM-2.
+- get_due_reviews() -> table(lesson_id,due_at,reps): distinct passed lessons (from quiz_attempts) left join review_schedule where unscheduled OR due_at<=now(). LAZY seeding (submit_quiz untouched).
+- submit_review(p_lesson_id,p_answers int[]): grades server-side (mirrors submit_quiz answer-check; answers never client-side), SM-2 (q=floor(pct/20); q<3 lapse->interval=1,reps=0,lapses++; else reps++, interval 1/3/ceil(interval*ease); ease=greatest(1.3, ease+(0.1-(5-q)*(0.08+(5-q)*0.02)))). Returns {score_pct,correct,total,passed,pass_pct,results,interval_days,next_due}. NO XP, NO quiz_attempts insert (mastery stats stay first-pass). Validated PG16: due->review->out; pass intervals 1->3->9; idempotent.
+**Client:** src/features/review/api.ts (getDueReviews, submitReview reusing quiz QuizResultItem). src/features/review/Review.tsx = /review session page (loads due queue, per-lesson get_lesson_quiz -> render -> submit_review -> next-due -> Next; resolves titles via getLessonAndCourseById; refresh() after submit to update badge). Route /review inside RequireAuth (App.jsx).
+**Provider:** dueReviewCount added (5th parallel query client.rpc('get_due_reviews'); count via cast (dueRes.data as unknown[]).length). Exposed in context (AcademyProgressValue.dueReviewCount).
+**Surfaced:** searchIndex PAGES += Review (/review, 🔁); Dashboard prompt card when dueReviewCount>0. Note: typed-client rpc/update need `as never` / `as unknown[]` casts.
+
+**Migrations through 0042.**
+**DEFERRED/DEBT:** light theme (P23); server timezone-aware 'today' count; useProgress.js shim + useLocalStorage.js unused cleanup; review could later surface a nav badge + due count on /learn sidebar. UI needs dev visual pass (/review flow, Dashboard prompt).
+## P25 ONBOARDING + DAILY-GOAL LOOP — COMPLETE
+
+**Persistence (migration 0041):** profiles += daily_goal(int default 1) + onboarded_at(timestamptz); track already existed. Extended column grant: `grant update (display_name, track, daily_goal, onboarded_at)`. Self-update RLS already present -> client writes prefs directly (safe, user-owned; NO RPC). Validated PG16 idempotent.
+**Auth:** Profile type (shared/types/user.ts) += dailyGoal, onboardedAt. AuthProvider mapProfile + select ('...daily_goal, onboarded_at...') updated. Added `updateProfile(patch:{track?,dailyGoal?,onboardedAt?})` to AuthContextValue (types.ts) — updates profiles + optimistic setProfile; uses `update(row as never)` cast for typed client.
+**Onboarding flow:** src/features/onboarding/Onboarding.tsx (3 steps: track -> daily goal(1/2/3) -> confirm; writes prefs + onboardedAt=now, routes to track's first lesson via getOrderedLessons/lessonHref). Route `/welcome` added inside RequireAuth in App.jsx.
+**Guard:** Layout.jsx effect — if session && profile && !profile.onboardedAt && path not in {/welcome,/login,/auth} -> navigate('/welcome',replace). Existing users see it once.
+**Daily-goal loop:** ProgressProvider derives todayCompleted from lesson_progress.completed_at (added completed_at to select; count where new Date(completed_at).toDateString()===today). Exposed todayCompleted in context. src/features/progress/DailyGoal.tsx (today vs profile.dailyGoal + streak, celebratory when met) placed in LearnLayout sidebar (persistent+drawer, above StreakTracker) + Dashboard sidebar.
+
+**Migrations through 0041.**
+**DEFERRED/DEBT:** light theme (P23); spaced-repetition review (recommended next); server-side timezone-aware 'today' count (MVP uses client-local); useProgress.js shim + useLocalStorage.js unused (cleanup). UI needs dev visual pass (/welcome flow, DailyGoal, redirect guard).
+## P24 M3 + DASHBOARD REFRESH — COMPLETE
+
+**Dashboard refresh:** src/pages/Dashboard.jsx rewritten (634->~165 lines) spine+server-driven via useAcademyProgress + curriculum + selectors (courseHref/getOrderedLessons). Real level (getLevelForXP), XP-to-next, streak, lessons done (completedSet.size), quizzes passed (quizStats.passed), badges (BADGES meta filtered by stats.earnedBadges), per-track course progress bars. Signed-out CTA. Reuses StreakTracker + StudyTimer. Removed ALL hardcoded deleted-course data. Dashboard content-staleness debt RESOLVED.
+
+**M3 activity heatmap (migration 0040):** user_activity(user_id, activity_date) PK(user_id,activity_date), RLS select-own only; writes via SECURITY DEFINER. Folded `insert into user_activity (…current_date) on conflict do nothing` into set_last_lesson (recreated in 0040) — opening any lesson marks the day. ProgressProvider: 4th query fetches user_activity >= today-13, builds activityDates:Set<string> (toDateString), exposed in context (AcademyProgressValue.activityDates). StreakTracker.jsx now uses activityDates for the 7-day grid (real, not single-date approximation); getLast7Days already returns toDateString so membership matches. Validated on PG16 (idempotent per day).
+
+**Migrations now through 0040.**
+
+**REMAINING DEFERRED (all documented, none blocking):** onboarding (P22); light theme (P23; needs semantic-token refactor + visual QA); useProgress.js kept as server-backed shim by design (deleting = rewrite 7 consumers, zero gain); useLocalStorage.js now unused (safe to delete later). No open build issues. UI needs dev visual pass (new Dashboard, streak heatmap).
+## P24 M2 — LOCALSTORAGE PROGRESS RETIRED (server-authoritative everywhere) — COMPLETE (no DB changes)
+
+Goal achieved: `tierzero_progress` localStorage / per-device state ELIMINATED. All XP/level/streak/badges/completion now server-sourced across every consumer. Gates green.
+- **useProgress.js is now a SERVER-BACKED SHIM** over useAcademyProgress (same API: {state, addXP(no-op), completeLesson->server, saveQuizScore(no-op), setLastVisited->setLastLesson, reset(no-op)}; state derives completedLessons/completedCourses/quizScores/totalXP/streak/earnedBadges from server). LEVELS/getLevelForXP/BADGES still exported from it. So NO consumer imports changed.
+- **Direct-localStorage readers migrated:** Navbar (now stats.totalXp; removed storage/xp-earned listener), StatsBar (useProgressStats uses shim), CoursePage (useLocalStorage->useProgress shim).
+- **Deleted** dead components/Quiz.jsx. **Redirected** legacy /certificate -> /certificates (Certificate.jsx = <Navigate replace>). StudyTimer addXP now no-op.
+- `tierzero_progress` grep = NONE in src. useLocalStorage.js now unused (left in place).
+
+**KNOWN / DEFERRED:**
+- useProgress.js FILE kept as shim by design (deleting = rewrite 7 consumers to useAcademyProgress for zero gain). LessonLayout still uses shim for non-override completion (2 legacy JSX lessons: what-is-it-support, malware-and-phishing render LessonChrome w/o override -> now server via shim).
+- Dashboard.jsx still has STALE hardcoded course cards (deleted-course ids); stats are server-driven now but course list outdated -> separate content refresh task.
+- M3 optional: user_activity table for accurate 7-day streak heatmap.
+- Other deferred: onboarding, light theme.
+Migrations still through 0039. No open build issues; UI needs a dev visual pass (Navbar XP, StatsBar, Dashboard, CoursePage).
+## P24 M1 — SERVER-AUTHORITATIVE STREAK & RESUME — COMPLETE
+
+Key finding: **server streak already existed** (user_stats.streak via _recompute_user_stats in 0002) — the UI was reading the localStorage copy. Fixed by repointing.
+- **Streak:** StreakTracker.jsx now reads useAcademyProgress().stats.streak (+ normalize lastStudyDate via new Date().toDateString()). Cross-device now.
+- **Resume (server):** migration **0039** adds user_stats.last_lesson_id + `set_last_lesson(p_lesson_id text)` SECURITY DEFINER RPC (writes only auth.uid(); inserts default stats row if none). Provider (ProgressProvider.tsx): StatsRow/UserStats += lastLessonId (mapper), added `setLastLesson` method + exposed in context (context.ts AcademyProgressValue). LessonView records on mount (useEffect on lessonId). ResumeBanner.jsx rewritten server-driven — resolves via getLessonAndCourseById (new selector) + lessonHref (no stale hrefs). Removed duplicate ResumeBanner from LearnHome (Layout renders globally).
+- Validated on PG16 (create+update+idempotent).
+
+**M2 REMAINING (useProgress full retirement):** LevelBadge.jsx, legacy Quiz.jsx, legacy Dashboard.jsx, Certificate.jsx still use useProgress (localStorage). LessonLayout.jsx still has dead setLastVisited localStorage write (harmless; remove with hook). Then delete src/hooks/useProgress.js + tierzero_progress. Audit legacy Dashboard/Certificate (may be redundant with server-driven views) before migrating.
+**M3 OPTIONAL:** user_activity(user_id, activity_date) table for accurate 7-day heatmap (currently single last_study_date approximation).
+
+**Migrations now through 0039.** Other deferred debt unchanged: onboarding, light theme.
+## P23 A11Y & AUTHORING TOOLING — COMPLETE (no DB changes); LIGHT THEME DEFERRED
+
+**P23.1 a11y:** Layout.jsx focuses `<main>` (tabIndex=-1, preventScroll) on route change + reduced-motion-aware scrollTo; Quiz.tsx result `<p>` now role=status aria-live=polite (announces score + pass/fail); color-scheme:dark in index.css. SkipLink + global prefers-reduced-motion/forced-colors already existed.
+**P23.2 tooling — PIPELINE NOW VERSIONED IN REPO (was sandbox-only, a real risk):** `it-academy/scripts/emit_content.py` (portable, repo-relative; reads scripts/manifests/<phase>.json; regenerates P18-20 identical), `scripts/validate_content.py` (id/sort collision + shape checks, exits 1 on error; verified catches dup ids), `scripts/new_phase.py` (scaffolder), `scripts/manifests/{p18,p19,p20}.json`, `docs/CONTENT-PIPELINE.md`. Sandbox /home/claude/emit_content.py + pXX_manifest.json still exist but the REPO copies are now canonical.
+**P23.3 light/dark DEFERRED (deliberate, evidence-based):** raw scale tokens (text-white/text-slate/bg-surface) across ~128 files => needs semantic-token refactor + visual QA; blind light theme would ship broken (invisible text). Path documented: semantic CSS vars -> component migration -> toggle (prefers-color-scheme+persist) -> programmatic WCAG contrast. Do as its own phase.
+**Also shipped this session:** vercel.json (SPA rewrite fixed /auth/callback 404 on Vercel + migrated security headers from ignored public/_headers).
+
+**REMAINING DEBT:** legacy useProgress localStorage (resume/streak, LessonLayout); server-authoritative streak; onboarding (deferred P22); light theme (deferred P23); original hand-written courses keep default difficulty. No open build issues.
 ## P22 ENGAGEMENT & SEARCH — COMPLETE (no DB changes)
 
 Frontend phase. Gates green. Onboarding DEFERRED (approved). Recommended defaults used: custom matcher (no Fuse dep), augment /learn, defer onboarding.

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocalStorage } from '../hooks/useLocalStorage.js'
+import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
 
 // Build last 7 days array
 function getLast7Days() {
@@ -15,20 +15,14 @@ function getLast7Days() {
 const DAY_LABELS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 export default function StreakTracker({ compact = false }) {
-  const [progress] = useLocalStorage('tierzero_progress', null)
+  const { stats, activityDates } = useAcademyProgress()
 
-  const streak      = progress?.streak ?? 0
-  const lastDate    = progress?.lastStudyDate ?? null
-  const studiedDays = new Set()
-
-  // Reconstruct which of the last 7 days had activity
-  // (we store only lastStudyDate; for full accuracy the progress hook
-  //  can be extended to store a studyHistory array in Phase 7)
-  if (lastDate) studiedDays.add(lastDate)
+  const streak      = stats?.streak ?? 0
+  const studiedDays = activityDates ?? new Set()
 
   const days    = getLast7Days()
   const today   = new Date().toDateString()
-  const studied = lastDate === today
+  const studied = studiedDays.has(today)
 
   if (compact) {
     return (

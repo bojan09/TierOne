@@ -4,7 +4,7 @@
  */
 
 /** The two learning tracks the platform offers. */
-export type Track = 'helpdesk' | 'sysadmin';
+export type Track = 'helpdesk' | 'sysadmin' | 'comptia' | 'scripting';
 
 /** Application roles. Stored on `profiles.role`. */
 export type Role = 'student' | 'admin';

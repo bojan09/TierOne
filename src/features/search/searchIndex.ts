@@ -35,6 +35,7 @@ const PAGES: Omit<SearchItem, '_hay'>[] = [
   { type: 'page', label: 'My Progress', desc: 'XP, levels, badges, streak', icon: '📊', href: '/dashboard' },
   { type: 'page', label: 'Virtual Help Desk', desc: 'Practice real support tickets', icon: '🎧', href: '/simulator' },
   { type: 'page', label: 'Labs', desc: 'Hands-on simulated terminals', icon: '🧪', href: '/labs' },
+  { type: 'page', label: 'Review', desc: 'Spaced-repetition review of passed lessons', icon: '🔁', href: '/review' },
   { type: 'page', label: 'Interview Prep', desc: 'Common IT interview questions', icon: '💬', href: '/interview' },
   { type: 'page', label: 'Career Analytics', desc: 'Job-readiness score & gaps', icon: '📈', href: '/analytics' },
   { type: 'page', label: 'Certificates', desc: 'Earned certificates & verification', icon: '🏆', href: '/certificates' },

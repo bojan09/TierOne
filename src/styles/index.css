@@ -456,6 +456,7 @@ mark.search-hl {
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* Smooth scrolling globally */
+:root { color-scheme: dark; }
 html {
   scroll-behavior: smooth;
 }

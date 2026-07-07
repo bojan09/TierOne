@@ -10,6 +10,10 @@ export interface Profile {
   role: Role;
   /** The track the student is currently focused on. Switchable. */
   track: Track;
+  /** Lessons/day goal set during onboarding. */
+  dailyGoal: number;
+  /** When onboarding was completed, or null if not yet. */
+  onboardedAt: IsoTimestamp | null;
   createdAt: IsoTimestamp;
 }
 

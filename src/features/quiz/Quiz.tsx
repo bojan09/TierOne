@@ -69,9 +69,9 @@ export function Quiz({ lessonId, onPass }: QuizProps) {
         <span className="text-xl">🧠</span>
         <h2 className="text-lg font-bold text-white">Check your understanding</h2>
       </div>
-      <p className="text-sm text-slate-400 mb-6">
+      <p className="text-sm text-slate-400 mb-6" role="status" aria-live="polite">
         {result
-          ? `You scored ${result.score_pct}% (${result.correct}/${result.total}).`
+          ? `You scored ${result.score_pct}% (${result.correct}/${result.total}). ${result.passed ? 'Passed. Bonus XP awarded.' : `${result.pass_pct}% needed to pass.`}`
           : `Answer all ${questions.length} questions, then submit. Pass to earn bonus XP.`}
       </p>
 

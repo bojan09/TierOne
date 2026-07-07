@@ -1,7 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import CourseTree from './CourseTree';
+import { Link } from 'react-router-dom';
+import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
 import StreakTracker from '@/components/StreakTracker.jsx';
+import DailyGoal from '@/features/progress/DailyGoal';
+
+function ReviewPill() {
+  const { dueReviewCount } = useAcademyProgress();
+  if (!dueReviewCount) return null;
+  return (
+    <Link
+      to="/review"
+      className="flex items-center gap-2 px-3 py-2 rounded-lg border border-brand-500/30 bg-brand-500/10
+                 text-sm text-brand-300 hover:bg-brand-500/20 transition-colors"
+    >
+      <span>🔁</span>
+      <span className="flex-1">{dueReviewCount} due for review</span>
+      <span aria-hidden>→</span>
+    </Link>
+  );
+}
 
 export default function LearnLayout() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -28,7 +47,9 @@ export default function LearnLayout() {
         aria-label="Course navigation"
       >
         <div className="sticky top-[64px] max-h-[calc(100vh-64px)] overflow-y-auto p-4">
-          <div className="mb-4 px-2">
+          <div className="mb-4 px-2 space-y-4">
+            <ReviewPill />
+            <DailyGoal />
             <StreakTracker compact />
           </div>
           <CourseTree />
@@ -75,7 +96,9 @@ export default function LearnLayout() {
               </button>
             </div>
             <div className="p-4">
-              <div className="mb-4">
+              <div className="mb-4 space-y-4">
+                <ReviewPill />
+                <DailyGoal />
                 <StreakTracker compact />
               </div>
               <CourseTree onNavigate={() => setDrawerOpen(false)} />
