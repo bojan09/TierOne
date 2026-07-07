@@ -77,7 +77,10 @@ function CourseCard({ course, completedSet }) {
   const completed = course.lessonIds.filter((id) => completedSet.has(id)).length
   const total = course.lessonCount
   const isComplete = completed === total && total > 0
-  const badge = TRACK_BADGE[course.track]
+  const badge = TRACK_BADGE[course.track] ?? {
+  label: course.track,
+  cls: 'bg-surface-700 text-slate-300 border-surface-600',
+}
   return (
     <Link
       to={course.href}
