@@ -292,5 +292,43 @@ export const cahardwareLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "Which RAID gives redundancy with only two disks, and which needs at least three?"
+  },
+  "ca-hw-07": {
+    "intro": "Firmware initializes hardware and hands off to the OS. A+ tests BIOS/UEFI settings.",
+    "sections": [
+      {
+        "h": "BIOS vs UEFI",
+        "ul": [
+          {
+            "b": "UEFI",
+            "t": "modern: GUI, >2TB disks (GPT), Secure Boot, faster"
+          },
+          {
+            "b": "Legacy BIOS",
+            "t": "older, MBR"
+          }
+        ]
+      },
+      {
+        "h": "Key settings",
+        "ul": [
+          "Boot order / boot device",
+          "TPM (required for BitLocker/Win11)",
+          "Secure Boot",
+          "Virtualization (VT-x/AMD-V)"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Win11 upgrades stall constantly on TPM/Secure Boot being off — enabling them in UEFI is a routine fix."
+        }
+      },
+      {
+        "h": "POST",
+        "p": [
+          "Power-On Self-Test checks hardware; beep codes/POST codes signal failures before boot."
+        ]
+      }
+    ],
+    "practice": "Name the two firmware settings you'd enable to install Windows 11."
   }
 };

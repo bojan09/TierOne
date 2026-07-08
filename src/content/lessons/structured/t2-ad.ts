@@ -118,5 +118,66 @@ export const t2adLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "A user says a mapped drive vanished. Show the two commands you'd run to check whether Group Policy is responsible."
+  },
+  "t2-ad-05": {
+    "intro": "When a policy 'isn't applying', diagnose it methodically.",
+    "sections": [
+      {
+        "h": "Check application",
+        "code": "gpresult /r          # applied policies for the user/computer\ngpupdate /force      # reapply now\nrsop.msc             # resultant set of policy (GUI)"
+      },
+      {
+        "h": "Common causes",
+        "ul": [
+          "Wrong OU (object not in the linked OU)",
+          "Security/WMI filtering excludes the user",
+          "Replication lag between DCs",
+          "Enforced/blocked inheritance"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Nine times out of ten a 'GPO not working' ticket is the object sitting in the wrong OU — check gpresult /r before touching the policy itself."
+        }
+      },
+      {
+        "h": "Order",
+        "p": [
+          "GPOs apply Local → Site → Domain → OU (last wins); loopback changes user-policy behavior."
+        ]
+      }
+    ],
+    "practice": "A mapped-drive GPO isn't applying to one user — what's your first command and likely cause?"
+  },
+  "t2-ad-06": {
+    "intro": "Lockouts are high-volume tickets — find the source, don't just unlock.",
+    "sections": [
+      {
+        "h": "Find the source",
+        "ul": [
+          "Event ID 4740 (lockout) on the DC / PDC emulator",
+          "Caller station in the event = where bad creds originate",
+          "Common sources: phone/email with old password, mapped drive, service account"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Just unlocking the account without finding the stale credential means it locks again in minutes — check the source machine in event 4740 first."
+        }
+      },
+      {
+        "h": "Resolve",
+        "ul": [
+          "Update saved creds (Credential Manager, phone mail, mapped drives)",
+          "Reset password if compromised",
+          "Check for a service running as the user"
+        ]
+      },
+      {
+        "h": "Prevent",
+        "p": [
+          "Educate users after a password change to update all devices/services."
+        ]
+      }
+    ],
+    "practice": "An account keeps locking every few minutes — where do you look to find the source?"
   }
 };

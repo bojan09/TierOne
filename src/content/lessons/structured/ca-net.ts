@@ -270,5 +270,36 @@ export const canetLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "Which connection type has the highest latency, and which is fastest/symmetrical?"
+  },
+  "ca-net-07": {
+    "intro": "A+ expects well-known ports and their protocols from memory.",
+    "sections": [
+      {
+        "h": "Must-know ports",
+        "ul": [
+          "20/21 FTP · 22 SSH/SFTP · 23 Telnet",
+          "25 SMTP · 53 DNS · 67/68 DHCP",
+          "80 HTTP · 443 HTTPS · 110 POP3 · 143 IMAP",
+          "389 LDAP · 3389 RDP · 445 SMB"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Firewall and connectivity tickets constantly come down to a blocked port — knowing 443 vs 3389 vs 445 on sight saves real time."
+        }
+      },
+      {
+        "h": "TCP vs UDP",
+        "p": [
+          "TCP reliable/ordered (web, email, RDP); UDP fast/connectionless (DNS queries, streaming, VoIP)."
+        ]
+      },
+      {
+        "h": "Secure vs insecure",
+        "p": [
+          "Prefer HTTPS/SSH/SFTP over HTTP/Telnet/FTP."
+        ]
+      }
+    ],
+    "practice": "Write the ports for HTTPS, RDP, SMB, and DNS."
   }
 };

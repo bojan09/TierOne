@@ -52,11 +52,15 @@ export default function Onboarding() {
               <button
                 key={t.id}
                 onClick={() => setTrack(t.id)}
-                className={`w-full text-left card p-4 flex items-start gap-3 transition-colors ${
-                  track === t.id ? 'border-brand-500 ring-1 ring-brand-500/40' : 'hover:border-surface-600'
+                aria-pressed={track === t.id}
+                className={`relative w-full h-full text-left card p-4 flex items-start gap-3 transition-all ${
+                  track === t.id ? 'border-brand-500 ring-2 ring-brand-500/40' : 'hover:border-surface-500'
                 }`}
               >
-                <span className="text-2xl">{t.icon}</span>
+                {track === t.id && (
+                  <span className="absolute top-2 right-2 w-5 h-5 rounded-full bg-brand-500 text-white text-xs flex items-center justify-center">✓</span>
+                )}
+                <span className="text-2xl flex-shrink-0">{t.icon}</span>
                 <span className="min-w-0">
                   <span className="block font-semibold text-white">{t.title}</span>
                   <span className="block text-sm text-slate-400 mt-0.5">{t.desc}</span>

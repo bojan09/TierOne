@@ -214,5 +214,39 @@ export const caosLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "Explain least privilege and how groups make it easier to apply."
+  },
+  "ca-os-07": {
+    "intro": "The built-in utilities A+ techs use to configure and repair Windows.",
+    "sections": [
+      {
+        "h": "Key utilities",
+        "ul": [
+          "msconfig — boot/startup",
+          "regedit — registry",
+          "services.msc — services",
+          "taskschd.msc — scheduled tasks",
+          "mmc — custom consoles"
+        ]
+      },
+      {
+        "h": "Repair/inspect",
+        "ul": [
+          "Event Viewer — logs",
+          "Performance Monitor",
+          "Disk Cleanup / defrag (HDD)"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Knowing the exact .msc to type turns a 10-minute click-hunt into seconds — techs live in Run (Win+R)."
+        }
+      },
+      {
+        "h": "Run box",
+        "p": [
+          "Win+R launches tools by name (e.g., 'services.msc', 'devmgmt.msc')."
+        ]
+      }
+    ],
+    "practice": "Which utility edits startup/boot config, and which manages services?"
   }
 };

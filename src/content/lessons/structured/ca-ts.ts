@@ -216,5 +216,38 @@ export const catsLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "A phone suddenly has high data use and pop-ups — what do you suspect and do?"
+  },
+  "ca-ts-07": {
+    "intro": "When Windows won't start, A+ techs use the recovery toolset methodically.",
+    "sections": [
+      {
+        "h": "Recovery tools",
+        "ul": [
+          "WinRE (Windows Recovery Environment)",
+          "Startup Repair",
+          "Safe Mode (minimal drivers)",
+          "System Restore / reset"
+        ]
+      },
+      {
+        "h": "Common boot errors",
+        "ul": [
+          "'No boot device' → boot order, bootrec /fixboot",
+          "BCD errors → bootrec /rebuildbcd",
+          "Driver crash → Safe Mode + roll back"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Boot into Safe Mode first — if it boots clean there, you've isolated the problem to a driver or startup app, not hardware."
+        }
+      },
+      {
+        "h": "BSOD",
+        "p": [
+          "Note the stop code; check Event Viewer/minidump; roll back recent driver/update."
+        ]
+      }
+    ],
+    "practice": "A PC fails to boot after a driver update — what's your first recovery step?"
   }
 };

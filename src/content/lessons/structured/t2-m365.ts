@@ -176,5 +176,76 @@ export const t2m365Lessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "A user can't edit a shared SharePoint document. List the first two things you'd verify."
+  },
+  "t2-m365-06": {
+    "intro": "Email delivery issues are core M365 admin work.",
+    "sections": [
+      {
+        "h": "Diagnose delivery",
+        "ul": [
+          "Message trace (admin center) — where did it stop?",
+          "Check quarantine / spam policies",
+          "Verify the recipient exists / not blocked"
+        ]
+      },
+      {
+        "h": "Mail flow concepts",
+        "ul": [
+          {
+            "b": "Connectors",
+            "t": "route mail to/from external systems"
+          },
+          {
+            "b": "SPF/DKIM/DMARC",
+            "t": "anti-spoofing — misconfig causes rejects"
+          },
+          {
+            "b": "Transport rules",
+            "t": "org-wide mail handling"
+          }
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: When external mail 'disappears', a message trace tells you in seconds whether it was quarantined, rejected by SPF, or never arrived — always start there."
+        }
+      },
+      {
+        "h": "NDRs",
+        "p": [
+          "Read the non-delivery report code (e.g. 550 5.4.1) — it names the cause."
+        ]
+      }
+    ],
+    "practice": "A user says an external email never arrived — what's your first diagnostic tool?"
+  },
+  "t2-m365-07": {
+    "intro": "Support the collaboration stack most orgs live in.",
+    "sections": [
+      {
+        "h": "Teams",
+        "ul": [
+          "Teams sit on a SharePoint site + M365 group",
+          "Common issues: cache (clear Teams cache), permissions, guest access"
+        ]
+      },
+      {
+        "h": "SharePoint/OneDrive",
+        "ul": [
+          "Permissions inherit from the site; broken inheritance causes access issues",
+          "Sync issues → reset OneDrive, check storage quota"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Most 'I can't open the file' tickets are permissions inheritance or a stale OneDrive sync — check access first, then clear the cache; reimaging is almost never the answer."
+        }
+      },
+      {
+        "h": "Licensing",
+        "p": [
+          "Features depend on the assigned license — verify before deep troubleshooting."
+        ]
+      }
+    ],
+    "practice": "A user can't access a Teams file others can — what two things do you check?"
   }
 };

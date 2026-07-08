@@ -234,5 +234,38 @@ export const camcLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "Name three field-replaceable laptop parts."
+  },
+  "ca-mc-07": {
+    "intro": "Go deeper on cloud service/deployment models and their traits.",
+    "sections": [
+      {
+        "h": "Shared responsibility",
+        "ul": [
+          "IaaS: you manage OS↑; provider manages hardware",
+          "PaaS: you manage app/data; provider manages runtime",
+          "SaaS: provider manages nearly everything"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: The shared-responsibility model decides who patches what — assuming the cloud provider secures your SaaS data is a common, costly mistake."
+        }
+      },
+      {
+        "h": "Traits",
+        "ul": [
+          "On-demand self-service",
+          "Rapid elasticity",
+          "Measured (pay-per-use)",
+          "Broad network access"
+        ]
+      },
+      {
+        "h": "Deployment",
+        "p": [
+          "Public, private, hybrid, community — trade control vs cost/scale."
+        ]
+      }
+    ],
+    "practice": "Under IaaS, who patches the guest OS — you or the provider?"
   }
 };

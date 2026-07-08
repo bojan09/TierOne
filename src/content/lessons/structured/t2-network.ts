@@ -94,5 +94,65 @@ export const t2networkLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "A shared printer shows 'offline' for everyone. List the checks you'd run from the print server outward."
+  },
+  "t2-net-04": {
+    "intro": "Remote workers depend on VPN — a top Tier-2 category.",
+    "sections": [
+      {
+        "h": "Can't connect",
+        "ul": [
+          "Wrong creds/MFA, expired cert, client version",
+          "ISP/firewall blocking the VPN port",
+          "Confirm the user has internet first"
+        ]
+      },
+      {
+        "h": "Connected but no access",
+        "ul": [
+          "Split tunnel vs full tunnel routing",
+          "DNS not resolving internal names",
+          "Firewall rules on the resource"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: 'VPN connects but I can't reach the file server' is usually DNS or routing, not the VPN itself — test by IP vs name to split the problem."
+        }
+      },
+      {
+        "h": "Method",
+        "p": [
+          "Internet → VPN tunnel up → internal DNS → resource. Test each hop."
+        ]
+      }
+    ],
+    "practice": "A user's VPN connects but internal sites won't load — what do you test to isolate it?"
+  },
+  "t2-net-05": {
+    "intro": "So many 'internet down' tickets are actually DNS.",
+    "sections": [
+      {
+        "h": "Diagnose",
+        "code": "nslookup intranet.corp   # does it resolve?\nipconfig /displaydns     # cache\nipconfig /flushdns       # clear stale records\nping 8.8.8.8 vs ping name # IP works, name fails = DNS"
+      },
+      {
+        "h": "Causes",
+        "ul": [
+          "Wrong DNS server set on the client",
+          "Stale cached record after a change",
+          "Internal vs external DNS split"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: If ping to 8.8.8.8 works but names fail, it's DNS every time — flush the cache and verify the client's DNS server before escalating."
+        }
+      },
+      {
+        "h": "Fix",
+        "p": [
+          "Correct DNS server (DHCP or static), flush cache, verify with nslookup."
+        ]
+      }
+    ],
+    "practice": "Ping to 8.8.8.8 succeeds but no site loads — name the cause and two commands to confirm/fix."
   }
 };

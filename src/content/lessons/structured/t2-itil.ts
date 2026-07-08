@@ -93,5 +93,73 @@ export const t2itilLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "Write two-sentence ticket notes for a password reset you completed, good enough for a colleague to understand cold."
+  },
+  "t2-itil-04": {
+    "intro": "A good escalation saves hours. A bad one bounces back.",
+    "sections": [
+      {
+        "h": "What to include",
+        "ul": [
+          "Clear summary + impact/urgency",
+          "Steps already tried and results",
+          "Exact errors, timestamps, affected users",
+          "What you need from the next tier"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Tier-3 and vendors triage by quality — a ticket with repro steps, errors, and what you've ruled out gets worked immediately; a one-line 'it's broken' sits in the queue."
+        }
+      },
+      {
+        "h": "Impact vs urgency",
+        "p": [
+          "Impact = how many/how critical; urgency = how fast it's needed. Together set priority."
+        ]
+      },
+      {
+        "h": "Don't",
+        "p": [
+          "Don't escalate without triage, and don't strip context — the next tier shouldn't restart from zero."
+        ]
+      }
+    ],
+    "practice": "List four things every escalation should contain."
+  },
+  "t2-itil-05": {
+    "intro": "Beyond incidents: the ITIL practices that prevent repeat tickets.",
+    "sections": [
+      {
+        "h": "Incident vs problem",
+        "ul": [
+          {
+            "b": "Incident",
+            "t": "restore service now"
+          },
+          {
+            "b": "Problem",
+            "t": "find/fix the root cause so it stops recurring"
+          }
+        ]
+      },
+      {
+        "h": "Change management",
+        "ul": [
+          "Changes are reviewed/approved (CAB) to reduce risk",
+          "Standard vs normal vs emergency changes",
+          "Always have a rollback plan"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Recurring incidents (same outage weekly) should become a 'problem' record — chasing the same ticket over and over without root-cause analysis is how teams stay underwater."
+        }
+      },
+      {
+        "h": "Why it matters",
+        "p": [
+          "Problem management turns firefighting into prevention; change management stops self-inflicted outages."
+        ]
+      }
+    ],
+    "practice": "Explain the difference between an incident and a problem in ITIL terms."
   }
 };

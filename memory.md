@@ -6,7 +6,17 @@ Last updated: 2026-07-06
 
 ## P2 DONE — Guided 'next step'. src/features/curriculum/NextStep.tsx: resolves resume (stats.lastLessonId if in-track & incomplete) else first incomplete lesson in profile.track; celebratory state when track complete. Placed top of LearnHome + Dashboard. Reduces overwhelm.
 
-## ROADMAP (P3-P4 remain) — after P32
+## P3 DONE — Practice exams. Migration 0052: get_exam(p_track,p_count) random N questions (no answers) join curriculum_lessons on track; submit_exam(p_ids bigint[],p_answers int[]) grades server-side, returns score/passed(>=70%)/results[{id,correct,correct_index}]. No XP/attempt. Validated PG16. Client: src/features/exam/{api.ts,Exam.tsx} — setup(pick track)->active(20 Q, 20min timer, auto-submit)->done(score+review w/ correct answers). Route /exam. Entries: searchIndex + Navbar Tools. Migrations through 0052.
+
+## P4 (scripting) DONE — Scripting expanded 12->18 lessons (54 quizzes). PowerShell +error-handling/remoting-modules/real-scripts (sc-ps-07..09); Python +regex/apis/log-parsing (sc-py-07..09). Each advanced lesson has an 'In the real world:' info callout. Author /home/claude/p29_expand.py (+scripts/). Seeds 0048/0049 regenerated, validated PG16.
+
+## P4b DONE — Tier 2 (helpdesk) expanded 20->30 lessons (90 quizzes). +2 per t2 course: profile/login+performance (win), gpo+lockouts (ad), exchange-mailflow+teams-sharepoint (m365), vpn+dns (net), effective-escalation+change-problem (itil). Each has 'In the real world:' callout. Author /home/claude/p20_expand.py (+scripts/). Seeds 0035/0036 regenerated, validated PG16.
+## P5 A+ DEPTH + EXAM HISTORY + ONBOARDING POLISH
+- A+ depth2: +1 lesson/domain -> 42 lessons/126 quizzes (ca-*-07: bios-uefi, ports-protocols, cloud-models-deep, windows-tools, access-control, boot-recovery). Author p28_expand2.py. Seeds 0045/0046 regenerated. PG-validated.
+- Exam history (migration 0053): exam_attempts table (RLS self) + submit_exam now (p_ids,p_answers,p_track) records attempt + get_exam_history(). Client: api getExamHistory + submitExam(track); Exam.tsx shows 'Recent attempts' on setup. Validated PG16.
+- Onboarding selector polish: track cards with selected ✓ badge + ring-2 + equal height, aria-pressed.
+Migrations through 0053.
+ROADMAP P1-P4b COMPLETE. Remaining nice-to-haves: A+ more depth; light-theme full tokenization (QA); onboarding selector polish; exam_attempts history table (optional).
 User feedback: landing/footer stale+misleading; onboarding overwhelming; wants more Scripting, more Tier1/2, practical exams, real-world explanations.
 - **P1 Truth-up marketing:** Footer.jsx is FULLY STALE/HARDCODED (brand 'SysAdminPro', dead /windows-server-2025 links, stats '82 lessons/82 VMware Labs/400+', 'open beta', 'Phase 17'). FIX: spine-driven stats (count from curriculum), accurate copy (4 tracks: helpdesk/sysadmin/comptia/scripting; in-browser labs NOT VMware; spaced review; progress), real learning-paths+featured, accurate free-beta line. Also check any hero/stats bar for same.
 - **P2 Guided experience:** curated 'Start here' path per track (ordered milestone roadmap) + persistent 'Your next step' CTA on Dashboard & /learn (use ResumeBanner/lastLessonId + next-lesson). Reduce overwhelm.

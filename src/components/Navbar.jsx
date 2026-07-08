@@ -18,6 +18,7 @@ const NAV_ITEMS = [
       { label: 'Virtual Help Desk',      href: '/simulator',                    desc: 'Practice on real tickets · new' },
       { label: 'Simulated Labs',         href: '/labs',                         desc: 'Hands-on terminal practice · new' },
       { label: 'Spaced Review',          href: '/review',                       desc: 'Review passed lessons · new' },
+      { label: 'Practice Exam',          href: '/exam',                         desc: 'Timed cert-style exam · new' },
       { label: 'Interview Prep',         href: '/interview',                    desc: 'Practice interview questions · new' },
       { label: 'Documentation Practice', href: '/practice',                     desc: 'Write docs, get AI feedback · new' },
       { label: 'Career Readiness',       href: '/analytics',                    desc: 'Your employability snapshot · new' },

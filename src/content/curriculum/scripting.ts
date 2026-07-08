@@ -21,7 +21,10 @@ addCourse({ id:'sc-powershell-scripting', slug:'sc-powershell-scripting', title:
     { id:'sc-ps-03', hasQuiz:true, slug:'variables-data', title:"Variables, Operators & Data", xp:55, minutes:20 },
     { id:'sc-ps-04', hasQuiz:true, slug:'flow-loops', title:"Flow Control & Loops", xp:55, minutes:20 },
     { id:'sc-ps-05', hasQuiz:true, slug:'functions-scripts', title:"Functions & Scripts", xp:60, minutes:22 },
-    { id:'sc-ps-06', hasQuiz:true, slug:'automation', title:"Practical Automation", xp:65, minutes:22 }
+    { id:'sc-ps-06', hasQuiz:true, slug:'automation', title:"Practical Automation", xp:65, minutes:22 },
+    { id:'sc-ps-07', hasQuiz:true, slug:'error-handling', title:"Error Handling & Debugging", xp:60, minutes:22 },
+    { id:'sc-ps-08', hasQuiz:true, slug:'remoting-modules', title:"Remoting & Modules", xp:60, minutes:22 },
+    { id:'sc-ps-09', hasQuiz:true, slug:'real-scripts', title:"Real-World Scripts", xp:70, minutes:24 }
 ]);
 
 addCourse({ id:'sc-python-scripting', slug:'sc-python-scripting', title:"Scripting: Python", description:"Learn Python for IT: from syntax and data structures to files, errors, and real automation scripts.", icon:'🐍', order:2, difficulty:'beginner' }, 'sc-py-m1', [
@@ -30,7 +33,10 @@ addCourse({ id:'sc-python-scripting', slug:'sc-python-scripting', title:"Scripti
     { id:'sc-py-03', hasQuiz:true, slug:'control-flow', title:"Control Flow & Loops", xp:55, minutes:20 },
     { id:'sc-py-04', hasQuiz:true, slug:'functions-modules', title:"Functions & Modules", xp:60, minutes:22 },
     { id:'sc-py-05', hasQuiz:true, slug:'files-errors', title:"Files & Error Handling", xp:60, minutes:22 },
-    { id:'sc-py-06', hasQuiz:true, slug:'automation', title:"IT Automation with Python", xp:65, minutes:22 }
+    { id:'sc-py-06', hasQuiz:true, slug:'automation', title:"IT Automation with Python", xp:65, minutes:22 },
+    { id:'sc-py-07', hasQuiz:true, slug:'regex', title:"Regular Expressions", xp:60, minutes:22 },
+    { id:'sc-py-08', hasQuiz:true, slug:'apis', title:"Working with APIs", xp:60, minutes:22 },
+    { id:'sc-py-09', hasQuiz:true, slug:'log-parsing', title:"Log Parsing & a Mini-Project", xp:70, minutes:24 }
 ]);
 // P29-GENERATED-END
 

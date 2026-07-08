@@ -152,5 +152,89 @@ export const scpsLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "Write a one-liner that exports all stopped services to a CSV file."
+  },
+  "sc-ps-07": {
+    "intro": "Production scripts must fail safely. Handle errors, control their behavior, and debug when things break.",
+    "sections": [
+      {
+        "h": "try / catch / finally",
+        "code": "try {\n  Get-Content missing.txt -ErrorAction Stop\n} catch {\n  Write-Warning \"Failed: $($_.Exception.Message)\"\n} finally {\n  'cleanup runs always'\n}"
+      },
+      {
+        "h": "Error control",
+        "ul": [
+          {
+            "b": "-ErrorAction Stop",
+            "t": "makes a non-terminating error catchable"
+          },
+          {
+            "b": "$Error[0]",
+            "t": "the most recent error"
+          },
+          {
+            "b": "-ErrorVariable e",
+            "t": "capture without stopping"
+          }
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Cmdlet errors are non-terminating by default — without -ErrorAction Stop your catch block never runs and a broken script keeps going."
+        }
+      },
+      {
+        "h": "Debugging",
+        "p": [
+          "Set-PSBreakpoint or the VS Code debugger; Write-Verbose with -Verbose for traceable output."
+        ]
+      }
+    ],
+    "practice": "Wrap a file read in try/catch so a missing file logs a warning instead of crashing."
+  },
+  "sc-ps-08": {
+    "intro": "Run commands on remote machines and extend PowerShell with modules from the Gallery.",
+    "sections": [
+      {
+        "h": "Remoting",
+        "code": "Invoke-Command -ComputerName SRV01 -ScriptBlock { Get-Service }\n$s = New-PSSession -ComputerName SRV01\nInvoke-Command -Session $s -ScriptBlock { $env:COMPUTERNAME }"
+      },
+      {
+        "h": "Modules",
+        "code": "Get-Module -ListAvailable\nImport-Module ActiveDirectory\nInstall-Module -Name Pester   # from PSGallery"
+      },
+      {
+        "h": "Why it matters",
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Admins rarely log into servers one by one — Invoke-Command runs a fix across dozens of machines at once, and modules (like ActiveDirectory) are how real admin tasks get automated."
+        }
+      }
+    ],
+    "practice": "Write a command that runs Get-Service on a remote server named SRV01."
+  },
+  "sc-ps-09": {
+    "intro": "Combine parameters, pipeline input, and logging into a script you'd actually run in production.",
+    "sections": [
+      {
+        "h": "A parameterized, logged script",
+        "code": "param([Parameter(Mandatory)][string]$UserName)\n\n$log = \"C:\\logs\\offboard.log\"\nfunction Write-Log($m){ \"$(Get-Date -f s) $m\" | Add-Content $log }\n\ntry {\n  Write-Log \"Disabling $UserName\"\n  # Disable-ADAccount -Identity $UserName -ErrorAction Stop\n  Write-Log \"Done\"\n} catch { Write-Log \"ERROR: $($_.Exception.Message)\" }"
+      },
+      {
+        "h": "Good script hygiene",
+        "ul": [
+          "Mandatory params + validation",
+          "Log actions with timestamps",
+          "-WhatIf support for safe dry-runs",
+          "Idempotent where possible"
+        ]
+      },
+      {
+        "h": "Scheduling",
+        "note": {
+          "kind": "info",
+          "text": "In the real world: This is how routine ops actually run: a parameterized script + Task Scheduler handles nightly cleanups, user offboarding, and report generation without anyone touching a console."
+        }
+      }
+    ],
+    "practice": "Sketch a script with a mandatory -UserName parameter that logs each action with a timestamp."
   }
 };

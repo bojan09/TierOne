@@ -135,5 +135,115 @@ export const scpyLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "Outline a script that reads a log file and counts lines containing 'ERROR'."
+  },
+  "sc-py-07": {
+    "intro": "Regex extracts structure from text — indispensable for parsing logs, configs, and output.",
+    "sections": [
+      {
+        "h": "The re module",
+        "code": "import re\nre.search(r'\\d+', 'abc123')      # first match object\nre.findall(r'\\d+', 'a1 b2 c3')     # ['1','2','3']\nm = re.search(r'(\\w+)@(\\w+)', 'ada@corp')\nm.group(1)                         # 'ada'"
+      },
+      {
+        "h": "Common patterns",
+        "ul": [
+          {
+            "b": "\\d",
+            "t": "digit"
+          },
+          {
+            "b": "\\w",
+            "t": "word char"
+          },
+          {
+            "b": "\\s",
+            "t": "whitespace"
+          },
+          {
+            "b": "+ * ?",
+            "t": "quantifiers"
+          },
+          {
+            "b": "( )",
+            "t": "capture group"
+          }
+        ]
+      },
+      {
+        "h": "Where it pays off",
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Extracting IPs, timestamps, or error codes from thousands of log lines is a regex one-liner — this is the single most reused skill in IT scripting."
+        }
+      }
+    ],
+    "practice": "Write a findall that pulls every number out of a string."
+  },
+  "sc-py-08": {
+    "intro": "Most automation talks to web APIs. Use requests to fetch and send JSON.",
+    "sections": [
+      {
+        "h": "GET and JSON",
+        "code": "import requests\nr = requests.get('https://api.example.com/servers',\n                 headers={'Authorization': 'Bearer TOKEN'})\nr.raise_for_status()\ndata = r.json()"
+      },
+      {
+        "h": "POST",
+        "code": "requests.post(url, json={'name': 'srv01'}, headers=headers)"
+      },
+      {
+        "h": "Status codes",
+        "ul": [
+          {
+            "b": "200",
+            "t": "OK"
+          },
+          {
+            "b": "401/403",
+            "t": "auth problem"
+          },
+          {
+            "b": "404",
+            "t": "not found"
+          },
+          {
+            "b": "429",
+            "t": "rate limited"
+          },
+          {
+            "b": "5xx",
+            "t": "server error"
+          }
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Cloud and monitoring tools (Azure, ticketing, Slack) all expose REST APIs — a short Python script can pull inventory, open tickets, or post alerts automatically."
+        }
+      }
+    ],
+    "practice": "Write a GET request with a bearer token that parses the JSON response."
+  },
+  "sc-py-09": {
+    "intro": "Tie it together: read a log, extract with regex, aggregate, and write a report.",
+    "sections": [
+      {
+        "h": "Count errors by type",
+        "code": "import re, collections\ncounts = collections.Counter()\nwith open('app.log') as f:\n    for line in f:\n        m = re.search(r'ERROR (\\w+)', line)\n        if m:\n            counts[m.group(1)] += 1\nfor kind, n in counts.most_common():\n    print(f'{kind}: {n}')"
+      },
+      {
+        "h": "Extend it",
+        "ul": [
+          "Write results to a CSV/JSON report",
+          "Filter by date range",
+          "Alert if a threshold is exceeded"
+        ]
+      },
+      {
+        "h": "The payoff",
+        "note": {
+          "kind": "info",
+          "text": "In the real world: A 15-line script like this replaces manual log scrolling — schedule it and it becomes a daily health report or an alert pipeline."
+        }
+      }
+    ],
+    "practice": "Outline a script that counts how many times each ERROR type appears in a log."
   }
 };

@@ -172,5 +172,78 @@ export const t2windowsLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "List the pre-reimage checklist you'd run so a user loses nothing when their machine is reimaged."
+  },
+  "t2-win-06": {
+    "intro": "Corrupt profiles and login failures are daily Tier-2 tickets. Know the causes and fixes.",
+    "sections": [
+      {
+        "h": "Symptoms",
+        "ul": [
+          "'We can't sign in to your account' → temp profile loaded",
+          "Long logins → slow GPO/scripts, roaming profile size",
+          "Black screen after login → explorer.exe/GPO"
+        ]
+      },
+      {
+        "h": "Fixes",
+        "ul": [
+          "Check C:\\Users for .bak profile; repair via registry ProfileList",
+          "Recreate profile as last resort (back up data first)",
+          "Test with a known-good account to isolate profile vs machine"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: A user signed into a 'temporary profile' will lose new work on logoff — act before they save more, and always copy their data out first."
+        }
+      },
+      {
+        "h": "Isolate",
+        "p": [
+          "Machine vs profile vs account: test another user on the same PC, and the same user on another PC."
+        ]
+      }
+    ],
+    "practice": "A user reports a temporary profile — what do you check and warn them about first?"
+  },
+  "t2-win-07": {
+    "intro": "'My PC is slow' needs a method, not guesswork. Read the resource signals.",
+    "sections": [
+      {
+        "h": "Tools",
+        "ul": [
+          {
+            "b": "Task Manager / Resource Monitor",
+            "t": "CPU, memory, disk, network"
+          },
+          {
+            "b": "Startup tab",
+            "t": "trim boot load"
+          },
+          {
+            "b": "Event Viewer",
+            "t": "errors/warnings"
+          }
+        ]
+      },
+      {
+        "h": "Common causes",
+        "ul": [
+          "100% disk → Windows Update, indexing, failing drive",
+          "High RAM → too many apps, memory leak",
+          "High CPU → runaway process, malware"
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Escalate a failing drive fast — a disk pegged at 100% with slow response and SMART warnings is often dying, and every hour risks the user's data."
+        }
+      },
+      {
+        "h": "Method",
+        "p": [
+          "Reproduce, watch which resource saturates, tie it to a process, then remediate."
+        ]
+      }
+    ],
+    "practice": "A PC shows 100% disk usage at idle — list two likely causes and your next step."
   }
 };

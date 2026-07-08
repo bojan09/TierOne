@@ -6,15 +6,21 @@ insert into public.lesson_quizzes (lesson_id, pass_pct, bonus_xp) values
   ('sc-ps-04', 70, 30),
   ('sc-ps-05', 70, 30),
   ('sc-ps-06', 70, 30),
+  ('sc-ps-07', 70, 30),
+  ('sc-ps-08', 70, 30),
+  ('sc-ps-09', 70, 30),
   ('sc-py-01', 70, 30),
   ('sc-py-02', 70, 30),
   ('sc-py-03', 70, 30),
   ('sc-py-04', 70, 30),
   ('sc-py-05', 70, 30),
-  ('sc-py-06', 70, 30)
+  ('sc-py-06', 70, 30),
+  ('sc-py-07', 70, 30),
+  ('sc-py-08', 70, 30),
+  ('sc-py-09', 70, 30)
 on conflict (lesson_id) do update set pass_pct=excluded.pass_pct, bonus_xp=excluded.bonus_xp;
 
-delete from public.quiz_questions where lesson_id in ('sc-ps-01', 'sc-ps-02', 'sc-ps-03', 'sc-ps-04', 'sc-ps-05', 'sc-ps-06', 'sc-py-01', 'sc-py-02', 'sc-py-03', 'sc-py-04', 'sc-py-05', 'sc-py-06');
+delete from public.quiz_questions where lesson_id in ('sc-ps-01', 'sc-ps-02', 'sc-ps-03', 'sc-ps-04', 'sc-ps-05', 'sc-ps-06', 'sc-ps-07', 'sc-ps-08', 'sc-ps-09', 'sc-py-01', 'sc-py-02', 'sc-py-03', 'sc-py-04', 'sc-py-05', 'sc-py-06', 'sc-py-07', 'sc-py-08', 'sc-py-09');
 
 insert into public.quiz_questions (lesson_id, sort, prompt, options, correct_index, explanation) values
   ('sc-ps-01', 1, 'PowerShell commands follow the form…', '["Noun-Verb", "Verb-Noun", "just verbs", "random"]'::jsonb, 1, 'Cmdlets are Verb-Noun, e.g. Get-Process.'),
@@ -35,6 +41,15 @@ insert into public.quiz_questions (lesson_id, sort, prompt, options, correct_ind
   ('sc-ps-06', 1, 'Export objects to CSV with…', '["Write-Host", "Export-Csv", "Out-Null", "Format-Table"]'::jsonb, 1, 'Export-Csv writes objects to CSV.'),
   ('sc-ps-06', 2, 'Recurring automation on Windows uses…', '["Task Scheduler", "Paint", "Notepad", "DNS"]'::jsonb, 0, 'Task Scheduler runs scripts on a schedule.'),
   ('sc-ps-06', 3, 'Select-Object -First 5 returns…', '["last 5", "first 5 objects", "all", "none"]'::jsonb, 1, 'It takes the first 5 objects.'),
+  ('sc-ps-07', 1, 'Which makes a cmdlet error catchable by try/catch?', '["-Force", "-ErrorAction Stop", "-WhatIf", "-Confirm"]'::jsonb, 1, 'Non-terminating errors need -ErrorAction Stop to be caught.'),
+  ('sc-ps-07', 2, 'Code that must always run goes in…', '["try", "catch", "finally", "trap"]'::jsonb, 2, 'finally always executes.'),
+  ('sc-ps-07', 3, 'The most recent error is in…', '["$LastError", "$Error[0]", "$?", "$_"]'::jsonb, 1, '$Error[0] holds the latest error.'),
+  ('sc-ps-08', 1, 'Which runs a scriptblock on a remote host?', '["Enter-Host", "Invoke-Command", "Run-Remote", "Get-Session"]'::jsonb, 1, 'Invoke-Command -ComputerName runs remotely.'),
+  ('sc-ps-08', 2, 'Third-party modules install from…', '["the BIOS", "PowerShell Gallery", "Task Scheduler", "the registry"]'::jsonb, 1, 'Install-Module pulls from PSGallery.'),
+  ('sc-ps-08', 3, 'A reusable, persistent remote connection is a…', '["job", "PSSession", "pipe", "cmdlet"]'::jsonb, 1, 'New-PSSession creates a reusable session.'),
+  ('sc-ps-09', 1, 'A required parameter uses…', '["[Optional]", "[Parameter(Mandatory)]", "[Switch]", "[AllowNull]"]'::jsonb, 1, '[Parameter(Mandatory)] forces a value.'),
+  ('sc-ps-09', 2, 'A safe dry-run is enabled by supporting…', '["-Force", "-WhatIf", "-Quiet", "-Silent"]'::jsonb, 1, '-WhatIf previews without acting.'),
+  ('sc-ps-09', 3, 'Recurring script execution is handled by…', '["Task Scheduler", "Notepad", "the pipeline", "Get-Help"]'::jsonb, 0, 'Task Scheduler runs scripts on a schedule.'),
   ('sc-py-01', 1, 'Python blocks are defined by…', '["Braces { }", "Indentation", "Semicolons", "Parentheses"]'::jsonb, 1, 'Indentation defines blocks in Python.'),
   ('sc-py-01', 2, 'An f-string is written…', '["f''{x}''", "$x", "%x", "{{x}}"]'::jsonb, 0, 'f''...{var}...'' interpolates values.'),
   ('sc-py-01', 3, 'Run a script file with…', '["run script", "python script.py", "exec()", "./python"]'::jsonb, 1, 'python script.py executes the file.'),
@@ -52,4 +67,13 @@ insert into public.quiz_questions (lesson_id, sort, prompt, options, correct_ind
   ('sc-py-05', 3, 'Opening with mode ''w''…', '["reads", "writes (truncates)", "appends", "fails"]'::jsonb, 1, '''w'' opens for writing, truncating.'),
   ('sc-py-06', 1, 'Run an external command from Python with…', '["os.open", "subprocess.run", "print", "import"]'::jsonb, 1, 'subprocess.run executes commands.'),
   ('sc-py-06', 2, 'Parse a JSON API response with…', '["r.text only", "r.json()", "r.bytes", "r.raw"]'::jsonb, 1, 'response.json() parses JSON.'),
-  ('sc-py-06', 3, 'A good automation pattern is…', '["random edits", "read \u2192 transform \u2192 output", "delete files", "guess"]'::jsonb, 1, 'Input → transform → output is the core pattern.');
+  ('sc-py-06', 3, 'A good automation pattern is…', '["random edits", "read \u2192 transform \u2192 output", "delete files", "guess"]'::jsonb, 1, 'Input → transform → output is the core pattern.'),
+  ('sc-py-07', 1, 'Which returns all matches as a list?', '["re.match", "re.findall", "re.split only", "re.compile"]'::jsonb, 1, 're.findall returns all matches.'),
+  ('sc-py-07', 2, 'A capture group is written with…', '["[ ]", "( )", "{ }", "< >"]'::jsonb, 1, '( ) captures a group.'),
+  ('sc-py-07', 3, '\d matches a…', '["letter", "digit", "space", "word"]'::jsonb, 1, '\d matches a digit.'),
+  ('sc-py-08', 1, 'Parse a JSON API body with…', '["r.text", "r.json()", "r.raw", "r.body"]'::jsonb, 1, 'response.json() parses JSON.'),
+  ('sc-py-08', 2, 'A 401 status means…', '["Success", "Auth problem", "Not found", "Rate limited"]'::jsonb, 1, '401 is unauthorized.'),
+  ('sc-py-08', 3, 'raise_for_status() does what?', '["Nothing", "Raises on HTTP error", "Prints", "Retries"]'::jsonb, 1, 'It raises an exception on 4xx/5xx.'),
+  ('sc-py-09', 1, 'Counting occurrences is easiest with…', '["a list", "collections.Counter", "a tuple", "a set"]'::jsonb, 1, 'Counter tallies occurrences.'),
+  ('sc-py-09', 2, 'most_common() returns items…', '["randomly", "ordered by frequency", "alphabetically", "reversed"]'::jsonb, 1, 'Ordered from most to least frequent.'),
+  ('sc-py-09', 3, 'The core automation pattern here is…', '["read \u2192 extract \u2192 aggregate \u2192 report", "delete logs", "guess", "reboot"]'::jsonb, 0, 'Read, extract, aggregate, output.');

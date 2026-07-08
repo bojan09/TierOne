@@ -186,14 +186,18 @@ addCourse({ id:'t2-windows-troubleshooting', slug:'t2-windows-troubleshooting', 
     { id:'t2-win-02', hasQuiz:true, slug:'bsod', title:"Blue Screens & Crash Analysis", xp:80, minutes:24 },
     { id:'t2-win-03', hasQuiz:true, slug:'safe-mode-winre', title:"Safe Mode & Windows Recovery", xp:80, minutes:24 },
     { id:'t2-win-04', hasQuiz:true, slug:'restore-reset-registry', title:"System Restore, Reset & the Registry", xp:80, minutes:24 },
-    { id:'t2-win-05', hasQuiz:true, slug:'imaging', title:"Imaging & Reimaging", xp:80, minutes:22 }
+    { id:'t2-win-05', hasQuiz:true, slug:'imaging', title:"Imaging & Reimaging", xp:80, minutes:22 },
+    { id:'t2-win-06', hasQuiz:true, slug:'profile-login', title:"Profile & Login Issues", xp:55, minutes:18 },
+    { id:'t2-win-07', hasQuiz:true, slug:'performance', title:"Performance & Resource Troubleshooting", xp:55, minutes:18 }
 ]);
 
 addCourse({ id:'t2-active-directory', slug:'t2-active-directory', title:"Tier 2: Active Directory for Support", description:"Handle the AD tasks that land on Tier 2 — managing accounts and OUs, fixing access via groups, resolving lockouts, and knowing what Group Policy is doing.", icon:'🗝️', order:21, difficulty:'intermediate' }, 't2-ad-m1', 'ad-for-support', "Active Directory for Support", [
     { id:'t2-ad-01', hasQuiz:true, slug:'accounts-ous', title:"Managing Accounts & OUs", xp:80, minutes:24 },
     { id:'t2-ad-02', hasQuiz:true, slug:'groups-access', title:"Groups & Access", xp:80, minutes:22 },
     { id:'t2-ad-03', hasQuiz:true, slug:'lockouts', title:"Passwords, Lockouts & Unlocks", xp:80, minutes:22 },
-    { id:'t2-ad-04', hasQuiz:true, slug:'gpo-basics', title:"Group Policy Basics for Support", xp:80, minutes:22 }
+    { id:'t2-ad-04', hasQuiz:true, slug:'gpo-basics', title:"Group Policy Basics for Support", xp:80, minutes:22 },
+    { id:'t2-ad-05', hasQuiz:true, slug:'gpo-troubleshoot', title:"Group Policy Troubleshooting", xp:55, minutes:18 },
+    { id:'t2-ad-06', hasQuiz:true, slug:'lockouts', title:"Account Lockouts & Password Issues", xp:55, minutes:16 }
 ]);
 
 addCourse({ id:'t2-m365-admin', slug:'t2-m365-admin', title:"Tier 2: Microsoft 365 Administration", description:"Support the cloud productivity stack every business runs on — the admin center, licensing, Exchange Online, identity and MFA, and Teams/SharePoint/Intune basics.", icon:'☁️', order:22, difficulty:'intermediate' }, 't2-m365-m1', 'm365-admin', "Microsoft 365 Administration", [
@@ -201,19 +205,25 @@ addCourse({ id:'t2-m365-admin', slug:'t2-m365-admin', title:"Tier 2: Microsoft 3
     { id:'t2-m365-02', hasQuiz:true, slug:'licensing', title:"Licensing & Plans", xp:80, minutes:22 },
     { id:'t2-m365-03', hasQuiz:true, slug:'exchange-online', title:"Exchange Online Basics", xp:80, minutes:22 },
     { id:'t2-m365-04', hasQuiz:true, slug:'identity-mfa', title:"Identity, MFA & Conditional Access", xp:85, minutes:24 },
-    { id:'t2-m365-05', hasQuiz:true, slug:'teams-sharepoint-intune', title:"Teams, SharePoint & Intune Intro", xp:80, minutes:22 }
+    { id:'t2-m365-05', hasQuiz:true, slug:'teams-sharepoint-intune', title:"Teams, SharePoint & Intune Intro", xp:80, minutes:22 },
+    { id:'t2-m365-06', hasQuiz:true, slug:'exchange-mailflow', title:"Exchange Online & Mail Flow", xp:55, minutes:18 },
+    { id:'t2-m365-07', hasQuiz:true, slug:'teams-sharepoint', title:"Teams & SharePoint Basics", xp:50, minutes:16 }
 ]);
 
 addCourse({ id:'t2-network-troubleshooting', slug:'t2-network-troubleshooting', title:"Tier 2: Network Troubleshooting", description:"Resolve the connectivity tickets that get escalated past Tier 1 — client addressing and DNS, VPN and remote access, and networked printers.", icon:'🔎', order:23, difficulty:'intermediate' }, 't2-net-m1', 'tier2-network', "Tier 2 Network Troubleshooting", [
     { id:'t2-net-01', hasQuiz:true, slug:'client-connectivity', title:"Client Connectivity Issues", xp:80, minutes:22 },
     { id:'t2-net-02', hasQuiz:true, slug:'vpn-remote', title:"VPN & Remote Access Issues", xp:80, minutes:22 },
-    { id:'t2-net-03', hasQuiz:true, slug:'printers', title:"Printers & Peripherals on the Network", xp:80, minutes:22 }
+    { id:'t2-net-03', hasQuiz:true, slug:'printers', title:"Printers & Peripherals on the Network", xp:80, minutes:22 },
+    { id:'t2-net-04', hasQuiz:true, slug:'vpn-remote', title:"VPN & Remote Access Issues", xp:55, minutes:18 },
+    { id:'t2-net-05', hasQuiz:true, slug:'dns-resolution', title:"DNS & Name Resolution", xp:55, minutes:16 }
 ]);
 
 addCourse({ id:'t2-itil-escalation', slug:'t2-itil-escalation', title:"Tier 2: ITIL & Escalation", description:"Work like a professional service desk — incident vs problem vs change, priorities and SLAs, escalation paths, and documentation that makes you trusted.", icon:'📋', order:24, difficulty:'intermediate' }, 't2-itil-m1', 'itil-escalation', "ITIL & Escalation", [
     { id:'t2-itil-01', hasQuiz:true, slug:'incident-problem-change', title:"Incident, Problem & Change", xp:80, minutes:22 },
     { id:'t2-itil-02', hasQuiz:true, slug:'sla-escalation', title:"SLAs, Priority & Escalation", xp:85, minutes:22 },
-    { id:'t2-itil-03', hasQuiz:true, slug:'documentation', title:"Documentation & Knowledge", xp:80, minutes:22 }
+    { id:'t2-itil-03', hasQuiz:true, slug:'documentation', title:"Documentation & Knowledge", xp:80, minutes:22 },
+    { id:'t2-itil-04', hasQuiz:true, slug:'effective-escalation', title:"Writing Effective Escalations", xp:50, minutes:16 },
+    { id:'t2-itil-05', hasQuiz:true, slug:'change-problem', title:"Change & Problem Management", xp:50, minutes:16 }
 ]);
 // P20-GENERATED-END
 

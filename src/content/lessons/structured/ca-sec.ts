@@ -255,5 +255,47 @@ export const casecLessons: Record<string, LessonContent> = {
       }
     ],
     "practice": "Match: fake call, fake SMS, targeting executives — to vishing, smishing, whaling."
+  },
+  "ca-sec-07": {
+    "intro": "Who you are, what you can do — the core of security operations.",
+    "sections": [
+      {
+        "h": "Authentication factors",
+        "ul": [
+          "Something you know (password/PIN)",
+          "Something you have (token/phone)",
+          "Something you are (biometric)",
+          "MFA combines 2+"
+        ]
+      },
+      {
+        "h": "Access control",
+        "ul": [
+          {
+            "b": "Least privilege",
+            "t": "minimum needed"
+          },
+          {
+            "b": "RBAC",
+            "t": "permissions via roles/groups"
+          },
+          {
+            "b": "ACLs",
+            "t": "per-resource permissions"
+          }
+        ],
+        "note": {
+          "kind": "info",
+          "text": "In the real world: Over-permissioned accounts are how small breaches become big ones — least privilege and group-based access are your first defense."
+        }
+      },
+      {
+        "h": "SSO",
+        "p": [
+          "One login for many apps — convenient, but protect it with MFA."
+        ]
+      }
+    ],
+    "practice": "Give one factor of each MFA type and explain least privilege."
   }
 };
