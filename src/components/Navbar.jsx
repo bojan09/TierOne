@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import AuthButton from './AuthButton.jsx'
+import ThemeToggle from '@/features/theme/ThemeToggle'
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
 
 // ─── Consolidated nav — 3 top-level dropdowns + right cluster ─────────────────
@@ -16,6 +17,7 @@ const NAV_ITEMS = [
       { label: 'Browse all tracks',      href: '/learn',                        desc: 'The full Academy' },
       { label: 'Virtual Help Desk',      href: '/simulator',                    desc: 'Practice on real tickets · new' },
       { label: 'Simulated Labs',         href: '/labs',                         desc: 'Hands-on terminal practice · new' },
+      { label: 'Spaced Review',          href: '/review',                       desc: 'Review passed lessons · new' },
       { label: 'Interview Prep',         href: '/interview',                    desc: 'Practice interview questions · new' },
       { label: 'Documentation Practice', href: '/practice',                     desc: 'Write docs, get AI feedback · new' },
       { label: 'Career Readiness',       href: '/analytics',                    desc: 'Your employability snapshot · new' },
@@ -471,6 +473,8 @@ export default function Navbar({ onOpenSearch }) {
                                  group-hover:animate-pulse flex-shrink-0" />
                 {(stats?.totalXp ?? xp).toLocaleString()} XP
               </Link>
+
+              <ThemeToggle />
 
               {/* Review due badge */}
               {dueReviewCount > 0 && (

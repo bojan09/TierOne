@@ -1,6 +1,21 @@
-# Memory — TierZero (through Phase 30)
+# Memory — TierZero (through Phase 32 + roadmap)
 
 Last updated: 2026-07-06
+
+## P1 DONE — Footer.jsx rewritten spine-driven (stats from curriculum: Tracks/Courses/Lessons/Quizzes), brand=TierZero, real 4 tracks->/​learn, real tools (labs/review/simulator/interview/glossary), platform (/learn,/dashboard,/certificates,/search), featured=first course per track via courseHref, accurate free-beta copy, removed SysAdminPro/VMware/open-beta/Phase17/localStorage. Gates green.
+
+## P2 DONE — Guided 'next step'. src/features/curriculum/NextStep.tsx: resolves resume (stats.lastLessonId if in-track & incomplete) else first incomplete lesson in profile.track; celebratory state when track complete. Placed top of LearnHome + Dashboard. Reduces overwhelm.
+
+## ROADMAP (P3-P4 remain) — after P32
+User feedback: landing/footer stale+misleading; onboarding overwhelming; wants more Scripting, more Tier1/2, practical exams, real-world explanations.
+- **P1 Truth-up marketing:** Footer.jsx is FULLY STALE/HARDCODED (brand 'SysAdminPro', dead /windows-server-2025 links, stats '82 lessons/82 VMware Labs/400+', 'open beta', 'Phase 17'). FIX: spine-driven stats (count from curriculum), accurate copy (4 tracks: helpdesk/sysadmin/comptia/scripting; in-browser labs NOT VMware; spaced review; progress), real learning-paths+featured, accurate free-beta line. Also check any hero/stats bar for same.
+- **P2 Guided experience:** curated 'Start here' path per track (ordered milestone roadmap) + persistent 'Your next step' CTA on Dashboard & /learn (use ResumeBanner/lastLessonId + next-lesson). Reduce overwhelm.
+- **P3 Practice exams:** exam mode — N random questions across track/course, timed, scored, pass/fail. New RPCs get_exam/submit_exam over quiz_questions. Big for A+ cert prep.
+- **P4 Content depth:** Scripting+ (PS: error handling/remoting/modules; Python: regex/APIs/log parsing/projects + labs); Tier1/2+ lessons + more Virtual Help Desk scenarios; 'In the real world' note callouts (model supports notes).
+Sequence P1->P2->P3->P4. All feasible with existing pipeline (emit_content.py) + schema.
+
+## P32 BUGFIX + NAV
+FIXED runtime crash: Home.jsx TRACK_BADGE only had helpdesk/sysadmin -> comptia/scripting courses hit undefined.cls. Added comptia+scripting badges + fallback guard (badge = TRACK_BADGE[track] || default). Added /review to Navbar Tools dropdown (/labs already there). Gates green.
 
 ## P31 THEME POLISH + ONBOARDING GRID
 Light overlay now uses [class*=...] attribute selectors so opacity variants (bg-surface-800/40 etc.) also flip in light mode. Onboarding track list -> responsive grid (sm:grid-cols-2) for 4 tracks. Search index verified covering comptia + scripting (structured body text). Gates green.

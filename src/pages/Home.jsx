@@ -35,6 +35,8 @@ const TRACK_TABS = [
 const TRACK_BADGE = {
   helpdesk: { label: 'Help Desk', cls: 'bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20' },
   sysadmin: { label: 'SysAdmin', cls: 'bg-accent-purple/10 text-accent-purple border-accent-purple/20' },
+  comptia: { label: 'CompTIA A+', cls: 'bg-accent-green/10 text-accent-green border-accent-green/20' },
+  scripting: { label: 'Scripting', cls: 'bg-accent-amber/10 text-accent-amber border-accent-amber/20' },
 }
 
 const FEATURES = [
@@ -77,10 +79,7 @@ function CourseCard({ course, completedSet }) {
   const completed = course.lessonIds.filter((id) => completedSet.has(id)).length
   const total = course.lessonCount
   const isComplete = completed === total && total > 0
-  const badge = TRACK_BADGE[course.track] ?? {
-  label: course.track,
-  cls: 'bg-surface-700 text-slate-300 border-surface-600',
-}
+  const badge = TRACK_BADGE[course.track] || { label: course.track, cls: 'bg-surface-700 text-slate-300 border-surface-600' }
   return (
     <Link
       to={course.href}

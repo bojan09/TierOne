@@ -865,3 +865,30 @@ button:focus-visible, a:focus-visible {
   from { transform: translateX(-100%); }
   to { transform: translateX(0); }
 }
+
+/* ── Light theme (data-theme=light) overlay — dark stays default/untouched ── */
+:root { color-scheme: dark; }
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="light"] body { background-color: #f8fafc; color: #0f172a; }
+html[data-theme="light"] [class*="bg-surface-950"],
+html[data-theme="light"] [class*="bg-surface-900"],
+html[data-theme="light"] [class*="bg-surface-850"] { background-color: #ffffff !important; }
+html[data-theme="light"] [class*="bg-surface-800"],
+html[data-theme="light"] [class*="bg-surface-750"] { background-color: #f1f5f9 !important; }
+html[data-theme="light"] [class*="bg-surface-700"],
+html[data-theme="light"] [class*="bg-surface-600"],
+html[data-theme="light"] [class*="bg-surface-500"] { background-color: #e2e8f0 !important; }
+html[data-theme="light"] [class*="text-white"],
+html[data-theme="light"] [class*="text-slate-100"],
+html[data-theme="light"] [class*="text-slate-200"],
+html[data-theme="light"] [class*="text-slate-300"] { color: #0f172a !important; }
+html[data-theme="light"] [class*="text-slate-400"],
+html[data-theme="light"] [class*="text-slate-500"],
+html[data-theme="light"] [class*="text-slate-600"] { color: #475569 !important; }
+html[data-theme="light"] [class*="border-surface-"] { border-color: #cbd5e1 !important; }
+html[data-theme="light"] .card { background-color: #ffffff !important; border-color: #e2e8f0 !important; }
+html[data-theme="light"] .glass { background-color: rgba(255,255,255,0.75) !important; border-color: #e2e8f0 !important; }
+html[data-theme="light"] .btn-secondary { background-color: #e2e8f0 !important; color: #1e293b !important; border-color: #cbd5e1 !important; }
+html[data-theme="light"] .btn-ghost:hover { background-color: #e2e8f0 !important; }
+html[data-theme="light"] .code-block,
+html[data-theme="light"] pre { background-color: #f1f5f9 !important; border-color: #e2e8f0 !important; color: #0f172a !important; }

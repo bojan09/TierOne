@@ -5,6 +5,7 @@ import { curriculum } from '@/content/curriculum'
 import { courseHref, getOrderedLessons } from '@/features/curriculum/selectors'
 import StreakTracker from '../components/StreakTracker.jsx'
 import DailyGoal from '@/features/progress/DailyGoal'
+import NextStep from '@/features/curriculum/NextStep'
 import StudyTimer from '../components/StudyTimer.jsx'
 
 const TRACK_LABELS = {
@@ -51,6 +52,8 @@ export default function Dashboard() {
     <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-10 py-10">
       <h1 className="text-2xl font-bold text-white mb-1">My Progress</h1>
       <p className="text-sm text-slate-400 mb-8">Server-synced across every device you sign in on.</p>
+
+      <div className="mb-6"><NextStep /></div>
 
       {dueReviewCount > 0 && (
         <Link to="/review"
