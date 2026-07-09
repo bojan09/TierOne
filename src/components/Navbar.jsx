@@ -63,12 +63,12 @@ const NAV_ITEMS = [
     label: 'IT Models',
     mega: false,
     children: [
-      { label: 'OSI Model',        href: '/it-models', desc: '7-layer network reference' },
-      { label: 'TCP/IP Model',     href: '/it-models', desc: 'Internet protocol suite' },
-      { label: 'ITIL Framework',   href: '/it-models', desc: 'Service management' },
-      { label: 'CIA Triad',        href: '/it-models', desc: 'Core security model' },
-      { label: 'Zero Trust',       href: '/it-models', desc: 'Never trust, always verify' },
-      { label: 'DevOps Lifecycle', href: '/it-models', desc: 'Plan → build → deploy' },
+      { label: 'OSI Model',        href: '/it-models?m=osi', desc: '7-layer network reference' },
+      { label: 'TCP/IP Model',     href: '/it-models?m=tcpip', desc: 'Internet protocol suite' },
+      { label: 'ITIL Framework',   href: '/it-models?m=itil', desc: 'Service management' },
+      { label: 'CIA Triad',        href: '/it-models?m=cia', desc: 'Core security model' },
+      { label: 'Zero Trust',       href: '/it-models?m=zero-trust', desc: 'Never trust, always verify' },
+      { label: 'DevOps Lifecycle', href: '/it-models?m=devops', desc: 'Plan → build → deploy' },
     ],
   },
   {

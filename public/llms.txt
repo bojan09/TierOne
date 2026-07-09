@@ -1,0 +1,12 @@
+# TierZero
+
+> Free, hands-on IT training platform. Four tracks — Help Desk, SysAdmin, CompTIA A+, and Scripting (PowerShell + Python) — with lessons, quizzes, in-browser labs, spaced-repetition review, and practice exams.
+
+## Tracks
+- Help Desk (Tier 1 & 2): IT support fundamentals, ticketing, Windows/AD/M365, troubleshooting.
+- SysAdmin: Windows Server, Active Directory, networking, automation.
+- CompTIA A+: hardware, operating systems, networking, security, troubleshooting.
+- Scripting: PowerShell and Python for IT automation.
+
+## Features
+- In-browser terminal labs, virtual help desk ticket simulations, spaced review, timed practice exams, progress tracking and certificates.

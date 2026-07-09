@@ -84,7 +84,6 @@ function CourseCard({ course, completedSet }) {
     <Link
       to={course.href}
       className="course-card block group relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
-      aria-label={`${course.title} — ${total} lessons`}
     >
       <div className="pt-4 pb-5 px-4">
         <div className="flex items-start justify-between gap-2 mb-3">

@@ -28,14 +28,14 @@ export default {
         },
         // Dark surface palette
         surface: {
-          950: '#070b14',
-          900: '#0d1220',
-          850: '#111827',
-          800: '#161f30',
-          750: '#1a2640',
-          700: '#1e2d4a',
-          600: '#243555',
-          500: '#2d4268',
+          950: 'rgb(var(--s-950) / <alpha-value>)',
+          900: 'rgb(var(--s-900) / <alpha-value>)',
+          850: 'rgb(var(--s-850) / <alpha-value>)',
+          800: 'rgb(var(--s-800) / <alpha-value>)',
+          750: 'rgb(var(--s-750) / <alpha-value>)',
+          700: 'rgb(var(--s-700) / <alpha-value>)',
+          600: 'rgb(var(--s-600) / <alpha-value>)',
+          500: 'rgb(var(--s-500) / <alpha-value>)',
         },
         // Accent
         accent: {

@@ -7,22 +7,6 @@ import Home from './pages/Home.jsx';
 import Placeholder from './shared/ui/Placeholder.jsx';
 
 // Data-driven Academy (spine-driven, lazy bodies).
-import LearnHome from './features/curriculum/LearnHome.tsx';
-import LearnLayout from './features/curriculum/LearnLayout.tsx';
-import Onboarding from './features/onboarding/Onboarding.tsx';
-import Review from './features/review/Review.tsx';
-import Exam from './features/exam/Exam.tsx';
-import CourseView from './features/curriculum/CourseView.tsx';
-import LessonView from './features/lessons/LessonView.tsx';
-import SimulatorHome from './features/scenario/SimulatorHome.tsx';
-import ScenarioPlayer from './features/scenario/ScenarioPlayer.tsx';
-import LabsHome from './features/labs/LabsHome.tsx';
-import LabPlayer from './features/labs/LabPlayer.tsx';
-import InterviewPrep from './features/interview/InterviewPrep.tsx';
-import Analytics from './features/analytics/Analytics.tsx';
-import Certificates from './features/certificates/Certificates.tsx';
-import DocPractice from './features/docs/DocPractice.tsx';
-import VerifyCertificate from './features/certificates/VerifyCertificate.tsx';
 
 // Auth.
 import RequireAuth from './features/auth/RequireAuth.tsx';
@@ -31,6 +15,24 @@ import AuthCallback from './features/auth/AuthCallback.tsx';
 
 // Lazily-loaded legacy route manifest (replaces ~110 hand-wired routes).
 import { pageRoutes, lessonRoutes, placeholderRoutes, legacyCourseRedirects } from './app/routes.jsx';
+
+// Code-split feature routes (Suspense boundary lives in Layout).
+const LearnHome = React.lazy(() => import('./features/curriculum/LearnHome.tsx'));
+const LearnLayout = React.lazy(() => import('./features/curriculum/LearnLayout.tsx'));
+const Onboarding = React.lazy(() => import('./features/onboarding/Onboarding.tsx'));
+const Review = React.lazy(() => import('./features/review/Review.tsx'));
+const Exam = React.lazy(() => import('./features/exam/Exam.tsx'));
+const CourseView = React.lazy(() => import('./features/curriculum/CourseView.tsx'));
+const LessonView = React.lazy(() => import('./features/lessons/LessonView.tsx'));
+const SimulatorHome = React.lazy(() => import('./features/scenario/SimulatorHome.tsx'));
+const ScenarioPlayer = React.lazy(() => import('./features/scenario/ScenarioPlayer.tsx'));
+const LabsHome = React.lazy(() => import('./features/labs/LabsHome.tsx'));
+const LabPlayer = React.lazy(() => import('./features/labs/LabPlayer.tsx'));
+const InterviewPrep = React.lazy(() => import('./features/interview/InterviewPrep.tsx'));
+const Analytics = React.lazy(() => import('./features/analytics/Analytics.tsx'));
+const Certificates = React.lazy(() => import('./features/certificates/Certificates.tsx'));
+const DocPractice = React.lazy(() => import('./features/docs/DocPractice.tsx'));
+const VerifyCertificate = React.lazy(() => import('./features/certificates/VerifyCertificate.tsx'));
 
 /**
  * All non-shell routes are lazily code-split. The single <Suspense> boundary

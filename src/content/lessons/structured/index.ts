@@ -5,6 +5,9 @@ import { canetLessons } from './ca-net';
 import { caosLessons } from './ca-os';
 import { casecLessons } from './ca-sec';
 import { catsLessons } from './ca-ts';
+import { hdessentialsLessons } from './hd-essentials';
+import { hdeverydayLessons } from './hd-everyday';
+import { hdtier1winLessons } from './hd-tier1-win';
 import { netfundamentalsLessons } from './net-fundamentals';
 import { netipv4Lessons } from './net-ipv4';
 import { netipv6Lessons } from './net-ipv6';
@@ -39,6 +42,9 @@ export const structuredLessons: Record<string, LessonContent> = {
   ...caosLessons,
   ...casecLessons,
   ...catsLessons,
+  ...hdessentialsLessons,
+  ...hdeverydayLessons,
+  ...hdtier1winLessons,
   ...netfundamentalsLessons,
   ...netipv4Lessons,
   ...netipv6Lessons,

@@ -11,6 +11,34 @@ Last updated: 2026-07-06
 ## P4 (scripting) DONE — Scripting expanded 12->18 lessons (54 quizzes). PowerShell +error-handling/remoting-modules/real-scripts (sc-ps-07..09); Python +regex/apis/log-parsing (sc-py-07..09). Each advanced lesson has an 'In the real world:' info callout. Author /home/claude/p29_expand.py (+scripts/). Seeds 0048/0049 regenerated, validated PG16.
 
 ## P4b DONE — Tier 2 (helpdesk) expanded 20->30 lessons (90 quizzes). +2 per t2 course: profile/login+performance (win), gpo+lockouts (ad), exchange-mailflow+teams-sharepoint (m365), vpn+dns (net), effective-escalation+change-problem (itil). Each has 'In the real world:' callout. Author /home/claude/p20_expand.py (+scripts/). Seeds 0035/0036 regenerated, validated PG16.
+## P3a POWERSHELL EXPANSION — 9->25 lessons (sc-ps-10..25; +rest-apis,log-analysis,monitoring,backup,group-policy,troubleshooting,modules,capstone-onboarding). Authors p29_ps_expand.py + p29_ps_expand2.py.
+Added sc-ps-10..17: files-folders, services-processes, events-registry, networking, ad-users, scheduled-wmi, data-formats, capstone(health report). Real-world callouts + code. Author /home/claude/p29_ps_expand.py (+scripts/). Seeds 0048/0049 regen, PG-validated. Scripting track=26 lessons/78 quizzes.
+PS+PY BOTH 25 (scripting track=50 lessons/150 quizzes). 3b Python authors: p29_py_expand.py (sc-py-10..25: lists/dicts/csv/json/xml/apis-advanced/ssh-paramiko/networking/psutil-monitoring/email/file-automation/report-gen/ticket-automation/helpdesk-automation/sysadmin-project/capstone). 3c DONE: new p33 helpdesk phase (spine_style helpdesk, sort_base 7000, marker P33-GENERATED, migs 0054/0055). 3 courses/15 lessons (hd-essentials, hd-everyday, hd-tier1-win; ids hd-*). Helpdesk track=70 lessons. Author p33_author.py. PHASE 3 COMPLETE (scripting 50 + helpdesk expanded). Migrations through 0055. Optional future: more Tier2/base-course depth; interactive labs/sims (Phase 4).
+
+## P2 (master roadmap) — UX/A11Y/PERF from Lighthouse
+Lighthouse reports were DEV-SERVER runs (localhost:5173, unminified) -> perf 52/63 inflated (FCP 15s mobile is a dev artifact; prod/Vercel minified is far better). Real fixes done:
+- SEO: added public/robots.txt (valid) + public/llms.txt (fixes robots-txt + llms-txt/agentic-browsing audits).
+- A11y label-content-name-mismatch (52): removed course-card aria-label in Home.jsx (accessible name now derives from visible content).
+- A11y color-contrast: narrowed light-mode keep-white rule to .btn-primary ONLY (was [class*=bg-brand-5/6] -> forced white text on translucent tint chips like review badge = ~1.24:1). Fixes the light-mode contrast failures.
+- Perf code-splitting: App.jsx 16 eager feature imports -> React.lazy (Suspense already in Layout). Main chunk 392KB->291KB (-26%).
+Gates green. REMAINING (note): re-run Lighthouse on PROD build for real perf numbers; dark-mode contrast on small text-brand-400/text-slate (pre-existing, needs focused token-bump sub-phase); search-button aria kbd; robots sitemap.xml not yet generated.
+
+## P7 IT MODELS ROUTING FIX + MASTER ROADMAP
+IT Models dropdown bug: all 6 items href '/it-models' -> same default tab. FIX: ITModels.jsx now URL-driven via useSearchParams ?m=slug (SLUG_TO_TAB: osi/tcpip/itil/cia/zero-trust/devops), useEffect reacts to param changes, selectTab updates ?m. Navbar hrefs -> /it-models?m=<slug>. All 6 tabs already had content. Gates green.
+MASTER-PROMPT ROADMAP (user wants full platform expansion; phased). NOTE much already exists (4 tracks, exam/review/labs/onboarding/XP/light theme). Remaining big items:
+- Ph2 UX/A11y/Perf audit (needs Lighthouse reports — user to provide).
+- Ph3 CURRICULUM (biggest): Scripting PS 9->~25 + Py 9->~25 (full topic lists); Help Desk Tier0/1/2 expansion; +labs/scenarios/capstones. Via pipeline (emit_content).
+- Ph4 Interactive: ticket sims, guided troubleshooting, decision trees, assessments, gamification/XP balance.
+- Ph5 Perf: code-split/lazy/bundle/CWV per Lighthouse.
+- Ph6 polish/e2e/docs.
+
+## P6.1 LIGHT THEME — component-class text fix
+Follow-up: attribute overlay [class*=text-white] can't reach classes that @apply text-white INTERNALLY (class attr = 'section-title', not 'text-white') -> section headings ('Popular starting points','All Learning Paths','Quick Access','Practice the job...') rendered white/invisible on light. FIX: explicit light overrides for component classes: .section-title/.stat-card-value/.info-card-title/.lesson-content h2/h3/strong/.callout-body strong -> #0f172a; .lesson-content p/li/blockquote + .tag -> #334155; .gradient-text stops darkened (#2563eb->#0891b2) for light. Gates green.
+
+## P6 LIGHT THEME — PROPER TOKENIZATION (fixes color mismatch)
+Root cause of light-mode breakage: CSS class-overlay couldn't override gradient/opacity/@apply card backgrounds -> course cards stayed dark navy w/ invisible text. FIX: tokenized the `surface` scale in tailwind.config.js to `rgb(var(--s-N) / <alpha-value>)`. index.css :root defines --s-950..500 = ORIGINAL dark values (dark byte-identical) + html[data-theme=light] redefines them as an INVERTED light ramp (page #f1f5f9, cards #fff, borders #e2e8f0/#cbd5e1). Now ALL bg/border/gradient(from/to)/opacity surface utilities + @apply .card flip automatically. Text overlay kept ([class*=text-white/slate-1/2/3]->#0f172a, slate-4/5/6->#475569) + KEEP-WHITE rule for .btn-primary/bg-brand-5/6 so button labels stay white. Old bulky per-utility overlay removed. Gates green. Dark unchanged.
+NOTE: replaces P30/P31 overlay approach. Remaining light polish if QA finds edge cases: colored badges w/ text-white on accent (not brand) bg; verify chart/svg colors.
+
 ## P5 A+ DEPTH + EXAM HISTORY + ONBOARDING POLISH
 - A+ depth2: +1 lesson/domain -> 42 lessons/126 quizzes (ca-*-07: bios-uefi, ports-protocols, cloud-models-deep, windows-tools, access-control, boot-recovery). Author p28_expand2.py. Seeds 0045/0046 regenerated. PG-validated.
 - Exam history (migration 0053): exam_attempts table (RLS self) + submit_exam now (p_ids,p_answers,p_track) records attempt + get_exam_history(). Client: api getExamHistory + submitExam(track); Exam.tsx shows 'Recent attempts' on setup. Validated PG16.

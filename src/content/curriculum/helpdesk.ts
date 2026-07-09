@@ -227,6 +227,32 @@ addCourse({ id:'t2-itil-escalation', slug:'t2-itil-escalation', title:"Tier 2: I
 ]);
 // P20-GENERATED-END
 
+// P33-GENERATED-START
+addCourse({ id:'hd-essentials', slug:'hd-essentials', title:"Help Desk Essentials", description:"The non-technical core of great support: communication, professionalism, documentation, and the ticket process.", icon:'🎧', order:30, difficulty:'beginner' }, 'hd-ess-m1', 'help-desk-essentials', "Help Desk Essentials", [
+    { id:'hd-ess-01', hasQuiz:true, slug:'intro-helpdesk', title:"Introduction to Help Desk", xp:45, minutes:16 },
+    { id:'hd-ess-02', hasQuiz:true, slug:'customer-communication', title:"Customer Communication", xp:50, minutes:18 },
+    { id:'hd-ess-03', hasQuiz:true, slug:'professionalism', title:"Professionalism & Ethics", xp:45, minutes:16 },
+    { id:'hd-ess-04', hasQuiz:true, slug:'documentation-kb', title:"Documentation & Knowledge Bases", xp:50, minutes:18 },
+    { id:'hd-ess-05', hasQuiz:true, slug:'ticket-lifecycle', title:"Ticket Lifecycle & Prioritization", xp:50, minutes:18 }
+]);
+
+addCourse({ id:'hd-everyday', slug:'hd-everyday', title:"Everyday Support Tasks", description:"The bread-and-butter tickets a Tier-1 tech resolves daily — accounts, printing, remote access, email, and browsers.", icon:'🛠️', order:31, difficulty:'beginner' }, 'hd-eve-m1', 'everyday-support', "Everyday Support Tasks", [
+    { id:'hd-eve-01', hasQuiz:true, slug:'password-mfa', title:"Password Resets & MFA", xp:50, minutes:16 },
+    { id:'hd-eve-02', hasQuiz:true, slug:'printer-support', title:"Printer Support", xp:45, minutes:16 },
+    { id:'hd-eve-03', hasQuiz:true, slug:'vpn-remote', title:"VPN & Remote Support", xp:50, minutes:18 },
+    { id:'hd-eve-04', hasQuiz:true, slug:'email-troubleshooting', title:"Email Troubleshooting", xp:50, minutes:16 },
+    { id:'hd-eve-05', hasQuiz:true, slug:'browser-troubleshooting', title:"Browser Troubleshooting", xp:45, minutes:14 }
+]);
+
+addCourse({ id:'hd-tier1-win', slug:'hd-tier1-win', title:"Tier 1: Windows & Accounts", description:"The Tier-1 Windows toolkit: troubleshooting, drivers, updates, remote desktop, and permissions.", icon:'🪟', order:32, difficulty:'beginner' }, 'hd-t1-m1', 'tier1-windows', "Tier 1: Windows & Accounts", [
+    { id:'hd-t1-01', hasQuiz:true, slug:'windows-troubleshooting', title:"Windows Troubleshooting", xp:50, minutes:18 },
+    { id:'hd-t1-02', hasQuiz:true, slug:'device-manager-drivers', title:"Device Manager & Drivers", xp:50, minutes:16 },
+    { id:'hd-t1-03', hasQuiz:true, slug:'windows-updates', title:"Windows Updates", xp:45, minutes:14 },
+    { id:'hd-t1-04', hasQuiz:true, slug:'remote-desktop', title:"Remote Desktop & Access", xp:45, minutes:14 },
+    { id:'hd-t1-05', hasQuiz:true, slug:'permissions-shares', title:"Permissions & File Shares", xp:55, minutes:18 }
+]);
+// P33-GENERATED-END
+
 export const helpdeskCourses = courses;
 export const helpdeskModules = modules;
 export const helpdeskLessons = lessons;

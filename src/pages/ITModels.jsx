@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import Breadcrumb from '../components/Breadcrumb.jsx'
 
 // ─── OSI Layers ───────────────────────────────────────────────────────────────
@@ -37,7 +38,16 @@ const ZERO_TRUST = [
 const TABS = ['OSI Model', 'TCP/IP Model', 'ITIL Framework', 'CIA Triad', 'Zero Trust', 'DevOps Lifecycle']
 
 export default function ITModels() {
-  const [activeTab, setActiveTab] = useState('OSI Model')
+  const SLUG_TO_TAB = { osi: 'OSI Model', tcpip: 'TCP/IP Model', itil: 'ITIL Framework', cia: 'CIA Triad', 'zero-trust': 'Zero Trust', devops: 'DevOps Lifecycle' }
+  const TAB_TO_SLUG = Object.fromEntries(Object.entries(SLUG_TO_TAB).map(([k, v]) => [v, k]))
+  const [params, setParams] = useSearchParams()
+  const [activeTab, setActiveTab] = useState(SLUG_TO_TAB[params.get('m')] || 'OSI Model')
+  // Deep-link: react to ?m= changes (e.g. clicking another IT Models menu item while on this page).
+  useEffect(() => {
+    const t = SLUG_TO_TAB[params.get('m')]
+    if (t && t !== activeTab) setActiveTab(t)
+  }, [params]) // eslint-disable-line react-hooks/exhaustive-deps
+  const selectTab = (tab) => { setActiveTab(tab); setParams({ m: TAB_TO_SLUG[tab] }, { replace: true }) }
   const [expandedOSI, setExpandedOSI] = useState(null)
 
   return (
@@ -58,7 +68,7 @@ export default function ITModels() {
         {TABS.map(tab => (
           <button
             key={tab}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => selectTab(tab)}
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150
                         ${activeTab === tab
                           ? 'bg-brand-500 text-white shadow-glow-sm'

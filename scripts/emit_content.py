@@ -41,6 +41,14 @@ PHASES = {
         lessons_hdr='0045_seed_comptia_lessons.sql — P28 CompTIA A+ lessons. Idempotent.',
         quiz_hdr='0046_seed_comptia_quizzes.sql — P28 CompTIA A+ quizzes. Idempotent.',
     ),
+    'p33': dict(
+        manifest='p33',
+        spine='src/content/curriculum/helpdesk.ts', marker='P33-GENERATED', spine_style='helpdesk',
+        track='helpdesk', sort_base=7000,
+        lessons_mig='0054_seed_helpdesk_t01_lessons.sql', quiz_mig='0055_seed_helpdesk_t01_quizzes.sql',
+        lessons_hdr='0054_seed_helpdesk_t01_lessons.sql — P33 Help Desk Tier 0/1 practical lessons. Idempotent.',
+        quiz_hdr='0055_seed_helpdesk_t01_quizzes.sql — P33 Help Desk Tier 0/1 quizzes. Idempotent.',
+    ),
     'p20': dict(
         manifest='p20',
         spine='src/content/curriculum/helpdesk.ts', marker='P20-GENERATED', spine_style='helpdesk',
