@@ -1,18 +1,23 @@
-# Deployment checklist (P14)
+# Deployment checklist
 
 Production go-live for TierZero. Order matters.
 
-## 1. Database — apply migrations
-Apply **`supabase/migrations/0001` → `0020`** in order to the live project.
-They are written to be re-runnable (idempotent policies, `create or replace`),
-but apply in sequence on a fresh project.
+> The exact migration count grows every content phase — **apply every file under
+> `supabase/migrations/` in filename order** (`0001_...` through the highest
+> number present), not a hardcoded range. As of this doc's last edit that's
+> through `0057`; check `ls supabase/migrations/ | tail -1` for the current tip.
 
-Verify after:
-- `select count(*) from curriculum_lessons;` → 86
-- `select count(*) from quiz_questions;` → 258
-- `select count(*) from scenarios;` → 4
-- `select count(*) from labs;` → 1
-- `select count(*) from doc_exercises;` → 3
+## 1. Database — apply migrations
+Apply every migration in `supabase/migrations/`, in filename order, to the live
+project. They are written to be re-runnable (idempotent policies,
+`create or replace`, `on conflict do update`), but apply in sequence on a fresh
+project.
+
+Verify after: no errors during apply, and spot-check a few row counts make sense
+for your project (`select count(*) from curriculum_lessons;`,
+`quiz_questions`, `scenarios`, `labs`, `doc_exercises`) — exact numbers aren't
+pinned here since they grow with every curriculum phase; see `memory.md` for
+the current curriculum footprint.
 
 ## 2. Auth
 - Enable the Google provider.

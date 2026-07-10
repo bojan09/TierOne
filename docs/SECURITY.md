@@ -1,5 +1,10 @@
 # Security model & audit (P14)
 
+> Table/function counts below are as of the P14 audit; the schema has grown since
+> (more migrations, more content tables) but every principle here is still the
+> enforced model — new tables follow the same default-deny + RLS pattern. Re-run
+> the audit query after major schema growth if you need current exact counts.
+
 TierZero is **server-authoritative**: the client is never trusted for progress,
 scoring, or XP. This document records the security model and the P14 audit result.
 

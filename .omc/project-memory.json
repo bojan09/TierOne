@@ -42,7 +42,7 @@
     "runtime": null
   },
   "build": {
-    "buildCommand": "cd \"E:/Code Realted/projects/tier-one(it_academy)\" && npm run build 2>&1 | tail -10 && echo \"---HTML---\" && cat dist/index.html",
+    "buildCommand": "cd \"E:/Code Realted/projects/tier-one(it_academy)\" && npm run build 2>&1 | tail -5",
     "testCommand": null,
     "lintCommand": "npm run lint",
     "devCommand": "npm run dev",
@@ -192,9 +192,21 @@
   "hotPaths": [
     {
       "path": "src\\components\\Navbar.jsx",
-      "accessCount": 18,
-      "lastAccessed": 1783713952226,
+      "accessCount": 22,
+      "lastAccessed": 1783715708826,
       "type": "directory"
+    },
+    {
+      "path": "src\\styles\\index.css",
+      "accessCount": 21,
+      "lastAccessed": 1783716505833,
+      "type": "file"
+    },
+    {
+      "path": "memory.md",
+      "accessCount": 16,
+      "lastAccessed": 1783717588127,
+      "type": "file"
     },
     {
       "path": "src\\pages\\Home.jsx",
@@ -203,21 +215,9 @@
       "type": "file"
     },
     {
-      "path": "memory.md",
-      "accessCount": 9,
-      "lastAccessed": 1783714794728,
-      "type": "file"
-    },
-    {
-      "path": "src\\styles\\index.css",
-      "accessCount": 6,
-      "lastAccessed": 1783705237280,
-      "type": "file"
-    },
-    {
       "path": "src",
-      "accessCount": 6,
-      "lastAccessed": 1783714579333,
+      "accessCount": 8,
+      "lastAccessed": 1783715641369,
       "type": "directory"
     },
     {
@@ -288,9 +288,15 @@
     },
     {
       "path": "src\\content\\curriculum",
-      "accessCount": 2,
-      "lastAccessed": 1783702347742,
+      "accessCount": 3,
+      "lastAccessed": 1783715603370,
       "type": "directory"
+    },
+    {
+      "path": "docs\\CHANGELOG.md",
+      "accessCount": 3,
+      "lastAccessed": 1783717304540,
+      "type": "file"
     },
     {
       "path": "public\\favicon.svg",
@@ -308,6 +314,30 @@
       "path": "src\\shared\\lib\\supabase.ts",
       "accessCount": 2,
       "lastAccessed": 1783714440817,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 2,
+      "lastAccessed": 1783715565327,
+      "type": "directory"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 2,
+      "lastAccessed": 1783716177722,
+      "type": "file"
+    },
+    {
+      "path": "docs\\ARCHITECTURE.md",
+      "accessCount": 2,
+      "lastAccessed": 1783717236708,
+      "type": "file"
+    },
+    {
+      "path": "docs\\IMPROVEMENT-PLAN.md",
+      "accessCount": 2,
+      "lastAccessed": 1783717248902,
       "type": "file"
     },
     {
@@ -345,12 +375,6 @@
       "accessCount": 1,
       "lastAccessed": 1783704417874,
       "type": "file"
-    },
-    {
-      "path": "",
-      "accessCount": 1,
-      "lastAccessed": 1783704440159,
-      "type": "directory"
     },
     {
       "path": "src\\features\\theme\\ThemeToggle.jsx",
@@ -392,6 +416,78 @@
       "path": "src\\shared\\lib\\env.ts",
       "accessCount": 1,
       "lastAccessed": 1783714427040,
+      "type": "file"
+    },
+    {
+      "path": "src\\features\\lessons\\registry.ts",
+      "accessCount": 1,
+      "lastAccessed": 1783715655773,
+      "type": "directory"
+    },
+    {
+      "path": "src\\content\\curriculum\\sysadmin.ts",
+      "accessCount": 1,
+      "lastAccessed": 1783715686391,
+      "type": "directory"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 1,
+      "lastAccessed": 1783716104738,
+      "type": "file"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 1,
+      "lastAccessed": 1783716149607,
+      "type": "file"
+    },
+    {
+      "path": "supabase\\migrations\\0051_seed_comptia_labs.sql",
+      "accessCount": 1,
+      "lastAccessed": 1783716772600,
+      "type": "file"
+    },
+    {
+      "path": "supabase\\migrations",
+      "accessCount": 1,
+      "lastAccessed": 1783716773342,
+      "type": "directory"
+    },
+    {
+      "path": "supabase\\migrations\\0014_labs.sql",
+      "accessCount": 1,
+      "lastAccessed": 1783716783748,
+      "type": "file"
+    },
+    {
+      "path": "supabase\\migrations\\0050_seed_scripting_labs.sql",
+      "accessCount": 1,
+      "lastAccessed": 1783716783988,
+      "type": "file"
+    },
+    {
+      "path": "supabase\\migrations\\0052_exam.sql",
+      "accessCount": 1,
+      "lastAccessed": 1783716802866,
+      "type": "directory"
+    },
+    {
+      "path": "src\\features\\exam\\Exam.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1783716814065,
+      "type": "directory"
+    },
+    {
+      "path": "src\\features\\labs\\LabsHome.tsx",
+      "accessCount": 1,
+      "lastAccessed": 1783716823802,
+      "type": "file"
+    },
+    {
+      "path": "supabase\\migrations\\0057_seed_labs_gap_fill.sql",
+      "accessCount": 1,
+      "lastAccessed": 1783716950858,
       "type": "file"
     }
   ],

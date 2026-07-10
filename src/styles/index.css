@@ -221,33 +221,11 @@
   @apply text-xs font-semibold text-slate-500 uppercase tracking-widest mt-1;
 }
 
-/* ─── Hero gradient blob ─── */
-.hero-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  opacity: 0.15;
-  animation: blobDrift 12s ease-in-out infinite alternate;
-}
-@keyframes blobDrift {
-  0%   { transform: translate(0,0) scale(1); }
-  100% { transform: translate(30px, -20px) scale(1.08); }
-}
-
 /* ─── Course card ─── */
 .course-card {
   @apply relative bg-surface-800 border border-surface-700 rounded-2xl
          overflow-hidden transition-all duration-300 cursor-pointer
          hover:-translate-y-1 hover:border-brand-600/40 hover:shadow-card-lg;
-}
-.course-card-accent {
-  @apply absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r;
-}
-
-/* ─── Achievement badge glow ─── */
-.badge-glow {
-  box-shadow: 0 0 16px var(--badge-color, rgba(59,98,246,0.5));
 }
 
 /* ─── Scrollbar refinements ─── */
@@ -368,28 +346,7 @@
   .print-break { page-break-before: always; }
 }
 
-/* ─── Hero grain overlay ─── */
-.noise-bg::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* ─── Phase 17 polish additions ─── */
-
-/* Reading progress bar */
-.reading-progress {
-  @apply fixed top-0 left-0 h-0.5 bg-gradient-to-r from-brand-500 to-accent-cyan z-50;
-  transition: width 0.1s linear;
-}
-
-/* Skeleton loader */
-.skeleton {
-  @apply rounded-lg bg-surface-800 animate-pulse;
-}
 
 /* Focus ring — keyboard nav accessibility */
 :focus-visible {
@@ -413,48 +370,6 @@ mark.search-hl {
   font-style: inherit;
 }
 
-/* Completion ribbon on cards */
-.ribbon-complete::after {
-  content: '✓';
-  position: absolute;
-  top: 0; right: 0;
-  width: 32px; height: 32px;
-  background: #22c55e;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom-left-radius: 8px;
-  clip-path: polygon(100% 0, 0 0, 100% 100%);
-}
-
-/* Tool card hover lift */
-.tool-card {
-  @apply card p-5 transition-all duration-200
-         hover:-translate-y-0.5 hover:shadow-card-lg hover:border-brand-500/30;
-}
-
-/* Stat chip */
-.stat-chip {
-  @apply inline-flex items-center gap-1.5 text-[11px] font-semibold font-mono
-         px-2.5 py-1 rounded-full border;
-}
-
-/* Scrollable horizontal on mobile */
-.scroll-x {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-}
-
-/* Course complete badge */
-.course-complete-badge {
-  @apply flex items-center gap-1 text-[10px] font-bold text-accent-green
-         bg-accent-green/10 border border-accent-green/20 px-2 py-0.5 rounded-full;
-}
-
 /* ═══════════════════════════════════════════════════════════════════════════
    PHASE 17 POLISH — additional utilities
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -475,102 +390,6 @@ html {
 /* Skip-to-content link for accessibility */
 /* .skip-link defined below with raw CSS */
 
-/* ── Hero gradient text */
-.hero-gradient-text {
-  background: linear-gradient(135deg,
-    theme('colors.white') 0%,
-    theme('colors.brand.200') 40%,
-    theme('colors.accent.cyan') 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Animated counter number */
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.count-up {
-  animation: countUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-/* ── Stat card used in Home hero */
-.hero-stat {
-  @apply flex flex-col items-center gap-1 px-6 py-4
-         bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl
-         transition-all duration-200;
-}
-.hero-stat:hover {
-  background-color: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.20);
-}
-
-/* ── Achievement badge pop */
-@keyframes badgePop {
-  0%   { transform: scale(0.85); opacity: 0; }
-  70%  { transform: scale(1.06); }
-  100% { transform: scale(1);    opacity: 1; }
-}
-.badge-pop {
-  animation: badgePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-/* ── Course completion glow */
-.course-complete-glow {
-  box-shadow: 0 0 0 1px rgba(74, 222, 128, 0.3),
-              0 0 20px -4px rgba(74, 222, 128, 0.15);
-}
-
-/* ── Dashboard course row */
-.dash-course-row {
-  @apply flex items-center gap-4 p-4 rounded-xl border border-surface-700
-         bg-surface-800/50 hover:bg-surface-700/50 hover:border-surface-600
-         transition-all duration-150;
-  /* Note: add 'group' class directly in JSX when using this class */
-}
-
-/* ── Milestone card */
-.milestone-card {
-  @apply card p-5 border-l-4 border-surface-700 transition-colors duration-200;
-}
-.info-card-progress:hover {
-  border-left-color: rgba(96, 136, 250, 0.7);
-}
-
-/* ── XP ring pulse on level-up */
-@keyframes xpRingPulse {
-  0%, 100% { box-shadow: 0 0 0 0px rgba(96, 165, 250, 0.4); }
-  50%       { box-shadow: 0 0 0 8px rgba(96, 165, 250, 0); }
-}
-.xp-ring-pulse {
-  animation: xpRingPulse 2s ease-in-out infinite;
-}
-
-/* ── Lesson grid responsive gaps */
-.lesson-grid {
-  @apply grid gap-4;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
-
-/* ── Keyboard shortcut chip */
-.kbd {
-  @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-bold
-         bg-surface-700 border border-surface-600 rounded text-slate-400;
-}
-
-/* ── Notification dot */
-.notif-dot {
-  @apply absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-accent-red
-         ring-2 ring-surface-900;
-}
-
-/* ── Timeline connector */
-.timeline-line {
-  @apply absolute left-4 top-8 bottom-0 w-px bg-surface-700;
-}
-
 /* ── Prose improvements for lesson content */
 .lesson-content h2 {
   @apply scroll-mt-24;
@@ -579,50 +398,10 @@ html {
   @apply scroll-mt-20;
 }
 
-/* ── Table of contents link */
-.toc-link {
-  @apply text-xs text-slate-500 hover:text-brand-300 transition-colors
-         flex items-center gap-1.5 py-1;
-}
-.toc-link.active {
-  @apply text-brand-300 font-semibold;
-}
-
-/* ── Copy feedback animation */
-@keyframes copyFlash {
-  0%   { background-color: rgba(74, 222, 128, 0.15); }
-  100% { background-color: transparent; }
-}
-.copy-flash {
-  animation: copyFlash 0.8s ease-out;
-}
-
-/* ── Mobile menu slide */
-@keyframes menuSlideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.menu-slide-down {
-  animation: menuSlideDown 0.18s ease-out both;
-}
-
-/* ── Dashboard summary grid */
-.summary-grid {
-  @apply grid grid-cols-2 sm:grid-cols-4 gap-3;
-}
-
-/* ── Completion banner */
-.completion-banner {
-  @apply relative overflow-hidden rounded-2xl border border-accent-green/30
-         bg-gradient-to-r from-accent-green/10 via-emerald-900/20 to-transparent
-         p-6 flex items-center gap-5;
-}
-.completion-banner::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top left, rgba(74,222,128,0.08) 0%, transparent 60%);
-  pointer-events: none;
+/* ── Keyboard shortcut chip */
+.kbd {
+  @apply inline-flex items-center px-1.5 py-0.5 text-[10px] font-mono font-bold
+         bg-surface-700 border border-surface-600 rounded text-slate-400;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -667,17 +446,6 @@ button:focus-visible, a:focus-visible {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Category filter tabs (Home page) ───────────────────────────────────── */
-.filter-tab {
-  @apply px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all duration-150
-         bg-surface-800 text-slate-400 border-surface-700
-         hover:border-surface-600 hover:text-slate-300
-         focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400;
-}
-.filter-tab.active {
-  @apply bg-brand-500/20 text-brand-300 border-brand-500/40;
-}
-
 /* ── Improved course card hover shadow ───────────────────────────────────── */
 .course-card {
   @apply bg-surface-800 border border-surface-600 rounded-2xl
@@ -685,89 +453,6 @@ button:focus-visible, a:focus-visible {
 }
 .course-card:hover {
   @apply border-surface-500 shadow-card-lg -translate-y-1;
-}
-.course-card-accent {
-  @apply h-1 w-full;
-  border-radius: 12px 12px 0 0;
-}
-
-/* ── XP toast animation ──────────────────────────────────────────────────── */
-@keyframes xpPop {
-  0%   { opacity: 0; transform: translateY(12px) scale(0.9); }
-  20%  { opacity: 1; transform: translateY(0) scale(1.04); }
-  80%  { opacity: 1; transform: translateY(0) scale(1); }
-  100% { opacity: 0; transform: translateY(-8px) scale(0.95); }
-}
-.xp-toast-anim {
-  animation: xpPop 2.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* ── Lesson lock shimmer ─────────────────────────────────────────────────── */
-@keyframes lockShimmer {
-  0%   { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.locked-lesson {
-  background: linear-gradient(90deg,
-    rgba(255,255,255,0.01) 25%,
-    rgba(255,255,255,0.04) 50%,
-    rgba(255,255,255,0.01) 75%);
-  background-size: 200% 100%;
-  animation: lockShimmer 2.5s linear infinite;
-}
-
-/* ── Code block line highlight ───────────────────────────────────────────── */
-.code-line-highlight {
-  background: rgba(99, 102, 241, 0.12);
-  border-left: 2px solid rgba(99, 102, 241, 0.6);
-  margin: 0 -1rem;
-  padding: 0 1rem;
-}
-
-/* ── Tooltip polish ──────────────────────────────────────────────────────── */
-.tooltip {
-  @apply absolute z-50 px-3 py-2 text-xs text-white rounded-xl
-         bg-surface-700 border border-surface-600 shadow-card-lg
-         pointer-events-none whitespace-nowrap;
-  backdrop-filter: blur(8px);
-}
-
-/* ── Hero grid background ────────────────────────────────────────────────── */
-.hero-grid-bg {
-  background-image:
-    linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* ── Progress ring text ──────────────────────────────────────────────────── */
-.ring-label {
-  @apply text-[10px] font-bold font-mono fill-current;
-}
-
-/* ── Stat card accent border ─────────────────────────────────────────────── */
-.stat-accent-amber  { border-left: 2px solid rgba(251,191,36,0.6); }
-.stat-accent-green  { border-left: 2px solid rgba(74,222,128,0.6); }
-.stat-accent-purple { border-left: 2px solid rgba(167,139,250,0.6); }
-.stat-accent-brand  { border-left: 2px solid rgba(99,102,241,0.6); }
-
-/* ── Mobile nav overlay ──────────────────────────────────────────────────── */
-.mobile-nav-overlay {
-  @apply fixed inset-0 z-30 bg-black/50 backdrop-blur-sm;
-  animation: overlayFadeIn 0.15s ease-out both;
-}
-@keyframes overlayFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* ── Glossary highlight ──────────────────────────────────────────────────── */
-.glossary-term {
-  @apply border-b border-dashed border-brand-400/50 text-brand-300 cursor-help;
-  transition: border-color 0.15s, color 0.15s;
-}
-.glossary-term:hover {
-  @apply border-brand-400 text-white;
 }
 
 /* ── Print styles ────────────────────────────────────────────────────────── */
@@ -804,9 +489,7 @@ button:focus-visible, a:focus-visible {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .fade-up,
-  .xp-toast-anim,
-  .locked-lesson {
+  .fade-up {
     animation: none !important;
   }
 }
@@ -831,30 +514,12 @@ button:focus-visible, a:focus-visible {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* ── Smooth number counter animation ────────────────────────────────────── */
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.count-up {
-  animation: countUp 0.4s ease-out both;
-}
-
 /* END PHASE 17 POLISH */
 
 /* ── no-print utility ────────────────────────────────────────────────────── */
 @media print {
   .no-print { display: none !important; }
-  .print-only { display: block; }
 }
-.print-only { display: none; }
 
 /* Print: isolate the certificate when using Print / Save PDF */
 @media print {

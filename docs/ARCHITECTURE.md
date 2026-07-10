@@ -1,6 +1,8 @@
 # IT Academy — Architecture
 
-> Status: **approved blueprint**. Build proceeds in phases; each phase ends buildable, deployable, and independently shippable.
+> **⚠ HISTORICAL — superseded by reality.** This is the original approved blueprint from early in the project (2 tracks, 14-phase roadmap). The platform has since grown to **4 tracks** (Help Desk, SysAdmin, CompTIA A+, Scripting & Automation), 50 courses, 337 lessons, and far past P14 — see `memory.md` for the actual current state and full phase history, and `docs/CHANGELOG.md` for the detailed record. The core technical decisions below (server-authoritative Supabase backend, typed curriculum spine, incremental TypeScript) are still accurate and still the architecture in use; the product scope, folder structure specifics, and phase roadmap are not.
+
+> Status: **approved blueprint** (original). Build proceeds in phases; each phase ends buildable, deployable, and independently shippable.
 
 ## Product
 

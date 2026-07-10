@@ -45,10 +45,9 @@ const NAV_ITEMS = [
         icon: '🐧',
         color: '#fb923c',
         items: [
-          { label: 'Linux Fundamentals', href: '/linux', desc: 'Shell, fs, permissions' },
-          { label: 'Ubuntu Server',      href: '/linux', desc: 'Debian-based server setup' },
-          { label: 'Kali Linux',         href: '/linux', desc: 'Penetration testing OS' },
-          { label: 'Unix',               href: '/unix',  desc: 'POSIX, BSD, Solaris' },
+          { label: 'Linux Fundamentals', href: '/linux',                desc: 'Shell, filesystem, permissions, SSH' },
+          { label: 'Linux Hardening',    href: '/learn/linux/hardening', desc: 'Firewalls, SSH lockdown, auditing' },
+          { label: 'Unix',               href: '/unix',                 desc: 'POSIX, BSD, Solaris' },
         ],
       },
       {

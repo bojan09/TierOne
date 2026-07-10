@@ -1,7 +1,9 @@
 # TierZero — Improvement & Expansion Plan
 
-Accepted direction for future phases. Goal: **mastery and job-readiness, depth over breadth.**
-Current baseline: 98 lessons / 15 courses, 294 quizzes, 7 scenarios, 3 labs, interview prep, AI doc grading, analytics, certificates.
+> **⚠ HISTORICAL — fully executed, superseded by reality.** Every item in this plan (Windows Server/Networking/Help Desk expansion, lesson-experience UX, engagement features, authoring tooling) shipped — see `docs/CHANGELOG.md` (Phases 18–23) and `memory.md` for what came after (CompTIA A+ and Scripting tracks, redesign, perf work, this document's baseline numbers are obsolete). Kept as a record of the plan that was actually followed.
+
+Accepted direction for future phases (at the time). Goal: **mastery and job-readiness, depth over breadth.**
+Baseline at time of writing: 98 lessons / 15 courses, 294 quizzes, 7 scenarios, 3 labs, interview prep, AI doc grading, analytics, certificates.
 
 ---
 

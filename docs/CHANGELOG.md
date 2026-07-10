@@ -1,5 +1,35 @@
 # Changelog
 
+## Phases 30–42 — Light theme tokenization, 3rd & 4th track polish, redesign, perf, cleanup
+
+Consolidated entry (this log lagged `memory.md` — see there for full blow-by-blow). Covers everything after Phase 29 through the most recent session.
+
+**Phase 30 — CompTIA A+ labs + light theme (beta).** 2 A+ labs (`lab-ca-win-cli`, `lab-ca-net-ts`, migration 0051). `src/features/theme/theme.ts` + `ThemeToggle.jsx`: CSS-overlay light mode (`data-theme` on `<html>`, `prefers-color-scheme` default, localStorage-persisted). Known-limited (opacity-variant classes not overridden) — flagged for a proper pass.
+
+**Phase 31 — Theme overlay fix + onboarding grid.** Light overlay switched to `[class*=...]` attribute selectors so opacity variants flip correctly. Onboarding track list → responsive grid for 4 tracks.
+
+**Phase 32 — Runtime crash fix.** `Home.jsx`'s `TRACK_BADGE` map only had helpdesk/sysadmin entries; comptia/scripting courses hit `undefined.cls` and crashed. Added the missing badges + a fallback guard.
+
+**Phase 33 — IT Models real routes.** The IT Models dropdown had every item resolve to the same page (query-param tabs, `/it-models?m=slug`) — read as "same page, doesn't work." Rebuilt as real nested routes (`/it-models/:model`), each with its own breadcrumb, H1, and `aria-current` active-tab state.
+
+**Phase 34 — "Terminal Aurora" visual redesign.** New brand identity: flat blue (#3b62f6) → electric indigo-violet (#6d5cf5) with a per-track signature-color system (Help Desk cyan, SysAdmin violet, CompTIA emerald, Scripting amber) so tracks read consistently across every surface. Animated aurora hero + terminal-window motif on Home. Fixed a real a11y bug in the process: `.btn-secondary` was invisible in light mode (its `text-slate-200` was `@apply`'d internally, unreachable by the light-theme attribute overlay — rendered light-grey-on-light-grey). Also: `TRACK_TABS` on Home was missing CompTIA/Scripting filters (only 2 of 4 tracks were filterable).
+
+**Phase 35 — Unified logo, mobile theme toggle, favicon.** Logo existed as 3 divergent inline copies (Navbar/Footer/drawer) — consolidated into `src/components/Logo.jsx`. `ThemeToggle` was `hidden lg:flex`-only — completely absent on mobile/tablet; moved into a `lg:hidden` cluster next to the hamburger. Favicon rebuilt to match the new mark.
+
+**Phases 36–37 — Track-color rollout + DRY.** Extracted the per-track color/label maps (previously duplicated in Home/LearnHome/CourseTree/Dashboard) into `src/features/curriculum/trackMeta.ts`. Applied track coloring to every multi-track browsing surface: `/learn` Academy hub, CourseTree sidebar, Dashboard. Lesson chrome deliberately left brand-neutral (single-course view, no cross-track comparison to disambiguate).
+
+**Phase 38 — Mega-menu modernized.** Courses dropdown got per-category accent colors + a 4th "Certifications & Tracks" column — a real content-discovery gap fix: the menu never linked to the 25-lesson Scripting track or CompTIA A+, only legacy single-page references.
+
+**Phase 39 — Perf: async Supabase code-split + font loading.** Root cause of mobile LCP ~4.0s / 223KB unused-JS: `main.jsx` statically imported `AuthProvider` → `supabase.ts` → `@supabase/supabase-js` at module scope, forcing the ~53KB-gzip SDK to load+parse+execute before React could paint *anything*, LCP hero included — despite `vendor-supabase` already being its own build chunk, the static import chain still gated first render. Fixed by making `getSupabaseClient()` a genuine dynamic `import()`, memoized via a shared promise; confirmed via the built `index.html` that `vendor-supabase` dropped out of `<link rel=modulepreload>` entirely. Touched 12 call sites (9 `api.ts` files + AuthProvider + ProgressProvider), all mechanical `await` insertions verified by a clean `tsc --noEmit`. Also: Google Fonts `<link rel=stylesheet>` was render-blocking (~550ms) — converted to preload+swap; caught a real bug while trimming unused weights — `font-black` (900) was used throughout the app but never loaded, silently rendering as fake-bold 800. **Verified on prod Lighthouse:** mobile perf 82→83, LCP 4.0s→3.8s, TTI 4.1s→3.9s, render-blocking 550ms→300ms, no regressions.
+
+**Phases 40–41 — Cleanup + regression pass.** Removed a dead root `index.css` (894 lines, never imported — `src/main.jsx` only ever imported `src/styles/index.css`). Mega-menu Linux/Unix column had "Ubuntu Server"/"Kali Linux" both silently pointing at the same `/linux` course as "Linux Fundamentals" — no such distinct content ever existed; replaced with two honest, genuinely distinct entries. Full regression pass (8 routes clicked through, zero errors) plus a dead-code sweep: **19 orphaned files removed** (8 unwired DevOps/Docker lesson pages, 10 superseded legacy course-index pages, 1 duplicate networking-troubleshooting page — note: this is the *second* time these exact 19 files were deleted; Phase 16 below documents the first removal, so they were resurrected at some point after that and needed removing again) and **`src/styles/index.css` trimmed 1056→720 lines** (39 dead classes/keyframes, verified via literal-string grep including dynamic-template suspects). Also added the missing `.env.example` (referenced by `env.ts`'s own error message but never existed) and rewrote the 1-line-stub `README.md`.
+
+**Phase 42 — Lab-coverage gap fill.** Audited exam vs. lab coverage: the exam RPC already generically supports all 4 tracks (no gap), but only 13 labs existed across 337 lessons, and Help Desk's newest/largest course group (Tier 0 essentials) had zero. Added 4 labs (migration 0057): `lab-hd-tier0`, `lab-ca-hardware`, `lab-ca-sec`, `lab-sc-ps-json` — mirrors the exact proven schema/pattern. **Not validated against a live Postgres this session** (no local Docker) — written carefully and statically checked (paren/quote balance, sort-collision check against all 13 existing labs), but needs `supabase db push` + a manual smoke test before considering it done.
+
+---
+
+# Changelog
+
 ## Phase 29 — Scripting & Automation track (PowerShell + Python)
 
 New `scripting` track for the most-requested skill gap. **2 sub-courses, 12 lessons, 36 quizzes, 2 hands-on labs.**
