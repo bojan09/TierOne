@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { UserStats } from '@/shared/types';
 import { hasSupabaseConfig } from '@/shared/lib/env';
 import { getSupabaseClient, type AppSupabaseClient } from '@/shared/lib/supabase';
@@ -45,11 +45,18 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
   const [dueReviewCount, setDueReviewCount] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const clientRef = useRef<AppSupabaseClient | null>(null);
-  if (clientRef.current === null && hasSupabaseConfig()) {
-    clientRef.current = getSupabaseClient();
-  }
-  const client = clientRef.current;
+  const [client, setClient] = useState<AppSupabaseClient | null>(null);
+  useEffect(() => {
+    let active = true;
+    if (hasSupabaseConfig()) {
+      getSupabaseClient().then((c) => {
+        if (active) setClient(c);
+      });
+    }
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const loadFor = useCallback(
     async (active: () => boolean) => {

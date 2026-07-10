@@ -27,7 +27,7 @@ export interface QuizResult {
 /** Fetch a lesson's questions WITHOUT the answer key (server strips it). */
 export async function getLessonQuiz(lessonId: string): Promise<QuizQuestion[]> {
   if (!hasSupabaseConfig()) return [];
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client.rpc('get_lesson_quiz', {
     p_lesson_id: lessonId,
   } as never);
@@ -44,7 +44,7 @@ export async function submitQuiz(
   answers: number[],
 ): Promise<QuizResult | null> {
   if (!hasSupabaseConfig()) return null;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client.rpc('submit_quiz', {
     p_lesson_id: lessonId,
     p_answers: answers,

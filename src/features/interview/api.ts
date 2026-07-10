@@ -14,7 +14,7 @@ export interface InterviewQuestion {
 
 export async function listInterviewQuestions(): Promise<InterviewQuestion[]> {
   if (!hasSupabaseConfig()) return [];
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client
     .from('interview_questions')
     .select('id, category, track, difficulty, prompt, sample_answer, key_points, sort')

@@ -25,7 +25,7 @@ export interface ScheduleResult {
 /** Lessons the user has passed that are due (or never scheduled = due now). */
 export async function getDueReviews(): Promise<DueReview[]> {
   if (!hasSupabaseConfig()) return [];
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client.rpc('get_due_reviews', {} as never);
   if (error) {
     console.error('get_due_reviews failed:', error.message);
@@ -37,7 +37,7 @@ export async function getDueReviews(): Promise<DueReview[]> {
 /** Grade a review answer set server-side (read-only; no scheduling). */
 export async function gradeReview(lessonId: string, answers: number[]): Promise<GradeResult | null> {
   if (!hasSupabaseConfig()) return null;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client.rpc('grade_review', {
     p_lesson_id: lessonId,
     p_answers: answers,
@@ -52,7 +52,7 @@ export async function gradeReview(lessonId: string, answers: number[]): Promise<
 /** Reschedule via SM-2 from a recall self-rating. quality: 0=Again,1=Hard,2=Good,3=Easy. */
 export async function scheduleReview(lessonId: string, quality: number): Promise<ScheduleResult | null> {
   if (!hasSupabaseConfig()) return null;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client.rpc('schedule_review', {
     p_lesson_id: lessonId,
     p_quality: quality,

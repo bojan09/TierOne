@@ -1,14 +1,6 @@
-import type { Track } from '@/shared/types';
 import LearningPath from './LearningPath';
 import NextStep from './NextStep';
-
-const TRACK_LABELS: Record<Track, string> = {
-  helpdesk: 'Help Desk / Tier-1 Support',
-  sysadmin: 'SysAdmin (Advanced)',
-  comptia: 'CompTIA A+ (Certification)',
-  scripting: 'Scripting & Automation',
-};
-const TRACK_ORDER: Track[] = ['helpdesk', 'sysadmin', 'comptia', 'scripting'];
+import { TRACK_META, TRACK_LABELS, TRACK_ORDER } from './trackMeta';
 
 export default function LearnHome() {
   return (
@@ -22,7 +14,12 @@ export default function LearnHome() {
 
       {TRACK_ORDER.map((track) => (
         <section key={track} className="mb-12">
-          <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-5">
+          <h2 className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-5">
+            <span
+              className="w-2 h-2 rounded-full flex-shrink-0"
+              style={{ backgroundColor: TRACK_META[track].color }}
+              aria-hidden="true"
+            />
             {TRACK_LABELS[track]}
           </h2>
           <LearningPath track={track} />

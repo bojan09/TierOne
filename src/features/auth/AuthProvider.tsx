@@ -2,7 +2,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type ReactNode,
 } from 'react';
@@ -12,6 +11,8 @@ import { hasSupabaseConfig } from '@/shared/lib/env';
 import { getSupabaseClient, type AppSupabaseClient } from '@/shared/lib/supabase';
 import { AuthContext } from './context';
 import type { AuthContextValue, AuthResult } from './types';
+
+const NOT_CONFIGURED = 'Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in .env.';
 
 function mapProfile(row: {
   id: string;
@@ -51,75 +52,69 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [configError, setConfigError] = useState<string | null>(null);
 
-  // Resolve the client once; if env is missing, degrade gracefully.
-  const clientRef = useRef<AppSupabaseClient | null>(null);
-  if (clientRef.current === null && hasSupabaseConfig()) {
-    clientRef.current = getSupabaseClient();
-  }
-  const client = clientRef.current;
-
-  const loadProfile = useCallback(
-    async (userId: string) => {
-      if (!client) return;
-      const { data, error } = await client
-        .from('profiles')
-        .select('id, display_name, role, track, daily_goal, onboarded_at, created_at')
-        .eq('id', userId)
-        .single();
-      if (error) {
-        // Profile may not exist yet immediately after signup; not fatal.
-        setProfile(null);
-        return;
-      }
-      setProfile(mapProfile(data));
-    },
-    [client],
-  );
+  const loadProfile = useCallback(async (client: AppSupabaseClient, userId: string) => {
+    const { data, error } = await client
+      .from('profiles')
+      .select('id, display_name, role, track, daily_goal, onboarded_at, created_at')
+      .eq('id', userId)
+      .single();
+    if (error) {
+      // Profile may not exist yet immediately after signup; not fatal.
+      setProfile(null);
+      return;
+    }
+    setProfile(mapProfile(data));
+  }, []);
 
   useEffect(() => {
-    if (!client) {
-      setConfigError(
-        'Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY in .env.',
-      );
+    if (!hasSupabaseConfig()) {
+      setConfigError(NOT_CONFIGURED);
       setLoading(false);
       return;
     }
 
     let active = true;
+    let unsubscribe: (() => void) | undefined;
 
-    client.auth.getSession().then(({ data }) => {
+    getSupabaseClient().then((client) => {
       if (!active) return;
-      setSession(data.session);
-      if (data.session?.user) {
-        void loadProfile(data.session.user.id);
-      }
-      setLoading(false);
-    });
 
-    const {
-      data: { subscription },
-    } = client.auth.onAuthStateChange((_event, newSession) => {
-      setSession(newSession);
-      if (newSession?.user) {
-        void loadProfile(newSession.user.id);
-      } else {
-        setProfile(null);
-      }
+      client.auth.getSession().then(({ data }) => {
+        if (!active) return;
+        setSession(data.session);
+        if (data.session?.user) {
+          void loadProfile(client, data.session.user.id);
+        }
+        setLoading(false);
+      });
+
+      const {
+        data: { subscription },
+      } = client.auth.onAuthStateChange((_event, newSession) => {
+        setSession(newSession);
+        if (newSession?.user) {
+          void loadProfile(client, newSession.user.id);
+        } else {
+          setProfile(null);
+        }
+      });
+      unsubscribe = () => subscription.unsubscribe();
     });
 
     return () => {
       active = false;
-      subscription.unsubscribe();
+      unsubscribe?.();
     };
-  }, [client, loadProfile]);
+  }, [loadProfile]);
 
   const signInWithPassword = useCallback(
     async (email: string, password: string): Promise<AuthResult> => {
-      if (!client) return { error: configError };
+      if (!hasSupabaseConfig()) return { error: NOT_CONFIGURED };
+      const client = await getSupabaseClient();
       const { error } = await client.auth.signInWithPassword({ email, password });
       return { error: error ? toMessage(error) : null };
     },
-    [client, configError],
+    [],
   );
 
   const signUp = useCallback(
@@ -128,7 +123,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       password: string,
       displayName?: string,
     ): Promise<AuthResult> => {
-      if (!client) return { error: configError };
+      if (!hasSupabaseConfig()) return { error: NOT_CONFIGURED };
+      const client = await getSupabaseClient();
       const { data, error } = await client.auth.signUp({
         email,
         password,
@@ -141,40 +137,44 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // When email confirmation is on, there is no active session yet.
       return { error: null, emailSent: !data.session };
     },
-    [client, configError],
+    [],
   );
 
   const signInWithMagicLink = useCallback(
     async (email: string): Promise<AuthResult> => {
-      if (!client) return { error: configError };
+      if (!hasSupabaseConfig()) return { error: NOT_CONFIGURED };
+      const client = await getSupabaseClient();
       const { error } = await client.auth.signInWithOtp({
         email,
         options: { emailRedirectTo: redirectTo() },
       });
       return { error: error ? toMessage(error) : null, emailSent: !error };
     },
-    [client, configError],
+    [],
   );
 
   const signInWithGoogle = useCallback(async (): Promise<AuthResult> => {
-    if (!client) return { error: configError };
+    if (!hasSupabaseConfig()) return { error: NOT_CONFIGURED };
+    const client = await getSupabaseClient();
     const { error } = await client.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: redirectTo() },
     });
     return { error: error ? toMessage(error) : null };
-  }, [client, configError]);
+  }, []);
 
   const signOut = useCallback(async () => {
-    if (!client) return;
+    if (!hasSupabaseConfig()) return;
+    const client = await getSupabaseClient();
     await client.auth.signOut();
     setProfile(null);
-  }, [client]);
+  }, []);
 
   const updateProfile = useCallback(
     async (patch: { track?: Profile['track']; dailyGoal?: number; onboardedAt?: string }) => {
       const userId = session?.user?.id;
-      if (!client || !userId) return { error: 'Not signed in.' };
+      if (!hasSupabaseConfig() || !userId) return { error: 'Not signed in.' };
+      const client = await getSupabaseClient();
       const row: Record<string, unknown> = {};
       if (patch.track !== undefined) row.track = patch.track;
       if (patch.dailyGoal !== undefined) row.daily_goal = patch.dailyGoal;
@@ -193,7 +193,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       );
       return { error: null };
     },
-    [client, session],
+    [session],
   );
 
   const value = useMemo<AuthContextValue>(

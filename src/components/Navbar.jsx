@@ -33,6 +33,7 @@ const NAV_ITEMS = [
       {
         heading: 'Windows',
         icon: '🖥️',
+        color: '#8b5cf6',
         items: [
           { label: 'Windows Desktop',     href: '/windows',             desc: 'OS fundamentals & Registry' },
           { label: 'Windows Server 2025', href: '/windows-server-2025', desc: 'AD, DNS, DHCP, Hyper-V' },
@@ -42,6 +43,7 @@ const NAV_ITEMS = [
       {
         heading: 'Linux / Unix',
         icon: '🐧',
+        color: '#fb923c',
         items: [
           { label: 'Linux Fundamentals', href: '/linux', desc: 'Shell, fs, permissions' },
           { label: 'Ubuntu Server',      href: '/linux', desc: 'Debian-based server setup' },
@@ -52,10 +54,21 @@ const NAV_ITEMS = [
       {
         heading: 'Infrastructure',
         icon: '🌐',
+        color: '#22d3ee',
         items: [
           { label: 'Networking',    href: '/networking',    desc: 'TCP/IP, VLANs, routing' },
           { label: 'Cybersecurity', href: '/cybersecurity', desc: 'Hardening, firewalls, IR' },
           { label: 'Python',        href: '/python',        desc: 'Automation scripting' },
+        ],
+      },
+      {
+        heading: 'Certifications & Tracks',
+        icon: '🎓',
+        color: '#34d399',
+        items: [
+          { label: 'CompTIA A+',        href: '/learn/ca-hardware',            desc: '6 courses · cert prep · new' },
+          { label: 'PowerShell Track',  href: '/learn/sc-powershell-scripting', desc: '25 lessons · real automation · new' },
+          { label: 'Python Track',      href: '/learn/sc-python-scripting',     desc: '25 lessons · IT automation · new' },
         ],
       },
     ],
@@ -85,18 +98,28 @@ const NAV_ITEMS = [
   },
 ]
 
-// ─── Mega-panel (3-column grid for Courses) ───────────────────────────────────
+// ─── Mega-panel (per-category accent, glow hover, aurora footer) ─────────────
 function MegaPanel({ item, onClose }) {
   return (
-    <div className="absolute top-full left-0 mt-2 z-50 w-[700px]
+    <div className="absolute top-full left-0 mt-2 z-50 w-[820px]
                     bg-surface-900 border border-surface-700 rounded-2xl
                     shadow-card-lg overflow-hidden">
-      <div className="grid grid-cols-3 divide-x divide-surface-700/60">
+      <div className="grid grid-cols-4 divide-x divide-surface-700/60">
         {item.columns.map((col) => (
-          <div key={col.heading} className="p-4">
+          <div key={col.heading} className="relative p-4" style={{ '--tc': col.color }}>
+            {/* Category accent bar */}
+            <div className="track-accent-bar absolute inset-x-0 top-0" />
             {/* Column heading */}
-            <div className="flex items-center gap-2 mb-3 px-1">
-              <span className="text-sm">{col.icon}</span>
+            <div className="flex items-center gap-2 mb-3 px-1 pt-1">
+              <span
+                className="grid place-items-center w-6 h-6 rounded-lg text-xs border flex-shrink-0"
+                style={{
+                  background: 'color-mix(in srgb, var(--tc) 14%, transparent)',
+                  borderColor: 'color-mix(in srgb, var(--tc) 30%, transparent)',
+                }}
+              >
+                {col.icon}
+              </span>
               <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
                 {col.heading}
               </span>
@@ -108,8 +131,8 @@ function MegaPanel({ item, onClose }) {
                   key={child.label}
                   to={child.href}
                   onClick={onClose}
-                  className="flex flex-col px-3 py-2.5 rounded-xl hover:bg-surface-700
-                             transition-colors duration-150 group/item"
+                  className="track-card flex flex-col px-3 py-2.5 rounded-xl border border-transparent
+                             hover:bg-surface-700/60 transition-all duration-150 group/item"
                 >
                   <span className="text-[13px] font-medium text-slate-200
                                    group-hover/item:text-white transition-colors">
@@ -125,16 +148,20 @@ function MegaPanel({ item, onClose }) {
           </div>
         ))}
       </div>
-      {/* Footer hint */}
-      <div className="px-5 py-3 bg-surface-800/50 border-t border-surface-700
-                      flex items-center justify-between">
-        <span className="text-[11px] text-slate-500">
-          Every course includes VMware labs &amp; quizzes
+      {/* Footer — aurora-tinted CTA strip */}
+      <div className="relative px-5 py-3 border-t border-surface-700
+                      flex items-center justify-between overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-60"
+          style={{ background: 'linear-gradient(90deg, rgba(109,92,245,0.08), rgba(34,211,238,0.06))' }}
+        />
+        <span className="relative text-[11px] text-slate-500">
+          Every course includes hands-on labs &amp; quizzes
         </span>
         <Link
           to="/vmware-setup"
           onClick={onClose}
-          className="text-[11px] font-medium text-brand-400 hover:text-brand-300 transition-colors"
+          className="relative text-[11px] font-semibold text-brand-300 hover:text-brand-200 transition-colors"
         >
           Set up your lab →
         </Link>

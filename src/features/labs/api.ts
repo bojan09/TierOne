@@ -31,7 +31,7 @@ export interface LabFull {
 
 export async function listLabs(): Promise<LabSummary[]> {
   if (!hasSupabaseConfig()) return [];
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client
     .from('labs')
     .select('id, slug, title, intro, est_minutes, bonus_xp')
@@ -45,7 +45,7 @@ export async function listLabs(): Promise<LabSummary[]> {
 
 export async function getLabBySlug(slug: string): Promise<LabFull | null> {
   if (!hasSupabaseConfig()) return null;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data: row, error: e1 } = await client
     .from('labs')
     .select('id')
@@ -66,7 +66,7 @@ export async function getLabBySlug(slug: string): Promise<LabFull | null> {
 
 export async function completeLab(labId: string): Promise<boolean> {
   if (!hasSupabaseConfig()) return false;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { error } = await client.rpc('complete_lab', { p_lab_id: labId } as never);
   if (error) {
     console.error('complete_lab failed:', error.message);

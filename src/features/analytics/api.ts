@@ -35,7 +35,7 @@ function last14(): string[] {
 
 export async function fetchAnalytics(): Promise<AnalyticsData> {
   if (!hasSupabaseConfig()) return EMPTY;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const [scenAtt, labAtt, lessons, quizzes, scenAll, labAll] = await Promise.all([
     client.from('scenario_attempts').select('scenario_id, passed, created_at'),
     client.from('lab_attempts').select('lab_id, created_at'),

@@ -2,18 +2,33 @@
 <html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="TierZero — Production-quality IT learning platform for sysadmins, DevOps engineers, and infrastructure professionals." />
     <title>TierZero — IT Learning Platform</title>
 
-    <!-- Google Fonts: Sora + JetBrains Mono -->
+    <!-- Google Fonts: Sora + JetBrains Mono.
+         Loaded non-render-blocking (preload -> swap to stylesheet) so the
+         hero text can paint immediately in a fallback font instead of the
+         browser stalling on this request before first paint. `display=swap`
+         then swaps to Sora once it arrives. Weight list trimmed to what's
+         actually used in the app (300/light was dead weight; 900/black was
+         MISSING despite `font-black` being used — it was silently rendering
+         as synthetic-bold 800 until now). -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      />
+    </noscript>
   </head>
   <body class="bg-surface-950 text-white antialiased">
     <div id="root"></div>

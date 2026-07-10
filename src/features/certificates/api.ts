@@ -27,7 +27,7 @@ export const TRACK_TITLE: Record<Track, string> = {
 
 export async function listCertificates(): Promise<Certificate[]> {
   if (!hasSupabaseConfig()) return [];
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client
     .from('certificates')
     .select('track, holder_name, code, issued_at')
@@ -41,7 +41,7 @@ export async function listCertificates(): Promise<Certificate[]> {
 
 export async function claimCertificate(track: Track): Promise<ClaimResult | null> {
   if (!hasSupabaseConfig()) return null;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client.rpc('claim_certificate', { p_track: track } as never);
   if (error) {
     console.error('claim_certificate failed:', error.message);
@@ -59,7 +59,7 @@ export interface VerifyResult {
 
 export async function verifyCertificate(code: string): Promise<VerifyResult> {
   if (!hasSupabaseConfig()) return { valid: false };
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client.rpc('verify_certificate', { p_code: code } as never);
   if (error) {
     console.error('verify_certificate failed:', error.message);

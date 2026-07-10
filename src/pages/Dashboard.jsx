@@ -7,14 +7,7 @@ import StreakTracker from '../components/StreakTracker.jsx'
 import DailyGoal from '@/features/progress/DailyGoal'
 import NextStep from '@/features/curriculum/NextStep'
 import StudyTimer from '../components/StudyTimer.jsx'
-
-const TRACK_LABELS = {
-  helpdesk: 'Help Desk / Tier-1 Support',
-  sysadmin: 'SysAdmin (Advanced)',
-  comptia: 'CompTIA A+ (Certification)',
-  scripting: 'Scripting & Automation',
-}
-const TRACK_ORDER = ['helpdesk', 'sysadmin', 'comptia', 'scripting']
+import { TRACK_META, TRACK_LABELS, TRACK_ORDER } from '@/features/curriculum/trackMeta'
 
 function StatCard({ label, value, sub, icon }) {
   return (
@@ -106,25 +99,29 @@ export default function Dashboard() {
               .slice()
               .sort((a, b) => a.order - b.order)
             if (!courses.length) return null
+            const accent = TRACK_META[track].color
             return (
               <section key={track}>
-                <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">
+                <h2 className="flex items-center gap-1.5 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: accent }} aria-hidden="true" />
                   {TRACK_LABELS[track]}
                 </h2>
-                <div className="space-y-2">
+                <div className="space-y-2" style={{ '--tc': accent }}>
                   {courses.map((course) => {
                     const lessons = getOrderedLessons(course)
                     const done = lessons.filter((l) => completedSet.has(l.id)).length
                     const pct = lessons.length ? Math.round((done / lessons.length) * 100) : 0
                     return (
                       <Link key={course.id} to={courseHref(course)}
-                        className="card p-3 flex items-center gap-3 hover:border-brand-500/40 transition-colors">
+                        className="card track-card p-3 flex items-center gap-3 transition-colors">
                         <span className="text-xl flex-shrink-0">{course.icon}</span>
                         <div className="flex-1 min-w-0">
                           <div className="text-sm font-medium text-white truncate">{course.title}</div>
                           <div className="h-1.5 rounded-full bg-surface-700 overflow-hidden mt-1.5">
-                            <div className={`h-full rounded-full ${pct === 100 ? 'bg-accent-green' : 'bg-brand-500'}`}
-                              style={{ width: `${pct}%` }} />
+                            <div
+                              className={`h-full rounded-full ${pct === 100 ? 'bg-accent-green' : ''}`}
+                              style={pct === 100 ? { width: `${pct}%` } : { width: `${pct}%`, backgroundColor: accent }}
+                            />
                           </div>
                         </div>
                         <span className="text-xs font-mono text-slate-500 flex-shrink-0">{done}/{lessons.length}</span>

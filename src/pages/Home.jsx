@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { curriculum } from '@/content/curriculum'
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
+import { TRACK_META, DEFAULT_TRACK_META } from '@/features/curriculum/trackMeta'
 
 // Spine-driven course cards. Counts, XP, links and progress all derive from the
 // curriculum spine + server progress — no hardcoded lists to drift out of date.
@@ -27,15 +28,6 @@ const COURSES = curriculum.courses
 const TOTAL_LESSONS = curriculum.lessons.length
 const TOTAL_COURSES = curriculum.courses.length
 const TOTAL_QUIZZES = curriculum.lessons.filter((l) => l.hasQuiz).length
-
-// Per-track signature colours — one hue per track brings order to the palette.
-const TRACK_META = {
-  helpdesk:  { label: 'Help Desk',  color: '#22d3ee' },
-  sysadmin:  { label: 'SysAdmin',   color: '#8b5cf6' },
-  comptia:   { label: 'CompTIA A+', color: '#34d399' },
-  scripting: { label: 'Scripting',  color: '#fbbf24' },
-}
-const DEFAULT_TRACK = { label: 'Course', color: '#6d5cf5' }
 
 const TRACK_TABS = [
   { id: 'all', label: 'All Courses' },
@@ -92,7 +84,7 @@ function CourseCard({ course, completedSet }) {
   const completed = course.lessonIds.filter((id) => completedSet.has(id)).length
   const total = course.lessonCount
   const isComplete = completed === total && total > 0
-  const meta = TRACK_META[course.track] || DEFAULT_TRACK
+  const meta = TRACK_META[course.track] || DEFAULT_TRACK_META
   return (
     <Link
       to={course.href}

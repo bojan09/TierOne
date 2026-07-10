@@ -56,7 +56,7 @@ export interface ScenarioResult {
 
 export async function listScenarios(): Promise<ScenarioSummary[]> {
   if (!hasSupabaseConfig()) return [];
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client
     .from('scenarios')
     .select('id, slug, title, intro_actor, intro_channel, intro_message, bonus_xp')
@@ -70,7 +70,7 @@ export async function listScenarios(): Promise<ScenarioSummary[]> {
 
 export async function getScenarioBySlug(slug: string): Promise<ScenarioFull | null> {
   if (!hasSupabaseConfig()) return null;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data: rows, error: e1 } = await client
     .from('scenarios')
     .select('id')
@@ -94,7 +94,7 @@ export async function submitScenario(
   choices: Array<{ stage_id: number; option_id: number }>,
 ): Promise<ScenarioResult | null> {
   if (!hasSupabaseConfig()) return null;
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client.rpc('submit_scenario', {
     p_scenario_id: scenarioId,
     p_choices: choices,

@@ -25,7 +25,7 @@ export type GradeResult =
 
 export async function listDocExercises(): Promise<DocExercise[]> {
   if (!hasSupabaseConfig()) return [];
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   const { data, error } = await client
     .from('doc_exercises')
     .select('id, track, title, prompt, context, criteria, model_answer, sort')
@@ -39,7 +39,7 @@ export async function listDocExercises(): Promise<DocExercise[]> {
 
 export async function gradeDoc(exerciseId: string, content: string): Promise<GradeResult> {
   if (!hasSupabaseConfig()) return { mode: 'regular' };
-  const client = getSupabaseClient();
+  const client = await getSupabaseClient();
   try {
     const { data, error } = await client.functions.invoke('grade-doc', {
       body: { exercise_id: exerciseId, content },

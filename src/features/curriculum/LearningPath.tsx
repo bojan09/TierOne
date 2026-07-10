@@ -3,6 +3,7 @@ import type { Track } from '@/shared/types';
 import { curriculum } from '@/content/curriculum';
 import { courseHref, getOrderedLessons } from '@/features/curriculum/selectors';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
+import { TRACK_META } from '@/features/curriculum/trackMeta';
 
 const DIFF_BADGE: Record<string, string> = {
   advanced: 'text-brand-300 border-brand-500/30 bg-brand-500/5',
@@ -12,6 +13,7 @@ const DIFF_BADGE: Record<string, string> = {
 
 export default function LearningPath({ track }: { track: Track }) {
   const { isLessonCompleted } = useAcademyProgress();
+  const accent = TRACK_META[track].color;
   const courses = curriculum.courses
     .filter((c) => c.track === track)
     .slice()
@@ -19,7 +21,7 @@ export default function LearningPath({ track }: { track: Track }) {
   if (courses.length === 0) return null;
 
   return (
-    <ol className="relative">
+    <ol className="relative" style={{ '--tc': accent } as React.CSSProperties}>
       {courses.map((course, i) => {
         const lessons = getOrderedLessons(course);
         const done = lessons.filter((l) => isLessonCompleted(l.id)).length;
@@ -36,9 +38,14 @@ export default function LearningPath({ track }: { track: Track }) {
                   state === 'complete'
                     ? 'bg-accent-green/15 border-accent-green text-accent-green'
                     : state === 'active'
-                      ? 'bg-brand-500/15 border-brand-500 text-brand-300'
+                      ? 'text-white'
                       : 'bg-surface-800 border-surface-600 text-slate-500'
                 }`}
+                style={
+                  state === 'active'
+                    ? { backgroundColor: `color-mix(in srgb, ${accent} 16%, transparent)`, borderColor: accent, color: accent }
+                    : undefined
+                }
               >
                 {state === 'complete' ? (
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -54,7 +61,7 @@ export default function LearningPath({ track }: { track: Track }) {
             {/* Course card */}
             <Link
               to={courseHref(course)}
-              className="card p-4 flex-1 min-w-0 hover:border-brand-500/40 transition-colors -mt-0.5"
+              className="card track-card p-4 flex-1 min-w-0 transition-colors -mt-0.5"
             >
               <div className="flex items-start gap-3">
                 <div className="min-w-0 flex-1">
@@ -72,8 +79,8 @@ export default function LearningPath({ track }: { track: Track }) {
               <div className="flex items-center gap-3 mt-3">
                 <div className="flex-1 h-1.5 rounded-full bg-surface-700 overflow-hidden">
                   <div
-                    className={`h-full rounded-full ${state === 'complete' ? 'bg-accent-green' : 'bg-brand-500'}`}
-                    style={{ width: `${pct}%` }}
+                    className={`h-full rounded-full ${state === 'complete' ? 'bg-accent-green' : ''}`}
+                    style={state === 'complete' ? { width: `${pct}%` } : { width: `${pct}%`, backgroundColor: accent }}
                   />
                 </div>
                 <span className="text-[11px] font-mono text-slate-500 flex-shrink-0">

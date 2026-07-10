@@ -1,18 +1,10 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import type { Track } from '@/shared/types';
 import { curriculum } from '@/content/curriculum';
 import { courseHref, lessonHref, getOrderedLessons } from '@/features/curriculum/selectors';
 import { isLessonLocked } from '@/features/curriculum/locking';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
-
-const TRACK_LABELS: Record<Track, string> = {
-  helpdesk: 'Help Desk / Tier-1 Support',
-  sysadmin: 'SysAdmin (Advanced)',
-  comptia: 'CompTIA A+ (Certification)',
-  scripting: 'Scripting & Automation',
-};
-const TRACK_ORDER: Track[] = ['helpdesk', 'sysadmin', 'comptia', 'scripting'];
+import { TRACK_META, TRACK_LABELS, TRACK_ORDER } from '@/features/curriculum/trackMeta';
 
 function CheckIcon() {
   return (
@@ -42,10 +34,12 @@ export default function CourseTree({ onNavigate }: { onNavigate?: () => void }) 
           .slice()
           .sort((a, b) => a.order - b.order);
         if (courses.length === 0) return null;
+        const accent = TRACK_META[track].color;
 
         return (
           <div key={track}>
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-2 px-2">
+            <p className="flex items-center gap-1.5 text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-2 px-2">
+              <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: accent }} aria-hidden="true" />
               {TRACK_LABELS[track]}
             </p>
             <ul className="space-y-0.5">
@@ -85,9 +79,10 @@ export default function CourseTree({ onNavigate }: { onNavigate?: () => void }) 
                                 aria-current={active ? 'page' : undefined}
                                 className={`flex items-center gap-2 pl-2 pr-1 py-1 rounded-md text-xs transition-colors ${
                                   active
-                                    ? 'bg-brand-500/10 text-brand-300 font-medium'
+                                    ? 'font-medium'
                                     : 'text-slate-400 hover:text-white hover:bg-surface-800/40'
                                 }`}
+                                style={active ? { backgroundColor: `color-mix(in srgb, ${accent} 14%, transparent)`, color: accent } : undefined}
                               >
                                 <span className="w-3.5 flex-shrink-0 flex justify-center">
                                   {completed ? <CheckIcon /> : locked ? <LockIcon /> : (
