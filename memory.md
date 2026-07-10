@@ -1,6 +1,15 @@
 # Memory — TierZero (through Phase 32 + roadmap)
 
-Last updated: 2026-07-06
+Last updated: 2026-07-10
+
+## P34 REDESIGN — "Terminal Aurora" + prod Lighthouse + bug fixes
+PROD Lighthouse (tier-one-tau.vercel.app): desktop perf 97 / mobile 82, a11y 96, BP 100, SEO 100. Mobile weak: LCP 4.0s, render-blocking CSS ~550ms, unused-css 11KB, unused-js 223KB (Phase 5 targets). a11y fails: color-contrast + label-content-name-mismatch. agentic: llms.txt format.
+FIXED bugs: (1) **invisible .btn-secondary in light mode** — `text-slate-200` is @applied internally so the attribute-overlay couldn't reach it → light-grey-on-light-grey. Added explicit `html[data-theme=light] .btn-secondary` override (bg #fff, text #1e293b). (2) **Home TRACK_TABS missing comptia+scripting** (only 3 of 4 tracks filterable) → added all 4. (3) stale hero "Two tracks" → "4 tracks". 
+REDESIGN (Terminal Aurora): brand palette → electric indigo-violet (#6d5cf5; was flat #3b62f6); glow shadows re-hued. Added accent.violet + **track color system** (helpdesk=cyan, sysadmin=violet, comptia=emerald, scripting=amber) for "color order". tailwind: aurora + shimmer-x keyframes, backgroundSize.aurora. index.css (src/styles/ — the LIVE one): `.aurora-bg` animated mesh (light variant + reduced-motion), `.grid-overlay` masked grid, `.aurora-text` gradient, `.terminal-window/.terminal-bar/.terminal-body` motif (pinned dark in light theme), `.track-accent-bar/.track-chip/.track-card` via `--tc` + color-mix, `.blink-cursor`. btn-primary → gradient. Home hero rewritten: 2-col (copy + terminal ticket demo), aurora bg, real spine stats (4/50/337/337), fixed copy. CourseCard → per-track accent bar + tinted icon + track chip + colored hover glow. typecheck+lint+build green, 54 cards render, no runtime errors (324 console errs were 1 stale HMR snapshot, non-reproducing).
+NOTE: root /index.css (894 lines) is DEAD — main.jsx imports src/styles/index.css. Flag for Phase 6 cleanup. HERO 2-col only shows >lg (browser pane ~800px shows stacked).
+
+## P33 IT MODELS → REAL ROUTES (supersedes P7 ?m= fix)
+User re-flagged IT Models dropdown ("every button same page"). P7's `?m=slug` query-param tabs were the half-measure. FIX: real nested routes `/it-models/:model`. routes.jsx: shared `ITModels` lazy const, added `it-models` + `it-models/:model` entries. ITModels.jsx: param-driven via `useParams()`, MODELS registry [{slug,tab,tagline}], per-model H1+tagline+breadcrumb (`Home / IT Models / <name>`), tabs are `<Link>` w/ `aria-current="page"`, bare/unknown slug → `<Navigate to="/it-models/osi" replace>`. Removed useSearchParams/useState tab logic. Navbar hrefs `/it-models?m=x` → `/it-models/x`. typecheck+build green. Content dicts (OSI/TCP/ITIL/CIA/ZeroTrust/DevOps) unchanged.
 
 ## P1 DONE — Footer.jsx rewritten spine-driven (stats from curriculum: Tracks/Courses/Lessons/Quizzes), brand=TierZero, real 4 tracks->/​learn, real tools (labs/review/simulator/interview/glossary), platform (/learn,/dashboard,/certificates,/search), featured=first course per track via courseHref, accurate free-beta copy, removed SysAdminPro/VMware/open-beta/Phase17/localStorage. Gates green.
 

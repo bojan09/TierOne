@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import AuthButton from './AuthButton.jsx'
+import Logo from './Logo.jsx'
 import ThemeToggle from '@/features/theme/ThemeToggle'
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
 
@@ -63,12 +64,12 @@ const NAV_ITEMS = [
     label: 'IT Models',
     mega: false,
     children: [
-      { label: 'OSI Model',        href: '/it-models?m=osi', desc: '7-layer network reference' },
-      { label: 'TCP/IP Model',     href: '/it-models?m=tcpip', desc: 'Internet protocol suite' },
-      { label: 'ITIL Framework',   href: '/it-models?m=itil', desc: 'Service management' },
-      { label: 'CIA Triad',        href: '/it-models?m=cia', desc: 'Core security model' },
-      { label: 'Zero Trust',       href: '/it-models?m=zero-trust', desc: 'Never trust, always verify' },
-      { label: 'DevOps Lifecycle', href: '/it-models?m=devops', desc: 'Plan → build → deploy' },
+      { label: 'OSI Model',        href: '/it-models/osi', desc: '7-layer network reference' },
+      { label: 'TCP/IP Model',     href: '/it-models/tcpip', desc: 'Internet protocol suite' },
+      { label: 'ITIL Framework',   href: '/it-models/itil', desc: 'Service management' },
+      { label: 'CIA Triad',        href: '/it-models/cia', desc: 'Core security model' },
+      { label: 'Zero Trust',       href: '/it-models/zero-trust', desc: 'Never trust, always verify' },
+      { label: 'DevOps Lifecycle', href: '/it-models/devops', desc: 'Plan → build → deploy' },
     ],
   },
   {
@@ -83,24 +84,6 @@ const NAV_ITEMS = [
     ],
   },
 ]
-
-// ─── Logo ─────────────────────────────────────────────────────────────────────
-function Logo() {
-  return (
-    <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
-      <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center
-                      shadow-glow-sm group-hover:bg-brand-400 transition-colors duration-200">
-        <svg viewBox="0 0 24 24" fill="none" className="w-[18px] h-[18px]">
-          <path d="M5 7l4 5-4 5" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-          <path d="M12.5 17H19" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-        </svg>
-      </div>
-      <span className="font-bold text-white text-[15px] tracking-tight leading-none">
-        Tier<span className="text-brand-400">Zero</span>
-      </span>
-    </Link>
-  )
-}
 
 // ─── Mega-panel (3-column grid for Courses) ───────────────────────────────────
 function MegaPanel({ item, onClose }) {
@@ -264,7 +247,7 @@ function DesktopNavItem({ item }) {
 }
 
 // ─── Mobile drawer ────────────────────────────────────────────────────────────
-function MobileMenu({ open, onClose, onOpenSearch }) {
+function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
   const [expanded, setExpanded] = useState(null)
 
   useEffect(() => {
@@ -333,7 +316,7 @@ function MobileMenu({ open, onClose, onOpenSearch }) {
         <div className="mx-4 mt-3 flex items-center gap-2 px-3 py-2 rounded-xl bg-surface-800
                         border border-surface-700 text-xs font-mono text-accent-green w-fit">
           <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse-slow" />
-          0 XP earned
+          {xp.toLocaleString()} XP earned
         </div>
 
         {/* Nav */}
@@ -497,18 +480,21 @@ export default function Navbar({ onOpenSearch }) {
               </Link>
             </div>
 
-            {/* Mobile hamburger */}
-            <button
-              onClick={() => setMobileOpen(true)}
-              className="lg:hidden p-2 rounded-lg text-slate-300 hover:text-white
-                         hover:bg-surface-700 transition-colors ml-auto"
-              aria-label="Open menu"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+            {/* Mobile / tablet cluster — theme toggle + hamburger */}
+            <div className="flex items-center gap-1 lg:hidden ml-auto">
+              <ThemeToggle />
+              <button
+                onClick={() => setMobileOpen(true)}
+                className="p-2 rounded-lg text-slate-300 hover:text-white
+                           hover:bg-surface-700 transition-colors"
+                aria-label="Open menu"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                     stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
 
           </div>
         </div>
@@ -518,6 +504,7 @@ export default function Navbar({ onOpenSearch }) {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         onOpenSearch={onOpenSearch}
+        xp={stats?.totalXp ?? xp}
       />
     </>
   )

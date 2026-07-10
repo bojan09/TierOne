@@ -72,9 +72,13 @@
 
   /* Buttons */
   .btn-primary {
-    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-400
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
            text-white font-semibold text-sm transition-all duration-200
            shadow-glow-sm hover:shadow-glow active:scale-95;
+    background-image: linear-gradient(120deg, #6d5cf5 0%, #8b5cf6 100%);
+  }
+  .btn-primary:hover {
+    background-image: linear-gradient(120deg, #7c6dff 0%, #9d6dff 100%);
   }
 
   .btn-secondary {
@@ -926,6 +930,19 @@ html[data-theme="light"] .lesson-content ol li,
 html[data-theme="light"] .lesson-content blockquote p,
 html[data-theme="light"] .tag { color: #334155 !important; }
 
+/* .btn-secondary @applies text-slate-200 internally — the attribute overlay
+   can't reach it, so in light mode it rendered light-grey-on-light-grey
+   (invisible). Force a readable pairing. */
+html[data-theme="light"] .btn-secondary,
+html[data-theme="light"] .btn-secondary * {
+  color: #1e293b !important;
+  -webkit-text-fill-color: #1e293b !important;
+}
+html[data-theme="light"] .btn-secondary {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
 /* Section eyebrow labels + gradient section titles read darker on light. */
 html[data-theme="light"] .gradient-text {
   --tw-gradient-from: #2563eb var(--tw-gradient-from-position);
@@ -936,3 +953,103 @@ html[data-theme="light"] .gradient-text {
 /* Card shadow reads better than a hard border on white. */
 html[data-theme="light"] .card { box-shadow: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04); }
 html[data-theme="light"] .glass { background-color: rgba(255,255,255,0.8) !important; }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TERMINAL AURORA — modernized visual identity (hero + cards)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Animated aurora mesh — the hero backdrop. Layered radial blooms drift slowly.
+   Sits behind content (pointer-events none via the element that uses it). */
+.aurora-bg {
+  background-color: rgb(var(--s-950));
+  background-image:
+    radial-gradient(38% 44% at 18% 8%,  rgba(109, 92, 245, 0.42) 0%, transparent 60%),
+    radial-gradient(34% 40% at 82% 12%, rgba(139, 92, 246, 0.34) 0%, transparent 60%),
+    radial-gradient(40% 46% at 60% 88%, rgba(34, 211, 238, 0.22) 0%, transparent 62%);
+  background-size: 200% 200%;
+  animation: aurora 18s ease infinite;
+}
+html[data-theme="light"] .aurora-bg {
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(38% 44% at 18% 8%,  rgba(109, 92, 245, 0.18) 0%, transparent 60%),
+    radial-gradient(34% 40% at 82% 12%, rgba(139, 92, 246, 0.15) 0%, transparent 60%),
+    radial-gradient(40% 46% at 60% 88%, rgba(34, 211, 238, 0.12) 0%, transparent 62%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .aurora-bg { animation: none; }
+}
+
+/* Fine grid overlay for the hero — dev/terminal texture. */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(139, 148, 200, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 148, 200, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 40%, transparent 100%);
+}
+
+/* Signature gradient text (brand → violet → cyan). */
+.aurora-text {
+  background-image: linear-gradient(115deg, #8b83ff 0%, #a78bfa 45%, #22d3ee 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Terminal window motif — used as a hero visual. */
+.terminal-window {
+  @apply rounded-2xl border border-surface-600 overflow-hidden shadow-card-lg;
+  background: rgb(var(--s-900));
+}
+.terminal-bar {
+  @apply flex items-center gap-2 px-4 py-2.5 border-b border-surface-700;
+  background: rgb(var(--s-850));
+}
+.terminal-dot { @apply w-3 h-3 rounded-full; }
+.terminal-body {
+  @apply p-5 font-mono text-[13px] leading-relaxed;
+}
+
+/* Per-track accent — set --tc inline (e.g. style={{'--tc': '#22d3ee'}}) and these
+   compose a consistent chip + top-bar + hover glow per learning track. */
+.track-accent-bar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--tc, #6d5cf5), transparent 85%);
+}
+.track-chip {
+  color: var(--tc, #8b83ff);
+  background: color-mix(in srgb, var(--tc, #6d5cf5) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tc, #6d5cf5) 30%, transparent);
+}
+.track-card:hover {
+  border-color: color-mix(in srgb, var(--tc, #6d5cf5) 45%, transparent) !important;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--tc, #6d5cf5) 20%, transparent),
+              0 14px 40px -12px color-mix(in srgb, var(--tc, #6d5cf5) 40%, transparent);
+}
+
+/* Terminal stays dark in both themes (authentic + keeps contrast). Exclude its
+   text from the light-mode dark-flip so mono output stays legible on dark. */
+html[data-theme="light"] .terminal-window { background: #0d1220 !important; border-color: #334155 !important; }
+html[data-theme="light"] .terminal-bar    { background: #161f30 !important; border-color: #243555 !important; }
+html[data-theme="light"] .terminal-body [class*="text-slate-4"],
+html[data-theme="light"] .terminal-body [class*="text-slate-5"] { color: #94a3b8 !important; }
+html[data-theme="light"] .terminal-body [class*="text-brand-2"] { color: #a5a3ff !important; }
+
+/* Hero eyebrow: readable in light mode (brand-200 is too pale on a light tint). */
+html[data-theme="light"] .hero-eyebrow { color: #4a37c4 !important; }
+
+/* Logo wordmark "Zero" — theme-aware brand tint, WCAG-AA on both backgrounds. */
+.logo-zero { color: #8b83ff; }
+html[data-theme="light"] .logo-zero { color: #5a45e0 !important; }
+
+/* Blinking cursor for the terminal motif. */
+.blink-cursor::after {
+  content: '▋';
+  color: #22d3ee;
+  animation: blink 1.1s steps(2, start) infinite;
+}
+@keyframes blink { to { visibility: hidden; } }
+@media (prefers-reduced-motion: reduce) { .blink-cursor::after { animation: none; } }

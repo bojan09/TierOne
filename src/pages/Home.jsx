@@ -25,19 +25,32 @@ const COURSES = curriculum.courses
   })
 
 const TOTAL_LESSONS = curriculum.lessons.length
+const TOTAL_COURSES = curriculum.courses.length
+const TOTAL_QUIZZES = curriculum.lessons.filter((l) => l.hasQuiz).length
+
+// Per-track signature colours — one hue per track brings order to the palette.
+const TRACK_META = {
+  helpdesk:  { label: 'Help Desk',  color: '#22d3ee' },
+  sysadmin:  { label: 'SysAdmin',   color: '#8b5cf6' },
+  comptia:   { label: 'CompTIA A+', color: '#34d399' },
+  scripting: { label: 'Scripting',  color: '#fbbf24' },
+}
+const DEFAULT_TRACK = { label: 'Course', color: '#6d5cf5' }
 
 const TRACK_TABS = [
   { id: 'all', label: 'All Courses' },
   { id: 'helpdesk', label: 'Help Desk' },
   { id: 'sysadmin', label: 'SysAdmin' },
+  { id: 'comptia', label: 'CompTIA A+' },
+  { id: 'scripting', label: 'Scripting' },
 ]
 
-const TRACK_BADGE = {
-  helpdesk: { label: 'Help Desk', cls: 'bg-accent-cyan/10 text-accent-cyan border-accent-cyan/20' },
-  sysadmin: { label: 'SysAdmin', cls: 'bg-accent-purple/10 text-accent-purple border-accent-purple/20' },
-  comptia: { label: 'CompTIA A+', cls: 'bg-accent-green/10 text-accent-green border-accent-green/20' },
-  scripting: { label: 'Scripting', cls: 'bg-accent-amber/10 text-accent-amber border-accent-amber/20' },
-}
+const HERO_STATS = [
+  { value: '4', label: 'Tracks' },
+  { value: String(TOTAL_COURSES), label: 'Courses' },
+  { value: String(TOTAL_LESSONS), label: 'Lessons' },
+  { value: String(TOTAL_QUIZZES), label: 'Quizzes' },
+]
 
 const FEATURES = [
   { icon: '🎫', title: 'Virtual Help Desk', desc: 'Work real support tickets end to end — triage, diagnose, resolve, and communicate like the job demands.' },
@@ -79,24 +92,35 @@ function CourseCard({ course, completedSet }) {
   const completed = course.lessonIds.filter((id) => completedSet.has(id)).length
   const total = course.lessonCount
   const isComplete = completed === total && total > 0
-  const badge = TRACK_BADGE[course.track] || { label: course.track, cls: 'bg-surface-700 text-slate-300 border-surface-600' }
+  const meta = TRACK_META[course.track] || DEFAULT_TRACK
   return (
     <Link
       to={course.href}
-      className="course-card block group relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
+      style={{ '--tc': meta.color }}
+      className="course-card track-card block group relative overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400"
     >
+      {/* Track-coloured top accent */}
+      <div className="track-accent-bar" />
       <div className="pt-4 pb-5 px-4">
         <div className="flex items-start justify-between gap-2 mb-3">
-          <span className="text-2xl leading-none">{course.icon}</span>
+          <span
+            className="grid place-items-center w-10 h-10 rounded-xl text-xl leading-none border"
+            style={{
+              background: 'color-mix(in srgb, var(--tc) 12%, transparent)',
+              borderColor: 'color-mix(in srgb, var(--tc) 26%, transparent)',
+            }}
+          >
+            {course.icon}
+          </span>
           <div className="flex items-center gap-1.5 flex-wrap justify-end">
             {isComplete ? (
               <span className="tag text-[10px] bg-accent-green/10 text-accent-green border-accent-green/20 py-0.5">✓ Complete</span>
             ) : (
-              <span className={`tag text-[10px] border py-0.5 ${badge.cls}`}>{badge.label}</span>
+              <span className="badge track-chip text-[10px] py-0.5">{meta.label}</span>
             )}
           </div>
         </div>
-        <h3 className="font-bold text-white text-sm leading-snug mb-1.5 group-hover:text-brand-300 transition-colors">{course.title}</h3>
+        <h3 className="font-bold text-white text-sm leading-snug mb-1.5 transition-colors group-hover:text-brand-300">{course.title}</h3>
         <p className="text-slate-400 text-[12px] leading-relaxed line-clamp-2 mb-3">{course.description}</p>
         <div className="flex items-center gap-3 text-[11px] text-slate-500 font-mono">
           <span>{course.lessonCount} lessons</span>
@@ -125,26 +149,62 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* ── HERO ── */}
-      <section className="relative overflow-hidden border-b border-surface-700/50">
-        <div className="absolute inset-0 pointer-events-none select-none" style={{ backgroundImage: 'linear-gradient(rgba(99,102,241,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(99,102,241,0.04) 1px,transparent 1px)', backgroundSize: '40px 40px' }} />
-        <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(99,102,241,0.12) 0%, transparent 70%)' }} />
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 sm:pt-24 sm:pb-16 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-brand-500/30 bg-brand-500/10 px-4 py-1.5 mb-6 fade-up">
-            <span className="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse" />
-            <span className="text-xs font-semibold text-brand-300 tracking-wide">Two tracks · Help Desk → SysAdmin · Hands-on, job-focused</span>
-          </div>
-          <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight mb-5 fade-up">
-            Break into IT, <span className="text-brand-400">one skill at a time.</span>
-          </h1>
-          <p className="text-slate-400 text-base sm:text-lg max-w-2xl mx-auto mb-8 leading-relaxed fade-up">
-            TierZero turns real IT work into hands-on practice — {TOTAL_LESSONS} lessons, live support tickets,
-            terminal labs, and AI feedback — so you learn the job, not just the theory.
-          </p>
-          <div className="flex flex-wrap gap-3 justify-center fade-up">
-            <Link to={hasStarted ? '/learn' : '/login'} className="btn-primary">
-              {hasStarted ? 'Resume learning →' : 'Start learning free →'}
-            </Link>
-            <Link to="/learn" className="btn-secondary">Explore the Academy</Link>
+      <section className="relative overflow-hidden border-b border-surface-700/50 aurora-bg">
+        <div className="absolute inset-0 pointer-events-none select-none grid-overlay" />
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-14 sm:pt-24 sm:pb-20">
+          <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-8 items-center">
+            {/* Left — copy */}
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-500/10 px-4 py-1.5 mb-6 fade-up backdrop-blur-sm">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent-cyan animate-pulse" />
+                <span className="hero-eyebrow text-xs font-semibold text-brand-200 tracking-wide">4 tracks · Help Desk → SysAdmin · Hands-on, job-focused</span>
+              </div>
+              <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-5 fade-up text-white">
+                Break into IT,<br />
+                <span className="aurora-text">one skill at a time.</span>
+              </h1>
+              <p className="text-slate-400 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed fade-up">
+                TierZero turns real IT work into hands-on practice — {TOTAL_LESSONS} lessons, live support tickets,
+                terminal labs, and AI feedback — so you learn the job, not just the theory.
+              </p>
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start fade-up mb-10">
+                <Link to={hasStarted ? '/learn' : '/login'} className="btn-primary">
+                  {hasStarted ? 'Resume learning →' : 'Start learning free →'}
+                </Link>
+                <Link to="/learn" className="btn-secondary">Explore the Academy</Link>
+              </div>
+              {/* Real spine stats */}
+              <div className="grid grid-cols-4 gap-3 max-w-md mx-auto lg:mx-0 fade-up">
+                {HERO_STATS.map((s) => (
+                  <div key={s.label} className="text-center lg:text-left">
+                    <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">{s.value}</div>
+                    <div className="text-[10px] text-slate-500 uppercase tracking-widest font-mono mt-0.5">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — terminal motif */}
+            <div className="fade-up hidden sm:block" style={{ animationDelay: '120ms' }}>
+              <div className="terminal-window max-w-md mx-auto">
+                <div className="terminal-bar">
+                  <span className="terminal-dot bg-accent-red" />
+                  <span className="terminal-dot bg-accent-amber" />
+                  <span className="terminal-dot bg-accent-green" />
+                  <span className="ml-2 text-[11px] text-slate-500 font-mono">tierzero — ticket #4821</span>
+                </div>
+                <div className="terminal-body space-y-1.5">
+                  <p><span className="text-accent-green">➜</span> <span className="text-slate-400">whoami</span></p>
+                  <p className="text-brand-200">tier-1 support · on shift</p>
+                  <p className="mt-2"><span className="text-accent-green">➜</span> <span className="text-slate-400">diagnose --user jsmith --issue "no vpn"</span></p>
+                  <p className="text-slate-500">→ checking client build…        <span className="text-accent-green">ok</span></p>
+                  <p className="text-slate-500">→ testing gateway 10.0.0.1…      <span className="text-accent-green">ok</span></p>
+                  <p className="text-slate-500">→ auth token…                    <span className="text-accent-red">expired</span></p>
+                  <p className="mt-2 text-accent-cyan">✔ resolution: re-issue MFA token</p>
+                  <p className="text-slate-400">➜ <span className="blink-cursor" /></p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

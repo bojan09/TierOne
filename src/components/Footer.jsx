@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Logo from './Logo.jsx'
 import { curriculum } from '@/content/curriculum'
 import { courseHref } from '@/features/curriculum/selectors'
 
@@ -65,15 +66,7 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1 space-y-5">
-            <Link to="/" className="flex items-center gap-2.5 group w-fit">
-              <div className="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center group-hover:bg-brand-400 transition-colors duration-200">
-                <svg viewBox="0 0 24 24" fill="none" className="w-[18px] h-[18px]">
-                  <path d="M4 6h16M4 10h10M4 14h12" stroke="white" strokeWidth="2.2" strokeLinecap="round"/>
-                  <circle cx="20" cy="14" r="2.5" fill="white"/>
-                </svg>
-              </div>
-              <span className="font-bold text-white text-[15px] tracking-tight">TierZero</span>
-            </Link>
+            <Logo size="lg" />
             <p className="text-sm text-slate-400 leading-relaxed">
               Practical, hands-on IT training across four tracks — Help Desk, SysAdmin,
               CompTIA A+, and Scripting. Lessons, quizzes, in-browser labs, spaced review,

@@ -8,6 +8,9 @@
 // the lessonRoutes array shrinks to empty and this file is removed.
 import { lazy } from 'react';
 
+// Shared lazy chunk — served for both the bare index and the per-model route.
+const ITModels = lazy(() => import('../pages/ITModels.jsx'));
+
 // Utility + course-index pages.
 export const pageRoutes = [
   { path: 'dashboard', Component: lazy(() => import('../pages/Dashboard.jsx')) },
@@ -15,7 +18,8 @@ export const pageRoutes = [
   { path: 'certificate', Component: lazy(() => import('../pages/Certificate.jsx')) },
   { path: 'search', Component: lazy(() => import('../pages/SearchResults.jsx')) },
   { path: 'cheatsheets', Component: lazy(() => import('../pages/CheatSheets.jsx')) },
-  { path: 'it-models', Component: lazy(() => import('../pages/ITModels.jsx')) },
+  { path: 'it-models', Component: ITModels },
+  { path: 'it-models/:model', Component: ITModels },
   { path: 'port-lookup', Component: lazy(() => import('../pages/PortLookup.jsx')) },
   { path: 'vmware-setup', Component: lazy(() => import('../pages/VmwareSetup.jsx')) },
 ];

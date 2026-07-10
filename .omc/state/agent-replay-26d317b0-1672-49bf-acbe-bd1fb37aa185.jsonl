@@ -1,0 +1,6 @@
+{"t":0,"agent":"system","event":"keyword_detected","keyword":"ai-slop-cleaner"}
+{"t":0,"agent":"system","event":"keyword_detected","keyword":"deepsearch"}
+{"t":0,"agent":"system","event":"keyword_detected","keyword":"ai-slop-cleaner"}
+{"t":0,"agent":"a1b7d77","agent_type":"unknown","event":"agent_stop","success":true}
+{"t":0,"agent":"a9d3211","agent_type":"unknown","event":"agent_stop","success":true}
+{"t":0,"agent":"aa4a770","agent_type":"unknown","event":"agent_stop","success":true}

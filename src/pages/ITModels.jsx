@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useParams, Navigate, Link } from 'react-router-dom'
 import Breadcrumb from '../components/Breadcrumb.jsx'
 
 // ─── OSI Layers ───────────────────────────────────────────────────────────────
@@ -34,50 +34,55 @@ const ZERO_TRUST = [
   { principle: 'Assume Breach',          icon: '🚨', desc: 'Minimise blast radius. Encrypt everything. Use analytics to detect anomalies fast.' },
 ]
 
-// ─── Section tabs ─────────────────────────────────────────────────────────────
-const TABS = ['OSI Model', 'TCP/IP Model', 'ITIL Framework', 'CIA Triad', 'Zero Trust', 'DevOps Lifecycle']
+// ─── Section tabs / model registry ────────────────────────────────────────────
+// Each model is its own route: /it-models/<slug>. `tagline` drives the per-model
+// intro + breadcrumb so every framework reads as a dedicated page.
+const MODELS = [
+  { slug: 'osi',        tab: 'OSI Model',        tagline: 'The 7-layer conceptual reference for how data moves across a network.' },
+  { slug: 'tcpip',      tab: 'TCP/IP Model',     tagline: 'The practical 4-layer model the internet actually runs on.' },
+  { slug: 'itil',       tab: 'ITIL Framework',   tagline: 'The industry-standard IT service management lifecycle.' },
+  { slug: 'cia',        tab: 'CIA Triad',        tagline: 'The three pillars every security control maps back to.' },
+  { slug: 'zero-trust', tab: 'Zero Trust',       tagline: 'The modern "never trust, always verify" security architecture.' },
+  { slug: 'devops',     tab: 'DevOps Lifecycle', tagline: 'The continuous loop where development and operations meet.' },
+]
+const SLUG_TO_MODEL = Object.fromEntries(MODELS.map(m => [m.slug, m]))
 
 export default function ITModels() {
-  const SLUG_TO_TAB = { osi: 'OSI Model', tcpip: 'TCP/IP Model', itil: 'ITIL Framework', cia: 'CIA Triad', 'zero-trust': 'Zero Trust', devops: 'DevOps Lifecycle' }
-  const TAB_TO_SLUG = Object.fromEntries(Object.entries(SLUG_TO_TAB).map(([k, v]) => [v, k]))
-  const [params, setParams] = useSearchParams()
-  const [activeTab, setActiveTab] = useState(SLUG_TO_TAB[params.get('m')] || 'OSI Model')
-  // Deep-link: react to ?m= changes (e.g. clicking another IT Models menu item while on this page).
-  useEffect(() => {
-    const t = SLUG_TO_TAB[params.get('m')]
-    if (t && t !== activeTab) setActiveTab(t)
-  }, [params]) // eslint-disable-line react-hooks/exhaustive-deps
-  const selectTab = (tab) => { setActiveTab(tab); setParams({ m: TAB_TO_SLUG[tab] }, { replace: true }) }
+  const { model } = useParams()
   const [expandedOSI, setExpandedOSI] = useState(null)
+
+  // Bare /it-models or an unknown slug → canonical first model (unique route).
+  if (!model || !SLUG_TO_MODEL[model]) return <Navigate to="/it-models/osi" replace />
+
+  const active = SLUG_TO_MODEL[model]
+  const activeTab = active.tab
 
   return (
     <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
-      <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'IT Models' }]} />
+      <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'IT Models', href: '/it-models/osi' }, { label: activeTab }]} />
 
       <div className="mb-8">
         <p className="text-xs font-semibold text-brand-400 uppercase tracking-widest mb-2">Reference</p>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">IT Models</h1>
-        <p className="text-slate-400 max-w-2xl">
-          Interactive reference for the foundational frameworks every IT professional must know cold.
-          Click any layer or section to expand it.
-        </p>
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-3">{activeTab}</h1>
+        <p className="text-slate-400 max-w-2xl">{active.tagline}</p>
       </div>
 
-      {/* Tab bar */}
-      <div className="flex gap-2 flex-wrap mb-8 border-b border-surface-700 pb-4">
-        {TABS.map(tab => (
-          <button
-            key={tab}
-            onClick={() => selectTab(tab)}
+      {/* Tab bar — real navigation between dedicated model routes */}
+      <nav aria-label="IT models" className="flex gap-2 flex-wrap mb-8 border-b border-surface-700 pb-4">
+        {MODELS.map(m => (
+          <Link
+            key={m.slug}
+            to={`/it-models/${m.slug}`}
+            aria-current={m.slug === model ? 'page' : undefined}
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-150
-                        ${activeTab === tab
+                        ${m.slug === model
                           ? 'bg-brand-500 text-white shadow-glow-sm'
                           : 'bg-surface-800 text-slate-400 hover:text-white border border-surface-700 hover:border-slate-500'}`}
           >
-            {tab}
-          </button>
+            {m.tab}
+          </Link>
         ))}
-      </div>
+      </nav>
 
       {/* ── OSI Model ─────────────────────────────────────────────── */}
       {activeTab === 'OSI Model' && (

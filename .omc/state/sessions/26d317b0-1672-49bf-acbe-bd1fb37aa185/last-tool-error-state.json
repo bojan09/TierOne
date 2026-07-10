@@ -1,0 +1,7 @@
+{
+  "tool_name": "mcp__Claude_Browser__preview_eval",
+  "tool_input_preview": "{\"serverId\":\"aad1039a-7229-42dd-a3f5-8ad374e87d8b\",\"expression\":\"(() => {\\n  const header = document.querySelector('header');\\n  // mobile cluster = the lg:hidden div holding toggle + hamburger\\n  con...",
+  "error": "preview_eval is not available — use the ext-shaped equivalent (read_page, computer, read_console_messages, …).",
+  "timestamp": "2026-07-10T18:28:43.247Z",
+  "retry_count": 1
+}
