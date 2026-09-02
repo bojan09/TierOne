@@ -32,6 +32,7 @@ const InterviewPrep = React.lazy(() => import('./features/interview/InterviewPre
 const Analytics = React.lazy(() => import('./features/analytics/Analytics.tsx'));
 const Certificates = React.lazy(() => import('./features/certificates/Certificates.tsx'));
 const DocPractice = React.lazy(() => import('./features/docs/DocPractice.tsx'));
+const Guide = React.lazy(() => import('./features/guide/Guide.tsx'));
 const VerifyCertificate = React.lazy(() => import('./features/certificates/VerifyCertificate.tsx'));
 
 /**
@@ -70,6 +71,7 @@ export default function App() {
         {/* Everything else needs a signed-in user (writes progress/XP, or is inherently personal) */}
         <Route element={<RequireAuth />}>
           <Route path="welcome" element={<Onboarding />} />
+          <Route path="guide" element={<Guide />} />
           <Route path="review" element={<Review />} />
           <Route path="exam" element={<Exam />} />
           <Route path="simulator" element={<SimulatorHome />} />

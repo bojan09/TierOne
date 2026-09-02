@@ -44,7 +44,14 @@ export default function Dashboard() {
   return (
     <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-10 py-10">
       <h1 className="text-2xl font-bold text-white mb-1">My Progress</h1>
-      <p className="text-sm text-slate-400 mb-8">Server-synced across every device you sign in on.</p>
+      <p className="text-sm text-slate-400 mb-1">Server-synced across every device you sign in on.</p>
+      <p className="text-xs text-slate-500 mb-8">
+        New here?{' '}
+        <Link to="/guide" className="text-brand-300 hover:text-brand-200 underline underline-offset-2">
+          See the guide
+        </Link>{' '}
+        for a map of everything on the platform.
+      </p>
 
       <div className="mb-6"><NextStep /></div>
 

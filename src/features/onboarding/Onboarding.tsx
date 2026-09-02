@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/features/auth/useAuth';
 import type { Track } from '@/shared/types';
 import { curriculum } from '@/content/curriculum';
@@ -109,7 +109,13 @@ export default function Onboarding() {
           <button onClick={finish} disabled={saving} className="btn-primary w-full disabled:opacity-60">
             {saving ? 'Setting up…' : 'Start learning'}
           </button>
-          <button onClick={() => setStep(2)} className="text-xs text-slate-500 hover:text-slate-300 mt-4">
+          <p className="text-xs text-slate-500 mt-4">
+            Not sure where everything is?{' '}
+            <Link to="/guide" className="text-brand-300 hover:text-brand-200 underline underline-offset-2">
+              See the full guide
+            </Link>
+          </p>
+          <button onClick={() => setStep(2)} className="text-xs text-slate-500 hover:text-slate-300 mt-2">
             Back
           </button>
         </div>

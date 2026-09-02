@@ -14,6 +14,7 @@ const NAV_ITEMS = [
     label: 'Academy',
     mega: false,
     children: [
+      { label: 'How TierOne works',      href: '/guide',                       desc: 'Map of every feature · start here' },
       { label: 'IT Support Foundations', href: '/learn/it-support-foundations', desc: 'Help Desk track · new' },
       { label: 'Browse all tracks',      href: '/learn',                        desc: 'The full Academy' },
       { label: 'Virtual Help Desk',      href: '/simulator',                    desc: 'Practice on real tickets · new' },
