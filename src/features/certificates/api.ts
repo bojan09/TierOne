@@ -1,7 +1,9 @@
 import { getSupabaseClient } from '@/shared/lib/supabase';
 import { hasSupabaseConfig } from '@/shared/lib/env';
+import { SITE_URL } from '@/shared/lib/seo';
+import type { Track } from '@/shared/types';
 
-export type Track = 'helpdesk' | 'sysadmin';
+export type { Track };
 
 export interface Certificate {
   track: Track;
@@ -23,6 +25,8 @@ export interface ClaimResult {
 export const TRACK_TITLE: Record<Track, string> = {
   helpdesk: 'Help Desk Technician',
   sysadmin: 'System Administrator',
+  comptia: 'CompTIA A+',
+  scripting: 'Scripting & Automation',
 };
 
 export async function listCertificates(): Promise<Certificate[]> {
@@ -55,6 +59,26 @@ export interface VerifyResult {
   holder_name?: string;
   track?: Track;
   issued_at?: string;
+}
+
+/**
+ * LinkedIn's documented (if unofficial) "Add to Profile" deep link — pre-fills
+ * a Licenses & Certifications entry rather than just sharing a post, which is
+ * what actually makes a certificate useful to show an employer. No API key
+ * or LinkedIn app registration required, just query params.
+ */
+export function linkedInAddToProfileUrl(cert: Certificate): string {
+  const issued = new Date(cert.issued_at);
+  const params = new URLSearchParams({
+    startTask: 'CERTIFICATION_NAME',
+    name: `${TRACK_TITLE[cert.track]} Certificate`,
+    organizationName: 'TierOne',
+    issueYear: String(issued.getUTCFullYear()),
+    issueMonth: String(issued.getUTCMonth() + 1),
+    certUrl: `${SITE_URL}/verify/${cert.code}`,
+    certId: cert.code,
+  });
+  return `https://www.linkedin.com/profile/add?${params.toString()}`;
 }
 
 export async function verifyCertificate(code: string): Promise<VerifyResult> {

@@ -4,13 +4,14 @@ import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
 import {
   listCertificates,
   claimCertificate,
+  linkedInAddToProfileUrl,
   TRACK_TITLE,
   type Certificate,
   type Track,
 } from './api';
 import CertificateView from './CertificateView';
 
-const TRACKS: Track[] = ['helpdesk', 'sysadmin'];
+const TRACKS: Track[] = ['helpdesk', 'sysadmin', 'comptia', 'scripting'];
 
 export default function Certificates() {
   const { completedSet } = useAcademyProgress();
@@ -42,6 +43,8 @@ export default function Certificates() {
     const out: Record<Track, { done: number; total: number }> = {
       helpdesk: { done: 0, total: 0 },
       sysadmin: { done: 0, total: 0 },
+      comptia: { done: 0, total: 0 },
+      scripting: { done: 0, total: 0 },
     };
     for (const t of TRACKS) {
       const ls = curriculum.lessons.filter((l) => l.track === t);
@@ -140,7 +143,15 @@ export default function Certificates() {
               issuedAt={open.issued_at}
               code={open.code}
             />
-            <div className="flex items-center justify-center gap-3 mt-4 cert-actions">
+            <div className="flex items-center justify-center gap-3 mt-4 cert-actions flex-wrap">
+              <a
+                href={linkedInAddToProfileUrl(open)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary text-sm"
+              >
+                Add to LinkedIn profile
+              </a>
               <button type="button" onClick={() => window.print()} className="btn-secondary text-sm">
                 Print / Save PDF
               </button>
