@@ -167,7 +167,7 @@ export default function Home() {
                 terminal labs, and AI feedback — so you learn the job, not just the theory.
               </p>
               <div className="flex flex-wrap gap-3 justify-center lg:justify-start fade-up mb-10">
-                <Link to={hasStarted ? '/learn' : '/login'} className="btn-primary">
+                <Link to="/learn" className="btn-primary">
                   {hasStarted ? 'Resume learning →' : 'Start learning free →'}
                 </Link>
                 <Link to="/learn" className="btn-secondary">Explore the Academy</Link>
@@ -316,7 +316,7 @@ export default function Home() {
               : 'Start with the Help Desk track — the fastest path to your first IT role — or jump to whichever skill you need right now.'}
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <Link to={hasStarted ? '/learn' : '/login'} className="btn-primary">
+            <Link to="/learn" className="btn-primary">
               {hasStarted ? 'Resume learning →' : 'Start learning free →'}
             </Link>
             <Link to="/analytics" className="btn-secondary">

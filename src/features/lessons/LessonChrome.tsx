@@ -30,6 +30,8 @@ export interface LessonChromeProps {
   isCompletedOverride?: boolean;
   onComplete?: () => void;
   requiresQuiz?: boolean;
+  /** True when there's no session — completion can't actually be saved. */
+  signedOut?: boolean;
 }
 
 /** The legacy layout, surfaced through a typed contract. */

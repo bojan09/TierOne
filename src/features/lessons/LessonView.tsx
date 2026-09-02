@@ -14,6 +14,7 @@ import {
 } from '@/features/curriculum/selectors';
 import { isLessonLocked } from '@/features/curriculum/locking';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
+import { useAuth } from '@/features/auth/useAuth';
 import { useSeo } from '@/shared/lib/seo';
 
 function Centered({ children }: { children: React.ReactNode }) {
@@ -44,6 +45,7 @@ function LessonLoading() {
 
 export default function LessonView() {
   const { courseSlug, lessonSlug } = useParams();
+  const { session } = useAuth();
   const { completedSet, completeLesson, setLastLesson } = useAcademyProgress();
 
   const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
@@ -76,11 +78,24 @@ export default function LessonView() {
         <div className="text-4xl mb-4">🔒</div>
         <h1 className="text-2xl font-bold text-white mb-3">{lesson.title}</h1>
         <p className="text-slate-400 mb-6">
-          Complete the previous lesson to unlock this one.
+          {session
+            ? 'Complete the previous lesson to unlock this one.'
+            : "Sign in to track completion and unlock this lesson — you'll pick up right where you left off."}
         </p>
-        <Link to={courseHref(course)} className="btn-primary">
-          Back to {course.title}
-        </Link>
+        {session ? (
+          <Link to={courseHref(course)} className="btn-primary">
+            Back to {course.title}
+          </Link>
+        ) : (
+          <div className="flex items-center justify-center gap-3">
+            <Link to="/login" className="btn-primary">
+              Sign in — it's free
+            </Link>
+            <Link to={courseHref(course)} className="btn-secondary">
+              Back to {course.title}
+            </Link>
+          </div>
+        )}
       </Centered>
     );
   }
@@ -108,6 +123,7 @@ export default function LessonView() {
       isCompletedOverride={completedSet.has(lesson.id)}
       onComplete={() => void completeLesson(lesson.id)}
       requiresQuiz={lesson.hasQuiz}
+      signedOut={!session}
     >
       <Suspense fallback={<LessonLoading />}>
         <Body />

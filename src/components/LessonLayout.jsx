@@ -62,6 +62,12 @@ export default function LessonLayout({
   // When true (lesson has a quiz), completion happens by passing the quiz —
   // the manual "Mark Complete" buttons are hidden (pass-to-unlock).
   requiresQuiz = false,
+  // True when there's no session — completion can't actually be saved server-
+  // side. Without this, a signed-out visitor could click "Mark Complete",
+  // see the XP toast and celebration card, and have nothing actually
+  // persisted — a silent lie discovered only when they eventually sign in
+  // and find no progress.
+  signedOut = false,
 }) {
   const { state, completeLesson, setLastVisited } = useProgress()
   const navigate = useNavigate()
@@ -74,7 +80,7 @@ export default function LessonLayout({
 
 
   const handleComplete = () => {
-    if (isCompleted) return
+    if (isCompleted || signedOut) return
     if (usingOverride) {
       onComplete()
     } else {
@@ -150,8 +156,29 @@ export default function LessonLayout({
           {/* ── Complete / next navigation ── */}
           <div className="mt-14 pt-8 border-t border-surface-700">
 
+            {/* Signed-out: never offer "Mark Complete" or a quiz that can't
+                actually save/render — tell them plainly why and how to fix it. */}
+            {!isCompleted && signedOut && (
+              <div className="card p-6 mb-6 border-brand-500/20 bg-brand-500/5">
+                <div className="flex items-center gap-4 flex-wrap">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold text-white mb-1">Sign in to save your progress</p>
+                    <p className="text-sm text-slate-400">
+                      You're browsing without an account — nothing here is saved.{' '}
+                      {requiresQuiz
+                        ? 'Sign in to unlock this lesson\'s quiz and start earning XP.'
+                        : <>Sign in to earn <span className="text-accent-amber font-mono font-semibold">+{xp} XP</span> for this lesson.</>}
+                    </p>
+                  </div>
+                  <Link to="/login" className="btn-primary flex-shrink-0">
+                    Sign in — it's free
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {/* XP completion card */}
-            {!isCompleted && !requiresQuiz && (
+            {!isCompleted && !signedOut && !requiresQuiz && (
               <div className="card p-6 mb-6 border-brand-500/20 bg-brand-500/5">
                 <div className="flex items-center gap-4 flex-wrap">
                   <div className="flex-1 min-w-0">
@@ -172,7 +199,7 @@ export default function LessonLayout({
               </div>
             )}
 
-            {!isCompleted && requiresQuiz && (
+            {!isCompleted && !signedOut && requiresQuiz && (
               <div className="card p-6 mb-6 border-brand-500/20 bg-brand-500/5">
                 <p className="font-semibold text-white mb-1">Pass the quiz to complete this lesson</p>
                 <p className="text-sm text-slate-400">
@@ -263,7 +290,15 @@ export default function LessonLayout({
                   </div>
                 )}
               </div>
-              {!isCompleted && !requiresQuiz && (
+              {!isCompleted && signedOut && (
+                <Link
+                  to="/login"
+                  className="btn-primary w-full justify-center mt-4 text-xs py-2"
+                >
+                  Sign in to save progress
+                </Link>
+              )}
+              {!isCompleted && !signedOut && !requiresQuiz && (
                 <button
                   onClick={handleComplete}
                   className="btn-primary w-full justify-center mt-4 text-xs py-2"

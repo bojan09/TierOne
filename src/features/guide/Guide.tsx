@@ -25,7 +25,7 @@ const PATH_STEPS = [
 const GROUPS: GuideGroup[] = [
   {
     title: 'Learn',
-    blurb: 'The curriculum. Every lesson lives here, across 4 tracks — pick any order, nothing is locked.',
+    blurb: 'The curriculum. Every lesson lives here, across 4 tracks — lessons unlock in order within each course as you complete them.',
     items: [
       {
         icon: '📚',

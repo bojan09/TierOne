@@ -3,6 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import CourseTree from './CourseTree';
 import { Link } from 'react-router-dom';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
+import { useAuth } from '@/features/auth/useAuth';
 import StreakTracker from '@/components/StreakTracker.jsx';
 import DailyGoal from '@/features/progress/DailyGoal';
 
@@ -19,6 +20,36 @@ function ReviewPill() {
       <span className="flex-1">{dueReviewCount} due for review</span>
       <span aria-hidden>→</span>
     </Link>
+  );
+}
+
+/**
+ * Signed-in users get the real progress widgets (streak, daily goal, review
+ * due). A signed-out visitor has no progress to show — rendering "🔥 0 day
+ * streak" at them before they've done anything is confusing chrome, not
+ * useful state, so swap it for a plain sign-in nudge instead.
+ */
+function SidebarProgress({ onNavigate }: { onNavigate?: () => void }) {
+  const { session } = useAuth();
+  if (!session) {
+    return (
+      <Link
+        to="/login"
+        onClick={onNavigate}
+        className="block px-3 py-2.5 rounded-lg border border-surface-700 bg-surface-800/60
+                   text-sm text-slate-300 hover:border-brand-500/40 hover:text-white transition-colors"
+      >
+        <span className="font-medium text-white">Sign in to track progress</span>
+        <span className="block text-xs text-slate-500 mt-0.5">Free — saves XP, streaks &amp; where you left off</span>
+      </Link>
+    );
+  }
+  return (
+    <>
+      <ReviewPill />
+      <DailyGoal />
+      <StreakTracker compact />
+    </>
   );
 }
 
@@ -48,9 +79,7 @@ export default function LearnLayout() {
       >
         <div className="sticky top-[64px] max-h-[calc(100vh-64px)] overflow-y-auto p-4">
           <div className="mb-4 px-2 space-y-4">
-            <ReviewPill />
-            <DailyGoal />
-            <StreakTracker compact />
+            <SidebarProgress />
           </div>
           <CourseTree />
         </div>
@@ -97,9 +126,7 @@ export default function LearnLayout() {
             </div>
             <div className="p-4">
               <div className="mb-4 space-y-4">
-                <ReviewPill />
-                <DailyGoal />
-                <StreakTracker compact />
+                <SidebarProgress onNavigate={() => setDrawerOpen(false)} />
               </div>
               <CourseTree onNavigate={() => setDrawerOpen(false)} />
             </div>

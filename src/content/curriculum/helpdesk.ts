@@ -38,7 +38,7 @@ function addCourse(
     track: 'helpdesk',
     difficulty: level,
     estimatedMinutes: s.minutes,
-    lockRule: { type: 'none' } as LockRule,
+    lockRule: (i === 0 ? { type: 'none' } : { type: 'sequential' }) as LockRule,
     hasQuiz: Boolean(s.hasQuiz),
   }));
   lessons.push(...built);

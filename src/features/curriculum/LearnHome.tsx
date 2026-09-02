@@ -19,8 +19,8 @@ export default function LearnHome() {
         <div>
           <h1 className="text-2xl font-bold text-white mb-1">Academy</h1>
           <p className="text-sm text-slate-400">
-            Every lesson is open — jump into any track, in any order. Progress and XP track
-            automatically as you complete lessons.
+            Follow the path through each track — lessons unlock in order as you complete them, so
+            you always know what&rsquo;s next.
           </p>
         </div>
         <button
