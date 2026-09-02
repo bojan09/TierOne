@@ -60,6 +60,15 @@ export default function Layout() {
     return () => window.removeEventListener('keydown', handler)
   }, [])
 
+  // Lets any component deep in the tree open search without prop-drilling
+  // through Layout -> LearnLayout -> page (e.g. the "Search the Academy"
+  // entry point on LearnHome).
+  useEffect(() => {
+    const handler = () => openPalette()
+    window.addEventListener('academy:open-search', handler)
+    return () => window.removeEventListener('academy:open-search', handler)
+  }, [])
+
   return (
     <div className="flex flex-col min-h-screen bg-surface-950">
       {/* Accessibility: skip-to-content for keyboard users */}

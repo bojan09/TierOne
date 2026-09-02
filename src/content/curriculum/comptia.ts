@@ -8,7 +8,7 @@ const lessons: Lesson[] = [];
 
 function addCourse(course: Omit<Course,'moduleIds'|'track'|'difficulty'> & { difficulty?: Course['difficulty'] }, moduleId: string, seeds: {id:string;slug:string;title:string;xp:number;minutes:number;hasQuiz?:boolean}[]) {
   const level = course.difficulty ?? 'beginner';
-  const built: Lesson[] = seeds.map((s,i)=>({ id:s.id, slug:s.slug, title:s.title, courseId:course.id, moduleId, order:i+1, xp:s.xp, track:'comptia', difficulty:level, estimatedMinutes:s.minutes, lockRule:(i===0?{type:'none'}:{type:'sequential'}) as LockRule, hasQuiz:Boolean(s.hasQuiz) }));
+  const built: Lesson[] = seeds.map((s,i)=>({ id:s.id, slug:s.slug, title:s.title, courseId:course.id, moduleId, order:i+1, xp:s.xp, track:'comptia', difficulty:level, estimatedMinutes:s.minutes, lockRule:{type:'none'} as LockRule, hasQuiz:Boolean(s.hasQuiz) }));
   lessons.push(...built);
   modules.push({ id:moduleId, slug:moduleId, title:course.title, courseId:course.id, order:1, lessonIds:built.map(l=>l.id) });
   courses.push({ ...course, track:'comptia', difficulty:level, moduleIds:[moduleId] });

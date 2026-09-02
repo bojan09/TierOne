@@ -15,10 +15,30 @@ export default function LearnHome() {
     <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-10 py-10">
       <div className="mb-8"><NextStep /></div>
 
-      <h1 className="text-2xl font-bold text-white mb-1">Academy</h1>
-      <p className="text-sm text-slate-400 mb-10">
-        Follow the path through each track — your progress updates as you complete lessons.
-      </p>
+      <div className="flex items-start justify-between gap-4 mb-10">
+        <div>
+          <h1 className="text-2xl font-bold text-white mb-1">Academy</h1>
+          <p className="text-sm text-slate-400">
+            Every lesson is open — jump into any track, in any order. Progress and XP track
+            automatically as you complete lessons.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new Event('academy:open-search'))}
+          className="hidden sm:flex items-center gap-2 px-3 py-2 rounded-lg bg-surface-800/80
+                     border border-surface-700 text-slate-400 hover:text-white
+                     hover:border-slate-500 transition-all duration-150 flex-shrink-0 whitespace-nowrap"
+        >
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span className="text-[13px]">Search all lessons</span>
+          <kbd className="px-1.5 py-0.5 rounded bg-surface-700 border border-surface-600 text-[10px] font-mono text-slate-600">
+            ⌘K
+          </kbd>
+        </button>
+      </div>
 
       {TRACK_ORDER.map((track) => (
         <section key={track} className="mb-12">

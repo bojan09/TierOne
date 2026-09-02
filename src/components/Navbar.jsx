@@ -441,7 +441,7 @@ function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
 
         {/* CTA */}
         <div className="p-4 border-t border-surface-700">
-          <Link to="/" onClick={onClose} className="btn-primary w-full justify-center">
+          <Link to="/learn" onClick={onClose} className="btn-primary w-full justify-center">
             Start Learning Free
           </Link>
         </div>
