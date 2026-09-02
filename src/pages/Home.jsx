@@ -133,7 +133,7 @@ export default function Home() {
   const hasStarted = completedCount > 0
 
   useSeo({
-    title: 'TierOne — Free Hands-On IT Training',
+    title: 'Free Hands-On IT Training',
     description: `TierOne turns real IT work into hands-on practice — ${TOTAL_LESSONS} lessons, live support tickets, terminal labs, and AI feedback across Help Desk, SysAdmin, CompTIA A+, and Scripting.`,
     path: '/',
   })
@@ -190,7 +190,7 @@ export default function Home() {
                   <span className="terminal-dot bg-accent-red" />
                   <span className="terminal-dot bg-accent-amber" />
                   <span className="terminal-dot bg-accent-green" />
-                  <span className="ml-2 text-[11px] text-slate-500 font-mono">tierzero — ticket #4821</span>
+                  <span className="ml-2 text-[11px] text-slate-500 font-mono">tierone — ticket #4821</span>
                 </div>
                 <div className="terminal-body space-y-1.5">
                   <p><span className="text-accent-green">➜</span> <span className="text-slate-400">whoami</span></p>

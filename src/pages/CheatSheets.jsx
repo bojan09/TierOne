@@ -376,7 +376,7 @@ export default function CheatSheets() {
       {/* Print header */}
       <div className="hidden print:block mb-6">
         <h2 className="text-2xl font-bold">{sheet?.icon} {sheet?.title} Cheat Sheet — TierOne</h2>
-        <p className="text-sm text-gray-500">tierzero.dev</p>
+        <p className="text-sm text-gray-500">tierone.dev</p>
         <hr className="my-3" />
       </div>
 

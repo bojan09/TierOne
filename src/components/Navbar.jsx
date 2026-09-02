@@ -212,12 +212,26 @@ function DropdownPanel({ item, onClose }) {
 // ─── Desktop nav item (dropdown trigger) ─────────────────────────────────────
 function DesktopNavItem({ item }) {
   const [open, setOpen] = useState(false)
-  const ref   = useRef(null)
-  const timer = useRef(null)
+  const ref     = useRef(null)
+  const timer   = useRef(null)
+  const btnRef  = useRef(null)
+  const panelId = `navpanel-${item.label.replace(/\s+/g, '-').toLowerCase()}`
 
-  const show = () => { clearTimeout(timer.current); setOpen(true) }
-  const hide = () => { timer.current = setTimeout(() => setOpen(false), 130) }
+  const show  = () => { clearTimeout(timer.current); setOpen(true) }
+  const hide  = () => { timer.current = setTimeout(() => setOpen(false), 130) }
+  const close = () => setOpen(false)
   useEffect(() => () => clearTimeout(timer.current), [])
+
+  // Escape closes the panel and returns focus to the trigger — without this,
+  // keyboard users had no way to dismiss an open panel without tabbing
+  // through every link inside it first.
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape' && open) {
+      e.stopPropagation()
+      setOpen(false)
+      btnRef.current?.focus()
+    }
+  }
 
   if (!item.mega && !item.children) {
     return (
@@ -236,10 +250,14 @@ function DesktopNavItem({ item }) {
   }
 
   return (
-    <div ref={ref} className="relative" onMouseEnter={show} onMouseLeave={hide}>
+    <div ref={ref} className="relative" onMouseEnter={show} onMouseLeave={hide} onKeyDown={handleKeyDown}>
       {/* Trigger button */}
       <button
+        ref={btnRef}
         onClick={() => setOpen(v => !v)}
+        aria-haspopup="true"
+        aria-expanded={open}
+        aria-controls={panelId}
         className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-[13px] font-medium
                     transition-all duration-150 select-none
                     ${open
@@ -256,18 +274,16 @@ function DesktopNavItem({ item }) {
         </svg>
       </button>
 
-      {/* Panel with CSS transition */}
-      <div
-        className={`transition-all duration-200 origin-top-left
-                    ${open
-                      ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto'
-                      : 'opacity-0 scale-95 -translate-y-1 pointer-events-none'}`}
-      >
-        {item.mega
-          ? <MegaPanel     item={item} onClose={() => setOpen(false)} />
-          : <DropdownPanel item={item} onClose={() => setOpen(false)} />
-        }
-      </div>
+      {/* Panel — only mounted while open, so its links never sit in the tab
+          order (or get read by screen readers) while visually hidden. */}
+      {open && (
+        <div id={panelId} className="animate-fade-up" style={{ animationDuration: '150ms' }}>
+          {item.mega
+            ? <MegaPanel     item={item} onClose={close} />
+            : <DropdownPanel item={item} onClose={close} />
+          }
+        </div>
+      )}
     </div>
   )
 }
@@ -275,11 +291,31 @@ function DesktopNavItem({ item }) {
 // ─── Mobile drawer ────────────────────────────────────────────────────────────
 function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
   const [expanded, setExpanded] = useState(null)
+  const closeBtnRef = useRef(null)
+  const rootRef      = useRef(null)
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [open])
+
+  // Move focus into the drawer on open; Escape closes it. The drawer stays
+  // mounted while closed (for the slide-out transition), so its `inert` DOM
+  // property is toggled imperatively — React 18's JSX `inert` prop doesn't
+  // reliably reflect to the attribute — to keep its links out of the tab
+  // order and the accessibility tree until it's actually visible.
+  useEffect(() => {
+    if (rootRef.current) rootRef.current.inert = !open
+  }, [open])
+  useEffect(() => {
+    if (open) closeBtnRef.current?.focus()
+  }, [open])
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (e) => { if (e.key === 'Escape') onClose() }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [open, onClose])
 
   // Flatten mega columns into one list per top-level item
   const mobileItems = NAV_ITEMS.map(item => ({
@@ -290,8 +326,11 @@ function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
   }))
 
   return (
-    <div className={`fixed inset-0 z-40 lg:hidden transition-all duration-300
-                     ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}>
+    <div
+      ref={rootRef}
+      className={`fixed inset-0 z-40 lg:hidden transition-all duration-300
+                     ${open ? 'pointer-events-auto' : 'pointer-events-none'}`}
+    >
       {/* Backdrop */}
       <div
         className={`absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity duration-300
@@ -301,6 +340,9 @@ function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
 
       {/* Drawer */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
         className={`absolute top-0 right-0 h-full w-[300px] bg-surface-900 border-l border-surface-700
                     flex flex-col shadow-card-lg overflow-y-auto transition-transform duration-300 ease-out
                     ${open ? 'translate-x-0' : 'translate-x-full'}`}
@@ -309,6 +351,7 @@ function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
         <div className="flex items-center justify-between px-5 py-4 border-b border-surface-700">
           <Logo />
           <button
+            ref={closeBtnRef}
             onClick={onClose}
             aria-label="Close menu"
             className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-surface-700 transition-colors"

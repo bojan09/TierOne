@@ -106,6 +106,7 @@ export default function CourseView() {
           const inner = (
             <div className="flex items-center gap-4">
               <span
+                aria-hidden="true"
                 className={`flex-shrink-0 w-8 h-8 rounded-full grid place-items-center text-sm font-mono ${
                   done
                     ? 'bg-accent-green/15 text-accent-green'
@@ -123,6 +124,13 @@ export default function CourseView() {
                   {lesson.title}
                 </p>
                 <p className="text-xs text-slate-500">
+                  {locked ? (
+                    <span>
+                      Locked — complete the previous lesson to unlock ·{' '}
+                    </span>
+                  ) : done ? (
+                    <span className="sr-only">Completed · </span>
+                  ) : null}
                   ~{lesson.estimatedMinutes} min · +{lesson.xp} XP
                 </p>
               </div>
@@ -132,7 +140,9 @@ export default function CourseView() {
           return (
             <li key={lesson.id}>
               {locked ? (
-                <div className="card p-4 opacity-60 cursor-not-allowed">{inner}</div>
+                <div className="card p-4 opacity-60 cursor-not-allowed" role="group">
+                  {inner}
+                </div>
               ) : (
                 <Link
                   to={lessonHref(course, lesson)}
