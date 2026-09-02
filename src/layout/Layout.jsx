@@ -1,19 +1,31 @@
-import React, { useState, useEffect, useRef, Suspense } from 'react'
+import React, { useState, useEffect, useRef, Suspense, lazy } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/features/auth/useAuth'
 import Navbar from '../components/Navbar.jsx'
 import Footer from '../components/Footer.jsx'
-import CommandPalette from '../components/CommandPalette.jsx'
 import ResumeBanner from '../components/ResumeBanner.jsx'
 import XPToast from '../components/XPToast.jsx'
 import SkipLink from '../components/SkipLink.jsx'
+
+// Lazy: pulls in the full search index (curriculum + lesson bodies + glossary,
+// ~370KB uncompressed) which otherwise bloated the entry chunk for every
+// visitor regardless of whether they ever open search. Loaded on first
+// Cmd/Ctrl+K press or first click of a search button — never mounted (and so
+// never imported) before that.
+const CommandPalette = lazy(() => import('../components/CommandPalette.jsx'))
 
 export default function Layout() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
   const { session, profile, loading } = useAuth()
   const [paletteOpen, setPaletteOpen] = useState(false)
+  const [paletteLoaded, setPaletteLoaded] = useState(false)
   const mainRef = useRef(null)
+
+  const openPalette = () => {
+    setPaletteLoaded(true)
+    setPaletteOpen(true)
+  }
 
   // First-run: send signed-in, not-yet-onboarded users to /welcome.
   useEffect(() => {
@@ -40,6 +52,7 @@ export default function Layout() {
     const handler = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault()
+        setPaletteLoaded(true)
         setPaletteOpen(v => !v)
       }
     }
@@ -52,7 +65,7 @@ export default function Layout() {
       {/* Accessibility: skip-to-content for keyboard users */}
       <SkipLink />
 
-      <Navbar onOpenSearch={() => setPaletteOpen(true)} />
+      <Navbar onOpenSearch={openPalette} />
       <ResumeBanner />
 
       {/* id="main-content" is the target for the skip link */}
@@ -69,7 +82,11 @@ export default function Layout() {
       </main>
 
       <Footer />
-      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      {paletteLoaded && (
+        <Suspense fallback={null}>
+          <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+        </Suspense>
+      )}
       <XPToast />
     </div>
   )
