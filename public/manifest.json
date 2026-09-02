@@ -1,0 +1,17 @@
+{
+  "name": "TierOne — Free Hands-On IT Training",
+  "short_name": "TierOne",
+  "description": "Hands-on IT training — Help Desk, SysAdmin, CompTIA A+, and Scripting & Automation. Lessons, quizzes, in-browser labs, and real support-ticket simulations.",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#070b14",
+  "theme_color": "#070b14",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
