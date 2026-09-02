@@ -35,6 +35,7 @@ function SidebarProgress({ onNavigate }: { onNavigate?: () => void }) {
     return (
       <Link
         to="/login"
+        state={{ mode: 'signup' }}
         onClick={onNavigate}
         className="block px-3 py-2.5 rounded-lg border border-surface-700 bg-surface-800/60
                    text-sm text-slate-300 hover:border-brand-500/40 hover:text-white transition-colors"

@@ -5,8 +5,8 @@ import type { Track } from '@/shared/types';
 import { curriculum } from '@/content/curriculum';
 import { getOrderedLessons, lessonHref } from '@/features/curriculum/selectors';
 
-const TRACKS: { id: Track; title: string; desc: string; icon: string }[] = [
-  { id: 'helpdesk', title: 'Help Desk / Tier-1 Support', desc: 'Start here for IT support fundamentals, ticketing, and the Tier-2 track.', icon: '🎧' },
+const TRACKS: { id: Track; title: string; desc: string; icon: string; recommended?: boolean }[] = [
+  { id: 'helpdesk', title: 'Help Desk / Tier-1 Support', desc: 'No IT background needed. Start here for the fundamentals, ticketing, and a clear path up.', icon: '🎧', recommended: true },
   { id: 'sysadmin', title: 'SysAdmin (Advanced)', desc: 'Windows Server, Active Directory, networking, and automation.', icon: '🖥️' },
   { id: 'comptia', title: 'CompTIA A+ (Certification)', desc: 'Entry-level IT cert: hardware, operating systems, networking, and security.', icon: '📜' },
   { id: 'scripting', title: 'Scripting & Automation', desc: 'Automate IT work with PowerShell and Python.', icon: '⚡' },
@@ -46,7 +46,10 @@ export default function Onboarding() {
       {step === 1 && (
         <div>
           <h1 className="text-2xl font-bold text-white mb-1">Welcome{profile?.displayName ? `, ${profile.displayName}` : ''} 👋</h1>
-          <p className="text-slate-400 mb-6">Which track do you want to start with? You can switch anytime.</p>
+          <p className="text-slate-400 mb-6">
+            Which track do you want to start with? You can switch anytime. New to IT entirely?
+            Go with Help Desk — it&rsquo;s built to need zero prior experience.
+          </p>
           <div className="grid gap-3 sm:grid-cols-2">
             {TRACKS.map((t) => (
               <button
@@ -62,7 +65,14 @@ export default function Onboarding() {
                 )}
                 <span className="text-2xl flex-shrink-0">{t.icon}</span>
                 <span className="min-w-0">
-                  <span className="block font-semibold text-white">{t.title}</span>
+                  <span className="flex items-center gap-2 flex-wrap">
+                    <span className="font-semibold text-white">{t.title}</span>
+                    {t.recommended && (
+                      <span className="text-[9px] font-bold uppercase tracking-widest text-accent-green bg-accent-green/10 border border-accent-green/30 rounded-full px-2 py-0.5">
+                        New to IT? Start here
+                      </span>
+                    )}
+                  </span>
                   <span className="block text-sm text-slate-400 mt-0.5">{t.desc}</span>
                 </span>
               </button>

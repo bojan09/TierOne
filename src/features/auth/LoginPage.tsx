@@ -15,9 +15,15 @@ export default function LoginPage() {
     signInWithGoogle,
   } = useAuth();
   const location = useLocation();
-  const from = (location.state as { from?: string } | null)?.from ?? '/learn';
+  const navState = location.state as { from?: string; mode?: Mode } | null;
+  const from = navState?.from ?? '/learn';
 
-  const [mode, setMode] = useState<Mode>('signin');
+  // Defaults to sign-in ("Welcome back"), the right assumption for the
+  // navbar's plain "Sign in" link. Contextual CTAs aimed at new visitors
+  // (e.g. "Sign in — it's free" on a locked lesson) pass state.mode='signup'
+  // so they don't land a first-timer on a page implying they already have
+  // an account.
+  const [mode, setMode] = useState<Mode>(navState?.mode ?? 'signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');

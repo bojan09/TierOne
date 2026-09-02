@@ -88,7 +88,7 @@ export default function LessonView() {
           </Link>
         ) : (
           <div className="flex items-center justify-center gap-3">
-            <Link to="/login" className="btn-primary">
+            <Link to="/login" state={{ mode: 'signup' }} className="btn-primary">
               Sign in — it's free
             </Link>
             <Link to={courseHref(course)} className="btn-secondary">

@@ -170,7 +170,7 @@ export default function LessonLayout({
                         : <>Sign in to earn <span className="text-accent-amber font-mono font-semibold">+{xp} XP</span> for this lesson.</>}
                     </p>
                   </div>
-                  <Link to="/login" className="btn-primary flex-shrink-0">
+                  <Link to="/login" state={{ mode: 'signup' }} className="btn-primary flex-shrink-0">
                     Sign in — it's free
                   </Link>
                 </div>
@@ -293,6 +293,7 @@ export default function LessonLayout({
               {!isCompleted && signedOut && (
                 <Link
                   to="/login"
+                  state={{ mode: 'signup' }}
                   className="btn-primary w-full justify-center mt-4 text-xs py-2"
                 >
                   Sign in to save progress
