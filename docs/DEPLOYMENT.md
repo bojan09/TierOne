@@ -1,6 +1,6 @@
 # Deployment checklist
 
-Production go-live for TierZero. Order matters.
+Production go-live for TierOne. Order matters.
 
 > The exact migration count grows every content phase — **apply every file under
 > `supabase/migrations/` in filename order** (`0001_...` through the highest

@@ -152,7 +152,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="border-t border-surface-700/60 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-slate-500">© {new Date().getFullYear()} TierZero · Practical IT training</p>
+          <p className="text-xs text-slate-500">© {new Date().getFullYear()} TierOne · Practical IT training</p>
           <div className="flex items-center gap-2 flex-wrap justify-center">
             {['React', 'Vite', 'Tailwind CSS', 'Supabase'].map(t => (
               <span key={t} className="tag text-[10px] px-2 py-0.5">{t}</span>

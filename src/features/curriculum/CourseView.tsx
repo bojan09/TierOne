@@ -7,11 +7,43 @@ import {
 } from '@/features/curriculum/selectors';
 import { isLessonLocked } from '@/features/curriculum/locking';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
+import { useSeo, useJsonLd, SITE_URL } from '@/shared/lib/seo';
 
 export default function CourseView() {
   const { courseSlug } = useParams();
   const course = courseSlug ? getCourseBySlug(courseSlug) : undefined;
   const { completedSet, isLessonCompleted } = useAcademyProgress();
+
+  const courseLessons = course ? getOrderedLessons(course) : [];
+
+  useSeo({
+    title: course ? course.title : 'Course not found',
+    description: course
+      ? `${course.description} ${courseLessons.length} lessons, free and self-paced.`
+      : 'This course could not be found.',
+    path: course ? courseHref(course) : '/learn',
+    noindex: !course,
+  });
+
+  useJsonLd(
+    'course',
+    course
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Course',
+          name: course.title,
+          description: course.description,
+          provider: { '@type': 'Organization', name: 'TierOne', sameAs: SITE_URL },
+          url: `${SITE_URL}${courseHref(course)}`,
+          hasCourseInstance: {
+            '@type': 'CourseInstance',
+            courseMode: 'online',
+            courseWorkload: `PT${courseLessons.reduce((s, l) => s + l.estimatedMinutes, 0)}M`,
+          },
+          numberOfCredits: courseLessons.length,
+        }
+      : null,
+  );
 
   if (!course) {
     return (
@@ -24,7 +56,7 @@ export default function CourseView() {
     );
   }
 
-  const lessons = getOrderedLessons(course);
+  const lessons = courseLessons;
   const completedCount = lessons.filter((l) => isLessonCompleted(l.id)).length;
   const percent = lessons.length
     ? Math.round((completedCount / lessons.length) * 100)

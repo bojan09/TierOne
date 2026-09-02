@@ -22,7 +22,7 @@ export default function CertificateView({ holderName, track, issuedAt, code }: P
       <div className="relative">
         <div className="flex items-center justify-center gap-2 mb-1">
           <span className="font-mono text-brand-300 text-lg">{'>_'}</span>
-          <span className="font-black tracking-tight text-white text-lg">TierZero</span>
+          <span className="font-black tracking-tight text-white text-lg">TierOne</span>
         </div>
         <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-8">
           Certificate of Completion

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#070b14"/>
+      <stop offset="100%" stop-color="#0d1220"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6d5cf5"/>
+      <stop offset="55%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1200" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6d5cf5"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="6" fill="url(#accent)"/>
+
+  <!-- Logo mark -->
+  <g transform="translate(90,90)">
+    <rect width="64" height="64" rx="14" fill="url(#mark)"/>
+    <rect x="12" y="36" width="9" height="16" rx="3.2" fill="#fff" fill-opacity="0.8"/>
+    <rect x="27.5" y="26" width="9" height="26" rx="3.2" fill="#fff" fill-opacity="0.9"/>
+    <rect x="43" y="15" width="9" height="37" rx="3.2" fill="#fff"/>
+    <circle cx="47.5" cy="14" r="6" fill="#160f36"/>
+    <circle cx="47.5" cy="14" r="6" stroke="#fff" stroke-width="3.4"/>
+  </g>
+  <text x="170" y="132" font-family="Arial, sans-serif" font-size="34" font-weight="700" fill="#f1f5f9">TierOne</text>
+
+  <text x="90" y="280" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#ffffff">Break into IT,</text>
+  <text x="90" y="352" font-family="Arial, sans-serif" font-size="64" font-weight="800" fill="#8b5cf6">one skill at a time.</text>
+
+  <text x="90" y="410" font-family="Arial, sans-serif" font-size="26" fill="#94a3b8">Hands-on Help Desk, SysAdmin, CompTIA A+ &amp; Scripting training</text>
+
+  <g font-family="Arial, sans-serif" font-size="22" fill="#22d3ee">
+    <text x="90" y="480">4 tracks</text>
+    <text x="230" y="480">·</text>
+    <text x="260" y="480">350+ lessons</text>
+    <text x="460" y="480">·</text>
+    <text x="490" y="480">Live ticket sims</text>
+    <text x="730" y="480">·</text>
+    <text x="760" y="480">In-browser labs</text>
+  </g>
+</svg>

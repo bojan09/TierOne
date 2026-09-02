@@ -131,7 +131,7 @@ export default function StudyTimer({ onClose }) {
 
     // Browser notification
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('TierZero ⏱️', {
+      new Notification('TierOne ⏱️', {
         body: isFocus
           ? `Focus session done! +${preset.xp} XP earned. Time for a break.`
           : 'Break over — ready to focus again!',
@@ -166,14 +166,19 @@ export default function StudyTimer({ onClose }) {
   }
 
   // ── Update document title while running ───────────────────────────────────
+  // Restores whatever the page's own title was (route-specific SEO titles set
+  // it) rather than a hardcoded string, so leaving this page keeps its title.
+  const priorTitleRef = useRef(document.title)
   useEffect(() => {
     if (running) {
-      document.title = `${fmt(remaining)} — TierZero`
+      document.title = `${fmt(remaining)} — TierOne`
     } else {
-      document.title = 'TierZero'
+      document.title = priorTitleRef.current
     }
-    return () => { document.title = 'TierZero' }
   }, [running, remaining])
+  useEffect(() => {
+    return () => { document.title = priorTitleRef.current }
+  }, [])
 
   const isFocus = preset.type === 'focus'
 

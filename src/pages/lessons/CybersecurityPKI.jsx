@@ -44,14 +44,14 @@ const CODE_CYBERSECURITYPKI_2 = `mkdir -p ~/lab-ca && cd ~/lab-ca
 # Generate CA key and root certificate
 openssl genrsa -out lab-ca.key 4096
 openssl req -new -x509 -days 3650 -key lab-ca.key -out lab-ca.crt \\
-  -subj '/CN=Lab Internal CA/O=TierZero Lab/C=US'
+  -subj '/CN=Lab Internal CA/O=TierOne Lab/C=US'
 
 # Verify the CA cert
 openssl x509 -in lab-ca.crt -noout -text | grep -E 'Subject:|Not After'
 echo 'Lab CA created successfully'`
 const CODE_CYBERSECURITYPKI_3 = `Generating RSA private key, 4096 bit long modulus
 ....
-Subject: CN=Lab Internal CA, O=TierZero Lab, C=US
+Subject: CN=Lab Internal CA, O=TierOne Lab, C=US
 Not After : Jan 14 11:00:00 2035 GMT
 Lab CA created successfully`
 const CODE_CYBERSECURITYPKI_4 = `cd ~/lab-ca
@@ -76,7 +76,7 @@ openssl x509 -in dc01.crt -noout -text |
 const CODE_CYBERSECURITYPKI_5 = `dc01.crt: OK  <- chain verified successfully
 
 Subject: CN=dc01.lab.local, O=Lab
-Issuer: CN=Lab Internal CA, O=TierZero Lab, C=US
+Issuer: CN=Lab Internal CA, O=TierOne Lab, C=US
 Not After : Jan 15 11:00:00 2026 GMT
 DNS:dc01.lab.local, DNS:dc01, IP Address:192.168.100.10`
 

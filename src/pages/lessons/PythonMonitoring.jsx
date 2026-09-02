@@ -68,7 +68,7 @@ def send_email_alert(subject, body, to, smtp_host='localhost'):
 def send_slack_alert(message, webhook_url):
     payload = {
         'text': message,
-        'username': 'TierZero Monitor',
+        'username': 'TierOne Monitor',
         'icon_emoji': ':rotating_light:'
     }
     try:

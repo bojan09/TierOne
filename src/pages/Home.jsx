@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { curriculum } from '@/content/curriculum'
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
 import { TRACK_META, DEFAULT_TRACK_META } from '@/features/curriculum/trackMeta'
+import { useSeo } from '@/shared/lib/seo'
 
 // Spine-driven course cards. Counts, XP, links and progress all derive from the
 // curriculum spine + server progress — no hardcoded lists to drift out of date.
@@ -131,6 +132,12 @@ export default function Home() {
   const completedCount = completedSet.size
   const hasStarted = completedCount > 0
 
+  useSeo({
+    title: 'TierOne — Free Hands-On IT Training',
+    description: `TierOne turns real IT work into hands-on practice — ${TOTAL_LESSONS} lessons, live support tickets, terminal labs, and AI feedback across Help Desk, SysAdmin, CompTIA A+, and Scripting.`,
+    path: '/',
+  })
+
   const [activeTrack, setActiveTrack] = useState('all')
   const filteredCourses = useMemo(
     () => (activeTrack === 'all' ? COURSES : COURSES.filter((c) => c.track === activeTrack)),
@@ -156,7 +163,7 @@ export default function Home() {
                 <span className="aurora-text">one skill at a time.</span>
               </h1>
               <p className="text-slate-400 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed fade-up">
-                TierZero turns real IT work into hands-on practice — {TOTAL_LESSONS} lessons, live support tickets,
+                TierOne turns real IT work into hands-on practice — {TOTAL_LESSONS} lessons, live support tickets,
                 terminal labs, and AI feedback — so you learn the job, not just the theory.
               </p>
               <div className="flex flex-wrap gap-3 justify-center lg:justify-start fade-up mb-10">

@@ -99,7 +99,7 @@ export const GLOSSARY_DATA = [
   { term: 'YAML',             category: 'Scripting', def: 'YAML Ain\'t Markup Language — a human-readable data serialisation format. Used heavily in Kubernetes, Ansible, GitHub Actions, and Docker Compose.' },
 
   // ── Platform ─────────────────────────────────────────────────────────────────
-  { term: 'XP',               category: 'Platform', def: 'Experience Points — earned on TierZero by completing lessons and passing quizzes. Accumulate XP to level up from Junior SysAdmin to Infrastructure Pro.' },
+  { term: 'XP',               category: 'Platform', def: 'Experience Points — earned on TierOne by completing lessons and passing quizzes. Accumulate XP to level up from Junior SysAdmin to Infrastructure Pro.' },
   { term: 'VMware',           category: 'Platform', def: 'A virtualisation platform widely used in enterprise environments. VMware Workstation Pro is the recommended tool for this platform\'s lab exercises.' },
 ]
 

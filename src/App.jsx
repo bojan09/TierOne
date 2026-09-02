@@ -53,16 +53,25 @@ export default function App() {
         <Route path="auth/callback" element={<AuthCallback />} />
         <Route path="verify/:code" element={<VerifyCertificate />} />
 
-        {/* Data-driven Academy — requires authentication */}
+        {/*
+          Academy content is public and crawlable — lesson/course pages render
+          read-only for signed-out visitors (progress is a no-op without a
+          session; quizzes fetch nothing without RLS access and simply don't
+          render). This is what makes the curriculum indexable at all: 350+
+          lesson URLs instead of just "/". Only routes that require a
+          server-authoritative user record stay behind RequireAuth.
+        */}
+        <Route path="learn" element={<LearnLayout />}>
+          <Route index element={<LearnHome />} />
+          <Route path=":courseSlug" element={<CourseView />} />
+          <Route path=":courseSlug/:lessonSlug" element={<LessonView />} />
+        </Route>
+
+        {/* Everything else needs a signed-in user (writes progress/XP, or is inherently personal) */}
         <Route element={<RequireAuth />}>
           <Route path="welcome" element={<Onboarding />} />
           <Route path="review" element={<Review />} />
           <Route path="exam" element={<Exam />} />
-          <Route path="learn" element={<LearnLayout />}>
-            <Route index element={<LearnHome />} />
-            <Route path=":courseSlug" element={<CourseView />} />
-            <Route path=":courseSlug/:lessonSlug" element={<LessonView />} />
-          </Route>
           <Route path="simulator" element={<SimulatorHome />} />
           <Route path="simulator/:slug" element={<ScenarioPlayer />} />
           <Route path="labs" element={<LabsHome />} />

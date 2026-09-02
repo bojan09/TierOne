@@ -1,8 +1,16 @@
 import LearningPath from './LearningPath';
 import NextStep from './NextStep';
 import { TRACK_META, TRACK_LABELS, TRACK_ORDER } from './trackMeta';
+import { useSeo } from '@/shared/lib/seo';
 
 export default function LearnHome() {
+  useSeo({
+    title: 'Academy — All Courses & Tracks',
+    description:
+      'Browse every TierOne course: Help Desk, SysAdmin, CompTIA A+, and Scripting & Automation. Free, hands-on IT lessons with quizzes and labs.',
+    path: '/learn',
+  });
+
   return (
     <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-10 py-10">
       <div className="mb-8"><NextStep /></div>

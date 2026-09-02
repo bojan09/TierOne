@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom'
 
 /**
- * TierZero brandmark — a single source of truth used by the Navbar, mobile
+ * TierOne brandmark — a single source of truth used by the Navbar, mobile
  * drawer, and Footer.
  *
  * The glyph is three ascending "tiers" (progression / levelling up) crowned by a
- * ring — the "zero" node you start from — on the aurora gradient tile. The
- * wordmark's "Zero" uses a theme-aware brand tint (`.logo-zero`) that stays
- * WCAG-AA legible on both dark and light backgrounds.
+ * ring — the starting node — on the aurora gradient tile. The wordmark's
+ * "One" uses a theme-aware brand tint (`.logo-zero`) that stays WCAG-AA
+ * legible on both dark and light backgrounds.
  */
 export default function Logo({ size = 'md' }) {
   const tile = size === 'lg' ? 'w-10 h-10' : 'w-9 h-9'
   const text = size === 'lg' ? 'text-base' : 'text-[15px]'
   return (
-    <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0" aria-label="TierZero — home">
+    <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0" aria-label="TierOne — home">
       <span className={`relative ${tile} rounded-xl overflow-hidden shadow-glow-sm
                         transition-transform duration-200 group-hover:scale-105`}>
         <span
@@ -29,7 +29,7 @@ export default function Logo({ size = 'md' }) {
         </svg>
       </span>
       <span className={`font-bold text-white ${text} tracking-tight leading-none`}>
-        Tier<span className="logo-zero">Zero</span>
+        Tier<span className="logo-zero">One</span>
       </span>
     </Link>
   )

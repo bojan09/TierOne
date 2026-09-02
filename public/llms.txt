@@ -1,4 +1,4 @@
-# TierZero
+# TierOne
 
 > Free, hands-on IT training platform. Four tracks — Help Desk, SysAdmin, CompTIA A+, and Scripting (PowerShell + Python) — with lessons, quizzes, in-browser labs, spaced-repetition review, and practice exams.
 

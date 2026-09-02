@@ -54,17 +54,17 @@ UBR            : 2033
 Name            Value
 SecurityHealth  C:\\Windows\\System32\\SecurityHealthSystray.exe`
 const CODE_WINDOWSREGISTRY_4 = `# Create a custom app registry key
-New-Item 'HKLM:\\SOFTWARE\\TierZero' -Force | Out-Null
-Set-ItemProperty 'HKLM:\\SOFTWARE\\TierZero' -Name 'Version' -Value '1.0'
-Set-ItemProperty 'HKLM:\\SOFTWARE\\TierZero' -Name 'InstallDate' -Value (Get-Date -Format 'yyyy-MM-dd')
-Set-ItemProperty 'HKLM:\\SOFTWARE\\TierZero' -Name 'Enabled' -Value 1 -Type DWord
+New-Item 'HKLM:\\SOFTWARE\\TierOne' -Force | Out-Null
+Set-ItemProperty 'HKLM:\\SOFTWARE\\TierOne' -Name 'Version' -Value '1.0'
+Set-ItemProperty 'HKLM:\\SOFTWARE\\TierOne' -Name 'InstallDate' -Value (Get-Date -Format 'yyyy-MM-dd')
+Set-ItemProperty 'HKLM:\\SOFTWARE\\TierOne' -Name 'Enabled' -Value 1 -Type DWord
 
 # Export as backup
-reg export 'HKLM\\SOFTWARE\\TierZero' C:\\reg-backup.reg /y
+reg export 'HKLM\\SOFTWARE\\TierOne' C:\\reg-backup.reg /y
 Write-Host 'Exported to C:\\reg-backup.reg'
 
 # Verify
-Get-ItemProperty 'HKLM:\\SOFTWARE\\TierZero'`
+Get-ItemProperty 'HKLM:\\SOFTWARE\\TierOne'`
 const CODE_WINDOWSREGISTRY_5 = `Exported to C:\\reg-backup.reg
 Version     : 1.0
 InstallDate : 2025-01-15

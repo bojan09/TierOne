@@ -10,9 +10,11 @@ import {
   getLessonBreadcrumbs,
   getLessonBySlug,
   getOrderedLessons,
+  lessonHref,
 } from '@/features/curriculum/selectors';
 import { isLessonLocked } from '@/features/curriculum/locking';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
+import { useSeo } from '@/shared/lib/seo';
 
 function Centered({ children }: { children: React.ReactNode }) {
   return <div className="max-w-screen-md mx-auto px-4 py-20 text-center">{children}</div>;
@@ -48,15 +50,27 @@ export default function LessonView() {
   const lesson = course && lessonSlug ? getLessonBySlug(course, lessonSlug) : undefined;
   const Body = lesson ? getLessonBody(lesson.id) : undefined;
   const lessonId = lesson?.id;
+  const locked = course && lesson ? isLessonLocked(lesson, course, completedSet) : false;
 
   // Server-authoritative "continue where you left off".
   useEffect(() => {
     if (lessonId) setLastLesson(lessonId);
   }, [lessonId, setLastLesson]);
 
+  useSeo({
+    title: lesson ? lesson.title : 'Lesson not found',
+    description:
+      lesson && course
+        ? `${lesson.title} — part of ${course.title} on TierOne. ~${lesson.estimatedMinutes} min, +${lesson.xp} XP.`
+        : 'This lesson could not be found.',
+    path: course && lesson ? lessonHref(course, lesson) : '/learn',
+    type: 'article',
+    noindex: !course || !lesson || locked,
+  });
+
   if (!course || !lesson || !Body) return <NotFound />;
 
-  if (isLessonLocked(lesson, course, completedSet)) {
+  if (locked) {
     return (
       <Centered>
         <div className="text-4xl mb-4">🔒</div>

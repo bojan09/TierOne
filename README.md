@@ -1,4 +1,4 @@
-# TierZero
+# TierOne
 
 Practical, hands-on IT training — Help Desk, SysAdmin, CompTIA A+, and Scripting & Automation, in one platform. Lessons, quizzes, in-browser labs, spaced-repetition review, ticket simulations, and server-authoritative progress tracking.
 
