@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { curriculum } from '@/content/curriculum';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
+import { useAuth } from '@/features/auth/useAuth';
+import { TRACK_META, DEFAULT_TRACK_META, TRACK_ORDER } from '@/features/curriculum/trackMeta';
 import { fetchAnalytics, type AnalyticsData } from './api';
 
 function readinessLabel(score: number): { label: string; color: string } {
@@ -13,6 +15,11 @@ function readinessLabel(score: number): { label: string; color: string } {
 
 export default function Analytics() {
   const { completedSet, quizStats } = useAcademyProgress();
+  const { profile } = useAuth();
+  // Falls back to 'helpdesk' only if a profile hasn't loaded yet (never
+  // actually null once onboarded — Onboarding always sets a track).
+  const track = profile?.track ?? 'helpdesk';
+  const trackMeta = TRACK_META[track] ?? DEFAULT_TRACK_META;
   const [data, setData] = useState<AnalyticsData | null>(null);
 
   useEffect(() => {
@@ -26,34 +33,38 @@ export default function Analytics() {
   }, []);
 
   const m = useMemo(() => {
-    const hdLessons = curriculum.lessons.filter((l) => l.track === 'helpdesk');
-    const hdDone = hdLessons.filter((l) => completedSet.has(l.id)).length;
-    const hdQuizIds = new Set(hdLessons.filter((l) => l.hasQuiz).map((l) => l.id));
-    const hdQuizPassed = quizStats.passedIds.filter((id) => hdQuizIds.has(id)).length;
+    // Was hardcoded to the 'helpdesk' track — a SysAdmin/CompTIA A+/Scripting
+    // learner's readiness score would sit at 0% forever and "recommended
+    // next step" would point at an unrelated Help Desk lesson, regardless of
+    // their actual progress. Now scoped to whichever track the user chose.
+    const trackLessons = curriculum.lessons.filter((l) => l.track === track);
+    const trackDone = trackLessons.filter((l) => completedSet.has(l.id)).length;
+    const trackQuizIds = new Set(trackLessons.filter((l) => l.hasQuiz).map((l) => l.id));
+    const trackQuizPassed = quizStats.passedIds.filter((id) => trackQuizIds.has(id)).length;
 
-    const lessonPct = hdLessons.length ? hdDone / hdLessons.length : 0;
-    const quizPct = hdQuizIds.size ? hdQuizPassed / hdQuizIds.size : 0;
+    const lessonPct = trackLessons.length ? trackDone / trackLessons.length : 0;
+    const quizPct = trackQuizIds.size ? trackQuizPassed / trackQuizIds.size : 0;
     const scenPct = data && data.scenariosTotal ? data.scenariosPassed / data.scenariosTotal : 0;
     const labPct = data && data.labsTotal ? data.labsCompleted / data.labsTotal : 0;
 
     const score = Math.round(100 * (0.4 * lessonPct + 0.3 * quizPct + 0.2 * scenPct + 0.1 * labPct));
     return {
-      hdLessons, hdDone, hdQuizIds, hdQuizPassed,
+      trackLessons, trackDone, trackQuizIds, trackQuizPassed,
       lessonPct, quizPct, scenPct, labPct, score,
       components: [
-        { label: 'Help Desk lessons', got: hdDone, total: hdLessons.length, weight: 40 },
-        { label: 'Help Desk quizzes passed', got: hdQuizPassed, total: hdQuizIds.size, weight: 30 },
+        { label: `${trackMeta.label} lessons`, got: trackDone, total: trackLessons.length, weight: 40 },
+        { label: `${trackMeta.label} quizzes passed`, got: trackQuizPassed, total: trackQuizIds.size, weight: 30 },
         { label: 'Tickets resolved', got: data?.scenariosPassed ?? 0, total: data?.scenariosTotal ?? 0, weight: 20 },
         { label: 'Labs completed', got: data?.labsCompleted ?? 0, total: data?.labsTotal ?? 0, weight: 10 },
       ],
     };
-  }, [completedSet, quizStats, data]);
+  }, [completedSet, quizStats, data, track, trackMeta.label]);
 
   const rl = readinessLabel(m.score);
   const maxAct = Math.max(1, ...(data?.activity.map((a) => a.count) ?? [1]));
 
   // next recommended step
-  const nextLesson = m.hdLessons.find((l) => !completedSet.has(l.id));
+  const nextLesson = m.trackLessons.find((l) => !completedSet.has(l.id));
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
@@ -113,7 +124,11 @@ export default function Analytics() {
         <div className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
           {curriculum.courses
             .slice()
-            .sort((a, b) => (a.track === b.track ? a.order - b.order : a.track === 'helpdesk' ? -1 : 1))
+            .sort((a, b) =>
+              a.track === b.track
+                ? a.order - b.order
+                : TRACK_ORDER.indexOf(a.track) - TRACK_ORDER.indexOf(b.track),
+            )
             .map((c) => {
               const ls = curriculum.lessons.filter((l) => l.courseId === c.id);
               const done = ls.filter((l) => completedSet.has(l.id)).length;
@@ -125,7 +140,10 @@ export default function Analytics() {
                     <span className="font-mono text-slate-500">{pct}%</span>
                   </div>
                   <div className="h-1.5 rounded-full bg-surface-700 overflow-hidden">
-                    <div className={`h-full ${c.track === 'helpdesk' ? 'bg-accent-cyan' : 'bg-accent-purple'}`} style={{ width: `${pct}%` }} />
+                    <div
+                      className="h-full"
+                      style={{ width: `${pct}%`, backgroundColor: (TRACK_META[c.track] ?? DEFAULT_TRACK_META).color }}
+                    />
                   </div>
                 </div>
               );

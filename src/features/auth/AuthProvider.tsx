@@ -6,7 +6,7 @@ import {
   type ReactNode,
 } from 'react';
 import type { Session } from '@supabase/supabase-js';
-import type { Profile } from '@/shared/types';
+import type { Profile, Track } from '@/shared/types';
 import { hasSupabaseConfig } from '@/shared/lib/env';
 import { getSupabaseClient, type AppSupabaseClient } from '@/shared/lib/supabase';
 import { AuthContext } from './context';
@@ -18,7 +18,7 @@ function mapProfile(row: {
   id: string;
   display_name: string | null;
   role: 'student' | 'admin';
-  track: 'helpdesk' | 'sysadmin';
+  track: Track;
   daily_goal: number | null;
   onboarded_at: string | null;
   created_at: string;

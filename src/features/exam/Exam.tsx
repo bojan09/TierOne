@@ -27,6 +27,7 @@ export default function Exam() {
   const [left, setLeft] = useState(COUNT * 60);
   const [busy, setBusy] = useState(false);
   const [history, setHistory] = useState<ExamHistoryRow[]>([]);
+  const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
     if (phase === 'setup') void getExamHistory(5).then(setHistory);
@@ -35,20 +36,32 @@ export default function Exam() {
   const finish = useCallback(async () => {
     if (busy) return;
     setBusy(true);
+    setSubmitError(false);
     const ids = questions.map((q) => q.id);
     const res = await submitExam(ids, questions.map((q) => answers[q.id] ?? -1), track);
-    setResult(res);
-    setPhase('done');
     setBusy(false);
+    if (res) {
+      setResult(res);
+      setPhase('done');
+    } else {
+      // Stay on the active screen with answers intact — the old behaviour
+      // set phase to 'done' unconditionally, and since `result` was still
+      // null neither the "done" nor the "active" render branch matched
+      // cleanly on a failed submission (especially painful mid-timed-exam,
+      // where losing answers on a network blip is the worst possible time).
+      setSubmitError(true);
+    }
   }, [busy, questions, answers, track]);
 
-  // Countdown during the exam.
+  // Countdown during the exam. Stops once the timer hits 0 and hands off to
+  // finish() — guarded by !submitError so a failed auto-submit at time-up
+  // doesn't retry itself in a loop; the retry button below takes over.
   useEffect(() => {
-    if (phase !== 'active') return;
+    if (phase !== 'active' || submitError) return;
     if (left <= 0) { void finish(); return; }
     const t = setTimeout(() => setLeft((s) => s - 1), 1000);
     return () => clearTimeout(t);
-  }, [phase, left, finish]);
+  }, [phase, left, finish, submitError]);
 
   const start = async () => {
     setBusy(true);
@@ -165,8 +178,13 @@ export default function Exam() {
           </div>
         ))}
       </div>
+      {submitError && (
+        <p className="text-sm text-accent-red mt-4" role="alert">
+          Couldn&rsquo;t submit your exam — check your connection and try again. Your answers are still here.
+        </p>
+      )}
       <button onClick={finish} disabled={busy} className="btn-primary w-full mt-6 disabled:opacity-60">
-        {busy ? 'Grading…' : `Submit exam (${answered}/${questions.length})`}
+        {busy ? 'Grading…' : submitError ? 'Try submitting again' : `Submit exam (${answered}/${questions.length})`}
       </button>
     </div>
   );

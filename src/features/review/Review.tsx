@@ -35,6 +35,7 @@ export default function Review() {
   const [schedule, setSchedule] = useState<ScheduleResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
     void getDueReviews().then((rows) => {
@@ -57,10 +58,15 @@ export default function Review() {
     async (quality: number) => {
       if (!lessonId || busy) return;
       setBusy(true);
+      setSubmitError(false);
       const res = await scheduleReview(lessonId, quality);
-      setSchedule(res);
       setBusy(false);
-      void refresh();
+      if (res) {
+        setSchedule(res);
+        void refresh();
+      } else {
+        setSubmitError(true);
+      }
     },
     [lessonId, busy, refresh],
   );
@@ -105,8 +111,11 @@ export default function Review() {
   const submitGrade = async () => {
     if (!lessonId) return;
     setBusy(true);
-    setGrade(await gradeReview(lessonId, questions.map((q) => answers[q.id] ?? -1)));
+    setSubmitError(false);
+    const res = await gradeReview(lessonId, questions.map((q) => answers[q.id] ?? -1));
     setBusy(false);
+    if (res) setGrade(res);
+    else setSubmitError(true);
   };
 
   return (
@@ -157,9 +166,15 @@ export default function Review() {
             </div>
           ))}
 
+          {submitError && (
+            <p className="text-sm text-accent-red mb-3" role="alert">
+              Something went wrong saving that — check your connection and try again.
+            </p>
+          )}
+
           {!grade ? (
             <button onClick={submitGrade} disabled={!allAnswered || busy} className="btn-primary w-full disabled:opacity-50">
-              {busy ? 'Grading…' : 'Check answers'}
+              {busy ? 'Grading…' : submitError ? 'Try again' : 'Check answers'}
             </button>
           ) : !schedule ? (
             <div className="card p-4">

@@ -24,6 +24,7 @@ export default function ScenarioPlayer() {
   const [choices, setChoices] = useState<Record<number, number>>({});
   const [result, setResult] = useState<ScenarioResult | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -72,6 +73,7 @@ export default function ScenarioPlayer() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    setSubmitError(false);
     const res = await submitScenario(
       scenario.id,
       stages.map((s) => ({ stage_id: s.id, option_id: choices[s.id] })),
@@ -81,6 +83,8 @@ export default function ScenarioPlayer() {
       setResult(res);
       if (res.passed) void refresh();
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    } else {
+      setSubmitError(true);
     }
   };
 
@@ -159,14 +163,21 @@ export default function ScenarioPlayer() {
       {/* Submit / scorecard */}
       <div className="mt-6">
         {!result ? (
-          <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={!allAnswered || submitting}
-            className="btn-primary disabled:opacity-50"
-          >
-            {submitting ? 'Scoring…' : 'Resolve ticket'}
-          </button>
+          <>
+            {submitError && (
+              <p className="text-sm text-accent-red mb-3" role="alert">
+                Couldn&rsquo;t submit — check your connection and try again. Your choices are still here.
+              </p>
+            )}
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={!allAnswered || submitting}
+              className="btn-primary disabled:opacity-50"
+            >
+              {submitting ? 'Scoring…' : submitError ? 'Try submitting again' : 'Resolve ticket'}
+            </button>
+          </>
         ) : (
           <div className="rounded-2xl border border-surface-700 bg-surface-800/50 p-6 text-center">
             <div className="text-4xl mb-2">{result.passed ? '🎉' : '📋'}</div>

@@ -18,6 +18,8 @@ export default function LabPlayer() {
   const [input, setInput] = useState('');
   const [done, setDone] = useState(false);
   const [misses, setMisses] = useState(0);
+  const [saveError, setSaveError] = useState(false);
+  const [savingRetry, setSavingRetry] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -77,8 +79,16 @@ export default function LabPlayer() {
         next.push({ kind: 'sys', text: '✓ All tasks complete — nice work!' });
         setLines(next);
         setDone(true);
+        // Terminal tasks are genuinely done at this point (that's local,
+        // real). Whether the server actually recorded it and awarded XP is
+        // a separate thing — don't claim "XP awarded" until we know.
         const okDone = await completeLab(lab.id);
-        if (okDone) void refresh();
+        if (okDone) {
+          setSaveError(false);
+          void refresh();
+        } else {
+          setSaveError(true);
+        }
       } else {
         setLines(next);
         setStep((s) => s + 1);
@@ -89,6 +99,17 @@ export default function LabPlayer() {
       setMisses(m);
       if (m >= 2 && current.hint) next.push({ kind: 'sys', text: `Hint: ${current.hint}` });
       setLines(next);
+    }
+  };
+
+  const retrySave = async () => {
+    if (!lab) return;
+    setSavingRetry(true);
+    const okDone = await completeLab(lab.id);
+    setSavingRetry(false);
+    if (okDone) {
+      setSaveError(false);
+      void refresh();
     }
   };
 
@@ -105,6 +126,15 @@ export default function LabPlayer() {
         <div className="rounded-xl border border-brand-500/30 bg-brand-500/5 px-4 py-3 mb-3">
           <span className="text-[10px] font-bold uppercase tracking-widest text-brand-300">Task</span>
           <p className="text-[15px] text-white mt-0.5">{current.instruction}</p>
+        </div>
+      ) : saveError ? (
+        <div className="rounded-xl border border-accent-amber/40 bg-accent-amber/10 px-4 py-3 mb-3 flex items-center justify-between flex-wrap gap-3">
+          <p className="text-[15px] text-white font-semibold">
+            Nice work on the tasks — but we couldn&rsquo;t save your completion. Your XP hasn&rsquo;t been awarded yet.
+          </p>
+          <button onClick={() => void retrySave()} disabled={savingRetry} className="btn-primary text-sm disabled:opacity-60">
+            {savingRetry ? 'Retrying…' : 'Retry save'}
+          </button>
         </div>
       ) : (
         <div className="rounded-xl border border-accent-green/40 bg-accent-green/10 px-4 py-3 mb-3 flex items-center justify-between flex-wrap gap-3">

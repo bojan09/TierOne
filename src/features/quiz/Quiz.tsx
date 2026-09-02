@@ -23,6 +23,7 @@ export function Quiz({ lessonId, onPass }: QuizProps) {
   const [result, setResult] = useState<QuizResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -67,6 +68,7 @@ export function Quiz({ lessonId, onPass }: QuizProps) {
 
   const handleSubmit = async () => {
     setSubmitting(true);
+    setSubmitError(false);
     const res = await submitQuiz(
       lessonId,
       questions.map((q) => (answers[q.id] ?? -1)),
@@ -78,12 +80,18 @@ export function Quiz({ lessonId, onPass }: QuizProps) {
         onPass?.();
         void refresh();
       }
+    } else {
+      // submitQuiz already logs the underlying error; here we just make sure
+      // the learner isn't left staring at a button that quietly reset with
+      // no explanation of what happened to their answers.
+      setSubmitError(true);
     }
   };
 
   const retry = () => {
     setResult(null);
     setAnswers({});
+    setSubmitError(false);
   };
 
   return (
@@ -140,6 +148,12 @@ export function Quiz({ lessonId, onPass }: QuizProps) {
         })}
       </div>
 
+      {submitError && (
+        <p className="text-sm text-accent-red mt-4" role="alert">
+          Couldn&rsquo;t submit your answers — check your connection and try again. Your selections are still here.
+        </p>
+      )}
+
       <div className="mt-6 flex items-center gap-3">
         {!result ? (
           <button
@@ -148,7 +162,7 @@ export function Quiz({ lessonId, onPass }: QuizProps) {
             disabled={!allAnswered || submitting}
             className="btn-primary disabled:opacity-50"
           >
-            {submitting ? 'Grading…' : 'Submit answers'}
+            {submitting ? 'Grading…' : submitError ? 'Try submitting again' : 'Submit answers'}
           </button>
         ) : (
           <>

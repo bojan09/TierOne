@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
 import { getLessonAndCourseById, lessonHref } from '@/features/curriculum/selectors'
 
@@ -7,12 +7,16 @@ import { getLessonAndCourseById, lessonHref } from '@/features/curriculum/select
 // (so links never go stale), cross-device.
 export default function ResumeBanner() {
   const { stats } = useAcademyProgress()
+  const { pathname } = useLocation()
   const lastId = stats?.lastLessonId
   if (!lastId) return null
 
   const resolved = getLessonAndCourseById(lastId)
   if (!resolved) return null
   const { course, lesson } = resolved
+
+  // Don't tell someone to "continue" a lesson they're already looking at.
+  if (pathname === lessonHref(course, lesson)) return null
 
   return (
     <div className="w-full bg-brand-600/10 border-b border-brand-500/20">
