@@ -1,0 +1,45 @@
+name: Supabase keep-alive
+
+# Free-tier Supabase projects pause after ~7 days with no API activity.
+# This pings a harmless, read-only, anon-callable RPC every couple of days so
+# the project never goes idle. It performs no writes and touches no user data.
+#
+# Requires repo secrets (Settings -> Secrets and variables -> Actions):
+#   SUPABASE_URL       - project URL, e.g. https://xxxx.supabase.co
+#   SUPABASE_ANON_KEY   - the anon/publishable key (safe for client use)
+
+on:
+  schedule:
+    # Every 3 days at 09:00 UTC — comfortably under Supabase's 7-day pause window.
+    - cron: '0 9 */3 * *'
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call verify_certificate RPC (read-only, no-op lookup)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::SUPABASE_URL / SUPABASE_ANON_KEY secrets are not set."
+            exit 1
+          fi
+
+          status=$(curl -s -o /tmp/resp.json -w '%{http_code}' \
+            -X POST "$SUPABASE_URL/rest/v1/rpc/verify_certificate" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"p_code":"keepalive-ping-does-not-exist"}')
+
+          echo "HTTP status: $status"
+          cat /tmp/resp.json
+          echo
+
+          if [ "$status" -ge 400 ]; then
+            echo "::error::Supabase keep-alive ping failed with HTTP $status"
+            exit 1
+          fi

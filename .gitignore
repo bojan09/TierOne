@@ -4,3 +4,11 @@ node_modules/
 dist/
 
 .env
+.env.local
+
+# Supabase CLI local state (project ref, pooler URL — not secrets, but
+# machine-local and noisy in diffs).
+supabase/.temp/
+
+# Local agent/session tooling state — not part of the app.
+.omc/

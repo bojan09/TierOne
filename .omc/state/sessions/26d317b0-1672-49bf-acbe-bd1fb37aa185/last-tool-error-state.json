@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cd \\\"E:/Code Realted/projects/tier-one(it_academy)\\\" && grep -nE \\\"[a-zA-Z]'[a-zA-Z]\\\" supabase/migrations/0057_seed_labs_gap_fill.sql; echo \\\"---paren balance---\\\"; python3 -c \\\"\\ns = ope...",
-  "error": "Exit code 49\n---paren balance---\nPython was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Apps > Advanced app settings > App execution aliases.",
-  "timestamp": "2026-07-10T20:56:10.465Z",
-  "retry_count": 1
-}

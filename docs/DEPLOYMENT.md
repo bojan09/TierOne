@@ -61,7 +61,20 @@ SPA routing: ensure a catch-all rewrite to `/index.html`.
   `default-src 'self'; connect-src 'self' https://*.supabase.co; img-src 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; font-src 'self' data:; frame-ancestors 'none'`.
   Adjust `connect-src` if Supabase Realtime (wss) is later enabled.
 
-## 6. Post-deploy smoke test
+## 6. Keep the free-tier project alive
+`.github/workflows/supabase-keepalive.yml` pings the read-only, anon-callable
+`verify_certificate` RPC every 3 days so Supabase's free-tier auto-pause (idle
+7 days) never triggers. Performs no writes.
+
+Required repo secrets (Settings -> Secrets and variables -> Actions):
+- `SUPABASE_URL` — project URL, e.g. `https://<ref>.supabase.co`
+- `SUPABASE_ANON_KEY` — anon/publishable key (safe for client use, not the
+  service role key)
+
+Runs on schedule and via `workflow_dispatch` (Actions tab -> Supabase
+keep-alive -> Run workflow) for a manual check.
+
+## 7. Post-deploy smoke test
 - Sign in with Google → profile row created, lands authenticated.
 - Complete a lesson → XP persists; refresh shows it.
 - Pass a quiz → lesson unlocks / XP updates.
@@ -70,7 +83,7 @@ SPA routing: ensure a catch-all rewrite to `/index.html`.
 - `/practice`: with AI configured → score returns; without → regular mode.
 - `/analytics` shows a readiness score.
 
-## 7. Known follow-ups (non-blocking)
+## 8. Known follow-ups (non-blocking)
 - Run `supabase gen types typescript --project-id <id>` and drop the temporary
   RPC casts (`as never` / `as unknown`).
 - Author more labs/scenarios/doc exercises (pure content).
