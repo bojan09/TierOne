@@ -28,8 +28,22 @@ jobs:
             exit 1
           fi
 
-          status=$(curl -s -o /tmp/resp.json -w '%{http_code}' \
-            -X POST "$SUPABASE_URL/rest/v1/rpc/verify_certificate" \
+          # Defensive cleanup: a pasted-in secret commonly carries a trailing
+          # slash, surrounding quotes, or trailing whitespace/newline — any of
+          # which makes curl fail with "URL malformed" (exit 3) and, with -s
+          # alone, no explanation why. Strip all of that before use.
+          url=$(printf '%s' "$SUPABASE_URL" | tr -d '\r\n' | sed -e 's/^[[:space:]"'"'"']*//' -e 's/[[:space:]"'"'"']*$//' -e 's:/*$::')
+
+          case "$url" in
+            https://*) ;;
+            *)
+              echo "::error::SUPABASE_URL doesn't start with https:// after cleanup — got: '$url'. Check the secret value in Settings -> Secrets and variables -> Actions for stray quotes/whitespace."
+              exit 1
+              ;;
+          esac
+
+          status=$(curl -s -S -o /tmp/resp.json -w '%{http_code}' \
+            -X POST "$url/rest/v1/rpc/verify_certificate" \
             -H "apikey: $SUPABASE_ANON_KEY" \
             -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
             -H "Content-Type: application/json" \
