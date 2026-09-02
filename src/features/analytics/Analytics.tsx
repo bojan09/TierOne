@@ -76,7 +76,7 @@ export default function Analytics() {
             return (
               <div key={c.label}>
                 <div className="flex items-center justify-between text-sm mb-1">
-                  <span className="text-slate-300">{c.label} <span className="text-slate-600">· {c.weight}%</span></span>
+                  <span className="text-slate-300">{c.label} <span className="text-slate-400">· {c.weight}%</span></span>
                   <span className="font-mono text-slate-400">{c.got}/{c.total}</span>
                 </div>
                 <div className="h-1.5 rounded-full bg-surface-700 overflow-hidden">

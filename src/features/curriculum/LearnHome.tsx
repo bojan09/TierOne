@@ -34,7 +34,7 @@ export default function LearnHome() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <span className="text-[13px]">Search all lessons</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-surface-700 border border-surface-600 text-[10px] font-mono text-slate-600">
+          <kbd className="px-1.5 py-0.5 rounded bg-surface-700 border border-surface-600 text-[10px] font-mono text-slate-400">
             ⌘K
           </kbd>
         </button>

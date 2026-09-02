@@ -185,7 +185,7 @@ function SubnetDivider() {
           <tbody className="divide-y divide-surface-700/50">
             {subnetList.map((s, i) => (
               <tr key={i} className="hover:bg-surface-700/30">
-                <td className="px-3 py-2 text-slate-600">{i + 1}</td>
+                <td className="px-3 py-2 text-slate-400">{i + 1}</td>
                 <td className="px-3 py-2 text-brand-300 font-bold">{s.network}</td>
                 <td className="px-3 py-2 text-accent-green">{s.first}</td>
                 <td className="px-3 py-2 text-accent-green">{s.last}</td>

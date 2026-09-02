@@ -294,7 +294,7 @@ export default function WS2025Intro() {
                   <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1.5">Considerations</p>
                   {v.cons.map(c => (
                     <div key={c} className="flex gap-2 text-xs text-slate-400 mb-1">
-                      <span className="text-slate-600 flex-shrink-0">→</span>{c}
+                      <span className="text-slate-400 flex-shrink-0">→</span>{c}
                     </div>
                   ))}
                 </div>
@@ -318,7 +318,7 @@ export default function WS2025Intro() {
               <div className="text-2xl mb-2">{r.icon}</div>
               <p className="text-[10px] text-slate-500 uppercase tracking-widest">{r.label}</p>
               <p className="text-lg font-bold text-white font-mono mt-0.5">{r.value}</p>
-              <p className="text-[10px] text-slate-600 mt-0.5">{r.note}</p>
+              <p className="text-[10px] text-slate-400 mt-0.5">{r.note}</p>
             </div>
           ))}
         </div>

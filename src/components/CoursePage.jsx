@@ -35,7 +35,7 @@ function LessonRow({ lesson, index, total }) {
             ${lesson.completed
               ? 'bg-accent-green/20 border-accent-green/60 text-accent-green'
               : lesson.locked
-                ? 'bg-surface-800 border-surface-700 text-slate-600'
+                ? 'bg-surface-800 border-surface-700 text-slate-400'
                 : 'bg-brand-500/15 border-brand-500/50 text-brand-300 shadow-glow-sm'
             }
           `}
@@ -69,13 +69,13 @@ function LessonRow({ lesson, index, total }) {
                 <span className="text-lg flex-shrink-0 grayscale">{lesson.icon || '📄'}</span>
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-slate-500 truncate">{lesson.title}</p>
-                  <p className="text-xs text-slate-600 mt-0.5 truncate">{lesson.description}</p>
+                  <p className="text-xs text-slate-400 mt-0.5 truncate">{lesson.description}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
-                <span className="text-[10px] text-slate-600 font-mono">{lesson.readTime}</span>
-                <span className="text-[10px] text-slate-600 font-mono">+{lesson.xp} XP</span>
-                <span className="text-[10px] font-semibold text-slate-600 bg-surface-700
+                <span className="text-[10px] text-slate-400 font-mono">{lesson.readTime}</span>
+                <span className="text-[10px] text-slate-400 font-mono">+{lesson.xp} XP</span>
+                <span className="text-[10px] font-semibold text-slate-400 bg-surface-700
                                  border border-surface-600 px-2 py-0.5 rounded-full">
                   Locked
                 </span>
@@ -126,7 +126,7 @@ function LessonRow({ lesson, index, total }) {
                       Done
                     </span>
                   ) : (
-                    <svg className="w-4 h-4 text-slate-600 group-hover:text-brand-400 group-hover:translate-x-0.5
+                    <svg className="w-4 h-4 text-slate-400 group-hover:text-brand-400 group-hover:translate-x-0.5
                                     transition-all duration-150"
                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -282,7 +282,7 @@ export default function CoursePage({
                 </span>
               </div>
               <ProgressBar value={courseProgress} showPercent size="md" />
-              <div className="flex justify-between text-[11px] text-slate-600 font-mono mt-1.5">
+              <div className="flex justify-between text-[11px] text-slate-400 font-mono mt-1.5">
                 <span>{completedCount * Math.round(totalXP / (totalLessons || 1))} XP earned</span>
                 <span>{totalXP} XP total</span>
               </div>

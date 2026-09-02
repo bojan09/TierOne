@@ -61,11 +61,11 @@ export default function StreakTracker({ compact = false }) {
                               ? 'bg-brand-500 text-white shadow-glow-sm'
                               : isToday
                                 ? 'bg-surface-700 border border-brand-500/50 text-slate-400'
-                                : 'bg-surface-700 text-slate-600'}`}
+                                : 'bg-surface-700 text-slate-400'}`}
               >
                 {active ? '✓' : ''}
               </div>
-              <span className={`text-[10px] font-mono ${isToday ? 'text-brand-400' : 'text-slate-600'}`}>
+              <span className={`text-[10px] font-mono ${isToday ? 'text-brand-400' : 'text-slate-400'}`}>
                 {DAY_LABELS[(new Date(day).getDay())]}
               </span>
             </div>

@@ -66,7 +66,7 @@ export default function PlatformProgress({ completedLessons = [] }) {
                     {c.label}
                   </span>
                   <span className={`text-[10px] font-mono ml-2 flex-shrink-0
-                                    ${done100 ? 'text-accent-green' : 'text-slate-600'}`}>
+                                    ${done100 ? 'text-accent-green' : 'text-slate-400'}`}>
                     {done100 ? '✓ Done' : `${d}/${c.ids.length}`}
                   </span>
                 </div>

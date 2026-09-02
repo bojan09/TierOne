@@ -106,7 +106,7 @@ export default function LessonCard({
           {title}
         </h3>
         <p className={`text-xs leading-relaxed line-clamp-2
-                        ${locked ? 'text-slate-600' : 'text-slate-400'}`}>
+                        ${locked ? 'text-slate-400' : 'text-slate-400'}`}>
           {description}
         </p>
       </div>
@@ -118,7 +118,7 @@ export default function LessonCard({
 
       {/* ── Locked hint ── */}
       {locked && (
-        <p className="text-[11px] text-slate-600 flex items-center gap-1.5">
+        <p className="text-[11px] text-slate-400 flex items-center gap-1.5">
           <svg className="w-3 h-3 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -151,7 +151,7 @@ export default function LessonCard({
           )}
         </div>
         <div className={`flex items-center gap-1 font-mono text-xs font-medium
-                          ${locked ? 'text-slate-600' : 'text-accent-amber'}`}>
+                          ${locked ? 'text-slate-400' : 'text-accent-amber'}`}>
           +{xp} <span className={locked ? 'text-slate-700' : 'text-slate-500'}>XP</span>
         </div>
       </div>

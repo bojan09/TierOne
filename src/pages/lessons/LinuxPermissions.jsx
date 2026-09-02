@@ -251,7 +251,7 @@ export default function LinuxPermissions() {
                 <div key={p.label} className="text-center">
                   <div className={`text-2xl font-black px-2 ${p.color}`}>{p.chars}</div>
                   <div className="text-[10px] text-slate-500 mt-1">{p.label}</div>
-                  <div className="text-[10px] text-slate-600 mt-0.5 max-w-[100px]">{p.desc}</div>
+                  <div className="text-[10px] text-slate-400 mt-0.5 max-w-[100px]">{p.desc}</div>
                 </div>
               ))}
             </div>

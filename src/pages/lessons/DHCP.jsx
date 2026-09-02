@@ -196,7 +196,7 @@ export default function DHCP() {
                   <p className="text-xs text-slate-400 leading-relaxed">{s.desc}</p>
                 </div>
                 {i < 3 && (
-                  <div className="flex-shrink-0 text-slate-600 self-center">↓</div>
+                  <div className="flex-shrink-0 text-slate-400 self-center">↓</div>
                 )}
               </div>
             ))}

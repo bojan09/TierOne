@@ -272,8 +272,8 @@ export default function CIATriad() {
                 <div>Internet ──[Firewall]──▶ Corporate Network</div>
                 <div className="ml-20">↓</div>
                 <div className="ml-10 text-accent-red">"You're inside = Trusted"</div>
-                <div className="ml-10 text-slate-600">No re-authentication</div>
-                <div className="ml-10 text-slate-600">Flat network = lateral movement</div>
+                <div className="ml-10 text-slate-400">No re-authentication</div>
+                <div className="ml-10 text-slate-400">Flat network = lateral movement</div>
               </div>
             </div>
             <div>
@@ -335,7 +335,7 @@ export default function CIATriad() {
         <p>Layer multiple independent controls. If one fails, the others hold.</p>
         <div className="info-card mt-4">
           <div className="font-mono text-xs leading-8 text-center text-slate-400">
-            <div className="text-slate-600 mb-1">Attacker trying to reach the database</div>
+            <div className="text-slate-400 mb-1">Attacker trying to reach the database</div>
             {[
               { layer: 'Perimeter Firewall',        status: 'first barrier',    color: 'border-brand-500/40 text-brand-300' },
               { layer: 'WAF / IPS',                 status: 'detects attacks',  color: 'border-accent-cyan/40 text-accent-cyan' },

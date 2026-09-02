@@ -135,7 +135,7 @@ export default function CommandPalette({ open, onClose }) {
 
         {/* Footer */}
         <div className="px-4 py-2.5 border-t border-surface-700 flex items-center gap-4
-                        text-[10px] font-mono text-slate-600">
+                        text-[10px] font-mono text-slate-400">
           <span><kbd className="text-slate-500">↑↓</kbd> navigate</span>
           <span><kbd className="text-slate-500">↵</kbd> open</span>
           <span><kbd className="text-slate-500">esc</kbd> close</span>

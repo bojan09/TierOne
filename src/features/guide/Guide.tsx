@@ -114,7 +114,7 @@ export default function Guide() {
                 <span className="text-sm font-medium text-white whitespace-nowrap">{step.label}</span>
               </Link>
               {i < PATH_STEPS.length - 1 && (
-                <span className="hidden sm:inline text-slate-600 flex-shrink-0" aria-hidden="true">→</span>
+                <span className="hidden sm:inline text-slate-400 flex-shrink-0" aria-hidden="true">→</span>
               )}
             </div>
           ))}

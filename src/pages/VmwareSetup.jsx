@@ -8,7 +8,7 @@ const STEPS = [
     title: 'Download VMware Workstation Pro',
     icon: '⬇️',
     time: '~10 min',
-    content: `VMware Workstation Pro is free for personal use as of 2024. Download it from the official Broadcom portal.`,
+    content: `VMware Workstation Pro is free for personal use. Download it from the official Broadcom portal.`,
     note: 'Alternatively, use VMware Workstation Player (free) or VirtualBox if you prefer open source.',
     links: [
       { label: 'Broadcom Download Portal', url: 'https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware+Workstation+Pro' },
@@ -212,13 +212,13 @@ export default function VmwareSetup() {
         <div className="font-mono text-xs text-slate-400 leading-8 overflow-x-auto">
           <div className="min-w-[480px]">
             <div className="flex items-center gap-3">
-              <span className="text-slate-600">Host Machine (Your PC)</span>
+              <span className="text-slate-400">Host Machine (Your PC)</span>
             </div>
             <div className="ml-4 border-l border-surface-600 pl-4 mt-1 space-y-3">
               <div className="flex items-center gap-3">
                 <span className="text-surface-600">├──</span>
                 <span className="text-accent-cyan">VMnet0 (Bridged)</span>
-                <span className="text-slate-600">→ Real network access</span>
+                <span className="text-slate-400">→ Real network access</span>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-surface-600">├──</span>
@@ -239,13 +239,13 @@ export default function VmwareSetup() {
                   <span className="text-surface-600">└──</span>
                   <span className="text-white">💻  Client01 Windows 10/11</span>
                   <span className="text-brand-400">192.168.100.30</span>
-                  <span className="text-slate-600">(optional)</span>
+                  <span className="text-slate-400">(optional)</span>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-surface-600">└──</span>
                 <span className="text-accent-green">VMnet2 (NAT) 192.168.200.0/24</span>
-                <span className="text-slate-600">→ Internet access</span>
+                <span className="text-slate-400">→ Internet access</span>
               </div>
             </div>
           </div>

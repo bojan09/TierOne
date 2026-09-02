@@ -111,7 +111,7 @@ export default function CourseView() {
                   done
                     ? 'bg-accent-green/15 text-accent-green'
                     : locked
-                      ? 'bg-surface-700 text-slate-600'
+                      ? 'bg-surface-700 text-slate-400'
                       : 'bg-brand-500/15 text-brand-300'
                 }`}
               >

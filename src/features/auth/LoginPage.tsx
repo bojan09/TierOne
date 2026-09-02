@@ -118,7 +118,7 @@ export default function LoginPage() {
         Continue with Google
       </button>
 
-      <div className="flex items-center gap-3 my-5 text-xs text-slate-600">
+      <div className="flex items-center gap-3 my-5 text-xs text-slate-400">
         <span className="h-px flex-1 bg-surface-700" />
         or
         <span className="h-px flex-1 bg-surface-700" />

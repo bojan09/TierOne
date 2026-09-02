@@ -221,7 +221,7 @@ export default function Glossary() {
           {hasFilters ? ' matching filters' : ' total'}
         </p>
         {!query && !alphaFilter && category === 'All' && (
-          <p className="text-xs text-slate-600">Sorted A–Z</p>
+          <p className="text-xs text-slate-400">Sorted A–Z</p>
         )}
       </div>
 
@@ -254,7 +254,7 @@ export default function Glossary() {
                   {letter}
                 </div>
                 <div className="flex-1 h-px bg-surface-700" />
-                <span className="text-xs text-slate-600 font-mono flex-shrink-0">
+                <span className="text-xs text-slate-400 font-mono flex-shrink-0">
                   {terms.length} term{terms.length !== 1 ? 's' : ''}
                 </span>
               </div>

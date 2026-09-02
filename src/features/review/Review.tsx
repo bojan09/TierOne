@@ -166,7 +166,7 @@ export default function Review() {
               <p className="text-sm text-white mb-1" role="status" aria-live="polite">
                 You scored {grade.score_pct}% ({grade.correct}/{grade.total}).
               </p>
-              <p className="text-xs text-slate-400 mb-3">How well did you recall this? <span className="text-slate-600">(press 1–4)</span></p>
+              <p className="text-xs text-slate-400 mb-3">How well did you recall this? <span className="text-slate-400">(press 1–4)</span></p>
               <div className="grid grid-cols-4 gap-2">
                 {RATINGS.map((r) => (
                   <button

@@ -318,7 +318,7 @@ export default function ThreatModelling() {
               ].map(col => (
                 <div key={col.tactic} className={`${col.color} border-r border-surface-700/50 last:border-0 p-3 min-w-[140px]`}>
                   <p className="text-[10px] font-bold text-white mb-1 leading-tight">{col.tactic}</p>
-                  <p className="text-[9px] text-slate-600 font-mono mb-2">{col.id}</p>
+                  <p className="text-[9px] text-slate-400 font-mono mb-2">{col.id}</p>
                   <div className="space-y-1">
                     {col.techniques.map(t => (
                       <div key={t} className="text-[10px] text-slate-400 bg-surface-800/60

@@ -149,7 +149,7 @@ function SubnetCalculator() {
           onChange={e => setCidr(Number(e.target.value))}
           className="w-full accent-brand-500 cursor-pointer"
         />
-        <div className="flex justify-between text-[10px] text-slate-600 font-mono mt-1">
+        <div className="flex justify-between text-[10px] text-slate-400 font-mono mt-1">
           <span>/1</span>
           <span>/8</span>
           <span>/16</span>
@@ -286,8 +286,8 @@ export default function TCPIP() {
             <div className="p-3 col-span-1 sm:col-span-2">
               <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-2">Key Protocols</p>
               <div className="py-1 text-slate-400 border-b border-surface-700/50">HTTP, HTTPS, FTP, SSH, SMTP, DNS</div>
-              <div className="py-1 text-slate-400 border-b border-surface-700/50 text-slate-600">—</div>
-              <div className="py-1 text-slate-400 border-b border-surface-700/50 text-slate-600">—</div>
+              <div className="py-1 text-slate-400 border-b border-surface-700/50 text-slate-400">—</div>
+              <div className="py-1 text-slate-400 border-b border-surface-700/50 text-slate-400">—</div>
               <div className="py-1 text-slate-400 border-b border-surface-700/50">TCP, UDP, SCTP</div>
               <div className="py-1 text-slate-400 border-b border-surface-700/50">IP, ICMP, ARP, OSPF, BGP</div>
               <div className="py-1 text-slate-400">Ethernet, Wi-Fi, Fibre</div>
@@ -349,7 +349,7 @@ export default function TCPIP() {
             <div className="min-w-[420px]">
               <div className="grid grid-cols-3 gap-4 text-center mb-2">
                 <div className="text-accent-cyan font-bold">Client</div>
-                <div className="text-slate-600"></div>
+                <div className="text-slate-400"></div>
                 <div className="text-accent-green font-bold">Server</div>
               </div>
               {[
@@ -359,11 +359,11 @@ export default function TCPIP() {
                 { from: 'both',   msg: 'DATA ↔ DATA', label: '4. Bidirectional data transfer', color: 'text-white' },
               ].map((s, i) => (
                 <div key={i} className="grid grid-cols-3 gap-4 items-center mb-1">
-                  <div className={`text-right text-xs ${s.from === 'client' ? s.color : s.from === 'both' ? s.color : 'text-slate-600'}`}>
+                  <div className={`text-right text-xs ${s.from === 'client' ? s.color : s.from === 'both' ? s.color : 'text-slate-400'}`}>
                     {s.from === 'client' ? s.msg : s.from === 'both' ? '←DATA' : ''}
                   </div>
                   <div className="text-center text-[10px] text-slate-500">{s.label}</div>
-                  <div className={`text-left text-xs ${s.from === 'server' ? s.color : s.from === 'both' ? s.color : 'text-slate-600'}`}>
+                  <div className={`text-left text-xs ${s.from === 'server' ? s.color : s.from === 'both' ? s.color : 'text-slate-400'}`}>
                     {s.from === 'server' ? s.msg : s.from === 'both' ? 'DATA→' : ''}
                   </div>
                 </div>

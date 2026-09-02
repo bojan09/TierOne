@@ -377,7 +377,7 @@ function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             <span className="flex-1 text-left text-[13px]">Search lessons…</span>
-            <kbd className="text-[10px] font-mono text-slate-600 bg-surface-700 border
+            <kbd className="text-[10px] font-mono text-slate-400 bg-surface-700 border
                             border-surface-600 px-1.5 py-0.5 rounded">⌘K</kbd>
           </button>
         </div>
@@ -510,7 +510,7 @@ export default function Navbar({ onOpenSearch }) {
                 </svg>
                 <span className="text-[12px] text-slate-500">Search</span>
                 <kbd className="flex items-center px-1.5 py-0.5 rounded bg-surface-700
-                                border border-surface-600 text-[10px] font-mono text-slate-600">
+                                border border-surface-600 text-[10px] font-mono text-slate-400">
                   ⌘K
                 </kbd>
               </button>

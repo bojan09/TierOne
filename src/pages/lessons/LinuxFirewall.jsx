@@ -288,32 +288,32 @@ export default function LinuxFirewall() {
               <div className="min-w-[500px]">
                 <div className="flex items-center gap-2">
                   <span className="text-accent-cyan">Incoming packet</span>
-                  <span className="text-slate-600">──▶</span>
+                  <span className="text-slate-400">──▶</span>
                   <span className="bg-surface-700 border border-brand-500/30 text-brand-300 px-3 py-1 rounded-lg">PREROUTING</span>
-                  <span className="text-slate-600">──▶</span>
+                  <span className="text-slate-400">──▶</span>
                   <span className="text-slate-500">Routing decision</span>
                 </div>
-                <div className="ml-32 text-slate-600 mt-1">├── For this host ──▶</div>
+                <div className="ml-32 text-slate-400 mt-1">├── For this host ──▶</div>
                 <div className="ml-48 flex items-center gap-2">
                   <span className="bg-surface-700 border border-accent-green/30 text-accent-green px-3 py-1 rounded-lg">INPUT</span>
-                  <span className="text-slate-600">──▶</span>
+                  <span className="text-slate-400">──▶</span>
                   <span className="text-accent-green">Local process</span>
                 </div>
-                <div className="ml-32 text-slate-600 mt-1">└── Forward ──▶</div>
+                <div className="ml-32 text-slate-400 mt-1">└── Forward ──▶</div>
                 <div className="ml-48 flex items-center gap-2">
                   <span className="bg-surface-700 border border-accent-amber/30 text-accent-amber px-3 py-1 rounded-lg">FORWARD</span>
-                  <span className="text-slate-600">──▶</span>
+                  <span className="text-slate-400">──▶</span>
                   <span className="bg-surface-700 border border-surface-600 text-slate-400 px-3 py-1 rounded-lg">POSTROUTING</span>
-                  <span className="text-slate-600">──▶</span>
+                  <span className="text-slate-400">──▶</span>
                   <span className="text-slate-500">Out</span>
                 </div>
                 <div className="flex items-center gap-2 mt-2">
                   <span className="text-accent-purple">Local process</span>
-                  <span className="text-slate-600">──▶</span>
+                  <span className="text-slate-400">──▶</span>
                   <span className="bg-surface-700 border border-accent-purple/30 text-accent-purple px-3 py-1 rounded-lg">OUTPUT</span>
-                  <span className="text-slate-600">──▶</span>
+                  <span className="text-slate-400">──▶</span>
                   <span className="bg-surface-700 border border-surface-600 text-slate-400 px-3 py-1 rounded-lg">POSTROUTING</span>
-                  <span className="text-slate-600">──▶</span>
+                  <span className="text-slate-400">──▶</span>
                   <span className="text-slate-500">Out</span>
                 </div>
               </div>

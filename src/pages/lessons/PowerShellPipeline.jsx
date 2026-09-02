@@ -318,7 +318,7 @@ export default function PowerShellPipeline() {
                 <span className="text-xl flex-shrink-0">{c.icon}</span>
                 <div>
                   <code className={`font-mono text-sm font-bold ${c.color}`}>{c.cmdlet}</code>
-                  <span className="text-[10px] text-slate-600 font-mono ml-2">({c.alias})</span>
+                  <span className="text-[10px] text-slate-400 font-mono ml-2">({c.alias})</span>
                 </div>
               </div>
               <p className="text-xs text-slate-400 leading-relaxed">{c.desc}</p>

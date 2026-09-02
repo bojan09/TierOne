@@ -218,7 +218,7 @@ export default function WindowsPermissions() {
                   <tr key={row[0]} className="hover:bg-surface-700/30">
                     <td className="px-3 py-2 font-semibold text-white text-xs">{row[0]}</td>
                     {row.slice(1).map((v, i) => (
-                      <td key={i} className={`px-3 py-2 text-center font-bold ${v === '✓' ? 'text-accent-green' : 'text-slate-600'}`}>{v}</td>
+                      <td key={i} className={`px-3 py-2 text-center font-bold ${v === '✓' ? 'text-accent-green' : 'text-slate-400'}`}>{v}</td>
                     ))}
                   </tr>
                 ))}

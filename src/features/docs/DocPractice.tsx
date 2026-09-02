@@ -86,7 +86,7 @@ export default function DocPractice() {
             className="w-full rounded-2xl border border-surface-700 bg-[#0b0f17] text-slate-100 text-sm p-4 outline-none focus:border-brand-500/60 resize-y mb-2"
           />
           <div className="flex items-center justify-between mb-6">
-            <span className="text-xs text-slate-600">{content.length}/4000</span>
+            <span className="text-xs text-slate-400">{content.length}/4000</span>
             <button
               type="button"
               onClick={() => void submit()}
@@ -128,7 +128,7 @@ function ResultView({ result, exercise }: { result: GradeResult; exercise: DocEx
           <ul className="space-y-2">
             {exercise.criteria.map((c, i) => (
               <li key={i} className="text-sm text-slate-300 flex gap-2">
-                <span className="text-slate-600 flex-shrink-0">☐</span>
+                <span className="text-slate-400 flex-shrink-0">☐</span>
                 <span>{c}</span>
               </li>
             ))}

@@ -131,7 +131,7 @@ export default function CodeBlock({
 
         <div className="flex items-center gap-2">
           {/* Language badge */}
-          <span className="text-[10px] font-mono text-slate-600 bg-surface-700
+          <span className="text-[10px] font-mono text-slate-400 bg-surface-700
                            px-2 py-0.5 rounded border border-surface-600">
             {langLabel}
           </span>

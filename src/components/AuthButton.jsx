@@ -6,7 +6,7 @@ export default function AuthButton() {
   const { session, profile, loading, signOut } = useAuth();
 
   if (loading) {
-    return <span className="text-[12px] text-slate-600 px-2">…</span>;
+    return <span className="text-[12px] text-slate-400 px-2">…</span>;
   }
 
   if (!session) {

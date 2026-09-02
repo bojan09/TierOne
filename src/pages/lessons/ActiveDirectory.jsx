@@ -262,11 +262,11 @@ export default function ActiveDirectory() {
               <div className="ml-4 text-slate-400">├── <span className="text-brand-300">Domain</span> (lab.local)</div>
               <div className="ml-8 text-slate-400">├── <span className="text-accent-cyan">Domain Controllers</span></div>
               <div className="ml-12 text-slate-500">├── DC01  192.168.100.10  <span className="text-accent-green">[PDC Emulator]</span></div>
-              <div className="ml-12 text-slate-500">└── DC02  192.168.100.11  <span className="text-slate-600">[Backup DC]</span></div>
+              <div className="ml-12 text-slate-500">└── DC02  192.168.100.11  <span className="text-slate-400">[Backup DC]</span></div>
               <div className="ml-8 text-slate-400">├── <span className="text-accent-amber">Organisational Units (OUs)</span></div>
               <div className="ml-12 text-slate-500">├── OU=IT</div>
-              <div className="ml-16 text-slate-600">├── Users (alice, bob, sysadmin)</div>
-              <div className="ml-16 text-slate-600">└── Computers (WS01, SRV01)</div>
+              <div className="ml-16 text-slate-400">├── Users (alice, bob, sysadmin)</div>
+              <div className="ml-16 text-slate-400">└── Computers (WS01, SRV01)</div>
               <div className="ml-12 text-slate-500">├── OU=Finance</div>
               <div className="ml-12 text-slate-500">└── OU=HR</div>
               <div className="ml-8 text-slate-400">└── <span className="text-accent-purple">Global Catalogue</span></div>

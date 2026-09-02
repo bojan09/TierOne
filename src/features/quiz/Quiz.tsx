@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getLessonQuiz, submitQuiz, type QuizQuestion, type QuizResult } from './api';
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress';
+import { useAuth } from '@/features/auth/useAuth';
 
 interface QuizProps {
   lessonId: string;
@@ -15,6 +16,7 @@ interface QuizProps {
  * the navbar/dashboard reflect the new XP immediately.
  */
 export function Quiz({ lessonId, onPass }: QuizProps) {
+  const { session } = useAuth();
   const { refresh } = useAcademyProgress();
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [answers, setAnswers] = useState<Record<number, number>>({});
@@ -37,7 +39,28 @@ export function Quiz({ lessonId, onPass }: QuizProps) {
     };
   }, [lessonId]);
 
-  if (loading || questions.length === 0) return null;
+  if (loading) return null;
+
+  if (questions.length === 0) {
+    // Expected for signed-out visitors — get_lesson_quiz is authenticated-only,
+    // so this is just RLS, not a data gap. Only surface a message when a
+    // signed-in user hits a lesson that's flagged hasQuiz but has zero
+    // questions seeded — otherwise this section silently vanishing looks
+    // like nothing happened.
+    if (!session) return null;
+    return (
+      <section className="mt-12 rounded-2xl border border-surface-700 bg-surface-800/40 p-6">
+        <div className="flex items-center gap-2.5 mb-1">
+          <span className="text-xl">🧠</span>
+          <h2 className="text-lg font-bold text-white">Check your understanding</h2>
+        </div>
+        <p className="text-sm text-slate-400">
+          This lesson&rsquo;s quiz isn&rsquo;t available right now — you can still mark the lesson
+          complete without it.
+        </p>
+      </section>
+    );
+  }
 
   const allAnswered = questions.every((q) => answers[q.id] !== undefined);
   const resultFor = (qid: number) => result?.results.find((r) => r.question_id === qid);

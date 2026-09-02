@@ -138,7 +138,7 @@ export default function Footer() {
                     <p className="text-sm font-semibold text-white truncate group-hover:text-brand-300 transition-colors">{c.title}</p>
                     <p className="text-[10px] text-slate-500 capitalize">{c.difficulty}</p>
                   </div>
-                  <svg className="w-4 h-4 text-slate-600 flex-shrink-0 group-hover:text-brand-400 group-hover:translate-x-0.5 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4 text-slate-400 flex-shrink-0 group-hover:text-brand-400 group-hover:translate-x-0.5 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7"/>
                   </svg>
                 </Link>

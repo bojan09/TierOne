@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 
 export const SITE_URL = 'https://tier-one-tau.vercel.app';
 export const SITE_NAME = 'TierOne';
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.svg`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 export interface SeoOptions {
   title: string;
@@ -61,6 +61,11 @@ export function useSeo({ title, description, path, type = 'website', image, noin
     setMeta('property', 'og:type', type);
     setMeta('property', 'og:site_name', SITE_NAME);
     setMeta('property', 'og:image', ogImage);
+    if (ogImage === DEFAULT_OG_IMAGE) {
+      setMeta('property', 'og:image:width', '1200');
+      setMeta('property', 'og:image:height', '630');
+      setMeta('property', 'og:image:type', 'image/png');
+    }
 
     setMeta('name', 'twitter:card', 'summary_large_image');
     setMeta('name', 'twitter:title', fullTitle);

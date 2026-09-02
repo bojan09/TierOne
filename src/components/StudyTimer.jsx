@@ -296,7 +296,7 @@ export default function StudyTimer({ onClose }) {
       {/* ── Session dots ── */}
       {sessions.length > 0 && (
         <div>
-          <p className="text-[10px] text-slate-600 uppercase tracking-widest mb-2">Session history</p>
+          <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-2">Session history</p>
           <div className="flex items-center gap-1.5 flex-wrap">
             {sessions.map((s, i) => (
               <SessionDot key={i} type={s.type} completed={s.done} />
@@ -307,7 +307,7 @@ export default function StudyTimer({ onClose }) {
 
       {/* ── Tips ── */}
       <div className="mt-4 pt-4 border-t border-surface-700">
-        <p className="text-[11px] text-slate-600 leading-relaxed">
+        <p className="text-[11px] text-slate-400 leading-relaxed">
           {isFocus
             ? '🎯 Close distractions, put on headphones, focus on one lesson at a time.'
             : '☕ Step away from the screen. Hydrate. Your brain consolidates learning during breaks.'}

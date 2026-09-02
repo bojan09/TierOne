@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function CustomerCommunication() {
   return (
@@ -25,7 +26,7 @@ export default function CustomerCommunication() {
       </section>
       <section>
         <h2>You've reached the end of the track</h2>
-        <p>From the support mindset to networks, accounts, M365, and communication — you now have the Tier-1 foundation. The Virtual Help Desk (coming soon) will let you put it all together on realistic tickets.</p>
+        <p>From the support mindset to networks, accounts, M365, and communication — you now have the Tier-1 foundation. Head to the <Link to="/simulator">Virtual Help Desk</Link> to put it all together on realistic tickets.</p>
       </section>
     </>
   );

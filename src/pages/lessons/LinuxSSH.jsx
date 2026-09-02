@@ -297,7 +297,7 @@ export default function LinuxSSH() {
                 <p className="text-[11px] text-slate-400 leading-relaxed">~/.ssh/id_ed25519</p>
                 <p className="text-[11px] text-slate-500 mt-1">Never leaves your machine. Permissions: 600. Optionally encrypted with a passphrase.</p>
               </div>
-              <div className="flex items-center text-slate-600 flex-shrink-0">↔</div>
+              <div className="flex items-center text-slate-400 flex-shrink-0">↔</div>
               <div className="flex-1 bg-surface-800 rounded-xl p-4 border border-accent-green/20">
                 <p className="text-accent-green font-bold text-sm mb-2">🔓 Public Key</p>
                 <p className="text-[11px] text-slate-400 leading-relaxed">~/.ssh/id_ed25519.pub</p>
