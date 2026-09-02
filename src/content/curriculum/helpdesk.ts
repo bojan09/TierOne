@@ -197,7 +197,7 @@ addCourse({ id:'t2-active-directory', slug:'t2-active-directory', title:"Tier 2:
     { id:'t2-ad-03', hasQuiz:true, slug:'lockouts', title:"Passwords, Lockouts & Unlocks", xp:80, minutes:22 },
     { id:'t2-ad-04', hasQuiz:true, slug:'gpo-basics', title:"Group Policy Basics for Support", xp:80, minutes:22 },
     { id:'t2-ad-05', hasQuiz:true, slug:'gpo-troubleshoot', title:"Group Policy Troubleshooting", xp:55, minutes:18 },
-    { id:'t2-ad-06', hasQuiz:true, slug:'lockouts', title:"Account Lockouts & Password Issues", xp:55, minutes:16 }
+    { id:'t2-ad-06', hasQuiz:true, slug:'lockout-root-cause', title:"Account Lockouts & Password Issues", xp:55, minutes:16 }
 ]);
 
 addCourse({ id:'t2-m365-admin', slug:'t2-m365-admin', title:"Tier 2: Microsoft 365 Administration", description:"Support the cloud productivity stack every business runs on — the admin center, licensing, Exchange Online, identity and MFA, and Teams/SharePoint/Intune basics.", icon:'☁️', order:22, difficulty:'intermediate' }, 't2-m365-m1', 'm365-admin', "Microsoft 365 Administration", [
@@ -214,7 +214,7 @@ addCourse({ id:'t2-network-troubleshooting', slug:'t2-network-troubleshooting', 
     { id:'t2-net-01', hasQuiz:true, slug:'client-connectivity', title:"Client Connectivity Issues", xp:80, minutes:22 },
     { id:'t2-net-02', hasQuiz:true, slug:'vpn-remote', title:"VPN & Remote Access Issues", xp:80, minutes:22 },
     { id:'t2-net-03', hasQuiz:true, slug:'printers', title:"Printers & Peripherals on the Network", xp:80, minutes:22 },
-    { id:'t2-net-04', hasQuiz:true, slug:'vpn-remote', title:"VPN & Remote Access Issues", xp:55, minutes:18 },
+    { id:'t2-net-04', hasQuiz:true, slug:'vpn-remote-routing', title:"VPN & Remote Access Issues", xp:55, minutes:18 },
     { id:'t2-net-05', hasQuiz:true, slug:'dns-resolution', title:"DNS & Name Resolution", xp:55, minutes:16 }
 ]);
 

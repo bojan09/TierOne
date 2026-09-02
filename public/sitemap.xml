@@ -559,7 +559,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://tier-one-tau.vercel.app/learn/t2-active-directory/lockouts</loc>
+    <loc>https://tier-one-tau.vercel.app/learn/t2-active-directory/lockout-root-cause</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -625,7 +625,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://tier-one-tau.vercel.app/learn/t2-network-troubleshooting/vpn-remote</loc>
+    <loc>https://tier-one-tau.vercel.app/learn/t2-network-troubleshooting/vpn-remote-routing</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
