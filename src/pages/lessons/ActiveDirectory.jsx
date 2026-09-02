@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import CodeBlock from '../../components/CodeBlock.jsx'
 import GlossaryTooltip from '../../components/GlossaryTooltip.jsx'
 
@@ -456,7 +457,7 @@ export default function ActiveDirectory() {
         <h2>VMware Lab Exercise</h2>
 
         <Callout type="warning" icon="🧪" title="Lab Prerequisites">
-          Complete the <a href="/vmware-setup">VMware Lab Setup guide</a> first.
+          Complete the <Link to="/vmware-setup">VMware Lab Setup guide</Link> first.
           You need: Windows Server 2025 VM on VMnet1, IP 192.168.100.10,
           server renamed to <strong>DC01</strong>.
         </Callout>

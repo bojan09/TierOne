@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import CodeBlock from '../components/CodeBlock.jsx'
 
 const STEPS = [
@@ -377,9 +378,9 @@ export default function VmwareSetup() {
           Once all 8 steps are complete, your lab environment is production-ready.
           Start with the Windows Server 2025 course.
         </p>
-        <a href="/windows-server-2025" className="btn-primary">
+        <Link to="/learn/windows-server-2025" className="btn-primary">
           Start Windows Server 2025 →
-        </a>
+        </Link>
       </div>
     </div>
   )
