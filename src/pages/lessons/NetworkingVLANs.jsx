@@ -46,68 +46,7 @@ ip route show | grep 10.10`
 const CODE_NETWORKINGVLANS_5 = `10.10.10.0/24 dev ens33.10 proto kernel scope link src 10.10.10.1
 10.10.20.0/24 dev ens33.20 proto kernel scope link src 10.10.20.1`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the primary purpose of a VLAN?',
-    options: [
-      'To increase network speed by reducing packet size',
-      'To logically segment a network at Layer 2, isolating broadcast domains without requiring separate physical switches',
-      'To encrypt traffic between network segments',
-      'To assign static IP addresses to devices automatically',
-    ],
-    correct: 1,
-    explanation: 'VLANs (Virtual LANs) create logical Layer 2 segments on a single physical switch. Devices in different VLANs cannot communicate at Layer 2 — broadcasts stay within each VLAN. This provides security isolation, traffic management, and broadcast control without buying separate physical hardware for each segment.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the difference between an access port and a trunk port?',
-    options: [
-      'Access ports are faster; trunk ports have security restrictions',
-      'An access port carries traffic for ONE VLAN (for end devices); a trunk port carries traffic for MULTIPLE VLANs using 802.1Q tags (for switch-to-switch or switch-to-router links)',
-      'Access ports are wireless; trunk ports are wired',
-      'Access ports require authentication; trunk ports do not',
-    ],
-    correct: 1,
-    explanation: 'An access port is assigned to a single VLAN — the end device connected to it (PC, server, printer) does not know about VLANs. A trunk port carries multiple VLANs simultaneously using IEEE 802.1Q tagging, which adds a 4-byte header to each Ethernet frame identifying its VLAN. Trunk ports connect switches to other switches, routers, or hypervisors.',
-  },
-  {
-    id: 'q3',
-    question: 'What is "inter-VLAN routing" and why is it needed?',
-    options: [
-      'A method of speeding up traffic between VLANs on the same switch',
-      'A Layer 3 process (router or Layer 3 switch) required for devices in different VLANs to communicate with each other',
-      'A security feature that logs traffic crossing VLAN boundaries',
-      'A protocol for synchronising VLAN configurations across multiple switches',
-    ],
-    correct: 1,
-    explanation: 'VLANs are Layer 2 segments — devices in different VLANs are isolated from each other. To route traffic between VLANs you need a Layer 3 device: a router (Router-on-a-Stick with subinterfaces) or a Layer 3 switch. The router/L3 switch has an IP address on each VLAN that serves as the default gateway for hosts in that VLAN.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the "native VLAN" on a trunk port?',
-    options: [
-      'The VLAN with the highest priority on the trunk',
-      'The management VLAN used to administer the switch',
-      'The VLAN whose traffic traverses a trunk port WITHOUT an 802.1Q tag — must match on both ends of a trunk',
-      'The default VLAN assigned to all access ports',
-    ],
-    correct: 2,
-    explanation: 'The native VLAN is the one VLAN on a trunk whose traffic is sent UNTAGGED. VLAN 1 is the default native VLAN on Cisco switches. A security best practice is to change the native VLAN to an unused VLAN ID — this prevents VLAN hopping attacks where an attacker sends double-tagged frames to jump to a different VLAN. Both ends of a trunk must agree on the native VLAN.',
-  },
-  {
-    id: 'q5',
-    question: 'What is Spanning Tree Protocol (STP) and why is it necessary in switched networks?',
-    options: [
-      'A protocol that encrypts traffic on trunk ports between switches',
-      'A protocol that prevents Layer 2 broadcast storms by disabling redundant links and creating a loop-free topology',
-      'A protocol for automatically assigning VLANs to new devices',
-      'A protocol that balances traffic load across multiple uplinks simultaneously',
-    ],
-    correct: 1,
-    explanation: 'Without STP, redundant switch connections create loops. A broadcast frame entering a loop circulates forever, duplicating endlessly and consuming all bandwidth — a broadcast storm that crashes the network. STP automatically detects loops and blocks redundant ports, maintaining exactly one active path between any two switches. Modern variants: RSTP (fast convergence), MSTP (per-VLAN), PVST+ (Cisco).',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

@@ -123,68 +123,6 @@ const CODE_LINUXPERMISSIONS_9 = `=== SUID Binaries ===
 === World-Writable Files in /etc ===
   (none — this is correct)`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'A file shows permissions "-rwxr-xr--". Who can execute it?',
-    options: [
-      'Everyone (owner, group, others)',
-      'Only the owner',
-      'Owner and group members',
-      'Only root',
-    ],
-    correct: 2,
-    explanation: 'Read the permissions in three groups of three: rwx (owner) r-x (group) r-- (others). The execute bit (x) is set for owner (rwX) and group (r-X) but not for others (r--). So the owner and group members can execute it. Others can only read it.',
-  },
-  {
-    id: 'q2',
-    question: 'What does "chmod 755 script.sh" set?',
-    options: [
-      'rwxr-xr-x — owner: full, group: read+execute, others: read+execute',
-      'rwxrwxr-x — owner: full, group: full, others: read+execute',
-      'rwx------ — owner: full, group: none, others: none',
-      'r-xr-xr-x — everyone: read+execute, nobody can write',
-    ],
-    correct: 0,
-    explanation: 'In octal: 7=rwx, 5=r-x, 5=r-x. So: owner gets rwx (read+write+execute), group gets r-x (read+execute, no write), others get r-x (read+execute, no write). This is the standard permission for executable scripts — only the owner can modify, everyone can read and run.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the SUID bit and why is it potentially dangerous?',
-    options: [
-      'It allows a file to be accessed by multiple users simultaneously',
-      'When set on an executable, it runs with the file OWNER\'s privileges regardless of who executes it — dangerous if set on root-owned programs',
-      'It prevents the file from being deleted even by root',
-      'It encrypts the file contents automatically',
-    ],
-    correct: 1,
-    explanation: 'SUID (Set User ID) means the program runs with the permissions of the FILE OWNER, not the person who runs it. The classic example: /usr/bin/passwd is SUID root — ordinary users can run it to change their own password because it temporarily gains root privileges. If an attacker finds a SUID root binary with a vulnerability, they can get a root shell.',
-  },
-  {
-    id: 'q4',
-    question: 'What does "usermod -aG docker alice" do?',
-    options: [
-      'Creates a new user called docker with alice as the password',
-      'Removes alice from the docker group',
-      'Adds alice to the docker group without removing her from existing groups (-a = append)',
-      'Sets alice as the administrator of the docker group',
-    ],
-    correct: 2,
-    explanation: 'usermod -aG group user adds the user to the specified group. The -a flag means APPEND — without it, -G would REPLACE all the user\'s supplementary groups with only the specified group. Always use -aG together. Changes take effect at next login. Verify with: groups alice or id alice.',
-  },
-  {
-    id: 'q5',
-    question: 'What does "umask 022" mean for newly created files?',
-    options: [
-      'New files get permissions 022',
-      'New files get permissions 644 (666 masked by 022) and directories get 755 (777 masked by 022)',
-      'Only files owned by group 022 can be created',
-      'All files created after this command are read-only',
-    ],
-    correct: 1,
-    explanation: 'umask subtracts from the default permissions. Default for files is 666, default for directories is 777. umask 022 removes write for group (2) and write for others (2). So files get 666-022=644 (rw-r--r--) and directories get 777-022=755 (rwxr-xr-x). The umask 022 is the standard production default.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

@@ -184,68 +184,6 @@ Get-Service | Where-Object Status -eq 'Running' |
   Group-Object { if ($_.DependentServices.Count -gt 0) {'Has Dependents'} else {'No Dependents'} } |
   Select-Object Name, Count`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does Where-Object do in a PowerShell pipeline?',
-    options: [
-      'Selects specific properties from objects',
-      'Filters objects that match a condition, passing only matching ones downstream',
-      'Sorts objects by a specified property',
-      'Groups objects into collections by a property value',
-    ],
-    correct: 1,
-    explanation: 'Where-Object filters the pipeline — only objects where the condition evaluates to $true are passed to the next command. Example: Get-Service | Where-Object { $_.Status -eq "Stopped" } passes only stopped services. Think of it as a WHERE clause in SQL. Its alias is "?" — so you can write Get-Service | ? { $_.Status -eq "Stopped" }.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the output of: 1..5 | ForEach-Object { $_ * 2 }',
-    options: [
-      '1 2 3 4 5',
-      '2 4 6 8 10',
-      '10 (the sum)',
-      '5 (the last value)',
-    ],
-    correct: 1,
-    explanation: '1..5 generates the range [1,2,3,4,5]. ForEach-Object processes each item as $_, multiplying by 2. So each number is doubled: 2, 4, 6, 8, 10. The results are output as separate pipeline objects, displayed on separate lines. This is the functional equivalent of a foreach loop but composable in pipelines.',
-  },
-  {
-    id: 'q3',
-    question: 'Which Select-Object parameter creates a calculated property with a custom label?',
-    options: [
-      '-Property with a string array',
-      '-Expand with the property name',
-      '-Property with a hashtable @{Name=\'Label\'; Expression={...}}',
-      '-Calculated with the expression scriptblock',
-    ],
-    correct: 2,
-    explanation: 'Calculated properties use a hashtable with Name (or Label/N/L) and Expression (or E) keys: Select-Object @{N="SizeMB"; E={[math]::Round($_.Length/1MB,2)}}. This is extremely powerful for transforming data on the fly — renaming properties, computing values, combining fields — without modifying the original object.',
-  },
-  {
-    id: 'q4',
-    question: 'What does the -ExpandProperty parameter of Select-Object do?',
-    options: [
-      'Expands compressed objects into their full representation',
-      'Extracts the values of a single property, returning them as raw values instead of objects',
-      'Shows all hidden and extended properties of an object',
-      'Increases the display width of the property column',
-    ],
-    correct: 1,
-    explanation: 'Select-Object -ExpandProperty PropertyName extracts the raw values of that property — stripping away the object wrapper. For example: Get-Process | Select-Object -ExpandProperty Name returns plain strings, not objects with a Name property. This is essential when you need raw values to pass to cmdlets that accept strings, not objects.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the purpose of Group-Object in the PowerShell pipeline?',
-    options: [
-      'Groups multiple commands together to run as a batch',
-      'Organises objects into groups based on a shared property value, outputting group name and count',
-      'Merges two object arrays into a single combined array',
-      'Creates a grouping of errors for batch error handling',
-    ],
-    correct: 1,
-    explanation: 'Group-Object groups input objects by a property value and returns a collection where each element has a Name (the group value), Count (how many), and Group (the actual objects). Example: Get-Service | Group-Object Status shows how many services are Running, Stopped, etc. Extremely useful for quick aggregation and frequency analysis.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

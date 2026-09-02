@@ -96,63 +96,7 @@ const CODE_PSREMOTING_6 = `Computer  OS                         FreeRAM_GB  Free
 DC01      Windows Server 2025 Std    1.82        42.7         67
 DC01      Windows Server 2025 Std    1.82        42.7         67`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What protocol does PowerShell Remoting use by default?',
-    options: ['SSH on port 22', 'WinRM (WS-Management) on port 5985 (HTTP) or 5986 (HTTPS)', 'RDP on port 3389', 'SMB on port 445'],
-    correct: 1,
-    explanation: 'PSRemoting uses WinRM (Windows Remote Management), Microsoft\'s implementation of the WS-Management protocol. Default: port 5985 (HTTP, traffic is still encrypted with Kerberos). Port 5986 uses HTTPS with a certificate. Enable it with: Enable-PSRemoting -Force. In a domain environment, WinRM traffic is authenticated and encrypted via Kerberos automatically.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the difference between Enter-PSSession and Invoke-Command?',
-    options: [
-      'Enter-PSSession opens an interactive remote shell; Invoke-Command runs a script block on one or more computers (can run in parallel)',
-      'Enter-PSSession is for Linux; Invoke-Command is for Windows',
-      'They are identical — different syntax for the same operation',
-      'Enter-PSSession requires admin rights; Invoke-Command does not',
-    ],
-    correct: 0,
-    explanation: 'Enter-PSSession creates an interactive session — your prompt changes to [ComputerName]:> and you type commands one at a time. Invoke-Command runs a script block non-interactively on one or many computers simultaneously using -ComputerName. Invoke-Command -ComputerName server1,server2,server3 { Get-Service } runs the command on all three servers in parallel and returns results.',
-  },
-  {
-    id: 'q3',
-    question: 'How do you run a command on 50 servers simultaneously with PSRemoting?',
-    options: [
-      'Loop through each server with foreach and call Invoke-Command one at a time',
-      'Invoke-Command -ComputerName (Get-Content servers.txt) -ScriptBlock { command } — it executes in parallel by default',
-      'Start-Job for each server then Wait-Job',
-      'PSRemoting cannot target more than 32 computers at once',
-    ],
-    correct: 1,
-    explanation: 'Invoke-Command accepts arrays for -ComputerName and executes on all targets in parallel (default throttle: 32 simultaneous connections, configurable with -ThrottleLimit). Feed server lists from a text file, AD query, or CSV. Results come back as objects tagged with PSComputerName so you know which server returned each result. This is how you manage hundreds of servers with a single command.',
-  },
-  {
-    id: 'q4',
-    question: 'What is a "Persistent Session" (PSSession) and when should you use one?',
-    options: [
-      'A session that survives server reboots',
-      'A reusable connection object created with New-PSSession — use when running multiple commands against the same computer to avoid the overhead of establishing a new connection each time',
-      'A session that records all commands for audit purposes',
-      'A session with elevated permissions that bypasses UAC',
-    ],
-    correct: 1,
-    explanation: 'New-PSSession creates a persistent connection object that stays open. Each Invoke-Command without a session creates AND destroys a connection — expensive for many commands. With $session = New-PSSession -ComputerName server1, subsequent Invoke-Command -Session $session calls reuse the same connection. Also preserves state (variables, loaded modules) between calls. Clean up with Remove-PSSession.',
-  },
-  {
-    id: 'q5',
-    question: 'What security risk does "CredSSP" authentication in PSRemoting address, and what risk does it introduce?',
-    options: [
-      'CredSSP prevents man-in-the-middle attacks; the risk is slower connection speed',
-      'CredSSP enables double-hop authentication (connecting to a third server FROM the remote session); the risk is that credentials are delegated to the remote machine, which could steal them',
-      'CredSSP encrypts traffic with AES-256; the risk is incompatibility with older servers',
-      'CredSSP allows non-admin accounts to use remoting; the risk is reduced audit trail',
-    ],
-    correct: 1,
-    explanation: 'The "double-hop problem": in a PSSession, you can\'t connect to a THIRD server because credentials are not forwarded. CredSSP solves this by delegating credentials to the remote machine — but this means the remote machine now holds your credentials and could abuse them. Only use CredSSP for specific administrative tasks that require the double-hop; never enable it globally. The preferred alternative is constrained delegation or resource-based constrained delegation.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

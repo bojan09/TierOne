@@ -95,58 +95,6 @@ Uninstall-WindowsFeature -Name Telnet-Client
 # RDS-RD-Server         → Remote Desktop Session Host
 # GPMC                  → Group Policy Management Console`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the minimum RAM requirement for Windows Server 2025 with Desktop Experience?',
-    options: ['512 MB', '1 GB', '2 GB', '4 GB'],
-    correct: 2,
-    explanation: 'Windows Server 2025 requires a minimum of 512 MB RAM for Server Core and 2 GB for Desktop Experience. However, for any real workload you need substantially more — 8 GB minimum for a lab domain controller, 16–32 GB for production.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the key difference between Windows Server Core and Desktop Experience?',
-    options: [
-      'Server Core is only for physical hardware; Desktop Experience is for VMs',
-      'Server Core has no GUI — managed via PowerShell and remote tools; Desktop Experience includes the full Windows GUI',
-      'Server Core cannot run Active Directory; Desktop Experience supports all roles',
-      'They are functionally identical — Desktop Experience just adds Solitaire',
-    ],
-    correct: 1,
-    explanation: 'Server Core has no graphical shell (no Explorer, no start menu) — it is a minimal installation managed entirely through the command line, PowerShell, and remote management tools like Windows Admin Center. It has a smaller attack surface, lower memory usage, and requires fewer reboots. Desktop Experience adds the full GUI. Microsoft recommends Server Core for production.',
-  },
-  {
-    id: 'q3',
-    question: 'Which command opens the Server Manager initial configuration tool on a freshly installed Windows Server?',
-    options: ['servermanager.exe', 'sconfig', 'initial-setup.cmd', 'server-config /init'],
-    correct: 1,
-    explanation: 'sconfig is the text-based Server Configuration tool that appears automatically on Server Core. It allows you to set the computer name, join a domain, configure networking, enable remote management, and set Windows Update settings — all without a GUI. On Desktop Experience, Server Manager launches automatically.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the purpose of Windows Server roles vs features?',
-    options: [
-      'Roles and features are the same thing — both terms refer to optional Windows components',
-      'Roles are primary server functions (DNS, DHCP, AD DS, IIS); Features are supporting components that enhance roles or the OS',
-      'Roles are free; Features require additional licensing',
-      'Roles run as services; Features run as scheduled tasks',
-    ],
-    correct: 1,
-    explanation: 'Roles define the primary purpose of a server — what service it provides to the network (DNS Server, DHCP Server, Active Directory Domain Services, Web Server/IIS, Hyper-V, File Services). Features are supporting software that add functionality — they may support a role or provide standalone capability (.NET Framework, Failover Clustering, SNMP, Windows Backup).',
-  },
-  {
-    id: 'q5',
-    question: 'What is VMware Tools and why is it important to install it in a Windows Server VM?',
-    options: [
-      'VMware Tools is a firewall product that protects VMs from network attacks',
-      'It is optional software that only adds aesthetic improvements to the VM window',
-      'It installs optimised drivers and services that dramatically improve VM performance, enable shared clipboard, and allow graceful shutdown from the VMware host',
-      'It configures Windows Server licensing for virtualised environments',
-    ],
-    correct: 2,
-    explanation: 'VMware Tools is a suite of utilities that runs inside the guest OS to improve management and performance. It provides optimised SVGA, network, and storage drivers; enables VM heartbeat monitoring; allows graceful power operations from the host; synchronises the VM clock; and enables shared clipboard and drag-and-drop. Always install it immediately after OS installation.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

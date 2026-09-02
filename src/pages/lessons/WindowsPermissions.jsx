@@ -81,68 +81,6 @@ Name                   ObjectClass PrincipalSource
 DC01\\Administrator     User        Local
 LAB\\Domain Admins      Group       ActiveDirectory`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does UAC (User Account Control) do when a standard user runs a program requiring elevation?',
-    options: [
-      'It silently denies the action and logs the attempt',
-      'It prompts for credentials of an administrator account — the program then runs with those elevated privileges, not the user\'s standard account',
-      'It temporarily grants admin rights to the user\'s account',
-      'It restarts the program with SYSTEM privileges',
-    ],
-    correct: 1,
-    explanation: 'Over-the-Shoulder (OTS) elevation: UAC shows a credential prompt asking for an admin account\'s username and password. The program launches as a new process with the admin\'s token, completely separate from the standard user session. This is why malware running as a standard user cannot silently gain admin rights — it triggers a visible UAC prompt that the user must actively approve.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the difference between NTFS permissions and Share permissions?',
-    options: [
-      'NTFS permissions are for local access; Share permissions only apply over the network — when both apply, the most restrictive wins',
-      'They are identical — both are stored in the same ACL',
-      'Share permissions are more secure than NTFS permissions',
-      'NTFS permissions apply to files; Share permissions apply to folders',
-    ],
-    correct: 0,
-    explanation: 'NTFS permissions are stored in the file system ACL and apply both locally and over the network. Share permissions only apply when accessing via a network share. When both apply simultaneously (network access to a shared NTFS folder), Windows calculates effective permissions by applying BOTH and taking the most restrictive result. Best practice: set Share permissions to Everyone:Full Control and use NTFS for all actual access control.',
-  },
-  {
-    id: 'q3',
-    question: 'What is an Access Control List (ACL) and what are its two types?',
-    options: [
-      'A list of allowed IP addresses for firewall rules; types are inbound and outbound',
-      'A list of Access Control Entries on a securable object; DACL (Discretionary ACL — who can access) and SACL (System ACL — what to audit)',
-      'A list of installed software and their access requirements',
-      'A log of all access attempts stored in Event Viewer',
-    ],
-    correct: 1,
-    explanation: 'Every Windows securable object (file, folder, registry key, process) has a security descriptor containing: DACL (Discretionary ACL) — the list of ACEs defining which users/groups are allowed or denied access and what type. SACL (System ACL) — defines which access attempts are logged to the Security event log. Each ACE contains: trustee (who), access mask (what), and type (Allow/Deny). Deny ACEs take precedence over Allow.',
-  },
-  {
-    id: 'q4',
-    question: 'What does "icacls C:\\folder /grant Users:(OI)(CI)M" do?',
-    options: [
-      'Grants Users read-only access to C:\\folder',
-      'Grants the Users group Modify permission on C:\\folder, with (OI) propagating to files and (CI) propagating to subfolders',
-      'Removes all existing permissions and grants only Users modify access',
-      'Creates a new folder and grants Users modify access',
-    ],
-    correct: 1,
-    explanation: 'icacls is the command-line ACL tool. /grant adds permissions. (OI) = Object Inherit (applies to files in the folder). (CI) = Container Inherit (applies to subfolders). M = Modify (read, write, execute, delete — but not change permissions). Combined: Users get Modify on the folder itself plus all files (OI) and subfolders (CI) created in it. Other rights: F=Full Control, R=Read, W=Write, X=Execute, D=Delete.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the purpose of the "Everyone" group vs "Authenticated Users" in Windows?',
-    options: [
-      'They are identical — both refer to all user accounts',
-      'Everyone includes all users including unauthenticated (guest/anonymous) connections; Authenticated Users includes only users who have successfully authenticated — use Authenticated Users for security-sensitive permissions',
-      'Everyone is for local accounts; Authenticated Users is for domain accounts',
-      'Everyone grants read access; Authenticated Users grants write access',
-    ],
-    correct: 1,
-    explanation: 'Everyone includes any user who can connect to the system — including the Guest account and potentially anonymous connections. Authenticated Users includes only principals who have successfully authenticated with a valid password. For share permissions and most access control scenarios, use Authenticated Users rather than Everyone. Granting Everyone:Read on a share means unauthenticated guests can read files if the Guest account is enabled.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info:'callout-info', warning:'callout-warning', success:'callout-success', danger:'callout-danger' }

@@ -121,68 +121,7 @@ Spooler Stopped Disabled    ✔ PrintNightmare mitigated
 System audit policy
 Logon: Success and Failure   ✔`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What are CIS Benchmarks and why are they authoritative?',
-    options: [
-      'Microsoft internal security guidelines only available to Enterprise customers',
-      'Community-developed, consensus-based configuration standards created by the Center for Internet Security — the most widely referenced baseline for system hardening',
-      'Government classified security standards requiring special clearance to access',
-      'Automated tools that scan for vulnerabilities and fix them automatically',
-    ],
-    correct: 1,
-    explanation: 'CIS (Center for Internet Security) Benchmarks are free, community-developed security configuration guides for operating systems, cloud platforms, and applications. They are developed through a consensus process involving security experts and are widely recognised by regulators, auditors, and security teams. CIS Level 1 = practical security that doesn\'t impact functionality. CIS Level 2 = high-security environments where functionality may be reduced.',
-  },
-  {
-    id: 'q2',
-    question: 'What does "attack surface reduction" mean in Windows Server hardening?',
-    options: [
-      'Installing antivirus software to block all known attacks',
-      'Minimising the number of installed roles, features, services, and open ports — fewer running components means fewer ways an attacker can exploit the system',
-      'Blocking all inbound network traffic with a firewall',
-      'Renaming the Administrator account to reduce brute-force attempts',
-    ],
-    correct: 1,
-    explanation: 'Attack surface reduction means minimising everything that is exposed: uninstall unused roles and features, disable unused services, close unnecessary ports, remove unused software, and restrict which accounts can do what. A minimal server running only what it needs has far fewer exploitable components than a general-purpose server with everything installed.',
-  },
-  {
-    id: 'q3',
-    question: 'What does enabling "Credential Guard" protect against?',
-    options: [
-      'Brute-force attacks against domain account passwords',
-      'Pass-the-Hash and Pass-the-Ticket attacks by isolating credential material in a hardware-protected Virtual Secure Mode process',
-      'Phishing attacks that steal credentials from browsers',
-      'Kerberoasting attacks against service account passwords',
-    ],
-    correct: 1,
-    explanation: 'Windows Credential Guard uses Virtualization-Based Security (VBS) to isolate NTLM hashes and Kerberos tickets in a separate Hyper-V Virtual Secure Mode process that the main OS cannot access. This prevents attackers who gain admin access from using Mimikatz or similar tools to extract credentials from LSASS memory for Pass-the-Hash and Pass-the-Ticket attacks.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the recommended approach to manage privileged access on Windows Servers (Microsoft\'s tiered model)?',
-    options: [
-      'Use a single administrator account with a very long password for all tasks',
-      'Use separate accounts for each tier: Tier 0 (Domain Controllers), Tier 1 (Servers), Tier 2 (Workstations) — never use a higher-tier account on a lower-tier system',
-      'Enable multi-factor authentication on the default Administrator account',
-      'Use shared credentials stored in a password manager accessible to all IT staff',
-    ],
-    correct: 1,
-    explanation: 'Microsoft\'s privileged access tiering model separates administrative accounts by the systems they manage. A Tier 0 admin account (used on Domain Controllers) must NEVER be used to log into a Tier 1 server or Tier 2 workstation. If a workstation (Tier 2) is compromised and a Tier 0 admin logs in, their credentials can be stolen. PAWs (Privileged Access Workstations) are dedicated hardened machines for tier administration.',
-  },
-  {
-    id: 'q5',
-    question: 'What Windows Security policy setting prevents users from reusing recent passwords?',
-    options: [
-      'Maximum password age',
-      'Enforce password history — stores previous password hashes and rejects reuse of the last N passwords',
-      'Minimum password length',
-      'Password must meet complexity requirements',
-    ],
-    correct: 1,
-    explanation: 'Enforce password history stores hashes of previous passwords (up to 24) and prevents reuse. Combined with minimum password age (prevents immediate cycling through history), this ensures users cannot just append a number to their old password. Recommended setting: 24 passwords remembered. Without minimum password age, users could reset 24 times in one session to reuse their favourite password.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

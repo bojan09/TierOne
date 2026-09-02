@@ -48,68 +48,7 @@ dig @192.168.100.10: 142.250.80.46 ← DC01 DNS works fine ✔
 Root cause: /etc/resolv.conf pointed to a non-existent DNS server.
 Fix: restored correct DNS server (192.168.100.10).`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'When should you escalate a problem rather than continuing to troubleshoot it yourself?',
-    options: [
-      'Immediately — always escalate to avoid making mistakes',
-      'Never — a professional should solve every problem independently',
-      'When you have exhausted your knowledge, the problem impacts critical systems beyond your authority to fix, or it requires specialist access you don\'t have',
-      'After exactly 30 minutes of troubleshooting',
-    ],
-    correct: 2,
-    explanation: 'Escalation is not failure — it\'s professional judgement. Escalate when: (1) you\'ve tried everything in your toolkit and the problem persists, (2) the issue is beyond your authority to fix (e.g. change management required), (3) the severity/business impact requires specialist involvement, or (4) you\'ve been troubleshooting so long that fresh eyes would be faster. Always document what you\'ve tried before escalating.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the "divide and conquer" troubleshooting approach?',
-    options: [
-      'Splitting the problem between multiple team members simultaneously',
-      'Testing the middle of a potential range to eliminate half the possibilities at each step',
-      'Dividing the ticket into smaller tasks and resolving them separately',
-      'Running multiple diagnostic tools simultaneously to gather data faster',
-    ],
-    correct: 1,
-    explanation: 'Divide and conquer (also called binary search / half-splitting) means testing the midpoint of a range to eliminate half the problem space at each step. For example: if network traffic fails between A and Z, test the midpoint M. If M works, the problem is between M and Z. If M fails, it\'s between A and M. This is much faster than testing sequentially from one end.',
-  },
-  {
-    id: 'q3',
-    question: 'Why should you change only ONE variable at a time when troubleshooting?',
-    options: [
-      'It\'s a bureaucratic requirement, not a technical one',
-      'So that if the problem resolves, you know exactly which change fixed it — multiple simultaneous changes make cause determination impossible',
-      'Because changes to multiple variables simultaneously can damage hardware',
-      'To ensure the change management system can track each modification separately',
-    ],
-    correct: 1,
-    explanation: 'Changing one variable at a time is fundamental to scientific troubleshooting. If you change three things and the problem disappears, you don\'t know which change fixed it — or whether the combination was necessary. You also can\'t reliably document the fix or reproduce it. Change one thing, test the result, document what happened, then proceed.',
-  },
-  {
-    id: 'q4',
-    question: 'What is an "OSI model top-down" troubleshooting approach?',
-    options: [
-      'Starting with management (top of the organisation) before touching technical systems',
-      'Beginning with application-layer symptoms and working down through the layers until the root cause is found',
-      'Checking the physical layer first, then moving up through the stack',
-      'Prioritising problems in the order they were reported',
-    ],
-    correct: 1,
-    explanation: 'Top-down starts at Layer 7 (Application) — "what does the user actually see?" — and works downward: Application → Presentation → Session → Transport (ports) → Network (IP/routing) → Data Link (switch/MAC) → Physical (cable/NIC). This approach is efficient when you have a clear user-reported symptom. Bottom-up starts at Layer 1 and is better when you suspect physical issues.',
-  },
-  {
-    id: 'q5',
-    question: 'What should ALWAYS be documented at the end of a troubleshooting session?',
-    options: [
-      'Only the final solution — documenting failed attempts wastes time',
-      'The problem description, symptoms, what was tested, root cause, solution applied, and who was involved',
-      'Just a ticket closure comment saying "issue resolved"',
-      'The time spent on the problem for billing purposes only',
-    ],
-    correct: 1,
-    explanation: 'Good troubleshooting documentation includes: problem description (what was broken), observed symptoms, what you tested and the results, root cause identified, solution applied, any follow-up actions, and timeline. This creates institutional knowledge, helps the next person who sees the same problem, and demonstrates professional competence. Poor documentation is one of the most common sysadmin anti-patterns.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

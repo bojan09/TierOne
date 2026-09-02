@@ -43,48 +43,6 @@ Subnets (/26):
   192.168.100.128/26  first=192.168.100.129 last=192.168.100.190
   192.168.100.192/26  first=192.168.100.193 last=192.168.100.254`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'You need to subnet 192.168.10.0 into 4 equal subnets. What prefix length do you use?',
-    options: ['/25', '/26', '/27', '/28'],
-    correct: 1,
-    explanation: 'To create 4 subnets from a /24, you need 2 additional bits (2² = 4). /24 + 2 = /26. Each /26 has 64 addresses (62 usable hosts). The 4 subnets are: 192.168.10.0/26, 192.168.10.64/26, 192.168.10.128/26, 192.168.10.192/26.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the broadcast address for 172.16.32.0/20?',
-    options: ['172.16.32.255', '172.16.47.255', '172.16.39.255', '172.16.48.0'],
-    correct: 1,
-    explanation: '/20 means 20 network bits and 12 host bits. The host portion for 172.16.32.0/20: last 12 bits are all zeros. The broadcast has all host bits set to 1: the third octet 32 in binary is 00100000, with the last 4 bits (from /20) being the start of the host portion. Network = 172.16.32.0, broadcast = 172.16.47.255 (32+16-1=47 in third octet, 255 in fourth).',
-  },
-  {
-    id: 'q3',
-    question: 'What is VLSM (Variable Length Subnet Masking)?',
-    options: [
-      'Using different subnet masks for different parts of a network to avoid wasting IP addresses',
-      'A security feature that changes subnet masks dynamically to prevent scanning',
-      'Assigning variable numbers of IP addresses to VLAN interfaces',
-      'A routing protocol that supports multiple subnet mask lengths',
-    ],
-    correct: 0,
-    explanation: 'VLSM allows different subnets within the same network to have different sizes (prefix lengths). For example: a point-to-point WAN link needs only 2 hosts → use /30. A server VLAN with 20 servers needs a /27 (30 hosts). A large user VLAN with 200 users needs a /24. VLSM avoids wasting addresses by right-sizing each subnet.',
-  },
-  {
-    id: 'q4',
-    question: 'Which address range is reserved for private use (RFC 1918) at the Class B range?',
-    options: ['10.0.0.0 – 10.255.255.255', '172.16.0.0 – 172.31.255.255', '192.168.0.0 – 192.168.255.255', '169.254.0.0 – 169.254.255.255'],
-    correct: 1,
-    explanation: 'RFC 1918 defines three private ranges: 10.0.0.0/8 (Class A, 16M addresses), 172.16.0.0/12 (Class B range, 172.16.0.0–172.31.255.255, 1M addresses), 192.168.0.0/16 (Class C range, 65K addresses). 169.254.0.0/16 is APIPA (link-local), assigned when DHCP fails.',
-  },
-  {
-    id: 'q5',
-    question: 'A host has IP 10.50.200.100/18. What is the network address?',
-    options: ['10.50.0.0', '10.50.192.0', '10.50.200.0', '10.50.128.0'],
-    correct: 1,
-    explanation: '/18 means 18 network bits. The third octet (200) contributes the last 2 bits to the network portion. 200 in binary = 11001000. /18 uses 16 bits for the first two octets + 2 more from the third octet. The first 2 bits of 200 (11) = 192. So network = 10.50.192.0/18. Host range: 10.50.192.1–10.50.255.254. Broadcast: 10.50.255.255.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

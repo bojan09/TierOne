@@ -113,68 +113,7 @@ ResourceId              InDesiredState
 [Service]WinRM          True
 [Service]DNS            True`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the core concept behind PowerShell Desired State Configuration (DSC)?',
-    options: [
-      'A scripting approach that runs commands in sequence to configure systems',
-      'A declarative configuration model — you describe the desired end state of a system and DSC continuously ensures the system matches that state, automatically correcting drift',
-      'A backup system that saves the current state of Windows servers',
-      'A version control system for PowerShell scripts',
-    ],
-    correct: 1,
-    explanation: 'DSC is declarative, not imperative. Instead of writing "run these commands to install IIS, then configure this setting", you declare "this server should have IIS installed with these settings." The Local Configuration Manager (LCM) on each node then ensures the system reaches and maintains that state. It periodically checks (every 30 minutes by default) and corrects drift automatically.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the Local Configuration Manager (LCM) in DSC?',
-    options: [
-      'A GUI tool for managing DSC configurations',
-      'The DSC engine that runs on each target node — it processes MOF files, applies configurations, monitors for drift, and enforces the refresh/reboot behaviour',
-      'The central server that distributes DSC configurations to managed nodes',
-      'A PowerShell module that must be installed separately on each server',
-    ],
-    correct: 1,
-    explanation: 'The LCM is the DSC runtime built into every modern Windows Server. It runs as a background service, processes .mof (Managed Object Format) files compiled from DSC configurations, and enforces state. Key LCM settings: ConfigurationMode (ApplyOnly / ApplyAndMonitor / ApplyAndAutoCorrect), RefreshFrequencyMins (how often to check), RebootNodeIfNeeded. View/set with Get-DscLocalConfigurationManager and Set-DscLocalConfigurationManager.',
-  },
-  {
-    id: 'q3',
-    question: 'In DSC, what is a "resource"?',
-    options: [
-      'A CPU or memory allocation for a DSC operation',
-      'A PowerShell module that defines how to test, get, and set a specific configuration item — like WindowsFeature, File, Registry, or Service',
-      'A .mof file containing compiled configuration',
-      'An XML file containing server inventory',
-    ],
-    correct: 1,
-    explanation: 'A DSC resource is a PowerShell module implementing three functions: Get-TargetResource (reads current state), Test-TargetResource (returns true/false: is it in desired state?), Set-TargetResource (applies the desired state). Built-in resources include: WindowsFeature (install/remove roles), File (manage files/dirs), Registry (registry values), Service (service state), User (local accounts). Many more from DSC Resource Kit on PowerShell Gallery.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the difference between Push mode and Pull mode in DSC?',
-    options: [
-      'Push mode uses UDP; Pull mode uses TCP',
-      'In Push mode, an admin computer pushes .mof files directly to target nodes; in Pull mode, nodes regularly poll a central Pull server to download their assigned configurations',
-      'Push mode applies configurations immediately; Pull mode requires manual approval',
-      'There is no difference — they produce identical behaviour',
-    ],
-    correct: 1,
-    explanation: 'Push mode: admin runs Start-DscConfiguration -Path .\\MofFolder -ComputerName node1 to push a compiled .mof directly to each node. Simple but not scalable for many nodes. Pull mode: nodes are configured with a Pull server URL, they check in periodically and download their configuration by ConfigurationID or ConfigurationName. Scales to thousands of nodes. Pull mode also enables compliance reporting — the pull server knows which nodes are in/out of compliance.',
-  },
-  {
-    id: 'q5',
-    question: 'What does Test-DscConfiguration return and when should you use it?',
-    options: [
-      'A list of all DSC resources installed on the system',
-      'A boolean (or detailed InDesiredState property) indicating whether the target node currently matches its applied DSC configuration — useful for compliance checking before/after changes',
-      'A test report of the MOF file syntax',
-      'The time it will take to apply the configuration',
-    ],
-    correct: 1,
-    explanation: 'Test-DscConfiguration -Detailed returns a DscConfigurationStatus object with InDesiredState (True/False), ResourcesInDesiredState, and ResourcesNotInDesiredState. Run it regularly as a compliance check. If InDesiredState is False, Start-DscConfiguration -UseExisting will re-apply the current configuration to correct the drift. Integrate into monitoring: script that emails when a node drifts from desired state.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info:'callout-info', warning:'callout-warning', success:'callout-success' }

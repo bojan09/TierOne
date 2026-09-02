@@ -92,68 +92,7 @@ Jan 15 11:00:00 srv01 kernel: [UFW BLOCK] IN=ens33 OUT=
   SRC=10.0.2.2 DST=192.168.100.20 PROTO=TCP DPT=22
   <- blocked connection attempt from outside the allowed subnet`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between stateful and stateless packet filtering?',
-    options: [
-      'Stateful filtering is slower; stateless is faster — they produce the same security outcome',
-      'Stateless filtering examines each packet in isolation against rules; stateful filtering tracks connection state and automatically allows return traffic for established connections',
-      'Stateful filtering works at Layer 7; stateless works at Layer 3',
-      'Stateless filtering requires more memory; stateful filtering requires more CPU',
-    ],
-    correct: 1,
-    explanation: 'Stateless filtering (ACLs) evaluates every packet against rules independently — you must explicitly allow both outbound AND inbound return traffic. Stateful filtering tracks the connection state table: when you allow outbound TCP:443, the firewall automatically allows the return packets because it knows they belong to an established connection. Modern firewalls (iptables with conntrack, nftables, Windows Firewall) are all stateful.',
-  },
-  {
-    id: 'q2',
-    question: 'What does "ufw default deny incoming" accomplish?',
-    options: [
-      'Blocks all outbound traffic from the server',
-      'Sets the default policy to deny all incoming connections not explicitly allowed — creating a whitelist model where everything is blocked unless you explicitly permit it',
-      'Disables the firewall completely for incoming traffic',
-      'Only affects traffic from unknown IP addresses',
-    ],
-    correct: 1,
-    explanation: 'Setting the default incoming policy to DENY is the foundation of secure firewall design — block everything, then explicitly allow only what is needed. This is the whitelist model. The alternative (default ALLOW) is the blacklist model — allow everything, block known-bad. Blacklists are fundamentally inferior because you must know every attack to block it; whitelists only need to know what legitimate traffic looks like.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the purpose of the INPUT, OUTPUT, and FORWARD chains in iptables?',
-    options: [
-      'INPUT handles TCP; OUTPUT handles UDP; FORWARD handles ICMP',
-      'INPUT processes packets destined FOR this host; OUTPUT processes packets FROM this host; FORWARD processes packets PASSING THROUGH this host (routing)',
-      'INPUT is for inbound connections; OUTPUT is for established connections; FORWARD is for new connections',
-      'They represent different OSI layers: INPUT=L3, OUTPUT=L4, FORWARD=L7',
-    ],
-    correct: 1,
-    explanation: 'iptables has three built-in chains in the filter table: INPUT — packets whose destination is the local host (incoming connections to services running on this machine). OUTPUT — packets originating from the local host (outbound connections). FORWARD — packets passing through this machine to another destination (only relevant when the machine is acting as a router/gateway). For a server that\'s not a router, INPUT and OUTPUT are the primary chains.',
-  },
-  {
-    id: 'q4',
-    question: 'What is a DMZ (Demilitarised Zone) in network security architecture?',
-    options: [
-      'A network segment where all firewall rules are disabled for testing',
-      'A network segment isolated from both the internet and internal LAN, where internet-facing services (web servers, mail) live — limiting exposure if they are compromised',
-      'A VLAN used exclusively for management traffic',
-      'A geographic region where servers are hosted under different regulatory rules',
-    ],
-    correct: 1,
-    explanation: 'A DMZ is a buffer zone between the internet and your internal network. Internet-facing services (web servers, email gateways, VPN concentrators) live in the DMZ. Firewall rules: internet → DMZ (limited, specific ports only), internal LAN → DMZ (allowed, for management), DMZ → internal LAN (blocked or very restricted). If an attacker compromises a web server in the DMZ, they cannot directly reach internal systems — they hit another firewall boundary.',
-  },
-  {
-    id: 'q5',
-    question: 'What does "ufw allow from 192.168.100.0/24 to any port 22" accomplish?',
-    options: [
-      'Blocks SSH access from the 192.168.100.0/24 subnet',
-      'Allows SSH connections only from the 192.168.100.0/24 subnet — restricting SSH access to the management network',
-      'Allows the server to initiate SSH connections to the subnet',
-      'Forwards SSH traffic to a different port',
-    ],
-    correct: 1,
-    explanation: 'This UFW rule creates a source-restricted allow: only hosts in 192.168.100.0/24 can connect to port 22 (SSH). All other source IPs are blocked by the default deny policy. This is the correct production approach for SSH hardening — combined with key-based authentication, it makes brute-force attacks from arbitrary internet IPs impossible because the firewall drops them before they reach sshd.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

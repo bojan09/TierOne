@@ -92,68 +92,7 @@ const CODE_CYBERSECURITYINCIDENTRESPONSE_5 = `Id     Name        StartTime      
 System contained — outbound traffic blocked
 Eradication complete`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What are the 6 phases of the NIST Incident Response lifecycle?',
-    options: [
-      'Detect, Analyse, Contain, Fix, Recover, Close',
-      'Preparation, Detection & Analysis, Containment, Eradication, Recovery, Post-Incident Activity',
-      'Plan, Identify, Protect, Detect, Respond, Recover',
-      'Discover, Triage, Isolate, Remediate, Restore, Document',
-    ],
-    correct: 1,
-    explanation: 'NIST SP 800-61 defines: (1) Preparation — build capability before incidents, (2) Detection & Analysis — confirm and scope the incident, (3) Containment — stop the bleeding, (4) Eradication — remove the threat completely, (5) Recovery — restore and verify, (6) Post-Incident Activity — lessons learned, improve processes. Each phase produces specific deliverables.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the FIRST action upon detecting a suspected compromise?',
-    options: [
-      'Immediately shut down the affected system',
-      'Re-image the system to remove any malware',
-      'Collect volatile evidence (running processes, network connections, memory) BEFORE any changes are made',
-      'Disconnect the system from the network',
-    ],
-    correct: 2,
-    explanation: 'Volatile evidence (RAM contents, running processes, active network connections, logged-in users, open files) is lost when a system is shut down or rebooted. Collect it FIRST: capture process list, network connections, running services, bash history, and if possible a memory dump. Shutdown destroys this evidence. After evidence collection, containment (network isolation) is the appropriate next step.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the difference between "containment" and "eradication" in incident response?',
-    options: [
-      'They are the same phase with different names',
-      'Containment stops the incident from spreading further (isolate); eradication removes the actual threat (malware, backdoors, compromised accounts)',
-      'Containment is for network incidents; eradication is for endpoint incidents',
-      'Containment is a technical action; eradication is a business decision',
-    ],
-    correct: 1,
-    explanation: 'Containment: isolate the affected system from the network to prevent lateral movement and further damage. The threat may still be present on the isolated system. Eradication: actively remove the malware, close the backdoor, reset compromised credentials, patch the vulnerability. Both phases are necessary — containment without eradication leaves the threat in place; eradication without containment allows the attacker to continue operating.',
-  },
-  {
-    id: 'q4',
-    question: 'What should a post-incident review (blameless post-mortem) produce?',
-    options: [
-      'A list of individuals responsible for the incident and disciplinary actions',
-      'A timeline of events, root cause analysis, impact assessment, and specific actionable improvements to prevent recurrence — not individual blame',
-      'A report to law enforcement documenting the attackers',
-      'A decision on whether to pay a ransom demand',
-    ],
-    correct: 1,
-    explanation: 'A blameless post-mortem focuses on system and process failures, not individual blame. Outputs: a timeline of events, root cause (not symptoms), impact quantification (downtime, data exposure, cost), what worked in the response, what didn\'t, and specific actionable improvements (controls to add, processes to change, training needed). Blame culture prevents honest disclosure and prevents learning.',
-  },
-  {
-    id: 'q5',
-    question: 'What is "chain of custody" in incident response and why does it matter?',
-    options: [
-      'The escalation chain for notifying management during an incident',
-      'Documentation proving that evidence was collected, handled, and stored in a controlled manner without tampering — required for legal proceedings',
-      'The order in which systems are brought back online after recovery',
-      'The process of handing off incident response between shift teams',
-    ],
-    correct: 1,
-    explanation: 'Chain of custody documents who collected evidence, when, how, and where it has been since collection. For legal proceedings (criminal charges, civil litigation, regulatory investigations), evidence is inadmissible if chain of custody is broken — if you can\'t prove the evidence wasn\'t tampered with, it\'s worthless in court. Even if you don\'t expect legal action, proper chain of custody is best practice.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

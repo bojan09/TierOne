@@ -105,68 +105,7 @@ const CODE_LINUXPACKAGES_9 = `nginx
 The following packages have been kept back:
   nginx`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between "apt update" and "apt upgrade"?',
-    options: [
-      'They are identical — both download and install updates',
-      'apt update refreshes the package index; apt upgrade actually installs newer versions of installed packages',
-      'apt update installs updates; apt upgrade only shows what is available',
-      'apt update works online; apt upgrade works from a local cache',
-    ],
-    correct: 1,
-    explanation: 'apt update downloads the latest package lists from repositories — it does not install anything. apt upgrade then compares your installed packages against the updated index and upgrades those that have newer versions available. Always run apt update before apt upgrade to ensure you have current information.',
-  },
-  {
-    id: 'q2',
-    question: 'A package installation fails with "E: Unable to locate package nginx". What is the FIRST step?',
-    options: [
-      'sudo apt install nginx --fix-missing',
-      'sudo apt update then retry',
-      'Reinstall the operating system',
-      'Download the .deb file manually',
-    ],
-    correct: 1,
-    explanation: 'This error almost always means the package index is out of date or the package is in a repository that has not been added. Run sudo apt update first to refresh the package lists. If it still fails, the package may not be in the default repos — check if you need to add a PPA or third-party repository.',
-  },
-  {
-    id: 'q3',
-    question: 'What does "apt-mark hold nginx" do?',
-    options: [
-      'Temporarily pauses the nginx service without stopping it',
-      'Prevents nginx from being upgraded or removed by apt',
-      'Locks the nginx configuration file from changes',
-      'Backs up the current nginx installation',
-    ],
-    correct: 1,
-    explanation: 'apt-mark hold marks a package so that apt will not automatically upgrade or remove it. This is used when you need to pin a specific version — for example, keeping Kubernetes at a specific version when running a managed cluster. Use apt-mark unhold to release the hold.',
-  },
-  {
-    id: 'q4',
-    question: 'What is a PPA (Personal Package Archive)?',
-    options: [
-      'A local package cache stored on the system',
-      'A community-maintained repository hosted on Launchpad that provides packages not in official Ubuntu repos, often newer versions',
-      'A compressed archive format for distributing multiple .deb files',
-      'A package signing key stored in the APT keyring',
-    ],
-    correct: 1,
-    explanation: 'A PPA (Personal Package Archive) is a repository hosted on Ubuntu\'s Launchpad platform, maintained by community members or software vendors. PPAs allow users to access newer versions of software or packages not in official repos. Add with: add-apt-repository ppa:user/repo. Be cautious — PPAs are not officially vetted and can introduce security risks.',
-  },
-  {
-    id: 'q5',
-    question: 'What command shows which package provides a specific file, such as /usr/bin/nmap?',
-    options: [
-      'apt search nmap',
-      'dpkg -S /usr/bin/nmap',
-      'apt show nmap',
-      'which --package nmap',
-    ],
-    correct: 1,
-    explanation: 'dpkg -S /path/to/file queries the dpkg database to find which installed package owns a given file. For files not yet installed, use: apt-file search /usr/bin/nmap (requires apt-file to be installed and updated). This is essential when troubleshooting missing commands — find what package provides them.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

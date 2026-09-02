@@ -84,68 +84,7 @@ const CODE_WS2025BACKUP_6 = `Name            Enabled
 ----            -------
 Test Recovery   False    ← restored, re-enable manually`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the 3-2-1 backup rule?',
-    options: [
-      '3 full backups per week, 2 per month, 1 per year',
-      '3 copies of data, on 2 different storage types, with 1 copy offsite — ensures no single failure destroys all backups',
-      '3 minute recovery time objective, 2 hour recovery point, 1 day retention',
-      '3 servers per site, 2 sites minimum, 1 primary datacenter',
-    ],
-    correct: 1,
-    explanation: 'The 3-2-1 rule: 3 copies of your data (1 production + 2 backups), stored on 2 different media types (e.g. disk + tape, or local + cloud), with 1 copy offsite. This protects against: disk failure (multiple copies), media failure (different types), and site disasters (offsite copy). For ransomware protection, add an air-gapped or immutable copy (3-2-1-1).',
-  },
-  {
-    id: 'q2',
-    question: 'What is the difference between RTO and RPO in backup planning?',
-    options: [
-      'RTO is for physical servers; RPO is for virtual machines',
-      'RTO (Recovery Time Objective) = how long you can tolerate being offline; RPO (Recovery Point Objective) = how much data loss you can accept (time since last backup)',
-      'They are the same metric measured in different units',
-      'RTO is a Microsoft standard; RPO is an industry standard',
-    ],
-    correct: 1,
-    explanation: 'RTO: "Our systems must be back online within 4 hours." This drives your restore process speed requirements. RPO: "We cannot lose more than 1 hour of data." This drives your backup frequency — if RPO is 1 hour, you must back up every hour. A system with 4-hour RTO and 1-hour RPO needs: hourly backups, a restore process testable in under 4 hours, and regular DR drills to prove it.',
-  },
-  {
-    id: 'q3',
-    question: 'What does Windows Server Backup use to ensure consistent backups of databases and AD?',
-    options: [
-      'It flushes all data to disk and locks the system for the duration',
-      'Volume Shadow Copy Service (VSS) — it coordinates with application writers to create application-consistent point-in-time snapshots without service interruption',
-      'It backs up only changed files since the last backup using journaling',
-      'It uses Hyper-V checkpoints to create consistent snapshots',
-    ],
-    correct: 1,
-    explanation: 'VSS (Volume Shadow Copy Service) is the framework that makes consistent backups of live systems possible. VSS-aware applications (SQL Server, Active Directory, Exchange) register as "VSS writers." When a backup starts, VSS signals writers to flush their buffers and quiesce writes temporarily, takes a snapshot, then signals writers to resume. The backup engine then reads from the snapshot. Without VSS, a database backup might capture half a transaction — unusable for restore.',
-  },
-  {
-    id: 'q4',
-    question: 'What is a Bare Metal Recovery (BMR) backup and when is it needed?',
-    options: [
-      'A backup of raw disk sectors without a filesystem',
-      'A complete backup of the entire system state — OS, applications, settings, and data — allowing full restoration to new hardware after a catastrophic failure',
-      'A backup method that bypasses the OS for maximum speed',
-      'A backup of only the Windows boot partition',
-    ],
-    correct: 1,
-    explanation: 'Bare Metal Recovery captures the entire system: OS, boot configuration, application binaries, settings, and data. It allows you to restore a failed server onto completely new hardware — not just the same hardware. Windows Server Backup includes BMR capability. For AD Domain Controllers, the System State backup (which includes the AD database, SYSVOL, registry, and boot files) is the minimum needed to restore DC functionality.',
-  },
-  {
-    id: 'q5',
-    question: 'Why must you regularly test backup restores and not just assume backups work?',
-    options: [
-      'Testing helps identify which files were changed since the last backup',
-      'Untested backups frequently fail during actual recovery — corruption, media failure, changed procedures, or missing dependencies are only discovered when you try to restore',
-      'Testing improves backup speed by warming the storage cache',
-      'Regulatory compliance requires testing every 90 days',
-    ],
-    correct: 1,
-    explanation: 'A backup that has never been tested is just a hope. Common failure modes discovered only during restore: media corruption (backup completed but data is unreadable), changed encryption keys (vault access lost), missing software prerequisites on the recovery system, procedure documentation out of date, and backup sets larger than expected restoration time allows. Schedule quarterly restore tests to a non-production environment and document the actual restore time.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info:'callout-info', warning:'callout-warning', success:'callout-success', danger:'callout-danger' }

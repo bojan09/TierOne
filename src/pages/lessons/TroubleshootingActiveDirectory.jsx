@@ -92,68 +92,7 @@ Replication Summary — no failures detected
 Name                        NameTarget        Port
 _ldap._tcp.lab.local        dc01.lab.local    389`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What command quickly checks the health of AD replication between domain controllers?',
-    options: [
-      'Get-ADReplication -All',
-      'repadmin /showrepl and repadmin /replsummary — shows replication status, last successful sync, and any failures between all DC pairs',
-      'dcdiag /test:replication',
-      'netlogon /check',
-    ],
-    correct: 1,
-    explanation: 'repadmin /showrepl shows the detailed replication status for each naming context from each source DC. repadmin /replsummary provides a quick summary table of largest deltas and failure counts. Both are essential for AD replication troubleshooting. Also useful: repadmin /syncall /AdeP (force sync all partitions), and Get-ADReplicationFailure in PowerShell for structured output.',
-  },
-  {
-    id: 'q2',
-    question: 'A user cannot log in with the error "The trust relationship between this workstation and the primary domain failed." What is the cause and fix?',
-    options: [
-      'The user\'s password has expired — reset it in ADUC',
-      'The computer account\'s Kerberos secret is out of sync with the domain. Fix: rejoin the domain or use "Reset-ComputerMachinePassword" without rejoining',
-      'The domain controller is offline — wait for it to come back online',
-      'Active Directory has reached its maximum number of computer accounts',
-    ],
-    correct: 1,
-    explanation: 'Every computer joined to a domain has a machine account with a password that rotates every 30 days. If the local machine\'s stored secret diverges from the domain\'s (e.g. after restoring an old snapshot), authentication fails. Fix without rejoining: Test-ComputerSecureChannel -Repair -Credential (Get-Credential DOMAIN\\Admin). If that fails, disjoin and rejoin. This is different from a user password issue — it\'s the computer\'s trust with the domain.',
-  },
-  {
-    id: 'q3',
-    question: 'What is SYSVOL replication and why is it critical for Group Policy to work?',
-    options: [
-      'SYSVOL is a backup of Active Directory — Group Policy doesn\'t depend on it',
-      'SYSVOL is a shared folder on every DC containing Group Policy templates and logon scripts. If SYSVOL replication fails, clients get different GPO versions from different DCs, causing inconsistent policy application',
-      'SYSVOL stores user profile data that must be replicated for roaming profiles',
-      'SYSVOL contains the AD schema — replication failures cause object creation to fail',
-    ],
-    correct: 1,
-    explanation: 'SYSVOL (\\\\domain\\SYSVOL) contains GPO templates (in Policies folder) and logon scripts. When you create or modify a GPO, the SYSVOL must replicate to all DCs. If SYSVOL replication breaks, clients applying policy from different DCs get different versions — some get the update, some get the old policy. Check SYSVOL replication with: Get-DfsrBacklog or dfsrdiag (DFS-R) or FRS event logs (legacy).',
-  },
-  {
-    id: 'q4',
-    question: 'What does "dcdiag /test:netlogon" check?',
-    options: [
-      'Whether domain controllers can ping each other',
-      'Whether the Netlogon service is running and the NETLOGON and SYSVOL shares are accessible on each DC',
-      'The speed of the network connection between domain controllers',
-      'Whether all netlogon audit events are being properly logged',
-    ],
-    correct: 1,
-    explanation: 'dcdiag /test:netlogon verifies the Netlogon service is started and the critical \\\\DC\\NETLOGON and \\\\DC\\SYSVOL shares exist and are accessible. These shares are required for domain join, logon scripts, and GPO downloads. A common issue: Netlogon running but shares not accessible (SYSVOL not yet replicated to a new DC, or DFS-R not initialized). Run dcdiag /test:all for a comprehensive DC health check.',
-  },
-  {
-    id: 'q5',
-    question: 'A user\'s Group Policy is not applying correctly. What is the first diagnostic step?',
-    options: [
-      'Restart the domain controller',
-      'Run gpresult /r or gpresult /h report.html on the affected computer to see which GPOs are applying, which are denied, and in what order (LSDOU)',
-      'Delete and recreate the GPO',
-      'Remove the computer from the OU and add it back',
-    ],
-    correct: 1,
-    explanation: 'gpresult /r (text) or gpresult /h report.html (HTML report) shows the complete Group Policy result for the current user and computer: which GPOs applied, which were filtered/denied and why, the processing order, and the winning settings for each policy area. This is always step 1. Common findings: GPO linked to wrong OU, security filtering excluding the account, WMI filter blocking application, or slow link detection deferring some GPOs.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

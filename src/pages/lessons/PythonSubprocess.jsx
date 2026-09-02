@@ -181,68 +181,7 @@ const CODE_PYTHONSUBPROCESS_5 = `  192.168.100.10: ONLINE
   nginx: STOPPED
   cron: active`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'Why should you avoid using shell=True with subprocess unless absolutely necessary?',
-    options: [
-      'It makes the code run slower than shell=False',
-      'It passes the command through a shell interpreter, creating a security vulnerability (shell injection) if any part of the command includes user input',
-      'It only works on Linux, not Windows',
-      'It prevents capturing stdout and stderr',
-    ],
-    correct: 1,
-    explanation: 'With shell=True, the command is passed to /bin/sh -c "command". If any user input is included unvalidated, an attacker can inject shell metacharacters: a filename like "file.txt; rm -rf /" becomes a shell command. Always use shell=False (default) and pass commands as lists: subprocess.run(["ls", "-la", user_dir]). The list form is immune to injection because each element is a literal argument, not parsed by a shell.',
-  },
-  {
-    id: 'q2',
-    question: 'What does subprocess.run(cmd, capture_output=True, text=True) return?',
-    options: [
-      'A string containing only stdout',
-      'A CompletedProcess object with .stdout (str), .stderr (str), and .returncode (int) attributes',
-      'A tuple of (stdout, stderr)',
-      'A file object you must read() manually',
-    ],
-    correct: 1,
-    explanation: 'subprocess.run() returns a CompletedProcess object. capture_output=True is equivalent to stdout=subprocess.PIPE, stderr=subprocess.PIPE. text=True decodes bytes to strings using the default encoding. Access results via: result.stdout (the output), result.stderr (any errors), result.returncode (0 = success, non-zero = failure). Check success with result.returncode == 0 or use check=True to raise an exception on failure.',
-  },
-  {
-    id: 'q3',
-    question: 'What does check=True do in subprocess.run()?',
-    options: [
-      'Verifies that the command exists before running it',
-      'Raises subprocess.CalledProcessError if the command returns a non-zero exit code',
-      'Checks that the output is non-empty',
-      'Validates the command against a whitelist of allowed commands',
-    ],
-    correct: 1,
-    explanation: 'check=True causes subprocess.run() to raise subprocess.CalledProcessError if the process exits with a non-zero return code (indicating failure). Without check=True, a failing command silently returns a result object with a non-zero returncode that you must check manually. Using check=True ensures failures are never silently ignored — critical for sysadmin scripts where silent failure can be catastrophic.',
-  },
-  {
-    id: 'q4',
-    question: 'When should you use subprocess.Popen instead of subprocess.run()?',
-    options: [
-      'Always — Popen is the modern API and run() is deprecated',
-      'When you need real-time, streaming output from a long-running process rather than waiting for it to complete',
-      'When running on Windows instead of Linux',
-      'When you need to capture stderr separately from stdout',
-    ],
-    correct: 1,
-    explanation: 'subprocess.run() waits for the process to finish and returns all output at once. For long-running processes where you want to process output line-by-line as it arrives (e.g., a backup job printing progress, a ping loop, a tail -f), use Popen with stdout=PIPE and iterate over proc.stdout. run() is correct for 95% of use cases; Popen is for streaming/interactive scenarios.',
-  },
-  {
-    id: 'q5',
-    question: 'How do you correctly pass a filename with spaces to a subprocess command?',
-    options: [
-      'Quote the filename: subprocess.run(["cat", "\'my file.txt\'"])',
-      'Pass it as a separate list element: subprocess.run(["cat", "my file.txt"]) — no quoting needed',
-      'Replace spaces with underscores first',
-      'Use shell=True and add quotes: subprocess.run("cat \'my file.txt\'", shell=True)',
-    ],
-    correct: 1,
-    explanation: 'When using list form (shell=False, the default), each list element is a separate argument. The OS passes it directly to the program without shell processing — so "my file.txt" as a list element IS the filename, spaces included. Never quote inside list elements. This is one of the key advantages of list form over shell=True: you never have to worry about quoting or escaping.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

@@ -167,68 +167,7 @@ const CODE_PYTHONCLITOOL_5 = `      Disk Usage
  389   LDAP     [green]OPEN[/]
  3389  RDP      [green]OPEN[/]`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does argparse.ArgumentParser(description="...") with add_argument("--verbose", action="store_true") provide?',
-    options: [
-      'A GUI window with a description label and a checkbox',
-      'Automatic --help text generation, command-line argument parsing, and a boolean flag that is True when --verbose is passed and False otherwise',
-      'A configuration file parser that reads settings from verbose.ini',
-      'A logging handler that writes verbose output to a file',
-    ],
-    correct: 1,
-    explanation: 'argparse is Python\'s built-in CLI argument library. add_argument("--verbose", action="store_true") creates an optional flag that defaults to False. When the user passes --verbose, args.verbose becomes True. argparse automatically generates --help output from the description and argument help strings. It also handles type conversion, required arguments, choices validation, and mutually exclusive argument groups.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the purpose of the if __name__ == "__main__": guard in a CLI tool?',
-    options: [
-      'It prevents the script from running on Windows',
-      'It allows the module to be imported by other scripts without executing the CLI entry point — the main() function only runs when the script is executed directly',
-      'It checks if the user running the script has root privileges',
-      'It validates that the Python version is compatible',
-    ],
-    correct: 1,
-    explanation: 'When Python imports a module, __name__ is set to the module\'s name. When a script is run directly, __name__ is "__main__". The guard if __name__ == "__main__": main() ensures that main() only executes when the file is run directly, not when imported. This makes CLI scripts importable as libraries in tests or other scripts, which is essential for testability.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the Rich library used for in Python CLI tools?',
-    options: [
-      'Connecting to financial APIs for currency conversion',
-      'Beautiful terminal output: coloured text, tables, progress bars, syntax highlighting, and styled panels — making CLI tools professional and readable',
-      'Encrypting CLI output for secure transmission',
-      'Managing Python package dependencies',
-    ],
-    correct: 1,
-    explanation: 'Rich (pip install rich) transforms bland terminal output into polished, readable interfaces. Key features: Console() with markup for coloured text ([bold red]Error[/]), Table() for aligned columns, Progress() for animated progress bars, Syntax() for syntax-highlighted code blocks, Panel() for boxed content, and Traceback() for beautiful exception display. It detects terminal capabilities and gracefully degrades when color isn\'t supported.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the benefit of using sys.exit(1) instead of raise SystemExit in error handling?',
-    options: [
-      'sys.exit(1) is faster and uses less memory',
-      'They are functionally identical — sys.exit(1) is more explicit and idiomatic; both exit with return code 1 which signals failure to the calling shell or CI system',
-      'sys.exit(1) shows an error message; SystemExit is silent',
-      'sys.exit(1) only works on Linux; SystemExit works cross-platform',
-    ],
-    correct: 1,
-    explanation: 'sys.exit(n) actually raises SystemExit(n) internally — they are equivalent. The convention: exit code 0 = success, non-zero = failure (1 = general error, 2 = bad usage/argument error). Shell scripts and CI pipelines check the exit code: if a script exits non-zero, the pipeline fails. Always exit with 1 on error and 0 on success. argparse automatically exits with code 2 for argument parsing errors.',
-  },
-  {
-    id: 'q5',
-    question: 'What makes a CLI tool "well-behaved" from a Unix philosophy perspective?',
-    options: [
-      'It has a graphical help screen and interactive wizard',
-      'It reads from stdin when no file is specified, writes results to stdout, errors to stderr, exits 0 on success and non-zero on failure, and does one thing well — making it composable with pipes and other tools',
-      'It stores all configuration in a database',
-      'It requires root/administrator privileges to install',
-    ],
-    correct: 1,
-    explanation: 'Unix-philosophy CLI tools: (1) stdout for normal output (can be piped), (2) stderr for errors/warnings (doesn\'t pollute pipes), (3) exit code 0 = success, non-zero = failure (machine-readable), (4) --help and --version flags, (5) support stdin as input when practical (cat file | tool or tool < file), (6) --quiet and --verbose flags for output control, (7) machine-readable output mode (--json, --csv) for scripting, (8) no interactive prompts in non-interactive mode (--force or --no-input).',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

@@ -34,33 +34,7 @@ Enable-NetFirewallRule -DisplayGroup 'Remote Desktop'
 # Who is connected right now?
 query session /server:DC01`
 
-const QUIZ_QUESTIONS = [
-  {
-    id:'q1', question:'What is the difference between Remote Desktop Services (RDS) and a plain RDP connection?',
-    options:['They are identical','RDS is a full platform for publishing apps/desktops to many users with licensing, session brokers, and gateways; plain RDP is a direct point-to-point connection to one server','RDS uses a different port than RDP','RDS requires Active Directory; RDP does not'],
-    correct:1, explanation:'A plain RDP connection (mstsc.exe) connects directly to one server desktop. RDS is a platform: Session Host (multi-user sessions), Connection Broker (load balances sessions), Web Access (browser-based launch), Gateway (secure external access over HTTPS), RemoteApp (publish individual applications). RDS scales from 2 users to thousands with proper infrastructure.'
-  },
-  {
-    id:'q2', question:'What is a RemoteApp and how does it differ from a full desktop session?',
-    options:['RemoteApp is a mobile application version of Windows software','A RemoteApp publishes a single application over RDP — users see only the application window, not the full remote desktop, making it feel like the app runs locally','RemoteApp requires a separate license from full desktop RDS','RemoteApp only works over LAN, not WAN connections'],
-    correct:1, explanation:'RemoteApp presents a single application (e.g. a legacy line-of-business app) as if it were running locally. The user sees the application window without the full remote desktop background. This is ideal for legacy app delivery — the app runs on a centralised server but appears local. Published via RDS Web Access or distributed as .rdp files.'
-  },
-  {
-    id:'q3', question:'What is the purpose of an RD Gateway?',
-    options:['It balances load between multiple Session Hosts','It provides HTTPS-encapsulated RDP access for external users without requiring a VPN, using port 443','It manages RDS CAL licenses across the infrastructure','It caches commonly-used applications to speed up session launch'],
-    correct:1, explanation:'RD Gateway wraps RDP traffic in HTTPS (port 443) enabling external users to connect to internal RDS infrastructure through the internet without a VPN. Users connect to gateway.company.com:443 and the gateway securely proxies their session to the internal Session Hosts. Supports certificate authentication and integrates with NPS for MFA policies.'
-  },
-  {
-    id:'q4', question:'What is an RDS CAL (Client Access License) and when is it required?',
-    options:['A certificate for encrypting RDS connections','A per-user or per-device license required for each entity that connects to RDS Session Host — required beyond the 2-connection grace period, enforced by the RDS Licensing Server','A network access control policy for RDS connections','A backup license used when the primary RDS server is offline'],
-    correct:1, explanation:'RDS CALs are Microsoft licenses for multi-user RDS access. Two modes: Per User (one CAL per user account, regardless of devices) or Per Device (one CAL per device, regardless of users). After a 120-day grace period, RDS Licensing Server must be configured or sessions are refused. The licensing server tracks and issues temporary tokens to clients. Domain Controllers cannot serve as licensing servers in some configurations.'
-  },
-  {
-    id:'q5', question:'What does the RD Connection Broker do in an RDS deployment?',
-    options:['It encrypts the connection between client and Session Host','It manages session load balancing across multiple Session Hosts and reconnects disconnected users to their existing session on the correct server','It brokers CAL licenses to connecting clients','It translates RDP traffic from older clients to newer protocol versions'],
-    correct:1, explanation:'The Connection Broker is the intelligence of an RDS farm. When a user connects, the broker: checks if they have an existing disconnected session (reconnect them to it), load balances new sessions across Session Hosts based on connection count or custom rules, and manages RemoteApp and VDI desktop assignments. Essential for redundancy — without a broker, adding multiple Session Hosts requires manual session management.'
-  },
-]
+
 
 function Callout({ type='info', icon, title, children }) {
   const s = { info:'callout-info', warning:'callout-warning', success:'callout-success' }

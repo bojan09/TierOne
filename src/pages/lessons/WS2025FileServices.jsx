@@ -97,68 +97,7 @@ NETLOGON    Disk  Logon server share
 SYSVOL      Disk  Logon server share
 IPC$        IPC   Remote IPC`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between Share Permissions and NTFS Permissions?',
-    options: [
-      'They are the same — both control access to shared folders',
-      'Share permissions control network access to the share; NTFS permissions control access to the files/folders themselves. When both apply, the MORE RESTRICTIVE of the two takes effect',
-      'Share permissions apply to domain users; NTFS applies to local users',
-      'Share permissions are set on the server; NTFS permissions are set on the client',
-    ],
-    correct: 1,
-    explanation: 'Share permissions only apply when accessing over the network. NTFS permissions apply both locally and over the network. When a user accesses a file over a share, Windows evaluates BOTH: the effective network permission is whichever is more restrictive. Best practice: set share permissions to "Everyone: Full Control" and use NTFS permissions for actual access control — simpler management, consistent results.',
-  },
-  {
-    id: 'q2',
-    question: 'What does DFS Namespace (DFS-N) provide?',
-    options: [
-      'Automatic replication of files between servers',
-      'A virtual namespace (like \\\\domain\\shared) that maps to physical shares on different servers — users see one path regardless of which server actually stores the files',
-      'Distributed file locking to prevent simultaneous edits',
-      'Encryption of files stored on file servers',
-    ],
-    correct: 1,
-    explanation: 'DFS Namespace creates a unified virtual path (\\\\lab.local\\shared\\Finance) that users access without knowing which physical server hosts the data. You can have \\\\SRV01\\Finance and \\\\SRV02\\Finance both mapped to the same namespace path. When you migrate data between servers, only the namespace target changes — users\' mapped drives continue working unchanged.',
-  },
-  {
-    id: 'q3',
-    question: 'What is a shadow copy and why should it be enabled on file servers?',
-    options: [
-      'A hidden backup of deleted files stored in the Recycle Bin',
-      'Volume Shadow Copies (VSS) create point-in-time snapshots of volumes, allowing users to restore previous versions of files without admin intervention — reducing helpdesk load for "I accidentally deleted my file" tickets',
-      'An encrypted copy of files stored in a separate partition',
-      'A real-time mirror of a file share to a backup server',
-    ],
-    correct: 1,
-    explanation: 'Volume Shadow Copy Service (VSS) creates snapshots of volumes at scheduled times. Users can right-click a file/folder → Properties → Previous Versions to restore an earlier version or recover a deleted file themselves. This dramatically reduces helpdesk tickets for accidental deletions. Configure via Server Manager → File and Storage Services → Volumes → Configure Shadow Copies. Recommend 2x daily.',
-  },
-  {
-    id: 'q4',
-    question: 'What PowerShell command creates a new SMB share with Full Control for Domain Admins and Change access for Domain Users?',
-    options: [
-      'New-SmbShare -Name "Data" -Path "D:\\Data" -FullAccess "Domain Admins" -ChangeAccess "Domain Users"',
-      'Create-Share -Name "Data" -Permissions "DA:Full,DU:Change"',
-      'Set-SmbShare -Path "D:\\Data" -Access "Full:DA,Change:DU"',
-      'New-FileShare -Name "Data" -ACL "Domain Admins:F,Domain Users:C"',
-    ],
-    correct: 0,
-    explanation: 'New-SmbShare creates SMB network shares. -FullAccess grants Full Control share permission. -ChangeAccess grants Change (read/write but not change permissions/delete). -ReadAccess grants Read only. Note: these are Share permissions — always also set NTFS permissions on the folder. Use Get-SmbShare to list shares, Remove-SmbShare to delete.',
-  },
-  {
-    id: 'q5',
-    question: 'What does the "Access-Based Enumeration" feature do in Windows file shares?',
-    options: [
-      'Limits the number of files a user can access per session',
-      'Hides files and folders from users who do not have at least Read permission — users only see files they can access, reducing confusion and information disclosure',
-      'Audits all file access attempts for compliance reporting',
-      'Encrypts files that are accessed more than once per day',
-    ],
-    correct: 1,
-    explanation: 'Access-Based Enumeration (ABE) prevents users from seeing files and folders they don\'t have permission to access. Without ABE, a user browsing \\\\server\\data would see all folders even those they can\'t open — they get "Access Denied" when they click, which is confusing and exposes the folder structure. With ABE, they simply don\'t see folders they can\'t access. Enable in Share Properties → Advanced Settings.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

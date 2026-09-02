@@ -192,68 +192,7 @@ const CODE_LINUXHARDENING_9 = `! Found shell without timeout [AUTH-9328]
 * Set a password on GRUB bootloader
 * Configure /tmp with noexec option`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the purpose of "sysctl -w net.ipv4.tcp_syncookies=1"?',
-    options: [
-      'Enables IPv4 forwarding for router functionality',
-      'Activates SYN cookies to protect against SYN flood DDoS attacks without blocking legitimate connections',
-      'Disables ICMP ping responses to hide the server',
-      'Limits the number of TCP connections per IP address',
-    ],
-    correct: 1,
-    explanation: 'SYN cookies protect against SYN flood attacks. In a SYN flood, an attacker sends many TCP SYN packets without completing the handshake, exhausting the server\'s connection table. With SYN cookies enabled, the server encodes connection info in the sequence number instead of storing state — so flooded connection tables don\'t cause denial of service for legitimate users.',
-  },
-  {
-    id: 'q2',
-    question: 'What does "fail2ban" do and which log file does it watch for SSH brute-force?',
-    options: [
-      'Blocks IPs after too many failed connections; watches /var/log/auth.log',
-      'Encrypts SSH traffic; watches /var/log/sshd.log',
-      'Rate-limits SSH connections; watches /etc/ssh/sshd_config',
-      'Detects rootkits; watches /proc/net/tcp',
-    ],
-    correct: 0,
-    explanation: 'fail2ban monitors log files for patterns indicating brute-force attempts. For SSH it watches /var/log/auth.log (Debian/Ubuntu) or /var/log/secure (RHEL) for repeated failed authentication entries. After a configurable number of failures (default 5) within a time window, it adds an iptables/nftables rule to block that source IP for a configurable duration.',
-  },
-  {
-    id: 'q3',
-    question: 'What is AppArmor and how does it differ from traditional file permissions?',
-    options: [
-      'AppArmor is an antivirus; file permissions prevent malware installation',
-      'AppArmor is a Mandatory Access Control (MAC) system that confines programs to a profile defining exactly which files/capabilities they can access — regardless of file permissions or user identity',
-      'AppArmor encrypts files; permissions control who can read them',
-      'AppArmor enforces password complexity; permissions control login access',
-    ],
-    correct: 1,
-    explanation: 'Traditional Linux permissions use Discretionary Access Control (DAC) — the file owner decides access. AppArmor uses Mandatory Access Control (MAC) — the OS enforces per-process profiles regardless of what the user or process owner wants. Even if nginx runs as root (bad practice, but possible), an AppArmor profile can confine it to only its specific directories, preventing it from reading /etc/passwd or writing to /bin.',
-  },
-  {
-    id: 'q4',
-    question: 'What does "noexec" mount option do and where should it be applied?',
-    options: [
-      'Prevents files on that filesystem from being read by non-root users',
-      'Prevents executables from being run from that mount point — applies to /tmp, /var/tmp to prevent attackers from dropping and running malicious binaries',
-      'Makes the filesystem read-only, preventing any modifications',
-      'Disables executable bit inheritance for new files created on the filesystem',
-    ],
-    correct: 1,
-    explanation: 'noexec prevents execution of binaries from that mount point. Applying it to /tmp and /var/tmp is a key hardening control — these directories are world-writable, and attackers commonly write exploit code there then execute it. With noexec, even if they write a binary to /tmp, they cannot execute it directly. Combine with nosuid (no SUID) and nodev (no device files) for full /tmp hardening.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the purpose of running "lynis audit system" and what does it produce?',
-    options: [
-      'It automatically fixes all security vulnerabilities on the system',
-      'It performs a comprehensive security audit, testing hundreds of controls and generating a hardening index score with specific recommendations',
-      'It compares the system against a CVE database and patches found vulnerabilities',
-      'It monitors the system in real-time for intrusion attempts',
-    ],
-    correct: 1,
-    explanation: 'Lynis is an open-source security auditing tool. Running lynis audit system performs 300+ tests: checking kernel hardening parameters, file permissions, SSH config, installed packages, authentication settings, boot loader security, and more. It outputs a "hardening index" score (0-100) and specific recommendations categorised by severity. It does not auto-fix — it reports and advises. Essential for CIS benchmark compliance checking.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

@@ -66,68 +66,7 @@ SecurityHealth : C:\\Windows\\System32\\SecurityHealthSystray.exe
 
 2847`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the Windows NT kernel and why does it matter for IT professionals?',
-    options: [
-      'A file system driver responsible for NTFS storage management',
-      'The core operating system component that manages hardware abstraction, memory, processes, and security — every modern Windows version runs on the NT kernel lineage',
-      'A network stack component that handles TCP/IP communications',
-      'The Windows Update service that manages OS patches',
-    ],
-    correct: 1,
-    explanation: 'The Windows NT kernel has been the foundation of every Windows version since Windows NT 3.1 (1993) through to Windows 11 today. It provides the Hardware Abstraction Layer (HAL), process and thread scheduling, virtual memory management, I/O subsystem, and the security reference monitor. Understanding the kernel helps diagnose crashes, performance issues, and security behaviour.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the Windows Registry and what type of data does it store?',
-    options: [
-      'A log file that records all user activity on the system',
-      'A hierarchical database storing OS configuration, hardware settings, user preferences, and application settings — organised into hives like HKLM and HKCU',
-      'A list of installed programs and their file locations',
-      'A network directory service similar to Active Directory',
-    ],
-    correct: 1,
-    explanation: 'The Registry is a centralised hierarchical database that stores virtually all configuration data for Windows and applications. Key hives: HKEY_LOCAL_MACHINE (HKLM) — machine-wide settings, hardware, services; HKEY_CURRENT_USER (HKCU) — per-user settings; HKEY_CLASSES_ROOT — file type associations; HKEY_CURRENT_CONFIG — current hardware profile. Registry corruption or misconfiguration is a common cause of boot failures and application problems.',
-  },
-  {
-    id: 'q3',
-    question: 'What happens during the Windows boot process between BIOS/UEFI and the login screen?',
-    options: [
-      'BIOS → Windows Explorer loads → Login screen appears',
-      'BIOS/UEFI → Boot Manager (bootmgr) → Windows OS Loader (winload) → Kernel init → Session Manager (smss.exe) → Winlogon → Login screen',
-      'BIOS/UEFI → Kernel loads directly → User profile loads → Login screen',
-      'BIOS/UEFI → GRUB bootloader → Windows kernel → Login screen',
-    ],
-    correct: 1,
-    explanation: 'The Windows boot sequence: (1) Firmware (BIOS/UEFI) POST and boot device selection, (2) Windows Boot Manager (bootmgr/bootmgfw.efi) reads BCD store, (3) Windows OS Loader (winload.exe) loads the kernel and HAL, (4) Kernel initialisation — loads drivers, starts kernel services, (5) Session Manager (smss.exe) — first user-mode process, starts subsystems, (6) Winlogon.exe — manages authentication, (7) LogonUI.exe — displays the login screen.',
-  },
-  {
-    id: 'q4',
-    question: 'What is User Account Control (UAC) and what security problem does it solve?',
-    options: [
-      'A password complexity enforcement system',
-      'A mechanism that runs programs with standard user rights by default, prompting for elevation when admin privileges are needed — prevents malware from silently gaining admin access',
-      'A firewall feature that controls which users can access network resources',
-      'A system that locks accounts after too many failed login attempts',
-    ],
-    correct: 1,
-    explanation: 'UAC addresses the problem of users running as local administrators (common before Vista). Without UAC, any program running as an admin could silently modify the system, install malware, or change security settings. With UAC, even admin users run with standard privileges by default. Elevation requires explicit confirmation (the UAC prompt) — meaning malware that launches silently cannot gain admin rights without user interaction.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the difference between a Windows process and a thread?',
-    options: [
-      'Processes are for system tasks; threads are for user applications',
-      'A process is a container with its own memory space and resources; a thread is a unit of execution that runs within a process and shares the process\'s memory',
-      'Processes run in kernel mode; threads run in user mode',
-      'There is no difference — the terms are interchangeable in Windows',
-    ],
-    correct: 1,
-    explanation: 'A process is an isolated container: it has its own virtual address space, security token, handles, and resources. Processes cannot directly access another process\'s memory (isolation/security). A thread is the actual unit of execution within a process — processes can have multiple threads running concurrently, all sharing the process\'s memory space. In Task Manager: Processes tab shows processes; Details tab shows processes with their thread counts.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

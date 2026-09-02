@@ -193,63 +193,7 @@ Administrator Administrator                                  01/15/2025
 
 Report: C:\\ADReport.csv`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What PowerShell module must be imported to use Get-ADUser and other AD cmdlets?',
-    options: ['ActiveDirectory','ADTools','RSAT-AD','WindowsAD'],
-    correct: 0,
-    explanation: 'The ActiveDirectory module is part of RSAT (Remote Server Administration Tools). On a domain controller it is installed automatically with the AD DS role. On a workstation or management server: Install-WindowsFeature RSAT-AD-PowerShell (Server) or Add-WindowsCapability -Name Rsat.ActiveDirectory*. Once installed: Import-Module ActiveDirectory (or it auto-loads in PS 3+).',
-  },
-  {
-    id: 'q2',
-    question: 'What does the -Filter parameter do in Get-ADUser -Filter { Department -eq "IT" }?',
-    options: [
-      'Filters results client-side after retrieving all users',
-      'Sends the filter expression to the domain controller, which processes it server-side — far more efficient than retrieving all users',
-      'Searches only the local domain, not child domains',
-      'Applies a security filter that hides sensitive attributes',
-    ],
-    correct: 1,
-    explanation: '-Filter sends the filter to Active Directory for server-side processing — only matching objects are returned over the network. This is the correct approach for large directories. The alternative Get-ADUser -Filter * | Where-Object {$_.Department -eq "IT"} retrieves ALL user objects first then filters in PowerShell — extremely slow on large AD environments with thousands of users.',
-  },
-  {
-    id: 'q3',
-    question: 'What does New-ADUser -AccountPassword (ConvertTo-SecureString "P@ssw0rd" -AsPlainText -Force) do, and why is it a security concern?',
-    options: [
-      'It encrypts the password using AES-256 — this is the secure approach',
-      'It creates a SecureString from a plain text password in code — the plain text password is visible in the script file and command history',
-      'It generates a random password automatically',
-      'It reads the password from a secure vault',
-    ],
-    correct: 1,
-    explanation: 'ConvertTo-SecureString with -AsPlainText -Force converts plain text to a SecureString object, but the original plain text is embedded in your script or command history. Anyone with access to the script file or PS history can read it. For production use a secrets manager, prompt with Read-Host -AsSecureString, or use a credential object from Get-Credential.',
-  },
-  {
-    id: 'q4',
-    question: 'How do you efficiently bulk-create 50 users from a CSV file in PowerShell?',
-    options: [
-      'Type each New-ADUser command manually',
-      'Import-Csv users.csv | ForEach-Object { New-ADUser with properties from $_ }',
-      'Use the ADUC GUI and import tool',
-      'Copy-ADUsers -Source users.csv -Target domain',
-    ],
-    correct: 1,
-    explanation: 'Import-Csv reads the CSV into objects where headers become property names. Piping to ForEach-Object lets you call New-ADUser for each row, referencing $_.ColumnName for each property. This is the standard pattern for bulk AD operations — the same approach works for bulk password resets, group membership changes, and OU moves.',
-  },
-  {
-    id: 'q5',
-    question: 'What does Get-ADUser -Properties * retrieve compared to just Get-ADUser?',
-    options: [
-      'They return identical data — * is just the default',
-      'Get-ADUser returns a default subset of attributes; -Properties * fetches all attributes including rarely-used ones like Department, Manager, LastLogonDate — at higher network cost',
-      '-Properties * restricts to only the most important properties',
-      '-Properties * downloads the user\'s profile from the domain controller',
-    ],
-    correct: 1,
-    explanation: 'By default Get-ADUser only returns a subset of frequently-used attributes. Use -Properties to request specific extra attributes: -Properties Department,Manager,LastLogonDate. Use -Properties * to get everything (slow — retrieves all 200+ possible AD attributes). Always specify only the attributes you need in production scripts to keep AD queries efficient.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

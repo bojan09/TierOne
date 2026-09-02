@@ -177,58 +177,6 @@ sudo fail2ban-client status sshd            # Jail status
 sudo fail2ban-client get sshd banip         # Banned IPs
 sudo fail2ban-client set sshd unbanip IP    # Unban an IP`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'Which sshd_config directive disables password-based authentication, requiring key auth only?',
-    options: ['PasswordLogin no', 'AllowPasswords no', 'PasswordAuthentication no', 'DisablePassword yes'],
-    correct: 2,
-    explanation: 'PasswordAuthentication no in /etc/ssh/sshd_config disables password login, forcing key-based authentication only. After changing, reload the service: systemctl reload sshd. Never set this before confirming your key works — you can lock yourself out.',
-  },
-  {
-    id: 'q2',
-    question: 'Where must the public key be placed on the server for SSH key authentication to work?',
-    options: [
-      '~/.ssh/id_rsa on the server',
-      '~/.ssh/authorized_keys on the server',
-      '/etc/ssh/authorized_keys on the server',
-      '~/.ssh/known_hosts on the server',
-    ],
-    correct: 1,
-    explanation: 'The public key must be appended to ~/.ssh/authorized_keys on the server (in the target user\'s home directory). The .ssh directory must have permissions 700 and authorized_keys must be 600 — SSH will silently ignore keys with wrong permissions.',
-  },
-  {
-    id: 'q3',
-    question: 'What does an SSH jump host (ProxyJump) allow you to do?',
-    options: [
-      'Speed up SSH connections by caching session state',
-      'Connect to a server that is not directly reachable, routing through an intermediate host',
-      'Run multiple commands simultaneously across all servers',
-      'Automatically rotate SSH keys on remote servers',
-    ],
-    correct: 1,
-    explanation: 'ProxyJump (formerly ProxyCommand) allows you to SSH through a bastion/jump host to reach servers on isolated internal networks. Config example: Host internal-srv / ProxyJump bastion.example.com. This is the standard enterprise pattern for accessing servers not exposed to the internet.',
-  },
-  {
-    id: 'q4',
-    question: 'What command copies your SSH public key to a remote server automatically?',
-    options: ['scp ~/.ssh/id_rsa.pub user@host:.ssh/', 'ssh-copy-id user@host', 'ssh-keygen --deploy user@host', 'rsync ~/.ssh/id_rsa.pub user@host:~/.ssh/authorized_keys'],
-    correct: 1,
-    explanation: 'ssh-copy-id user@host is the safest way to deploy your public key. It appends the key to authorized_keys, creates the .ssh directory with correct permissions if needed, and sets correct file permissions automatically. scp works but requires manual permission fixing.',
-  },
-  {
-    id: 'q5',
-    question: 'Which fail2ban action protects SSH from brute-force attacks?',
-    options: [
-      'It monitors /var/log/auth.log and bans IPs after repeated failed logins',
-      'It encrypts SSH traffic to prevent password interception',
-      'It disables SSH after 3 failed attempts permanently',
-      'It requires a CAPTCHA before allowing SSH connections',
-    ],
-    correct: 0,
-    explanation: 'fail2ban monitors log files (e.g. /var/log/auth.log) for patterns indicating brute-force attempts. After a configurable number of failures (default 5), it adds an iptables/nftables rule to ban the source IP for a configurable duration (default 10 minutes). Essential for any internet-facing SSH service.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

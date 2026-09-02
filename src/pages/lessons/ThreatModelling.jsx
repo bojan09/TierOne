@@ -64,68 +64,6 @@ Write-Host "DREAD Score: $total / 50 — $(if($total -gt 40){'CRITICAL'}elseif($
 const CODE_THREATMODELLING_7 = `Threat: RDP Brute Force on Domain Controller
 DREAD Score: 43 / 50 — CRITICAL`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'In the STRIDE threat model, what does "Repudiation" mean?',
-    options: [
-      'An attacker denies performing an action because there is insufficient logging or evidence',
-      'An attacker refuses to pay a ransom demand',
-      'A system denies access to legitimate users (denial of service)',
-      'An attacker rejects authentication attempts through brute force',
-    ],
-    correct: 0,
-    explanation: 'Repudiation occurs when a user can deny performing an action because no audit trail exists. For example, an admin deletes a file but logs were not enabled — they can claim they never did it. The control is non-repudiation: immutable audit logging, digital signatures, and SIEM systems. Windows Security Event Log auditing directly addresses this.',
-  },
-  {
-    id: 'q2',
-    question: 'What is an "attack surface"?',
-    options: [
-      'The physical area of a server room that attackers can physically access',
-      'The total set of entry points — network ports, APIs, user interfaces, and processes — that an attacker could exploit',
-      'The maximum damage an attacker could cause if they succeeded',
-      'The number of CVEs affecting a system',
-    ],
-    correct: 1,
-    explanation: 'The attack surface is the sum of all possible attack vectors — every exposed port, service, API endpoint, web form, protocol, and user interface represents part of the attack surface. Reducing attack surface (disabling unused services, closing ports, minimising privileges) is a fundamental security principle. Smaller surface = fewer ways in.',
-  },
-  {
-    id: 'q3',
-    question: 'In MITRE ATT&CK, what does a "Tactic" represent versus a "Technique"?',
-    options: [
-      'Tactics are specific tools used; Techniques are the broader goals',
-      'Tactics are the adversary\'s goal (the why); Techniques are the specific methods used to achieve that goal (the how)',
-      'Tactics are defensive measures; Techniques are offensive methods',
-      'There is no distinction — the terms are interchangeable in ATT&CK',
-    ],
-    correct: 1,
-    explanation: 'In MITRE ATT&CK, Tactics represent the adversary\'s tactical goals — what they\'re trying to achieve (e.g. Initial Access, Persistence, Privilege Escalation, Lateral Movement, Exfiltration). Techniques describe how they achieve those goals (e.g. Phishing for Initial Access, Registry Run Keys for Persistence). Sub-techniques provide even more specific detail.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the DREAD scoring model used for in threat modelling?',
-    options: [
-      'Documenting security incidents after they happen',
-      'Rating the severity of identified threats across five dimensions to prioritise remediation',
-      'Assessing the cost of implementing security controls',
-      'Measuring how quickly an attacker can exploit a vulnerability',
-    ],
-    correct: 1,
-    explanation: 'DREAD scores threats from 1-10 across: Damage potential, Reproducibility (how easy to repeat), Exploitability (skill required), Affected users, and Discoverability (how easy to find). Summing or averaging these gives a risk score to help prioritise which threats to address first. Higher DREAD score = higher priority.',
-  },
-  {
-    id: 'q5',
-    question: 'Which STRIDE category does "an attacker intercepts network traffic between a client and server" map to?',
-    options: [
-      'Spoofing',
-      'Tampering',
-      'Information Disclosure',
-      'Elevation of Privilege',
-    ],
-    correct: 2,
-    explanation: 'Intercepting network traffic to read sensitive data is Information Disclosure — the unauthorised exposure of data to individuals who should not have access. If the attacker also modifies the traffic, that additionally maps to Tampering. If they impersonate one party to the other, that\'s Spoofing. A man-in-the-middle attack can violate all three.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

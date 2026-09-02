@@ -135,68 +135,7 @@ const CODE_PYTHONLOGPARSING_4 = `=== Top 10 SSH failure sources ===
 === Successful logins ===
   user                   3 login(s)`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does re.compile() do and why is it more efficient than calling re.search() directly?',
-    options: [
-      'It checks if a regex pattern is valid before using it',
-      'It pre-compiles the regex pattern into a pattern object, avoiding recompilation on every match call — significant performance gain when the same pattern is used thousands of times',
-      'It makes the regex case-insensitive by default',
-      'It enables multi-line matching across an entire file',
-    ],
-    correct: 1,
-    explanation: 're.compile() compiles the regex pattern once into an internal representation. When you loop over millions of log lines calling re.search(pattern, line), Python recompiles the pattern each time without compile(). With compiled = re.compile(pattern), each call to compiled.search(line) reuses the pre-compiled object — typically 2-5x faster for tight loops. Always compile patterns used in loops.',
-  },
-  {
-    id: 'q2',
-    question: 'What is a "named group" in a Python regex and how do you access it?',
-    options: [
-      'A variable assigned to a regex pattern for reuse',
-      'A capture group with a label: (?P<name>pattern) — accessed as match.group("name") for readable, maintainable extraction',
-      'A regex flag that makes groups optional',
-      'A group that only matches at the start of a line',
-    ],
-    correct: 1,
-    explanation: 'Named groups use the syntax (?P<name>pattern). Instead of match.group(1), match.group(2), you use match.group("ip"), match.group("status") — much more readable and robust. If you add another group to the pattern, the positional indices shift but named groups remain stable. Also accessible via match.groupdict() which returns all named groups as a dictionary.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the most memory-efficient way to process a 10 GB log file in Python?',
-    options: [
-      'Read the entire file into memory with open().read() then split by newline',
-      'Use a generator with open() and iterate line by line — only one line is in memory at a time regardless of file size',
-      'Use multiprocessing to split the file across CPU cores',
-      'Convert the file to a database first, then query it',
-    ],
-    correct: 1,
-    explanation: 'Iterating over a file object in Python is lazy — it reads one line at a time from disk. For line in open("huge.log"): processes each line without loading the entire file. This uses O(1) memory regardless of file size. Using .read() or .readlines() loads the entire file into RAM — 10 GB would require 10+ GB of available memory and likely swap.',
-  },
-  {
-    id: 'q4',
-    question: 'What does collections.Counter do that makes it ideal for log analysis?',
-    options: [
-      'It counts the number of lines in a log file',
-      'It creates a dictionary-like object that counts occurrences of each item — perfect for frequency analysis (top IPs, error counts, HTTP status distribution)',
-      'It tracks a running counter variable across function calls',
-      'It counts bytes read from a log file for progress monitoring',
-    ],
-    correct: 1,
-    explanation: 'collections.Counter takes any iterable and counts occurrences. Counter(["200","404","200","500","200"]) gives Counter({"200":3, "404":1, "500":1}). The most_common(10) method returns the top N items sorted by count. For log analysis: pass a generator of extracted IP addresses, status codes, or error messages to Counter and instantly get frequency tables without writing sort/count logic.',
-  },
-  {
-    id: 'q5',
-    question: 'How should you handle a log line that does not match your regex pattern?',
-    options: [
-      'Raise an exception to stop processing',
-      'Skip it with continue — not every log line matches every pattern; always check if match is not None before accessing groups',
-      'Log it to a separate error file and continue',
-      'Replace the line with an empty string',
-    ],
-    correct: 1,
-    explanation: 're.search() / re.match() returns None if there is no match. Accessing groups on None raises AttributeError. Always check: match = pattern.search(line); if match: process it. In production parsers, you often want to track unmatched lines for debugging: unmatched += 1 at the end. Some log lines are genuinely different formats (multi-line exceptions, status lines) that won\'t match your main pattern.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

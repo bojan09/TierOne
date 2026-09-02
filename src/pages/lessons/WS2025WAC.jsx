@@ -32,33 +32,7 @@ cfg     : http://schemas.microsoft.com/wbem/wsman/1/config
 DisplayName                            Enabled
 Windows Remote Management (HTTP-In)    True`
 
-const QUIZ_QUESTIONS = [
-  {
-    id:'q1', question:'What is Windows Admin Center (WAC) and what does it replace?',
-    options:['A new version of Server Manager that requires Windows Server 2025','A browser-based management tool that unifies server management, replacing the need to RDP into each server and use individual MMC snap-ins','A cloud-only tool requiring Azure subscription','A replacement for Active Directory Users and Computers'],
-    correct:1, explanation:'Windows Admin Center is a browser-based, locally-deployed management hub for Windows Server, Windows 10/11 PCs, and clusters. It consolidates capabilities previously requiring separate tools: Server Manager, Device Manager, Disk Management, Hyper-V Manager, Task Manager, Registry Editor, PowerShell — all in one web interface with no cloud dependency. Runs on your on-premises gateway server.'
-  },
-  {
-    id:'q2', question:'What are WAC Extensions and where are they obtained?',
-    options:['Built-in WAC features that must be licensed separately','Community and vendor-developed plugins that add management capabilities — available in the WAC Extension Manager from Microsoft and partners like Dell, HPE, VMware','Windows Updates that extend WAC functionality','GPO templates that configure WAC settings'],
-    correct:1, explanation:'WAC Extensions extend the platform with additional tools. Available from the Extension Manager (Settings > Extensions) in WAC: Microsoft provides extensions for Azure integration, Storage Spaces Direct, and Failover Cluster management. Hardware vendors (Dell, HPE) provide extensions for their hardware management. Third parties provide database, networking, and monitoring extensions. Extensions are installed from the WAC management interface without reinstalling WAC.'
-  },
-  {
-    id:'q3', question:'What connection modes does WAC support for managing servers?',
-    options:['Only direct connections over the LAN','Gateway mode (WAC runs on a dedicated server, manages remote servers via WinRM) and Desktop mode (WAC runs locally, manages local and remote systems)','Cloud-relayed connections through Azure only','VPN-only connections for security'],
-    correct:1, explanation:'WAC runs in two modes: Gateway mode — installed on a dedicated management server (or VM), all connections go through it. Users open a browser to https://wacserver and manage remote servers via WinRM from the gateway. Best for teams. Desktop mode — installed on a Windows 10/11 management PC, manages that PC and connects directly to remote servers. Single-user. Both modes use WinRM for server communication and support RBAC via Windows security groups.'
-  },
-  {
-    id:'q4', question:'What does the WAC "Packet Monitoring" feature provide?',
-    options:['Bandwidth monitoring for the WAC web interface','A built-in network packet capture tool (using pktmon) that lets you capture and analyse network traffic on a managed server directly from the WAC browser interface','DNS query logging for the managed server','Firewall log analysis for the managed server'],
-    correct:1, explanation:'WAC\'s Packet Monitoring extension wraps pktmon (the built-in Windows packet monitor) in a browser-friendly UI. You can start a capture, filter by protocol/port/IP, and view results without installing Wireshark or RDPing to the server. Captured data can be downloaded as a .pcapng file for analysis in Wireshark. Introduced in WAC 2103 — extremely useful for remote troubleshooting.'
-  },
-  {
-    id:'q5', question:'What is the minimum requirement for WAC to manage servers without installing additional agents?',
-    options:['Servers must be running Windows Server 2025','WinRM must be enabled and accessible on the managed servers — WAC uses existing WinRM infrastructure','WAC agent must be installed on each managed server','Managed servers must be Azure Arc-enrolled'],
-    correct:1, explanation:'WAC uses WinRM (Windows Remote Management) — the same protocol as PSRemoting. No additional agent installation is required. WinRM must be enabled (Enable-PSRemoting -Force or via GPO) and port 5985 (HTTP) or 5986 (HTTPS) must be reachable from the WAC gateway. This is why WAC can immediately manage any server where PSRemoting already works — you have zero additional deployment overhead.'
-  },
-]
+
 
 function Callout({ type='info', icon, title, children }) {
   const s = { info:'callout-info', warning:'callout-warning', success:'callout-success' }

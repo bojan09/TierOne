@@ -90,68 +90,7 @@ sudo grep 'UFW BLOCK' /var/log/ufw.log |
     if($i~/^DPT=/) dpt=substr($i,5)}
     print src, dpt}' | sort | head -10`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between an IDS and an IPS?',
-    options: [
-      'IDS is software; IPS is hardware',
-      'An IDS (Intrusion Detection System) monitors and alerts; an IPS (Intrusion Prevention System) monitors, detects, AND actively blocks malicious traffic inline',
-      'IDS works at Layer 4; IPS works at Layer 7',
-      'IDS is for internal networks; IPS is for perimeter networks only',
-    ],
-    correct: 1,
-    explanation: 'IDS sits out-of-band (receives a copy of traffic) — it can only alert, never block. Think of it as a burglar alarm: it rings when someone breaks in, but doesn\'t stop them. IPS sits inline (all traffic passes through it) — it can drop malicious packets in real time. IPS has lower risk tolerance for false positives since blocking legitimate traffic causes outages. Most modern tools (Snort, Suricata) can operate in either mode.',
-  },
-  {
-    id: 'q2',
-    question: 'What is a SIEM and what are its core functions?',
-    options: [
-      'A firewall that learns traffic patterns and auto-updates rules',
-      'Security Information and Event Management — centralises log collection from all sources, correlates events across systems, generates alerts, and provides a single pane of glass for security monitoring',
-      'A vulnerability scanner that runs continuously against all systems',
-      'An endpoint security agent deployed on every server',
-    ],
-    correct: 1,
-    explanation: 'SIEM combines two functions: SIM (Security Information Management) — log collection, storage, and compliance reporting; and SEM (Security Event Management) — real-time correlation and alerting. A SIEM ingests logs from firewalls, servers, endpoints, and applications, then applies correlation rules: "5 failed logins from one IP across 3 different servers in 10 minutes = potential brute-force attack." Examples: Splunk, Microsoft Sentinel, Elastic SIEM, Wazuh (open-source).',
-  },
-  {
-    id: 'q3',
-    question: 'What is the difference between a false positive and a false negative in IDS/IPS?',
-    options: [
-      'False positive = correctly detected attack; False negative = missed attack',
-      'False positive = legitimate traffic flagged as malicious (alert on normal activity); False negative = malicious traffic not detected (attacker gets through undetected)',
-      'Both terms mean the same thing — incorrectly classified traffic',
-      'False positive = network error; False negative = configuration error',
-    ],
-    correct: 1,
-    explanation: 'False positive: normal traffic triggers an alert — a developer\'s port scan flagged as an attack, or a backup tool\'s behaviour matching malware signatures. High false positive rates cause alert fatigue, where analysts stop taking alerts seriously. False negative: real attacks that slip through undetected — the more dangerous failure mode. Tuning IDS/IPS is the art of reducing false positives without increasing false negatives.',
-  },
-  {
-    id: 'q4',
-    question: 'What is log correlation in a SIEM and why is it more valuable than individual log analysis?',
-    options: [
-      'Log correlation compresses logs to reduce storage requirements',
-      'Correlation links events across multiple systems to detect attack patterns invisible when logs are viewed in isolation — e.g. a failed login on a firewall + a failed login on a server + a successful login on a database 5 minutes later suggests lateral movement',
-      'Correlation synchronises log timestamps across different time zones',
-      'Correlation removes duplicate log entries to reduce noise',
-    ],
-    correct: 1,
-    explanation: 'Individual log analysis sees a tree; SIEM correlation sees the forest. An attacker conducting a slow, careful attack generates individual events that each look benign in isolation: one failed login here, one port scan there, one successful login. Only when correlated across systems and time does the attack chain become visible. SIEM correlation rules define these patterns: "if events A, B, C happen across systems X, Y, Z within time window W, generate high-severity alert."',
-  },
-  {
-    id: 'q5',
-    question: 'What does Wazuh provide that syslog forwarding alone does not?',
-    options: [
-      'Wazuh only forwards logs faster — there is no functional difference',
-      'Wazuh provides an agent that performs file integrity monitoring, rootkit detection, vulnerability scanning, and active response on the endpoint in addition to log forwarding',
-      'Wazuh encrypts logs before forwarding; syslog sends in plaintext',
-      'Wazuh supports Windows; syslog only supports Linux',
-    ],
-    correct: 1,
-    explanation: 'Wazuh is a full open-source SIEM/XDR platform. Its agent does much more than log forwarding: FIM (File Integrity Monitoring) detects unauthorised file changes, rootkit detection checks for hidden processes/files, vulnerability assessment compares installed software against CVE databases, and active response can automatically block IPs after detecting brute-force. The manager performs log aggregation, correlation, and alerting. It\'s a complete lightweight security platform.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

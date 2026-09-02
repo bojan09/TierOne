@@ -115,68 +115,7 @@ SecurityHealth  C:\\Windows\\System32\\SecurityHealthSystray.exe
 === HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run ===
   (empty)`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does Get-ChildItem -Recurse -Filter "*.log" -Path C:\\Logs do?',
-    options: [
-      'Lists only .log files in C:\\Logs without recursing into subfolders',
-      'Recursively lists all .log files under C:\\Logs and all its subfolders, returning FileInfo objects with full path, size, and date properties',
-      'Deletes all .log files older than a week',
-      'Counts the number of log files and returns an integer',
-    ],
-    correct: 1,
-    explanation: '-Recurse traverses all subdirectories. -Filter uses the filesystem provider\'s native filtering (faster than Where-Object). The result is a collection of FileInfo objects — you can pipe to Select-Object Name, FullName, Length, LastWriteTime or process each with ForEach-Object. For large trees, add -Depth 3 to limit recursion depth.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the safest way to delete files matching a pattern using PowerShell?',
-    options: [
-      'Remove-Item C:\\Logs\\*.log -Force',
-      'First run Get-ChildItem with your filter and -WhatIf, verify output, then pipe to Remove-Item -WhatIf, then remove -WhatIf to execute',
-      'Use del *.log in a PowerShell session',
-      'Move files to Recycle Bin first using Shell.Application COM object',
-    ],
-    correct: 1,
-    explanation: 'The -WhatIf flag on Remove-Item shows exactly what would be deleted without deleting anything. Always preview destructive operations: Get-ChildItem -Path C:\\Logs -Filter "*.log" -Recurse | Remove-Item -WhatIf. When satisfied with the output, remove -WhatIf to execute. For extra safety add -Confirm to prompt for each file, or pipe to a Where-Object first to add age/size filters.',
-  },
-  {
-    id: 'q3',
-    question: 'What does New-Item -Path "HKLM:\\SOFTWARE\\MyApp" -Force do?',
-    options: [
-      'Creates a new file at that Windows path',
-      'Creates a new Registry key at HKEY_LOCAL_MACHINE\\SOFTWARE\\MyApp, creating parent keys if needed due to -Force',
-      'Overwrites an existing registry key with default values',
-      'Forces a registry scan to find the key',
-    ],
-    correct: 1,
-    explanation: 'PowerShell\'s registry provider exposes the registry as a drive (HKLM:, HKCU:, etc.). New-Item creates registry keys (like folders). New-ItemProperty creates values within a key. -Force creates parent keys if they don\'t exist. Access: Get-Item, Set-Item, Remove-Item all work on registry paths the same way as filesystem paths — this is the PSDrive abstraction at work.',
-  },
-  {
-    id: 'q4',
-    question: 'How do you efficiently find all files larger than 100MB on a drive?',
-    options: [
-      'Get-ChildItem C:\\ -Recurse | Where-Object { $_.Length -gt 104857600 }',
-      'dir /s /b C:\\ | Where-Object Length',
-      'Find-LargeFiles -Size 100MB',
-      'Get-Disk | Where-Object Size -gt 100MB',
-    ],
-    correct: 0,
-    explanation: 'Get-ChildItem returns FileInfo objects with a Length property in bytes. 100MB = 100 * 1024 * 1024 = 104,857,600 bytes. Pipe to Where-Object {$_.Length -gt 100MB} — PowerShell understands MB/GB literals. Add -File to exclude directories. Sort by size: | Sort-Object Length -Descending | Select-Object -First 20 | Select-Object FullName, @{N="Size_MB";E={[math]::Round($_.Length/1MB,1)}}',
-  },
-  {
-    id: 'q5',
-    question: 'What is the purpose of Get-ItemProperty in the registry PSDrive?',
-    options: [
-      'Gets file system attributes like Hidden, ReadOnly, Archive',
-      'Reads registry values (REG_SZ, REG_DWORD, REG_MULTI_SZ etc.) from a registry key — equivalent to reading value entries in regedit',
-      'Gets Active Directory object properties',
-      'Returns the properties of a running process',
-    ],
-    correct: 1,
-    explanation: 'Get-ItemProperty -Path "HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion" reads all values in that registry key. Specify -Name to read a single value. Set-ItemProperty writes a value. New-ItemProperty creates a new value with a specified type (-PropertyType String/DWord/Binary etc.). Remove-ItemProperty deletes a value. This is the PowerShell way to read/write the registry without falling back to reg.exe.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info:'callout-info', warning:'callout-warning', success:'callout-success', danger:'callout-danger' }

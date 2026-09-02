@@ -65,68 +65,7 @@ if ($cleared) {
     Write-Host 'OK: Audit log intact (no clearing events found)' -ForegroundColor Green
 }`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between Event ID 4624 and 4625 in the Security log?',
-    options: [
-      '4624 = logon failure, 4625 = logon success',
-      '4624 = successful account logon, 4625 = failed account logon — monitoring 4625 frequency per source IP identifies brute-force attacks',
-      '4624 = account created, 4625 = account deleted',
-      '4624 = service start, 4625 = service stop',
-    ],
-    correct: 1,
-    explanation: 'Security Event 4624: An account was successfully logged on — includes logon type (2=interactive, 3=network, 10=remote interactive/RDP). Event 4625: An account failed to log on — includes failure reason and source IP. A flood of 4625 events from one IP = brute force. Multiple 4625 then 4624 from same source = successful attack after brute force. Filter Security log by Event ID in Event Viewer or Get-WinEvent.',
-  },
-  {
-    id: 'q2',
-    question: 'What are the 5 Windows event log levels from highest to lowest severity?',
-    options: [
-      'Fatal, Error, Warning, Info, Debug',
-      'Critical (1), Error (2), Warning (3), Information (4), Verbose (5) — Critical indicates system failure, Error indicates functionality failure, Warning indicates potential future problems',
-      'Emergency, Alert, Critical, Error, Warning',
-      'Fatal, Severe, Error, Warning, Notice',
-    ],
-    correct: 1,
-    explanation: 'Windows event levels: Critical (1) — system component failure, may cause data loss. Error (2) — significant problem that has caused service/functionality loss. Warning (3) — not currently failing but may indicate future problems. Information (4) — normal operational events. Verbose (5) — detailed diagnostic data. In Event Viewer: filter by level to focus on actionable events. In PowerShell: Get-WinEvent -FilterHashtable @{LogName=\'System\'; Level=1,2}.',
-  },
-  {
-    id: 'q3',
-    question: 'What is a Windows Event Subscription and why is it useful in enterprise environments?',
-    options: [
-      'A notification email sent when critical events occur',
-      'A mechanism to forward events from multiple source computers to a central collector server — enabling centralised log analysis without requiring a SIEM agent on every machine',
-      'A scheduled task that exports event logs weekly',
-      'An API subscription for third-party monitoring tools',
-    ],
-    correct: 1,
-    explanation: 'Windows Event Forwarding (WEF) allows computers to push (push mode: WinRM required) or a collector to pull events from multiple source computers. Configure a Collector subscription: which event logs, which event IDs, from which computers. Events arrive at the Forwarded Events log on the collector. This provides centralised visibility without third-party agents — using only built-in Windows components. Combine with Get-WinEvent on the collector for fleet-wide log analysis.',
-  },
-  {
-    id: 'q4',
-    question: 'What does Get-WinEvent -FilterHashtable @{LogName="System"; StartTime=(Get-Date).AddHours(-24); Level=1,2} return?',
-    options: [
-      'All System log events from the last 24 hours',
-      'Critical and Error level events from the System log in the last 24 hours — efficient server-side filtering that outperforms piping to Where-Object',
-      'Events from all logs in the last 24 hours',
-      'System log events older than 24 hours',
-    ],
-    correct: 1,
-    explanation: 'Get-WinEvent with -FilterHashtable performs server-side filtering — the event log engine filters before returning data to PowerShell. This is significantly faster than Get-WinEvent -LogName System | Where-Object which retrieves ALL events then filters in PowerShell. FilterHashtable keys: LogName, StartTime, EndTime, Level (array), Id (event IDs array), ProviderName. For large logs on busy servers, FilterHashtable vs Where-Object can mean seconds vs minutes.',
-  },
-  {
-    id: 'q5',
-    question: 'What Windows tool provides a "stability score" and timeline of system crashes?',
-    options: [
-      'Task Manager → Performance tab',
-      'Reliability Monitor (perfmon /rel) — shows a day-by-day stability index and timeline of application/Windows failures, making it easy to correlate instability with specific events',
-      'Event Viewer → Custom Views → Administrative Events',
-      'System Information (msinfo32)',
-    ],
-    correct: 1,
-    explanation: 'Reliability Monitor (Control Panel → Security and Maintenance → Reliability Monitor, or perfmon /rel) shows a 1-10 stability score over time as a line chart, with icons for: application failures (crashes), Windows failures (BSODs), miscellaneous failures, warnings, and information events. It\'s the fastest way to see if instability correlates with a specific date — like "the crashes started after that driver update on Tuesday." Invaluable for intermittent problem diagnosis.',
-  },
-]
+
 
 function LabStep({ number, description, command, language = 'powershell', output }) {
   return (

@@ -120,68 +120,7 @@ const CODE_TROUBLESHOOTINGPERFORMANCE_7 = `load average: 0.85, 0.22, 0.07  <- lo
 USER  PID  %CPU  COMMAND
 root  9876  99.8  python3   <- our artificial load`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'A server shows 95% CPU but "top" shows no process using more than 2%. What is the most likely cause?',
-    options: [
-      'The CPU monitoring tool is broken',
-      'Many processes each using small amounts of CPU — high context switching overhead, or CPU time is spent in kernel/interrupt handling (visible in %sy and %hi in top)',
-      'The system is running malware that hides from top',
-      'CPU throttling is limiting individual process CPU usage',
-    ],
-    correct: 1,
-    explanation: 'top shows per-process CPU as a percentage of ONE core. If a system has 8 cores at 95% but no process shows >2%, the load is spread across many processes/threads. Check: vmstat 1 showing high "sy" (system/kernel time) indicates system call overhead; high "in" (interrupts) suggests NIC or disk interrupt flooding; many processes in "R" state (runnable) shows CPU contention. Also check: ps aux | awk "{sum += $3} END {print sum}" for total CPU.',
-  },
-  {
-    id: 'q2',
-    question: 'What does a high "iowait" percentage in top/vmstat indicate?',
-    options: [
-      'The network is saturated with I/O requests',
-      'CPUs are idle while waiting for disk I/O to complete — the disk is the bottleneck, not the CPU or applications',
-      'Too many processes are waiting for network I/O',
-      'The filesystem is full and writes are failing',
-    ],
-    correct: 1,
-    explanation: 'iowait shows CPU time spent idle while the kernel is waiting for outstanding I/O requests. High iowait (>20%) means the disk is slow relative to demand. The CPU is not busy — it\'s literally waiting for disk. Diagnose with: iostat -x 1 (check %util — if near 100%, disk is saturated), iotop (which processes are doing the I/O), and check disk health with smartctl.',
-  },
-  {
-    id: 'q3',
-    question: 'What is swap thrashing and what are its symptoms?',
-    options: [
-      'A disk encryption failure causing random write errors',
-      'When a system continuously moves data between RAM and swap because RAM is exhausted — symptoms: extreme slowness, high disk I/O, near-zero free memory, constant swap activity',
-      'When multiple processes compete for the same swap space',
-      'A kernel bug causing swap space to be allocated incorrectly',
-    ],
-    correct: 1,
-    explanation: 'Swap thrashing (also called "thrashing") occurs when physical RAM is exhausted and the system must constantly swap pages to/from disk. Since disk is 1000x+ slower than RAM, the system spends most of its time doing swap I/O rather than useful work. Symptoms: system appears almost frozen, disk light constantly on, top shows high iowait, free -m shows near-zero free memory and active swap. Solutions: add RAM, reduce workload, find the memory-leaking process and fix/restart it.',
-  },
-  {
-    id: 'q4',
-    question: 'A Linux server has 16GB RAM with 8GB used. Applications are slow but there is plenty of free memory. What should you check?',
-    options: [
-      'The applications must have memory leaks',
-      'Check if memory is heavily fragmented or if transparent huge pages are disabled, causing many small page allocations',
-      'The "free" memory shown may actually be used by page cache — check what "available" memory shows, and look for memory-intensive processes with high virtual memory (VSZ)',
-      'Increase the swap space to improve performance',
-    ],
-    correct: 2,
-    explanation: 'Linux "free" memory is misleading — the kernel aggressively uses "free" RAM for page cache (recent file I/O). The "available" column in free -h is what actually matters — it shows RAM that can be given to applications immediately. "Used" includes page cache. If "available" is high but apps are slow, the bottleneck is something else: CPU, network, database queries, or application code. Use free -h, not just free memory.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the correct tool to identify which process is consuming the most network bandwidth?',
-    options: [
-      'netstat -an | sort',
-      'iftop or nethogs — iftop shows per-connection bandwidth, nethogs shows per-process bandwidth usage',
-      'ping with large packet sizes',
-      'tcpdump counting packet sizes',
-    ],
-    correct: 1,
-    explanation: 'iftop shows real-time bandwidth per network connection (source/destination pairs). nethogs shows bandwidth per process — much more useful for finding which application is consuming bandwidth. Neither is installed by default: apt install iftop nethogs. Alternative: ss -s for socket statistics, or check /proc/net/dev for interface statistics over time.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

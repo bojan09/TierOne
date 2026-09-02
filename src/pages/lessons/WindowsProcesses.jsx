@@ -55,68 +55,7 @@ if ($stopped) {
     Write-Host 'All automatic services are running ✓' -ForegroundColor Green
 }`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'In Task Manager, what does high "Committed" memory vs high "In Use" memory indicate?',
-    options: [
-      'They are the same metric displayed in different units',
-      'In Use = physical RAM currently occupied by processes; Committed = total virtual memory allocated by all processes (including paged-out data) — high Committed with low In Use means active paging to disk',
-      'Committed memory is always higher than In Use memory',
-      'In Use measures GPU memory; Committed measures CPU cache',
-    ],
-    correct: 1,
-    explanation: 'In Use shows physical RAM occupied. Committed shows all virtual memory reserved by processes — this can exceed physical RAM because Windows uses the page file as overflow. If Committed is much larger than In Use, processes have reserved large virtual address ranges but most is paged out to disk. High Committed with a full page file = potential out-of-memory situation. Check Memory Pressure and Hard Faults/sec (disk I/O for page file access).',
-  },
-  {
-    id: 'q2',
-    question: 'What is a Windows service and how does it differ from a regular user process?',
-    options: [
-      'Services are faster because they run in kernel mode',
-      'Services run in the background without a user interface, can start before any user logs in, run under service accounts (SYSTEM, Network Service, or dedicated accounts), and are managed by the Service Control Manager',
-      'Services can only be started and stopped by administrators',
-      'Services are processes that use more than 10% CPU',
-    ],
-    correct: 1,
-    explanation: 'Windows services are background processes managed by the Service Control Manager (SCM). They can: start automatically at boot before user login, run as specific service accounts with limited privileges, restart automatically on failure, and receive control signals (start/stop/pause). Most Windows features (DHCP, DNS, Print Spooler, Windows Update, Defender) are services. View with services.msc or Get-Service in PowerShell.',
-  },
-  {
-    id: 'q3',
-    question: 'What does "svchost.exe" do and why are there multiple instances?',
-    options: [
-      'It is a virus — legitimate Windows has only one svchost.exe',
-      'svchost.exe is a generic host process for Windows services — Microsoft groups multiple services into shared svchost instances to reduce process overhead, with each instance hosting different service groups',
-      'It provides a service to other host computers on the network',
-      'It hosts Internet Explorer plugins and extensions',
-    ],
-    correct: 1,
-    explanation: 'svchost.exe (Service Host) is a shared process container for DLL-based Windows services. Instead of each service running as its own .exe, services implemented as DLLs are grouped and hosted inside svchost.exe instances. In Windows 10 1703+, each service gets its own svchost instance when RAM > 3.5GB — so you see 50+ svchost processes, which is normal. Suspicious svchost: running from outside C:\\Windows\\System32, or running without any services hosted.',
-  },
-  {
-    id: 'q4',
-    question: 'What is Process Monitor (ProcMon) from Sysinternals used for?',
-    options: [
-      'A replacement for Task Manager that shows more CPU/memory detail',
-      'Real-time monitoring of file system, registry, network, and process activity for every process — the gold standard for diagnosing application failures, permission errors, and malware behaviour',
-      'Monitoring network bandwidth usage per process',
-      'Killing processes that exceed CPU thresholds',
-    ],
-    correct: 1,
-    explanation: 'Process Monitor (procmon.exe) from Sysinternals captures every file, registry, network, and process/thread operation in real time. When an application fails with a cryptic error, ProcMon shows: which files it tried to open (and if they were missing or access-denied), which registry keys it read (and if values were wrong), which DLLs it tried to load. Filter by process name then look for ACCESS DENIED or NAME NOT FOUND results. Invaluable for application troubleshooting.',
-  },
-  {
-    id: 'q5',
-    question: 'A process is consuming 100% CPU but you need to keep the system responsive. What is the fastest mitigation?',
-    options: [
-      'Kill the process immediately with Task Manager',
-      'Lower the process priority to Below Normal or Low using Task Manager → Details → Set Priority, then investigate the cause — this lets the system remain responsive without terminating the process',
-      'Restart the computer',
-      'Open Resource Monitor and click Suspend',
-    ],
-    correct: 1,
-    explanation: 'Right-click the process in Task Manager → Go to Details → Right-click → Set Priority → Below Normal. This drops the process to a low scheduling priority — other processes get CPU time first, keeping the system responsive. The runaway process still runs but no longer starves the system. Now you have time to investigate with ProcMon or check logs before deciding to kill it. Killing a misbehaving process prematurely destroys diagnostic information.',
-  },
-]
+
 
 function LabStep({ number, description, command, language = 'powershell', output }) {
   return (

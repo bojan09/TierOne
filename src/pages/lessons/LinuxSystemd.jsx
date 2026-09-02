@@ -174,68 +174,7 @@ systemctl list-timers healthcheck.timer`
 const CODE_LINUXSYSTEMD_10 = `NEXT                         LEFT     LAST  PASSED  UNIT
 Thu 2025-01-15 11:05:00 UTC  4min 59s  n/a    n/a   healthcheck.timer`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between "systemctl stop" and "systemctl disable"?',
-    options: [
-      'They are the same — both stop the service and prevent it from starting',
-      'stop halts the service NOW; disable prevents it from starting automatically at BOOT — they are independent',
-      'stop is temporary; disable is permanent',
-      'stop works on running services; disable only works on services that are already stopped',
-    ],
-    correct: 1,
-    explanation: 'stop and disable are independent operations. systemctl stop halts the service immediately. systemctl disable removes the service from the boot targets so it does not start on reboot. A service can be running but disabled (it was started manually or will not survive a reboot), or stopped but enabled (it was not running but will start on the next boot). To do both: systemctl disable --now service.',
-  },
-  {
-    id: 'q2',
-    question: 'What is a systemd "unit file" and where are they stored?',
-    options: [
-      'A compiled binary that systemd executes to start services, stored in /usr/bin/',
-      'A plain-text INI-style configuration file that describes a service, socket, timer, or mount — stored in /etc/systemd/system/ or /lib/systemd/system/',
-      'A shell script used to start services, equivalent to /etc/init.d/ scripts',
-      'A JSON configuration file stored in /etc/systemd/units.json',
-    ],
-    correct: 1,
-    explanation: 'Unit files are plain-text INI-style files (.service, .socket, .timer, .mount etc.) that tell systemd everything about a unit: how to start it, what it depends on, when to restart it, which user to run as. /lib/systemd/system/ contains vendor-provided units. /etc/systemd/system/ contains admin overrides and custom units — these take priority. Use systemctl edit service to create override files without modifying originals.',
-  },
-  {
-    id: 'q3',
-    question: 'What command shows the logs for a specific service and follows them in real time?',
-    options: [
-      'tail -f /var/log/service.log',
-      'journalctl -u servicename -f',
-      'systemctl logs servicename --follow',
-      'syslog --service servicename -tail',
-    ],
-    correct: 1,
-    explanation: 'journalctl -u servicename shows journal entries for that specific unit. -f follows in real time (like tail -f). Other useful flags: -n 50 (last 50 lines), --since "10 minutes ago", -p err (errors only), -b (since last boot). journalctl is the modern replacement for /var/log/syslog for service logs.',
-  },
-  {
-    id: 'q4',
-    question: 'What is a systemd timer unit used for?',
-    options: [
-      'Setting timeout values for service startup',
-      'A replacement for cron — scheduled task execution managed by systemd with better logging and dependency management',
-      'Measuring how long a service takes to start',
-      'Throttling service resource usage over time',
-    ],
-    correct: 1,
-    explanation: 'systemd timers (.timer units) are a modern replacement for cron jobs. They offer: integration with journald for logging, OnCalendar (cron-like) or OnBootSec/OnUnitActiveSec (relative) schedules, dependency management, accurate missed timer handling, and systemctl list-timers to see all scheduled jobs. Each timer is paired with a .service unit that does the actual work.',
-  },
-  {
-    id: 'q5',
-    question: 'What does "systemctl daemon-reload" do and when must you run it?',
-    options: [
-      'Restarts all running services simultaneously',
-      'Reloads systemd\'s configuration by re-reading all unit files — required after creating or modifying a unit file before starting/restarting the service',
-      'Reloads the kernel modules used by systemd',
-      'Resets all failed service states to inactive',
-    ],
-    correct: 1,
-    explanation: 'systemctl daemon-reload tells systemd to re-read all unit files from disk. You MUST run it after creating a new unit file or modifying an existing one, otherwise systemd will use the old cached version. It does not restart any services — it only updates systemd\'s in-memory representation of unit files.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

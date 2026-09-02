@@ -275,58 +275,7 @@ crontab -e
 # Verify it was added
 crontab -l`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'Which Python module is best for running shell commands and capturing their output?',
-    options: ['os.system()', 'subprocess.run()', 'shell.execute()', 'commands.run()'],
-    correct: 1,
-    explanation: 'subprocess.run() is the recommended approach. It replaces os.system() (which can\'t capture output) and os.popen(). Use subprocess.run(["cmd", "arg"], capture_output=True, text=True, check=True) — capture_output captures stdout/stderr, text=True returns strings, check=True raises an exception on non-zero exit codes.',
-  },
-  {
-    id: 'q2',
-    question: 'What does the pathlib.Path module provide over the older os.path module?',
-    options: [
-      'Faster file I/O operations',
-      'An object-oriented interface to filesystem paths that works cross-platform',
-      'Built-in file encryption capabilities',
-      'Automatic sudo elevation for privileged operations',
-    ],
-    correct: 1,
-    explanation: 'pathlib.Path provides an object-oriented API for filesystem paths. Instead of os.path.join(base, "subdir", "file.txt"), you write Path(base) / "subdir" / "file.txt". It\'s more readable, cross-platform, and provides useful methods like .exists(), .read_text(), .write_text(), .glob(), and .iterdir().',
-  },
-  {
-    id: 'q3',
-    question: 'Which Python library is the standard choice for making HTTP requests to REST APIs?',
-    options: ['urllib', 'http.client', 'requests', 'httplib2'],
-    correct: 2,
-    explanation: 'The requests library (pip install requests) is the de facto standard for HTTP in Python. It provides a clean, human-friendly API: requests.get(url), requests.post(url, json=data), automatic JSON decoding (response.json()), session management, and authentication helpers. urllib is built-in but verbose.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the best practice for storing sensitive configuration like API keys in Python scripts?',
-    options: [
-      'Hardcode them as constants at the top of the file',
-      'Store them in a config.py file imported by the script',
-      'Load from environment variables using os.environ or python-dotenv',
-      'Encode them in base64 before storing in the script',
-    ],
-    correct: 2,
-    explanation: 'Environment variables (os.environ.get("API_KEY")) are the standard approach. python-dotenv loads from a .env file (which you add to .gitignore). Never hardcode secrets — they end up in git history, logs, and error messages. Base64 is encoding, not encryption, and provides zero security.',
-  },
-  {
-    id: 'q5',
-    question: 'In Python, what does context manager syntax (with statement) guarantee when opening files?',
-    options: [
-      'The file is opened in binary mode',
-      'The file is locked so no other process can access it',
-      'The file is automatically closed even if an exception occurs',
-      'The file contents are loaded entirely into memory',
-    ],
-    correct: 2,
-    explanation: 'The with statement (context manager) ensures __exit__ is called on the object even if an exception is raised. For files, this means the file handle is always closed, preventing resource leaks. Always use "with open(file) as f:" instead of manual f.open()/f.close() pairs.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

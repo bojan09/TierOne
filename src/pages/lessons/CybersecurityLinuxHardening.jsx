@@ -105,68 +105,7 @@ type=PATH msg=audit(1705312200.123:456): item=0 name='/etc/shadow'
 Jan 15 11:30:00 srv01 sudo: user : TTY=pts/0 ; PWD=/home/user
   USER=root ; COMMAND=/bin/cat /etc/shadow`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the CIS Benchmark Level 1 vs Level 2 distinction for Linux hardening?',
-    options: [
-      'Level 1 uses iptables; Level 2 uses nftables',
-      'Level 1 = practical security with minimal operational impact; Level 2 = high-security environments that may reduce functionality and require more maintenance',
-      'Level 1 covers network security; Level 2 covers filesystem security',
-      'Level 1 is for servers; Level 2 is for workstations',
-    ],
-    correct: 1,
-    explanation: 'CIS Benchmark Level 1 controls are broadly applicable and cause minimal disruption — recommended for all systems. Level 2 controls are for defense-in-depth environments where security outweighs some functionality concerns — they may break some applications or require significant configuration changes. Always start with Level 1, assess Level 2 controls individually for your environment.',
-  },
-  {
-    id: 'q2',
-    question: 'What does "sudo journalctl _COMM=sudo" show and why is it useful for security?',
-    options: [
-      'It lists all users who have sudo access configured',
-      'It shows all sudo command executions in the journal log, providing an audit trail of privileged actions',
-      'It shows failed sudo authentication attempts only',
-      'It displays the current sudo configuration from /etc/sudoers',
-    ],
-    correct: 1,
-    explanation: 'journalctl _COMM=sudo filters journal entries where the process name is "sudo", showing every sudo invocation with timestamp, user, and command executed. This is your audit trail for privileged access. Combined with auditd, you get comprehensive coverage of who ran what as root, which is essential for incident response and compliance.',
-  },
-  {
-    id: 'q3',
-    question: 'What does "noexec" on /tmp prevent and why is this a critical hardening control?',
-    options: [
-      'Prevents temporary files from being accessed by non-root users',
-      'Prevents binaries from being executed from /tmp — attackers commonly write exploits to /tmp then execute them; noexec breaks this attack pattern',
-      'Prevents files in /tmp from being modified after creation',
-      'Limits the size of /tmp to prevent disk exhaustion attacks',
-    ],
-    correct: 1,
-    explanation: '/tmp is world-writable — any user can write files there, making it a common staging area for attackers who gain code execution. With noexec, even if an attacker writes a compiled exploit to /tmp, they cannot execute it directly. This forces attackers to find an alternate execution method, significantly raising the cost of exploitation. Apply nosuid and nodev as well for complete /tmp hardening.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the purpose of "unattended-upgrades" on Ubuntu Server?',
-    options: [
-      'It automatically upgrades the Ubuntu version to the next release',
-      'It automatically installs security updates without manual intervention, reducing the window between patch release and application',
-      'It monitors for failed update attempts and alerts the administrator',
-      'It rolls back updates that cause system instability',
-    ],
-    correct: 1,
-    explanation: 'unattended-upgrades automatically downloads and installs security updates on a schedule. The time between a CVE being published (with patch) and it being applied is a critical attack window. Manually patching is slow — unattended-upgrades closes this window automatically for security-only updates. Configure it to install security updates only (not all updates) to avoid unexpected package upgrades breaking applications.',
-  },
-  {
-    id: 'q5',
-    question: 'What does the auditd daemon provide that journald alone cannot?',
-    options: [
-      'Real-time alerting when disk space is low',
-      'Kernel-level auditing of system calls, file access, privilege changes, and network connections — tamper-evident logs that cannot be modified by non-root processes',
-      'Automatic rotation and compression of log files',
-      'Central log aggregation from multiple servers',
-    ],
-    correct: 1,
-    explanation: 'auditd hooks into the Linux Audit subsystem in the kernel, capturing events at the system call level before they reach user space. This means the audit log captures events that attackers might hide from application-level logs. Audit rules can track: file reads/writes to sensitive files (/etc/passwd, SSH keys), all executions, privilege escalation attempts, network connections, and user/group changes. The audit log itself is append-only to non-root processes.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

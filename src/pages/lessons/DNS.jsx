@@ -96,58 +96,7 @@ ipconfig /displaydns                 # View client cache
 ipconfig /flushdns                   # Clear client cache
 Clear-DnsClientCache                 # PowerShell flush`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What DNS record type maps a hostname to an IPv4 address?',
-    options: ['CNAME', 'MX', 'A', 'PTR'],
-    correct: 2,
-    explanation: 'An A record (Address record) maps a hostname to an IPv4 address. For example: server01.lab.local → 192.168.100.10. AAAA records do the same for IPv6. CNAME is an alias. MX routes email. PTR is a reverse lookup.',
-  },
-  {
-    id: 'q2',
-    question: 'What is a DNS forwarder?',
-    options: [
-      'A secondary DNS server that holds a copy of the primary zone',
-      'A record that redirects one hostname to another',
-      'A DNS server to which unresolved queries are forwarded for resolution',
-      'A cache-only DNS server with no local zones',
-    ],
-    correct: 2,
-    explanation: 'A forwarder is a DNS server that your DNS server sends queries to when it cannot resolve a name from its own zones. Typically set to your ISP\'s DNS or a public resolver like 8.8.8.8. This allows your internal DNS server to resolve both internal names and external internet names.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the purpose of a PTR record?',
-    options: [
-      'Points a hostname to multiple IP addresses for load balancing',
-      'Maps an IP address back to a hostname (reverse DNS lookup)',
-      'Provides a text description of a DNS zone',
-      'Delegates authority for a subdomain to another DNS server',
-    ],
-    correct: 1,
-    explanation: 'PTR (Pointer) records enable reverse DNS lookups — mapping an IP address to a hostname. They live in special reverse lookup zones (e.g., 100.168.192.in-addr.arpa). Used by mail servers, security tools, and logging systems to verify hostnames.',
-  },
-  {
-    id: 'q4',
-    question: 'Which command displays all DNS records in a zone from a Windows DNS server?',
-    options: [
-      'Get-DnsServerZone -Name lab.local',
-      'Get-DnsServerResourceRecord -ZoneName lab.local',
-      'Show-DnsZoneRecords -Zone lab.local',
-      'nslookup -zone lab.local',
-    ],
-    correct: 1,
-    explanation: 'Get-DnsServerResourceRecord -ZoneName "lab.local" lists all resource records in the specified zone. You can add -RRType "A" to filter by record type. This is the standard PowerShell approach for DNS management on Windows Server.',
-  },
-  {
-    id: 'q5',
-    question: 'Active Directory requires DNS. What special record type does AD register to help clients locate domain controllers?',
-    options: ['A records only', 'SRV (Service) records', 'NS records', 'TXT records'],
-    correct: 1,
-    explanation: 'Active Directory registers SRV records in DNS so that clients can locate domain controllers, Global Catalogue servers, and Kerberos KDCs. For example: _ldap._tcp.dc._msdcs.lab.local SRV 0 0 389 dc01.lab.local. If these SRV records are missing or corrupt, clients cannot join or authenticate to the domain.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

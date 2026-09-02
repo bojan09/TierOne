@@ -1,43 +1,7 @@
 import React, { useState } from 'react'
 import CodeBlock from '../../components/CodeBlock.jsx'
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'At which OSI layer does IP addressing and routing occur?',
-    options: ['Layer 2 — Data Link', 'Layer 3 — Network', 'Layer 4 — Transport', 'Layer 5 — Session'],
-    correct: 1,
-    explanation: 'Layer 3 (Network) handles logical IP addressing and routing. Routers operate at this layer, making forwarding decisions based on IP addresses. Layer 2 uses MAC addresses, Layer 4 handles TCP/UDP ports.',
-  },
-  {
-    id: 'q2',
-    question: 'A packet arrives at a switch. At which layer does the switch make its forwarding decision?',
-    options: ['Layer 1 — Physical', 'Layer 2 — Data Link', 'Layer 3 — Network', 'Layer 4 — Transport'],
-    correct: 1,
-    explanation: 'Unmanaged and standard managed switches operate at Layer 2, using the destination MAC address in the Ethernet frame to make forwarding decisions. Layer 3 switches can also route based on IP addresses.',
-  },
-  {
-    id: 'q3',
-    question: 'Which protocol operates at Layer 7 of the OSI model?',
-    options: ['TCP', 'IP', 'Ethernet', 'HTTP'],
-    correct: 3,
-    explanation: 'HTTP (and HTTPS) operate at Layer 7 — the Application layer. This is the layer that directly interfaces with end-user software. TCP is Layer 4, IP is Layer 3, and Ethernet is Layer 2.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the PDU (Protocol Data Unit) name at Layer 4?',
-    options: ['Frame', 'Packet', 'Segment', 'Bit'],
-    correct: 2,
-    explanation: 'Each OSI layer has a name for its data unit: Layer 7–5 = Data, Layer 4 = Segment, Layer 3 = Packet, Layer 2 = Frame, Layer 1 = Bit. Understanding PDU names helps when reading protocol documentation.',
-  },
-  {
-    id: 'q5',
-    question: 'SSL/TLS operates primarily at which OSI layer?',
-    options: ['Layer 4 — Transport', 'Layer 5 — Session', 'Layer 6 — Presentation', 'Layer 7 — Application'],
-    correct: 2,
-    explanation: 'SSL/TLS is typically mapped to Layer 6 (Presentation) because it handles encryption, decryption, and data format translation — all Presentation layer responsibilities. Some models place it at Layer 5 or treat it as spanning multiple layers.',
-  },
-]
+
 
 const LAYERS = [
   { num: 7, name: 'Application',  color: 'bg-brand-500',       textColor: 'text-brand-300',    pdu: 'Data',    protocols: ['HTTP', 'HTTPS', 'FTP', 'SMTP', 'DNS', 'SSH', 'Telnet'], devices: ['Servers', 'Applications'], role: 'End-user interfaces with network services. Provides protocols for email, web browsing, file transfer, and remote access.' },

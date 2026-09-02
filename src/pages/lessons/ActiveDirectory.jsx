@@ -96,65 +96,6 @@ repadmin /showrepl
 dcdiag /test:replications /v
 netdom query fsmo`
 
-// ─── Quiz questions ───────────────────────────────────────────────────────────
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the minimum number of domain controllers recommended for a production Active Directory environment?',
-    options: [
-      'One — a single DC is sufficient for most organisations',
-      'Two — for redundancy and fault tolerance',
-      'Three — one per site minimum',
-      'Four — two global catalogues plus two standard DCs',
-    ],
-    correct: 1,
-    explanation: 'Microsoft recommends at least two domain controllers per domain for fault tolerance. If one DC fails, the second continues servicing authentication requests. A single DC is a single point of failure.',
-  },
-  {
-    id: 'q2',
-    question: 'Which PowerShell cmdlet promotes a Windows Server to a Domain Controller?',
-    options: [
-      'Add-DomainController',
-      'Install-ADDSForest',
-      'New-ADDomainController',
-      'Set-ADDSPromotion',
-    ],
-    correct: 1,
-    explanation: 'Install-ADDSForest is used to create a new forest and promote the first domain controller. For adding a DC to an existing domain you would use Install-ADDSDomainController.',
-  },
-  {
-    id: 'q3',
-    question: 'What does an Organisational Unit (OU) primarily provide in Active Directory?',
-    options: [
-      'Network segmentation between sites',
-      'A container for applying Group Policy and delegating administration',
-      'Physical security boundaries for servers',
-      'Replication boundaries between domain controllers',
-    ],
-    correct: 1,
-    explanation: 'OUs are containers used to organise directory objects and apply Group Policy Objects (GPOs). They also allow you to delegate administrative control — e.g., giving the helpdesk permission to reset passwords only within the HR OU.',
-  },
-  {
-    id: 'q4',
-    question: 'Which port does LDAP use by default?',
-    options: ['88', '389', '445', '636'],
-    correct: 1,
-    explanation: 'LDAP uses port 389 by default. LDAPS (LDAP over SSL/TLS) uses port 636. Port 88 is used by Kerberos and port 445 is SMB.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the SYSVOL share used for in Active Directory?',
-    options: [
-      'Storing user home directories',
-      'Database storage for AD objects',
-      'Replicating Group Policy files and logon scripts between domain controllers',
-      'Hosting the DHCP scope database',
-    ],
-    correct: 2,
-    explanation: 'SYSVOL is a shared folder replicated between all domain controllers using either FRS (legacy) or DFSR (modern). It contains Group Policy templates, logon/logoff scripts, and other domain-wide public files.',
-  },
-]
-
 // ─── Reusable section components ─────────────────────────────────────────────
 
 function SectionTitle({ icon, title, subtitle }) {

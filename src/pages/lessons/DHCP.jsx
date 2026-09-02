@@ -59,63 +59,6 @@ Get-DhcpServerInDC
 Get-DhcpServerv4Statistics
 netsh dhcp server show all`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the correct sequence of messages in the DHCP four-way handshake?',
-    options: [
-      'DISCOVER → OFFER → ACK → REQUEST',
-      'DISCOVER → OFFER → REQUEST → ACK',
-      'REQUEST → DISCOVER → OFFER → ACK',
-      'OFFER → DISCOVER → REQUEST → ACK',
-    ],
-    correct: 1,
-    explanation: 'DORA: Discover (client broadcasts for a server), Offer (server offers an IP), Request (client requests that specific IP), Acknowledge (server confirms the lease). This is always the order.',
-  },
-  {
-    id: 'q2',
-    question: 'Which UDP ports does DHCP use?',
-    options: ['Port 67 (server) and 68 (client)', 'Port 53 (server) and 67 (client)', 'Port 80 and 443', 'Port 68 (server) and 67 (client)'],
-    correct: 0,
-    explanation: 'DHCP servers listen on UDP port 67. DHCP clients send from and receive on UDP port 68. This is fixed and cannot be changed.',
-  },
-  {
-    id: 'q3',
-    question: 'A workstation has IP address 169.254.10.5. What does this indicate?',
-    options: [
-      'The workstation has a static IP configured',
-      'The DHCP server assigned this address',
-      'The workstation failed to reach a DHCP server and self-assigned an APIPA address',
-      'The workstation is on a different subnet',
-    ],
-    correct: 2,
-    explanation: '169.254.0.0/16 is the Automatic Private IP Addressing (APIPA) range. Windows assigns an address from this range when it cannot contact a DHCP server. It indicates a DHCP failure — check connectivity to the DHCP server.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the purpose of a DHCP reservation?',
-    options: [
-      'To prevent certain IP addresses from being leased to any client',
-      'To always assign the same IP address to a specific device based on its MAC address',
-      'To extend the lease time for all clients in a scope',
-      'To assign IPs to clients on a different subnet via a relay agent',
-    ],
-    correct: 1,
-    explanation: 'A DHCP reservation binds a specific IP address to a device\'s MAC address. The device still goes through the DORA process, but the DHCP server always offers the same reserved IP. This is preferred over static IPs for servers and printers.',
-  },
-  {
-    id: 'q5',
-    question: 'What must you do before a DHCP scope can begin leasing addresses?',
-    options: [
-      'Create at least one reservation',
-      'Activate the scope',
-      'Enable the DHCP audit log',
-      'Configure DNS integration',
-    ],
-    correct: 1,
-    explanation: 'A DHCP scope must be explicitly activated before it starts responding to client requests. A newly created scope is inactive by default. You can activate via the DHCP console or with Activate-DhcpServerv4Scope in PowerShell.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const styles = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

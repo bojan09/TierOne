@@ -156,68 +156,6 @@ sudo reboot
 # (reconnect via SSH)
 sudo ufw status verbose`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What are the three default iptables chains in the filter table?',
-    options: [
-      'ACCEPT, DROP, REJECT',
-      'INPUT, OUTPUT, FORWARD',
-      'PREROUTING, POSTROUTING, OUTPUT',
-      'ALLOW, BLOCK, LOG',
-    ],
-    correct: 1,
-    explanation: 'The filter table (default) has three chains: INPUT (traffic destined for the host), OUTPUT (traffic originating from the host), and FORWARD (traffic passing through the host, used for routing/NAT). PREROUTING and POSTROUTING exist in the nat table, which handles NAT rules.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the difference between iptables DROP and REJECT?',
-    options: [
-      'DROP silently discards the packet; REJECT discards it and sends an error response back to the sender',
-      'DROP is faster; REJECT is more secure',
-      'DROP applies to TCP only; REJECT applies to UDP only',
-      'There is no difference — they both block traffic the same way',
-    ],
-    correct: 0,
-    explanation: 'DROP silently discards the packet — the sender gets no response and must wait for a timeout. This makes port scanning slower and hides that a host exists. REJECT sends an ICMP "port unreachable" message back, giving the sender immediate feedback. Use DROP for internet-facing rules (less information disclosure), REJECT for internal rules (faster failure for legitimate tools).',
-  },
-  {
-    id: 'q3',
-    question: 'Which ufw command allows incoming SSH connections from a specific IP only?',
-    options: [
-      'ufw allow from 192.168.100.0/24 to any port 22',
-      'ufw enable ssh from 192.168.100.0/24',
-      'ufw add rule ssh source 192.168.100.0/24',
-      'ufw allow 22/tcp restrict 192.168.100.0/24',
-    ],
-    correct: 0,
-    explanation: 'ufw allow from SOURCE to any port PORT is the correct syntax for source-restricted rules. "ufw allow from 192.168.100.0/24 to any port 22" allows SSH from the entire 192.168.100.0/24 subnet. Without "from", the rule allows SSH from anywhere.',
-  },
-  {
-    id: 'q4',
-    question: 'What must you do to make iptables rules persist across reboots on Ubuntu/Debian?',
-    options: [
-      'Nothing — iptables rules automatically persist',
-      'Run "iptables --save" after configuring rules',
-      'Install iptables-persistent and run netfilter-persistent save, or use iptables-save to a file loaded at boot',
-      'Add rules to /etc/rc.local with iptables commands',
-    ],
-    correct: 2,
-    explanation: 'iptables rules are not persistent by default — they are lost on reboot. On Ubuntu/Debian, install iptables-persistent (apt install iptables-persistent) which saves current rules to /etc/iptables/rules.v4 and /etc/iptables/rules.v6, loading them at boot. You can also use iptables-save > /etc/iptables/rules.v4 and load with iptables-restore.',
-  },
-  {
-    id: 'q5',
-    question: 'What does "ufw default deny incoming" do?',
-    options: [
-      'Blocks all traffic including outbound until rules are added',
-      'Sets the default policy to block all unsolicited inbound connections unless explicitly allowed by a rule',
-      'Disables ufw entirely',
-      'Only blocks incoming traffic on port 80',
-    ],
-    correct: 1,
-    explanation: '"ufw default deny incoming" sets the default policy for the INPUT chain to DROP. Any inbound connection not explicitly allowed by a ufw allow rule will be silently dropped. This is the secure default — start with deny all and allow only what you need. Pair it with "ufw default allow outgoing" for normal operation.',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

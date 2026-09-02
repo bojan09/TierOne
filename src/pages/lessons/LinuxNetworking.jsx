@@ -185,48 +185,7 @@ const CODE_LINUXNETWORKING_12 = `10:15:22 192.168.100.20.52341 > 192.168.100.10.
 10:15:23 192.168.100.20.51422 > 192.168.100.10.53: A? google.com
 10:15:23 192.168.100.10.53 > 192.168.100.20.51422: A 142.250.80.46 (forwarded)`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'Which command shows all IP addresses assigned to all network interfaces on a Linux system?',
-    options: ['ifconfig -a', 'ip addr show', 'netstat -i', 'route -n'],
-    correct: 1,
-    explanation: 'ip addr show (or ip a for short) is the modern replacement for ifconfig. It displays all interfaces, their IP addresses, MAC addresses, and states. ifconfig is from the deprecated net-tools package and should not be used on modern systems.',
-  },
-  {
-    id: 'q2',
-    question: 'What does the Netplan configuration file format use?',
-    options: ['XML', 'INI/INF format', 'YAML', 'JSON'],
-    correct: 2,
-    explanation: 'Netplan uses YAML configuration files stored in /etc/netplan/. After editing, apply with "sudo netplan apply". Netplan is the default network configuration tool on Ubuntu 18.04+ and generates configuration for either NetworkManager or systemd-networkd backends.',
-  },
-  {
-    id: 'q3',
-    question: 'Which command shows active TCP listening ports and the process using each port?',
-    options: ['netstat -tulpn', 'ss -tlnp', 'lsof -i', 'All of the above show this information'],
-    correct: 3,
-    explanation: 'All three commands can show listening TCP ports with process information. ss -tlnp is the modern preferred tool (replaces netstat from deprecated net-tools). lsof -i shows file-based network connections. netstat -tulpn still works on systems with net-tools installed. In practice, ss -tlnp is the recommended current approach.',
-  },
-  {
-    id: 'q4',
-    question: 'What does "ip route add default via 192.168.100.1" do?',
-    options: [
-      'Adds a static route to the 192.168.100.0/24 network',
-      'Replaces the DNS server with 192.168.100.1',
-      'Sets 192.168.100.1 as the default gateway for all traffic with no more specific route',
-      'Configures 192.168.100.1 as a secondary IP on the default interface',
-    ],
-    correct: 2,
-    explanation: 'The default route (0.0.0.0/0) matches all traffic with no more specific route. "via 192.168.100.1" specifies the next-hop gateway. This is equivalent to setting a default gateway. The route is temporary (lost on reboot) — for persistence, add it to Netplan or /etc/network/interfaces.',
-  },
-  {
-    id: 'q5',
-    question: 'What file on Ubuntu/Debian systems configures the DNS resolver (which servers to query)?',
-    options: ['/etc/hosts', '/etc/resolv.conf', '/etc/dns.conf', '/etc/systemd/network/dns.conf'],
-    correct: 1,
-    explanation: '/etc/resolv.conf contains the DNS resolver configuration: nameserver entries for DNS servers and search domain settings. On modern Ubuntu with systemd-resolved, this file is a symlink to /run/systemd/resolve/stub-resolv.conf. Use resolvectl to query and manage DNS settings on systemd-resolved systems.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

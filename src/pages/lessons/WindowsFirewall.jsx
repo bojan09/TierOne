@@ -104,68 +104,7 @@ netsh advfirewall export "C:\\fw-backup.wfw"
 netsh advfirewall import "C:\\fw-backup.wfw"
 netsh advfirewall reset   # Factory reset (dangerous!)`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'In Windows Defender Firewall, what is the difference between Inbound and Outbound rules?',
-    options: [
-      'Inbound rules control traffic from the internet only; Outbound rules control local traffic',
-      'Inbound rules filter traffic arriving at the computer; Outbound rules filter traffic leaving the computer',
-      'Inbound rules apply to servers; Outbound rules apply to workstations',
-      'There is no functional difference — both block or allow the same traffic',
-    ],
-    correct: 1,
-    explanation: 'Inbound rules filter traffic arriving at the host (e.g. blocking port 3389 to prevent RDP access). Outbound rules filter traffic leaving the host (e.g. blocking a process from calling home). By default, Windows blocks unsolicited inbound connections and allows all outbound connections.',
-  },
-  {
-    id: 'q2',
-    question: 'What are the three Windows Firewall profiles and when does each apply?',
-    options: [
-      'Public, Private, and Domain — applying based on network location detection',
-      'High, Medium, and Low — based on security level set by the administrator',
-      'Wired, Wireless, and VPN — based on the connection type',
-      'Local, Remote, and Cloud — based on where the resource is hosted',
-    ],
-    correct: 0,
-    explanation: 'Domain profile applies when the computer is connected to a domain network. Private profile applies to home or work networks marked as trusted. Public profile applies to public/untrusted networks (hotels, coffee shops). Each profile can have different rules — you typically allow more on Domain, restrict heavily on Public.',
-  },
-  {
-    id: 'q3',
-    question: 'What PowerShell cmdlet creates a new inbound firewall rule to allow TCP port 8080?',
-    options: [
-      'Add-FirewallRule -Port 8080 -Protocol TCP -Direction Inbound',
-      'New-NetFirewallRule -DisplayName "Web-8080" -Direction Inbound -Protocol TCP -LocalPort 8080 -Action Allow',
-      'Set-NetFirewallRule -Port 8080 -Allow $true',
-      'Enable-NetFirewallRule -LocalPort 8080 -Protocol TCP',
-    ],
-    correct: 1,
-    explanation: 'New-NetFirewallRule is the cmdlet for creating firewall rules. Key parameters: -Direction (Inbound/Outbound), -Protocol (TCP/UDP/Any), -LocalPort (port number or range), -Action (Allow/Block), -Profile (Domain/Private/Public/Any). -DisplayName is required and should be descriptive.',
-  },
-  {
-    id: 'q4',
-    question: 'What is Windows Defender Firewall with Advanced Security (WFAS) Connection Security Rules used for?',
-    options: [
-      'Blocking connections from specific countries',
-      'Requiring IPsec encryption and authentication between specific computers',
-      'Setting bandwidth limits on network connections',
-      'Automatically blocking ports that are not in use',
-    ],
-    correct: 1,
-    explanation: 'Connection Security Rules (part of WFAS) configure IPsec to authenticate and/or encrypt traffic between computers. They can require that all traffic between two servers be mutually authenticated with Kerberos and encrypted. This is different from regular firewall rules — they don\'t allow or block traffic, they specify the security requirements for allowed traffic.',
-  },
-  {
-    id: 'q5',
-    question: 'A new Windows service needs to accept connections on port 5985. Which firewall profile change is most appropriate for a domain-joined server?',
-    options: [
-      'Allow on all three profiles (Domain, Private, Public)',
-      'Allow on Domain profile only',
-      'Disable the firewall entirely for easier management',
-      'Create an outbound rule to allow port 5985',
-    ],
-    correct: 1,
-    explanation: 'Port 5985 is WinRM (PowerShell remoting). On a domain-joined server, you should allow it on the Domain profile only — not Private or Public. This follows the principle of least privilege: the service is only accessible from domain networks, not from untrusted public networks.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

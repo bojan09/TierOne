@@ -201,58 +201,7 @@ sudo lvcreate -L 2G -s -n mysnap /dev/myvg/mylv   # Create snapshot
 sudo mount /dev/myvg/mysnap /mnt/snapshot          # Mount snapshot
 sudo lvconvert --merge /dev/myvg/mysnap            # Revert to snapshot`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the correct sequence for creating a new filesystem on a disk partition?',
-    options: [
-      'mkfs → fdisk → mount',
-      'fdisk (create partition) → mkfs (format) → mount (attach)',
-      'mount → mkfs → fdisk',
-      'fdisk → mount → mkfs',
-    ],
-    correct: 1,
-    explanation: 'The sequence is always: (1) fdisk/parted to create the partition on the disk, (2) mkfs to create a filesystem (ext4, xfs, etc.) on the partition, (3) mount to attach it to the directory tree. Optionally, add to /etc/fstab for persistence at boot. Trying to mount before formatting results in an error.',
-  },
-  {
-    id: 'q2',
-    question: 'What are the three layers in LVM, from bottom to top?',
-    options: [
-      'Disk → Partition → Volume',
-      'Physical Volume (PV) → Volume Group (VG) → Logical Volume (LV)',
-      'Block Device → Stripe → Logical Unit',
-      'Physical Disk → Logical Group → Extended Volume',
-    ],
-    correct: 1,
-    explanation: 'LVM has three layers: Physical Volumes (PV) are the actual block devices or partitions initialised for LVM use. Volume Groups (VG) pool one or more PVs into a storage pool. Logical Volumes (LV) are carved out of a VG and used like regular partitions. This abstraction allows resizing, snapshotting, and migration without downtime.',
-  },
-  {
-    id: 'q3',
-    question: 'Which command extends an existing LVM logical volume AND the filesystem on it in one step?',
-    options: [
-      'lvextend -L +10G /dev/vgdata/lvdata && resize2fs /dev/vgdata/lvdata',
-      'lvextend -r -L +10G /dev/vgdata/lvdata',
-      'lvresize --resizefs +10G /dev/vgdata/lvdata',
-      'Both B and C are correct',
-    ],
-    correct: 3,
-    explanation: 'Both lvextend -r (or --resizefs) and lvresize --resizefs will extend the LV and automatically resize the filesystem in one step. Without -r/--resizefs, the LV grows but the filesystem remains the old size — you must then run resize2fs (ext4) or xfs_growfs (xfs) manually. Always use -r for convenience and safety.',
-  },
-  {
-    id: 'q4',
-    question: 'What file configures filesystems to mount automatically at boot?',
-    options: ['/etc/mounts', '/etc/fstab', '/etc/mount.conf', '/boot/grub/mount.cfg'],
-    correct: 1,
-    explanation: '/etc/fstab (filesystem table) defines which filesystems to mount at boot. Each line specifies: device (UUID or path), mount point, filesystem type, mount options, dump, and fsck pass order. Always use UUIDs (not /dev/sdb1 — these can change) and test with "mount -a" before rebooting to catch errors.',
-  },
-  {
-    id: 'q5',
-    question: 'What command shows disk space usage of mounted filesystems in human-readable form?',
-    options: ['du -sh /*', 'lsblk -f', 'df -h', 'fdisk -l'],
-    correct: 2,
-    explanation: 'df -h (disk free, human-readable) shows filesystem-level space usage — total, used, available, and percentage for each mounted filesystem. du (disk usage) measures directory/file sizes. lsblk shows block device tree. fdisk -l shows partition table information. For day-to-day disk space monitoring, df -h is your go-to command.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

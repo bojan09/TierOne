@@ -57,58 +57,6 @@ ESTAB     0       0       192.168.100.20:22     192.168.100.10:54321
   2 ESTABLISHED
   0 TIME-WAIT`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'How many usable host addresses are in a /26 subnet?',
-    options: ['32', '62', '64', '126'],
-    correct: 1,
-    explanation: 'A /26 subnet has 26 network bits and 6 host bits. Total addresses = 2^6 = 64. Usable hosts = 64 - 2 = 62 (subtract network address and broadcast address). Subnet mask: 255.255.255.192.',
-  },
-  {
-    id: 'q2',
-    question: 'What does TCP\'s three-way handshake accomplish?',
-    options: [
-      'It encrypts the connection before data is transferred',
-      'It establishes a reliable, ordered connection by synchronising sequence numbers between client and server',
-      'It verifies the identity of both endpoints using certificates',
-      'It negotiates the data transfer rate between client and server',
-    ],
-    correct: 1,
-    explanation: 'The TCP three-way handshake (SYN → SYN-ACK → ACK) establishes connection parameters — primarily synchronising Initial Sequence Numbers (ISN) so both sides can track which bytes have been received and reorder out-of-order segments. It does not encrypt or authenticate — that\'s TLS\'s job.',
-  },
-  {
-    id: 'q3',
-    question: 'Which statement best describes the difference between TCP and UDP?',
-    options: [
-      'TCP is faster; UDP is more reliable',
-      'TCP guarantees ordered, reliable delivery with error checking; UDP is connectionless with no guaranteed delivery',
-      'TCP is for text data; UDP is for binary data',
-      'TCP requires a static IP; UDP works with DHCP',
-    ],
-    correct: 1,
-    explanation: 'TCP provides reliable, ordered, error-checked delivery through acknowledgements, sequence numbers, and retransmission. This overhead makes it slower but dependable. UDP is connectionless — it sends packets with no handshake, acknowledgement, or retransmission. UDP is faster and used for DNS, VoIP, gaming, and streaming where speed matters more than perfect delivery.',
-  },
-  {
-    id: 'q4',
-    question: 'A host has IP 172.16.45.200 with subnet mask 255.255.240.0. What is the network address?',
-    options: ['172.16.45.0', '172.16.32.0', '172.16.0.0', '172.16.48.0'],
-    correct: 1,
-    explanation: '255.255.240.0 = /20. The third octet mask is 240 (11110000 in binary). 45 in binary is 00101101. AND with 11110000 = 00100000 = 32. So the network address is 172.16.32.0. The host range is 172.16.32.1 – 172.16.47.254, broadcast is 172.16.47.255.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the purpose of a default gateway?',
-    options: [
-      'To assign IP addresses to hosts on the local network',
-      'To resolve hostnames to IP addresses',
-      'To forward packets from the local subnet to other networks when no more-specific route exists',
-      'To encrypt traffic leaving the local network',
-    ],
-    correct: 2,
-    explanation: 'The default gateway is a router\'s IP address that a host sends packets to when the destination IP is not on the local subnet. The host checks its routing table — if no specific route matches, it sends the packet to the default gateway (0.0.0.0/0 route), which then makes the next routing decision.',
-  },
-]
 
 // ─── Interactive subnet calculator ───────────────────────────────────────────
 function SubnetCalculator() {

@@ -117,68 +117,7 @@ Backup-GPO -All -Path C:\\\\GPO-Backups
 Restore-GPO -Name "My-Policy" -Path C:\\\\GPO-Backups
 Import-GPO -BackupGpoName "My-Policy" -Path C:\\\\GPO-Backups -TargetName "My-Policy" -CreateIfNeeded`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the correct order of GPO processing (LSDOU)?',
-    options: [
-      'Local → Site → Domain → OU',
-      'Domain → Site → Local → OU',
-      'OU → Domain → Site → Local',
-      'Site → Local → OU → Domain',
-    ],
-    correct: 0,
-    explanation: 'LSDOU: Local policy is applied first, then Site, then Domain, then OU (from parent to child). Each subsequent policy can override the previous — meaning OU-linked GPOs have the highest precedence and will override Domain-level settings unless blocked or enforced.',
-  },
-  {
-    id: 'q2',
-    question: 'What does "Enforced" (previously called "No Override") do to a GPO?',
-    options: [
-      'Prevents the GPO from being deleted',
-      'Forces the GPO to apply even if a child OU has Block Inheritance enabled',
-      'Requires all settings to be configured before the GPO can be saved',
-      'Prevents administrators from modifying the GPO settings',
-    ],
-    correct: 1,
-    explanation: 'Enforced (No Override) prevents child containers from blocking the GPO with Block Inheritance. It also gives the policy precedence in conflict resolution — settings from an enforced GPO win against non-enforced policies regardless of LSDOU order.',
-  },
-  {
-    id: 'q3',
-    question: 'A user logs in and their mapped drives don\'t appear. Which tool is the BEST first step to diagnose GPO application issues?',
-    options: [
-      'Event Viewer → Application log',
-      'gpresult /r and gpresult /h report.html',
-      'Active Directory Users and Computers',
-      'Restarting the Group Policy service',
-    ],
-    correct: 1,
-    explanation: 'gpresult /r shows a summary of applied GPOs for the current user and computer. gpresult /h generates a full HTML report showing every GPO, its settings, and whether it was applied or filtered. This should always be the first diagnostic step for GPO issues.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the difference between Computer Configuration and User Configuration in a GPO?',
-    options: [
-      'They are identical — either section can configure any setting',
-      'Computer Configuration applies when the machine boots; User Configuration applies when the user logs in',
-      'Computer Configuration only affects servers; User Configuration only affects workstations',
-      'Computer Configuration requires a domain admin to apply; User Configuration applies to standard users',
-    ],
-    correct: 1,
-    explanation: 'Computer Configuration settings are applied during machine startup (before login) and refresh every 90 minutes. User Configuration settings apply at user logon and also refresh every 90 minutes. Some settings only exist in one section — e.g., drive mappings are User Configuration only; disk quotas are Computer Configuration only.',
-  },
-  {
-    id: 'q5',
-    question: 'How do you force an immediate Group Policy refresh on a remote computer?',
-    options: [
-      'Restart-Computer -ComputerName srv01',
-      'Invoke-GPUpdate -Computer "srv01" -Force',
-      'Set-GPLink -GPO "Default Domain Policy" -Force',
-      'gpupdate /sync /target:srv01',
-    ],
-    correct: 1,
-    explanation: 'Invoke-GPUpdate -Computer "srv01" -Force remotely triggers a gpupdate /force on the target machine. The local equivalent is simply gpupdate /force. gpresult shows what was applied. GP normally refreshes every 90 minutes (±30 min randomisation) plus at boot/logon.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

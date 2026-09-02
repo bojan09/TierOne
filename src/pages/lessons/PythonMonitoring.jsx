@@ -178,68 +178,6 @@ const CODE_PYTHONMONITORING_5 = `{
 }
 OK: Disk at 15.3%`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does the psutil library provide that makes it ideal for system monitoring scripts?',
-    options: [
-      'A web framework for building monitoring dashboards',
-      'Cross-platform access to system and process information: CPU, memory, disk, network I/O, process lists, and system uptime',
-      'A database for storing monitoring metrics',
-      'Email and alerting functionality',
-    ],
-    correct: 1,
-    explanation: 'psutil (process and system utilities) gives Python cross-platform access to system metrics that would otherwise require parsing platform-specific commands. Key functions: psutil.cpu_percent(), psutil.virtual_memory(), psutil.disk_usage("/"), psutil.net_io_counters(), psutil.process_iter(). Works on Linux, Windows, and macOS with the same API.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the correct approach for a monitoring script that runs continuously and alerts on thresholds?',
-    options: [
-      'Use while True with no sleep — maximum responsiveness',
-      'Use a loop with time.sleep() for the polling interval, check thresholds, and implement cooldown logic to prevent alert flooding',
-      'Run the script once as a cron job every minute',
-      'Use asyncio for concurrent monitoring of all metrics',
-    ],
-    correct: 1,
-    explanation: 'A continuous monitoring loop needs: time.sleep(interval) to avoid consuming 100% CPU, threshold checking with hysteresis (don\'t alert every second when CPU is at 91% for 10 minutes), cooldown tracking (track last_alert_time per metric to prevent flooding), and graceful SIGINT handling (try/except KeyboardInterrupt). For production, use a proper monitoring system (Prometheus, Datadog) but understanding the loop pattern is fundamental.',
-  },
-  {
-    id: 'q3',
-    question: 'How do you send an email alert from Python when a threshold is crossed?',
-    options: [
-      'import email and call email.send()',
-      'Use smtplib.SMTP to connect to a mail server, create a MIMEText message, and call sendmail()',
-      'Use requests.post() to the Gmail API',
-      'Write a file to /var/mail/username',
-    ],
-    correct: 1,
-    explanation: 'Python\'s built-in smtplib handles SMTP email sending. Create the message with email.mime.text.MIMEText or email.message.EmailMessage. Connect to SMTP server with smtplib.SMTP("smtp.company.com", 587), call starttls() for encryption, login() with credentials, and sendmail(). For production scripts, use an SMTP relay or service like SendGrid/SES rather than direct mail server access.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the purpose of a "cooldown" mechanism in a monitoring script?',
-    options: [
-      'It reduces CPU temperature by slowing down the monitoring loop',
-      'It prevents the same alert from being sent repeatedly during a sustained incident — wait N minutes before sending another alert for the same condition',
-      'It gracefully shuts down the monitoring script when requested',
-      'It pauses monitoring during business hours to reduce noise',
-    ],
-    correct: 1,
-    explanation: 'Without a cooldown, a monitoring script checking every 30 seconds during a 2-hour CPU spike would send 240 identical alerts. A cooldown tracks the last alert time per metric and only sends another alert after a minimum interval (e.g., 30 minutes). Track with: last_alert = {}; if metric not in last_alert or time.time() - last_alert[metric] > COOLDOWN_SECS: send_alert(); last_alert[metric] = time.time().',
-  },
-  {
-    id: 'q5',
-    question: 'What is the advantage of using Python\'s requests library to send monitoring alerts to a Slack webhook?',
-    options: [
-      'Slack webhooks are faster than email',
-      'It requires no email infrastructure, delivers alerts instantly to a channel visible to the whole team, and is a single POST request to a URL with a JSON payload',
-      'It automatically escalates alerts if not acknowledged',
-      'It stores alert history in a database automatically',
-    ],
-    correct: 1,
-    explanation: 'Slack incoming webhooks accept a simple POST request with a JSON payload containing a "text" field. No SMTP server, no email credentials, no MX records — just an HTTPS request to a webhook URL. The alert appears in a Slack channel immediately, visible to everyone. Excellent for team operational alerts. Also simple to integrate: requests.post(webhook_url, json={"text": message}).',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

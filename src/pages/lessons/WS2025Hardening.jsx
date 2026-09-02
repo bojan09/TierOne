@@ -99,68 +99,7 @@ True         True
 
 DC01 hardening complete`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is a Server Core installation and what is its primary security advantage?',
-    options: [
-      'A minimal Windows Server install with no GUI — smaller attack surface, fewer patches needed, lower resource usage',
-      'A virtual machine template for rapid server deployment',
-      'A read-only installation mode for database servers',
-      'A containerised version of Windows Server',
-    ],
-    correct: 0,
-    explanation: 'Server Core removes the GUI shell (explorer.exe, IE, most graphical components), leaving only command-line management via PowerShell, cmd, and remote tools. Benefits: fewer installed components = fewer CVEs to patch, smaller memory footprint (~1GB vs ~2GB), remote management enforced (admins must use WinRM/RSAT rather than logging in locally). Microsoft recommends Server Core for all new deployments.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the principle of least privilege and how does it apply to Windows service accounts?',
-    options: [
-      'Privilege should be allocated based on seniority of the employee',
-      'Every account and service should operate with only the minimum permissions needed — service accounts should not be members of Domain Admins, Local Admins, or have rights beyond their specific function',
-      'Privileges should be least for external users and most for internal users',
-      'Privilege levels should be reduced after business hours',
-    ],
-    correct: 1,
-    explanation: 'Least privilege limits blast radius when a service account is compromised. A SQL Server service account needs: Log on as a service right, read/write access to the SQL data directory, and nothing else. Not Local Admin, not Domain Admin. Use Group Managed Service Accounts (gMSAs) for Windows services — they get automatic password rotation with no admin effort, and can be restricted to specific servers.',
-  },
-  {
-    id: 'q3',
-    question: 'What does enabling "Windows Defender Credential Guard" protect against?',
-    options: [
-      'Brute-force attacks against Active Directory accounts',
-      'Pass-the-Hash and Pass-the-Ticket attacks by isolating credential material (NTLM hashes, Kerberos tickets) in a Virtualization-Based Security container inaccessible to even privileged processes',
-      'Credential stuffing attacks from external sources',
-      'Weak password selection by users',
-    ],
-    correct: 1,
-    explanation: 'Credential Guard uses Hyper-V Virtualization-Based Security to run the LSASS process in an isolated container. Even if an attacker gains SYSTEM access and tries to run Mimikatz, the credential material (NTLM hashes, Kerberos tickets) is in a protected container they cannot access. Requires: 64-bit Windows, UEFI 2.3.1+, Secure Boot, Virtualization extensions (VT-x/AMD-V). Enabled via Group Policy or MDM.',
-  },
-  {
-    id: 'q4',
-    question: 'What is SMB signing and why is it important on a Windows Server network?',
-    options: [
-      'A digital certificate applied to SMB file shares for HTTPS-like encryption',
-      'Cryptographic signing of SMB packets that prevents man-in-the-middle (NTLM relay) attacks where an attacker intercepts and replays authentication between a client and server',
-      'A feature that logs all SMB connections for auditing',
-      'An SMB version indicator that shows which protocol version is in use',
-    ],
-    correct: 1,
-    explanation: 'SMB signing adds a cryptographic signature to every SMB packet using the session key established during authentication. Without it, an attacker on the network can intercept SMB authentication (NTLM relay attack) and relay it to another server, potentially gaining access as the victim. SMB signing is required on Domain Controllers by default. Enable it on all servers: Set-SmbServerConfiguration -RequireSecuritySignature $true.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the purpose of Windows Security Baselines from Microsoft?',
-    options: [
-      'A list of recommended hardware specifications for running Windows Server',
-      'Pre-configured Group Policy settings representing Microsoft\'s recommended security configuration — tested to not break typical enterprise functionality while significantly reducing attack surface',
-      'Baseline performance benchmarks for Windows Server workloads',
-      'A tool for measuring the current security posture against a minimum standard',
-    ],
-    correct: 1,
-    explanation: 'Microsoft Security Baselines (from Microsoft Security Compliance Toolkit) are pre-built Group Policy Object exports representing Microsoft\'s recommended security settings. They cover: Windows Defender settings, account policies, auditing, network security, and Windows Firewall. Import them into GPMC and test in a lab OU before deploying production-wide. They are CIS Benchmark-equivalent from Microsoft and a solid starting point for any hardening project.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info:'callout-info', warning:'callout-warning', success:'callout-success', danger:'callout-danger' }

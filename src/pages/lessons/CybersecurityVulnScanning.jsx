@@ -63,68 +63,7 @@ const CODE_CYBERSECURITYVULNSCANNING_5 = `Host script results:
 
 Scan saved to /tmp/lab-scan.xml`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between a vulnerability scanner and a penetration test?',
-    options: [
-      'Vulnerability scanners are automated; penetration tests are manual — there is no functional difference',
-      'A vulnerability scanner identifies and catalogues potential weaknesses; a penetration test actively attempts to exploit those weaknesses to determine actual impact',
-      'Vulnerability scanners only work on Windows; penetration tests work on all platforms',
-      'Penetration tests require no tools; vulnerability scanners require expensive hardware',
-    ],
-    correct: 1,
-    explanation: 'Vulnerability scanning is automated detection — it identifies software versions, checks against CVE databases, and flags potential vulnerabilities without exploiting them. It gives you a list of "might be vulnerable." Penetration testing actively tries to exploit vulnerabilities to prove impact, chain multiple issues together, and demonstrate business risk. Scanning is continuous/frequent; pen testing is periodic and requires skilled human judgment.',
-  },
-  {
-    id: 'q2',
-    question: 'What does CVSS score measure and what does a score of 9.8 indicate?',
-    options: [
-      'The frequency with which a vulnerability is being exploited in the wild',
-      'A standardised 0-10 severity score; 9.8 = Critical — remotely exploitable with no authentication required, with high impact on confidentiality, integrity, and availability',
-      'The number of systems worldwide affected by the vulnerability',
-      'The cost in dollars to remediate the vulnerability',
-    ],
-    correct: 1,
-    explanation: 'CVSS (Common Vulnerability Scoring System) provides a 0-10 score based on: Attack Vector (network/local), Attack Complexity, Privileges Required, User Interaction, Scope, Confidentiality/Integrity/Availability impact. Score ranges: 0-3.9 Low, 4-6.9 Medium, 7-8.9 High, 9-10 Critical. A 9.8 means: network-exploitable, low complexity, no privileges needed, no user interaction — basically "anyone on the internet can own this without any preconditions."',
-  },
-  {
-    id: 'q3',
-    question: 'What is "authenticated scanning" and why does it produce more accurate results?',
-    options: [
-      'Scanning with administrator credentials stored in the scanner',
-      'Scanning that uses valid credentials to log into the target system, allowing inspection of installed software versions, configurations, and patches — not just network-visible services',
-      'Scanning that has been approved by the system owner',
-      'Scanning that requires two-factor authentication before running',
-    ],
-    correct: 1,
-    explanation: 'Unauthenticated scanning can only see what\'s visible from the network — open ports, banner versions. It misses: installed patches (a service might show an old version in banner but be patched), local software not listening on the network, configuration issues, and files. Authenticated scanning logs in via SSH (Linux) or WMI/SMB (Windows) and inspects the actual system — much more accurate, fewer false positives, and catches vulnerabilities that network scanning misses.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the recommended vulnerability remediation prioritisation approach?',
-    options: [
-      'Fix all Critical CVEs first, then High, then Medium, then Low in strict score order',
-      'Prioritise by combining CVSS score with exploitability in the wild (EPSS), asset criticality, and whether the vulnerability is reachable from the internet or from untrusted networks',
-      'Fix the newest vulnerabilities first as they are most likely to be exploited',
-      'Fix vulnerabilities alphabetically by CVE ID to ensure systematic coverage',
-    ],
-    correct: 1,
-    explanation: 'Pure CVSS ordering ignores context. A Critical CVE on an isolated test server is lower priority than a High CVE on your internet-facing payment system. Better approach: (1) CVSS score, (2) EPSS (Exploit Prediction Scoring System) — likelihood of exploitation in the wild, (3) Asset criticality — is this a core infrastructure server?, (4) Exposure — is it internet-facing or internal only?, (5) Compensating controls — does a WAF or firewall already mitigate it?',
-  },
-  {
-    id: 'q5',
-    question: 'What does nmap -sV -sC -p- do?',
-    options: [
-      'Performs a stealthy scan that evades intrusion detection systems',
-      'Scans all 65,535 TCP ports, attempts service/version detection, and runs default NSE scripts against found services',
-      'Scans only the top 1,000 most common ports with verbose output',
-      'Performs a vulnerability assessment using the Nessus database',
-    ],
-    correct: 1,
-    explanation: '-p- scans all ports (1-65535), not just the default top 1000. -sV performs service version detection — attempts to identify exact software and version running on each open port. -sC runs the default Nmap Scripting Engine (NSE) scripts which perform additional checks: banner grabbing, authentication testing, vulnerability checking for common issues. This is a thorough reconnaissance scan often used at the start of security assessments.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

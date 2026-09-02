@@ -203,63 +203,7 @@ const CODE_PYTHONBASICS_8 = `Scanning 192.168.100.0/24...
   ✔ 192.168.100.10      53/DNS, 389/LDAP, 445/SMB, 3389/RDP
   ✔ 192.168.100.20      22/SSH`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is a Python virtual environment (venv) and why should you always use one?',
-    options: [
-      'A sandbox that runs Python inside a VM for security isolation',
-      'An isolated Python installation with its own packages so projects don\'t interfere with each other or the system Python',
-      'A visual IDE for writing Python scripts',
-      'A remote Python environment running on a server',
-    ],
-    correct: 1,
-    explanation: 'A virtual environment (venv) creates an isolated directory with its own Python interpreter and package installation. This means project A can use requests==2.28 while project B uses requests==2.31, and neither affects the system Python. Always use venvs for any project with dependencies. Create: python3 -m venv venv. Activate: source venv/bin/activate (Linux) or venv\\Scripts\\activate (Windows).',
-  },
-  {
-    id: 'q2',
-    question: 'What is the output of: print(type(42), type("hello"), type([1,2,3]))',
-    options: [
-      '<int> <str> <list>',
-      '<class \'int\'> <class \'str\'> <class \'list\'>',
-      'int str list',
-      'number string array',
-    ],
-    correct: 1,
-    explanation: 'Python\'s type() function returns a type object. When printed, it shows <class \'typename\'>. Python\'s built-in types: int, float, str, bool, list, tuple, dict, set, NoneType. Everything in Python is an object with a type.',
-  },
-  {
-    id: 'q3',
-    question: 'What does the following print?\nservers = {"dc01": "192.168.100.10", "srv01": "192.168.100.20"}\nprint(servers.get("web01", "Not found"))',
-    options: ['None', 'KeyError: web01', '"Not found"', '{}'],
-    correct: 2,
-    explanation: 'dict.get(key, default) safely retrieves a key — if the key doesn\'t exist, it returns the default value instead of raising a KeyError. servers["web01"] would raise KeyError, but servers.get("web01", "Not found") safely returns "Not found". Always use .get() when you\'re not sure a key exists.',
-  },
-  {
-    id: 'q4',
-    question: 'What is a Python list comprehension and when should you use one?',
-    options: [
-      'A type of comment that documents what a list contains',
-      'A concise one-line syntax to create a new list by applying an expression and optional filter to an iterable',
-      'A built-in method that checks if all items in a list match a condition',
-      'A way to merge two lists into one',
-    ],
-    correct: 1,
-    explanation: 'A list comprehension creates a new list concisely: [expression for item in iterable if condition]. Example: [x*2 for x in range(10) if x % 2 == 0] creates [0,4,8,12,16]. Use comprehensions when building a list from another iterable with simple transformations. For complex logic, a regular for loop is more readable.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the purpose of if __name__ == "__main__": in a Python script?',
-    options: [
-      'It defines the main function that Python always runs first',
-      'It checks if the script is being run directly (not imported), allowing code to run as a script but not when imported as a module',
-      'It prevents the script from running without administrator privileges',
-      'It sets the script\'s name for logging purposes',
-    ],
-    correct: 1,
-    explanation: 'When Python imports a module, __name__ is set to the module name. When running a script directly, __name__ is "__main__". So if __name__ == "__main__": lets you write code that runs when the script is executed directly but NOT when it\'s imported by another script. This is the standard pattern for making scripts both importable as modules and executable as scripts.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

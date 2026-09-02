@@ -191,53 +191,7 @@ NTDS     Running
 W32Time  Running
 Netlogon Running`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the correct PowerShell verb-noun cmdlet naming convention for listing running services?',
-    options: ['List-Service', 'Show-Services', 'Get-Service', 'Display-Service'],
-    correct: 2,
-    explanation: 'PowerShell follows a strict Verb-Noun naming convention. Approved verbs include Get, Set, New, Remove, Start, Stop, etc. Get-Service is correct. "List" and "Show" are not approved PowerShell verbs. You can see all approved verbs with Get-Verb.',
-  },
-  {
-    id: 'q2',
-    question: 'What does the pipeline operator (|) do in PowerShell?',
-    options: [
-      'Redirects output to a file',
-      'Passes objects (not just text) from one cmdlet to the next',
-      'Runs two commands simultaneously in parallel',
-      'Separates multiple commands on one line',
-    ],
-    correct: 1,
-    explanation: 'The PowerShell pipeline passes full .NET objects between cmdlets — not just text like in bash. This means you can access properties of the objects in subsequent pipeline stages. For example: Get-Process | Where-Object {$_.CPU -gt 100} works because $_ is a full Process object with a CPU property.',
-  },
-  {
-    id: 'q3',
-    question: 'What does Get-Help Get-Process -Examples show you?',
-    options: [
-      'The source code for Get-Process',
-      'All properties of a Process object',
-      'Practical usage examples for the Get-Process cmdlet',
-      'A list of all processes currently running',
-    ],
-    correct: 2,
-    explanation: 'Get-Help <CmdletName> -Examples shows practical usage examples. Other useful Help parameters: -Full (complete documentation), -Online (opens browser to online docs), -Parameter * (details on all parameters). Always run Update-Help first to get the latest documentation.',
-  },
-  {
-    id: 'q4',
-    question: 'Which automatic variable represents the current object in the pipeline?',
-    options: ['$this', '$current', '$_', '$object'],
-    correct: 2,
-    explanation: '$_ (dollar underscore) is the automatic variable representing the current pipeline object in Where-Object, ForEach-Object, and other pipeline-aware cmdlets. You\'ll also see $PSItem used as an alias for $_ in newer PowerShell. Example: Get-Service | Where-Object { $_.Status -eq "Running" }',
-  },
-  {
-    id: 'q5',
-    question: 'What execution policy setting allows locally-created scripts but requires remote scripts to be signed?',
-    options: ['Restricted', 'AllSigned', 'RemoteSigned', 'Unrestricted'],
-    correct: 2,
-    explanation: 'RemoteSigned allows locally-created .ps1 scripts to run without a signature, but scripts downloaded from the internet (marked with an Alternate Data Stream zone identifier) must be digitally signed by a trusted publisher. This is the recommended setting for most sysadmin environments.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

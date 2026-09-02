@@ -89,68 +89,7 @@ const CODE_TROUBLESHOOTINGNETWORKING_6 = `11:00:01 192.168.100.20.48291 > 192.16
 11:00:02 192.168.100.20.51234 > 192.168.100.10.53: SRV? _ldap._tcp.lab.local.
 11:00:02 192.168.100.10.53 > 192.168.100.20.51234: SRV dc01.lab.local.:389`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'traceroute/tracert shows asterisks (***) at hop 3 and succeeds afterward. What does this mean?',
-    options: [
-      'The connection failed at hop 3 — the destination is unreachable',
-      'Hop 3 is a router that drops ICMP TTL-exceeded messages (firewall rule) but still forwards packets normally',
-      'The network is congested at hop 3 causing packet loss',
-      'Hop 3 is a VPN gateway hiding the route',
-    ],
-    correct: 1,
-    explanation: 'When traceroute shows *** for a hop but subsequent hops respond, that router is simply configured to not respond to ICMP TTL-exceeded messages (a common firewall hardening measure). The packets ARE being forwarded — the router just silently drops the ICMP error responses. This is not a problem. Only worry if *** appears at every hop from a certain point onward, indicating a real path failure.',
-  },
-  {
-    id: 'q2',
-    question: 'What does "ping succeeds but the application connection fails" tell you?',
-    options: [
-      'The server is down and needs to be rebooted',
-      'Layer 3 (IP/ICMP) works but the issue is Layer 4+ — the specific TCP/UDP port is blocked, the service is not running, or TLS handshake is failing',
-      'DNS is not resolving the hostname correctly',
-      'The network cable has a fault causing intermittent drops',
-    ],
-    correct: 1,
-    explanation: 'Ping tests Layer 3 (ICMP). Success means routing and basic connectivity work. If ping succeeds but the application fails, the problem is above Layer 3: the destination port may be blocked by a firewall (test with: Test-NetConnection -Port 443 or nc -zv host port), the service may not be running on that port, or the application protocol (TLS, HTTP, etc.) is failing. Work up the OSI layers.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the correct use of "nslookup" vs "dig" for DNS troubleshooting?',
-    options: [
-      'They are identical — use either interchangeably',
-      'Both resolve DNS queries, but dig provides more detailed output including response time, authority section, and flags — preferred for diagnostic work; nslookup is simpler but available on Windows by default',
-      'nslookup is for Windows; dig is for Linux only',
-      'nslookup tests recursive resolution; dig only tests authoritative servers',
-    ],
-    correct: 1,
-    explanation: 'Both tools query DNS servers. dig gives richer output: query time, server used, response flags, full authority and additional sections. For scripting and detailed diagnosis, dig is preferred on Linux. nslookup is available on both Windows and Linux and is fine for basic lookups. Key diagnostic tip: always test with a specific server (dig @8.8.8.8 hostname) to isolate whether the issue is your DNS server or global resolution.',
-  },
-  {
-    id: 'q4',
-    question: 'A server shows high packet loss to the gateway but only during business hours. What are the most likely causes?',
-    options: [
-      'DNS cache is expiring and causing delays',
-      'Network congestion or a duplex mismatch on the switch port — high traffic during business hours exposes bandwidth saturation or collisions from a half-duplex misconfiguration',
-      'The server\'s NIC driver needs to be updated',
-      'Windows Update is running and consuming bandwidth',
-    ],
-    correct: 1,
-    explanation: 'Business-hours-only packet loss strongly suggests load-dependent issues. Most common: (1) bandwidth saturation on an uplink, (2) duplex mismatch — one side auto-negotiated to half-duplex causing collisions under load, (3) QoS misconfiguration prioritising other traffic. Check: ethtool ens33 (Linux) or Get-NetAdapterStatistics (Windows) for errors. A duplex mismatch shows increasing errors/discards at higher utilisation.',
-  },
-  {
-    id: 'q5',
-    question: 'What information does Wireshark capture that ping and traceroute cannot provide?',
-    options: [
-      'Network topology and routing table information',
-      'Full packet contents including application-layer data, exact timestamps, TCP state machine details, retransmission patterns, and the complete conversation between client and server',
-      'The names and locations of all network devices',
-      'VPN tunnel configuration and encryption keys',
-    ],
-    correct: 1,
-    explanation: 'Wireshark captures every single packet with microsecond timestamps and full contents. This reveals: exact TCP handshake sequence, retransmissions (indicating packet loss), RST packets (connection resets), TLS certificate details, HTTP request/response details, DNS query/response pairs, and application-level errors. It answers "what exactly was said between client and server" — something no other tool provides.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

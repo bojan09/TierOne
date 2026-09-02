@@ -87,68 +87,7 @@ SwapTotal:   2097148 kB
 === CPU count ===
 2`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the core principle of the Unix philosophy as described by Doug McIlroy?',
-    options: [
-      'Build large programs that handle all possible use cases in a single executable',
-      'Write programs that do one thing well, that work together, and that work on text streams as the universal interface',
-      'Always use GUI interfaces for ease of use by non-technical users',
-      'Optimise for performance above all other concerns including clarity',
-    ],
-    correct: 1,
-    explanation: 'Doug McIlroy\'s Unix philosophy (1978): (1) Write programs that do one thing and do it well. (2) Write programs that work together. (3) Write programs that handle text streams, because that is a universal interface. This philosophy produced tools like grep, sed, awk, cut, sort — each focused, composable via pipes, and working on text. It is the opposite of "monolithic software that does everything."',
-  },
-  {
-    id: 'q2',
-    question: 'What is POSIX and why does it matter for cross-platform scripting?',
-    options: [
-      'A Linux security framework that enforces mandatory access controls',
-      'A set of IEEE standards defining a portable operating system interface — scripts written to POSIX standards run on Linux, macOS, BSDs, and any other POSIX-compliant system',
-      'A package manager format used by Debian-based Linux distributions',
-      'A network protocol for communicating between Unix systems',
-    ],
-    correct: 1,
-    explanation: 'POSIX (Portable Operating System Interface) is a family of IEEE standards (IEEE 1003) that define the API between software and Unix-like operating systems. POSIX-compliant shell scripts (#!/bin/sh) using only POSIX-specified commands will run on Linux, macOS, FreeBSD, Solaris, and any other certified system. Using bash-specific features (arrays, [[ ]], $()) breaks portability. Knowing POSIX lets you write once, run everywhere.',
-  },
-  {
-    id: 'q3',
-    question: 'What are the two main Unix lineages and which major operating systems descend from each?',
-    options: [
-      'Unix System V (→ Solaris, HP-UX, AIX) and BSD (→ FreeBSD, macOS, OpenBSD)',
-      'AT&T Unix (→ Linux) and Berkeley Unix (→ Windows)',
-      'Commercial Unix (→ Solaris) and Open Source Unix (→ macOS)',
-      'POSIX Unix (→ Linux) and Non-POSIX Unix (→ BSD systems)',
-    ],
-    correct: 0,
-    explanation: 'Two main lineages: (1) AT&T System V — commercialised Unix from Bell Labs, led to Solaris (Sun/Oracle), HP-UX (HP), AIX (IBM), and influenced most enterprise Unix. (2) BSD (Berkeley Software Distribution) — research Unix from UC Berkeley, led to FreeBSD (servers/infrastructure), OpenBSD (security focus), NetBSD (portability), and most importantly macOS/iOS (Apple\'s Darwin kernel is BSD-derived). Linux is neither — it\'s a clean-room reimplementation of Unix behaviour.',
-  },
-  {
-    id: 'q4',
-    question: 'In Unix, what does "everything is a file" mean practically?',
-    options: [
-      'All data must be stored as files — databases and memory are not allowed',
-      'Devices, network sockets, processes, and hardware interfaces are represented as files in the filesystem — you can read, write, and manipulate them with standard file I/O tools',
-      'The filesystem is stored entirely in memory for performance',
-      'Unix only supports text files — binary files are not supported',
-    ],
-    correct: 1,
-    explanation: 'In Unix, the "everything is a file" abstraction means: /dev/sda is a disk, /dev/null is a discard sink, /dev/urandom generates random bytes, /proc/cpuinfo contains CPU info, sockets are file descriptors — all accessed with open(), read(), write(). This abstraction lets you use the same tools (cat, cp, grep, dd) on everything. cat /proc/meminfo reads kernel memory data. dd if=/dev/urandom of=/dev/sda wipes a disk.',
-  },
-  {
-    id: 'q5',
-    question: 'What is the significance of process ID 1 (PID 1) in Unix/Linux?',
-    options: [
-      'It is the kernel itself — the most privileged process',
-      'It is the init process — the ancestor of all other processes, responsible for starting system services and adopting orphaned child processes',
-      'It is the root shell that all other processes spawn from',
-      'It is the first process created by the user after login',
-    ],
-    correct: 1,
-    explanation: 'PID 1 is the init process — the first user-space process started by the kernel. All other processes are descendants of PID 1. Init is responsible for: starting system services at boot, reaping zombie processes (adopting orphans when their parent dies), handling system shutdown/reboot signals. On modern Linux it is typically systemd. On BSDs it is /sbin/init or similar. In containers, your main process runs as PID 1.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

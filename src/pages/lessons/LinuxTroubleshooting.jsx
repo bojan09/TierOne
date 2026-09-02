@@ -113,68 +113,7 @@ Mem:           3.8G  1.2G  2.3G
   UNIT              LOAD    ACTIVE  SUB
   broken-app.service loaded  failed  failed`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'A Linux service fails to start. What is the FIRST command to run?',
-    options: [
-      'tail -f /var/log/syslog',
-      'systemctl status servicename',
-      'dmesg | tail',
-      'ps aux | grep service',
-    ],
-    correct: 1,
-    explanation: 'systemctl status servicename is the single most useful first step — it shows the current state, last exit code, and the last few journal log lines, all in one output. This usually tells you exactly what went wrong. From there you can run journalctl -u servicename -n 50 for more log history.',
-  },
-  {
-    id: 'q2',
-    question: 'What does "dmesg | tail -20" show and when is it most useful?',
-    options: [
-      'The last 20 commands run by the root user',
-      'The last 20 lines of kernel ring buffer messages — most useful for hardware issues, driver problems, OOM kills, and filesystem errors',
-      'The last 20 login attempts on the system',
-      'A list of the 20 most recently modified system files',
-    ],
-    correct: 1,
-    explanation: 'dmesg shows the kernel ring buffer — messages from the kernel itself, including hardware detection, driver loading, OOM (Out of Memory) killer events, filesystem errors, NIC issues, and USB events. It is essential for diagnosing hardware problems, kernel panics, memory pressure, and I/O errors. Add --human for readable timestamps: dmesg --human | tail -20.',
-  },
-  {
-    id: 'q3',
-    question: 'A process is using 100% CPU and the system is slow. Which command helps identify WHAT the process is waiting for or doing?',
-    options: [
-      'ps aux | grep process',
-      'strace -p PID',
-      'kill -9 PID',
-      'nice -n 19 PID',
-    ],
-    correct: 1,
-    explanation: 'strace -p PID attaches to a running process and shows every system call it makes — file opens, network connections, memory operations. This reveals what the process is actually doing: stuck on a file read, waiting for a network response, looping on a system call, etc. Essential for debugging processes that are consuming CPU without an obvious reason.',
-  },
-  {
-    id: 'q4',
-    question: 'What does "lsof -i :80" show?',
-    options: [
-      'All processes that have ever used port 80',
-      'All currently open files and network connections on port 80',
-      'The firewall rules for port 80',
-      'The HTTP server configuration for port 80',
-    ],
-    correct: 1,
-    explanation: 'lsof (List Open Files) -i :80 lists all processes that have a network connection or listener on port 80. In Linux, everything is a file — including network sockets. lsof -i shows all network files. lsof -i :80 filters to port 80. This tells you which process is listening on a port (or using it for a connection). Combined with: lsof -p PID (all files by process) or lsof /path/to/file (who has this file open).',
-  },
-  {
-    id: 'q5',
-    question: 'A server is running out of disk space but "df -h" shows plenty of free space. What is the likely cause?',
-    options: [
-      'df -h is broken and cannot be trusted',
-      'Deleted files still held open by processes — space is not freed until processes close them; also check inode exhaustion with df -ih',
-      'The disk is corrupted and needs fsck',
-      'The /proc filesystem is consuming all available inodes',
-    ],
-    correct: 1,
-    explanation: 'When a file is deleted in Linux, the space is not freed until all file descriptors pointing to it are closed. If a log process has a file open, you can delete the filename but the process still holds the inode and space. Find them with: lsof | grep deleted. Restart the relevant service to release the space. Also check inodes: df -ih — it\'s possible to run out of inodes (file slots) while having free disk space.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

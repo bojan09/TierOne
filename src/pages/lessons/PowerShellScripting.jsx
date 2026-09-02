@@ -209,68 +209,7 @@ $report | Export-Csv 'C:\\ServerAudit.csv' -NoTypeInformation
 $report | Format-Table -AutoSize
 Write-Host "Report saved to C:\\ServerAudit.csv"`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the purpose of the [CmdletBinding()] attribute in a PowerShell function?',
-    options: [
-      'It makes the function available globally across all sessions',
-      'It promotes a simple function to an advanced function, enabling -Verbose, -Debug, -WhatIf, -ErrorAction, and other common parameters automatically',
-      'It compiles the function to native code for better performance',
-      'It restricts who can call the function based on AD group membership',
-    ],
-    correct: 1,
-    explanation: '[CmdletBinding()] turns a basic function into an advanced function (cmdlet-like). It automatically adds: -Verbose, -Debug, -ErrorAction, -ErrorVariable, -WarningAction, -InformationAction, -OutVariable, -OutBuffer, -PipelineVariable. It also enables SupportsShouldProcess for -WhatIf and -Confirm support. Always add it to production functions.',
-  },
-  {
-    id: 'q2',
-    question: 'What does param([Parameter(Mandatory=$true)] [string]$ComputerName) do?',
-    options: [
-      'Sets ComputerName to a default value of $true',
-      'Declares a required string parameter — PowerShell will prompt for it if not supplied',
-      'Creates a boolean parameter named ComputerName',
-      'Marks the parameter as deprecated and shows a warning',
-    ],
-    correct: 1,
-    explanation: 'Mandatory=$true means PowerShell will stop execution and prompt the user if this parameter is not provided. [string] enforces the type — passing a non-string will either cast or error. Combine with [ValidateNotNullOrEmpty()] to also reject empty strings. Other useful validators: [ValidateRange(1,65535)], [ValidateSet("A","B","C")].',
-  },
-  {
-    id: 'q3',
-    question: 'What is the difference between a PowerShell module (.psm1) and a script (.ps1)?',
-    options: [
-      'There is no difference — both are plain text files with PowerShell code',
-      'A .ps1 script runs sequentially; a .psm1 module exposes reusable functions that persist in memory after being imported',
-      'Modules require signing; scripts do not',
-      'Scripts run as administrator; modules run as standard user',
-    ],
-    correct: 1,
-    explanation: 'A .ps1 script executes top-to-bottom and its functions disappear after it finishes. A .psm1 module exposes named functions via Export-ModuleMember that remain available after Import-Module. Modules also support versioning via a .psd1 manifest, dependency declarations, and automatic loading (PowerShell 3+ auto-discovers modules in $env:PSModulePath).',
-  },
-  {
-    id: 'q4',
-    question: 'What is the correct way to handle expected errors in PowerShell while still catching unexpected ones?',
-    options: [
-      'Set $ErrorActionPreference = "SilentlyContinue" to ignore all errors',
-      'Use -ErrorAction SilentlyContinue on the specific command that may fail, then check $? or use try/catch for critical paths',
-      'Wrap everything in if ($error) {} blocks',
-      'Use $Error.Clear() before each command to reset the error buffer',
-    ],
-    correct: 1,
-    explanation: 'Use -ErrorAction SilentlyContinue on specific commands where failure is expected and acceptable (e.g., checking if something exists). For critical operations, use try/catch with -ErrorAction Stop to convert non-terminating errors to terminating ones that can be caught. Never use global $ErrorActionPreference = "SilentlyContinue" as it hides real errors.',
-  },
-  {
-    id: 'q5',
-    question: 'How do you make a function write to the pipeline so it can be used with | Select-Object, | Where-Object etc.?',
-    options: [
-      'Return objects using the return keyword followed by a hashtable',
-      'Use Write-Output or simply place objects/expressions without assignment — they flow to the pipeline automatically',
-      'Call Write-Pipeline with the object you want to emit',
-      'Functions cannot emit to the pipeline — use global variables instead',
-    ],
-    correct: 1,
-    explanation: 'In PowerShell, any expression or object that is not captured by a variable or redirected automatically flows to the pipeline (output stream). Write-Output is explicit but optional. The return keyword works too but exits the function immediately. To emit multiple objects: use a loop and output each item. Use [PSCustomObject]@{} to create structured objects that work well with Select-Object and Export-Csv.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success', danger: 'callout-danger' }

@@ -67,68 +67,7 @@ const CODE_NETWORKINGDNS_5 = `# From Ubuntu after creating records:
 webserver.lab.local.   <- CNAME target
 webserver.lab.local.   <- PTR result`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between a recursive resolver and an authoritative nameserver?',
-    options: [
-      'Recursive resolvers are faster; authoritative servers are more accurate',
-      'A recursive resolver does the full lookup work on behalf of a client (querying multiple servers until it gets the answer); an authoritative server holds the actual DNS records for a domain and gives definitive answers',
-      'Recursive resolvers handle IPv4; authoritative servers handle IPv6',
-      'They are the same thing with different names depending on the operating system',
-    ],
-    correct: 1,
-    explanation: 'When you query your ISP\'s DNS server for google.com: the ISP\'s recursive resolver does the work — it asks the root nameservers, then the .com TLD servers, then Google\'s authoritative nameservers. The authoritative server for google.com is the one that actually "knows" the correct IP — it was configured by Google. Your ISP\'s resolver is just a middleman that caches results for efficiency.',
-  },
-  {
-    id: 'q2',
-    question: 'What is a DNS SOA record and what information does it contain?',
-    options: [
-      'Start of Authority — defines the primary nameserver for a zone and zone transfer/refresh parameters',
-      'Source of Address — maps IP addresses to MAC addresses in a zone',
-      'Statement of Availability — records the uptime SLA for a DNS zone',
-      'System Object Attributes — stores Active Directory schema information',
-    ],
-    correct: 0,
-    explanation: 'SOA (Start of Authority) is the first record in every DNS zone. It contains: MNAME (primary nameserver), RNAME (admin email in dot notation), SERIAL (zone version number — must increment on every change), REFRESH (how often slaves check for updates), RETRY (how long to wait if refresh fails), EXPIRE (when slave considers zone data stale), MINIMUM (negative caching TTL). The serial number is critical — slaves compare it to detect zone changes.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the purpose of a PTR record?',
-    options: [
-      'A pointer to a mail server for a domain',
-      'Reverse DNS — maps an IP address back to a hostname, used by mail servers for anti-spam checks and by logs to show human-readable names instead of IPs',
-      'A protocol type record that specifies which protocols a server supports',
-      'A priority record that controls load balancing between multiple servers',
-    ],
-    correct: 1,
-    explanation: 'PTR (Pointer) records are stored in the in-addr.arpa zone for IPv4 (ip6.arpa for IPv6) and provide reverse DNS lookups. Example: 10.100.168.192.in-addr.arpa PTR dc01.lab.local. Used by: mail servers (receiving servers check that sending IP has a PTR matching its HELO hostname — missing or mismatched PTR = spam flag), log analysis (hostnames in logs), and SSH for reverse DNS verification. In Windows AD, DHCP automatically creates PTR records when leasing addresses.',
-  },
-  {
-    id: 'q4',
-    question: 'What is DNS TTL and what is the impact of setting it very low vs very high?',
-    options: [
-      'TTL controls the DNS query timeout — lower TTL means faster query responses',
-      'TTL (Time To Live) is how long resolvers cache a record. Low TTL (60s) = changes propagate quickly but more load on authoritative servers; High TTL (86400s) = less query load but slow propagation when records change',
-      'TTL determines how many times a recursive resolver will retry a failed query',
-      'TTL defines how many DNS servers can cache a record simultaneously',
-    ],
-    correct: 1,
-    explanation: 'TTL is set on each DNS record in seconds. When a resolver caches a record, it keeps it for TTL seconds before re-querying. High TTL (24 hours): good for stable records, reduces resolver load, fast lookups (cached). Bad for changes — if you update an A record with TTL 86400, some clients will keep the old IP for up to 24 hours. Low TTL (60s): changes propagate quickly, but every TTL expiry causes a new query. Best practice: lower TTL to 300s before planned changes, change the record, wait, then raise TTL back.',
-  },
-  {
-    id: 'q5',
-    question: 'What is DNSSEC and what attack does it prevent?',
-    options: [
-      'DNS over HTTPS — encrypts DNS queries to prevent eavesdropping',
-      'DNS Security Extensions — adds cryptographic signatures to DNS responses, preventing DNS cache poisoning attacks where an attacker injects false DNS records',
-      'DNS over TLS — encrypts the DNS transport layer',
-      'DNS firewall — blocks queries to known malicious domains',
-    ],
-    correct: 1,
-    explanation: 'DNSSEC adds digital signatures (RRSIG records) to DNS responses. Resolvers can verify the signature chain from the root zone down to the record, confirming the response hasn\'t been tampered with. This prevents cache poisoning (Kaminsky attack): without DNSSEC, an attacker can inject false DNS records into a resolver\'s cache, redirecting users to malicious servers. DNSSEC doesn\'t encrypt (use DoH/DoT for that) — it authenticates.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

@@ -125,68 +125,7 @@ const CODE_PYTHONSCHEDULING_5 = `*/5 * * * * python3 /opt/scripts/health-check.p
 cron.service - Regular background program processing daemon
    Active: active (running)`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does the cron expression "30 2 * * 1-5" schedule?',
-    options: [
-      'Every 30 minutes on weekdays',
-      'At 02:30 every weekday (Monday through Friday)',
-      'At 2:30 AM on the 30th of each month',
-      'Every 2 hours and 30 minutes',
-    ],
-    correct: 1,
-    explanation: 'Cron format: minute hour day-of-month month day-of-week. "30 2 * * 1-5" reads as: minute=30, hour=2, day-of-month=any(*), month=any(*), day-of-week=1-5 (Mon-Fri). So: 02:30 every Monday through Friday. Cron expressions are in local server time — always verify the server timezone with "date" when setting up jobs.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the correct way to capture the output of a cron job for debugging?',
-    options: [
-      'Cron automatically saves all output to /var/log/cron.log',
-      'Redirect stdout and stderr in the crontab entry: 30 2 * * * /script.py >> /var/log/job.log 2>&1',
-      'Use the -v flag in the cron expression',
-      'Install a special logging daemon to capture cron output',
-    ],
-    correct: 1,
-    explanation: 'By default, cron emails output to the local user (often lost/ignored). Redirecting stdout and stderr to a log file is the production practice: >> /var/log/job.log 2>&1. The >> appends (preserving history), 2>&1 sends stderr to the same file as stdout. Also add timestamps in your script output (print(datetime.now())) so you can correlate entries. Rotate the log with logrotate to prevent it growing unbounded.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the purpose of a lock file in a scheduled Python script?',
-    options: [
-      'To encrypt the script output for security',
-      'To prevent multiple simultaneous instances — if a previous run is still executing when the next schedule fires, the new run exits immediately instead of running concurrently',
-      'To record who last modified the script',
-      'To lock the script file from being edited while it runs',
-    ],
-    correct: 1,
-    explanation: 'If a cron job takes longer than its schedule interval (e.g. a backup taking 35 minutes when scheduled every 30), without a lock file you get overlapping runs: two instances fighting over the same files, doubling resource usage, or corrupting output. A lock file pattern: try to acquire an exclusive lock (fcntl.flock or creating a .lock file), exit if locked, release the lock in a finally block. The filelock library simplifies this.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the difference between cron and the Python schedule library?',
-    options: [
-      'cron is more accurate; schedule is easier to configure',
-      'cron is OS-managed and persists across reboots; the schedule library runs in-process requiring a running Python process — suitable for daemons, not ad-hoc tasks',
-      'cron only supports Linux; schedule works cross-platform including Windows',
-      'They produce identical results with different syntax',
-    ],
-    correct: 1,
-    explanation: 'cron: OS scheduler, runs even after reboots, no Python process needed, syntax is concise but cryptic, managed via crontab. schedule library: Python in-process scheduler, requires a permanently running Python process, simpler Python syntax, cross-platform (works on Windows too), better for building daemons. For sysadmin scripts: use cron for ad-hoc periodic tasks; use schedule when building a Python service that includes scheduling as part of its functionality.',
-  },
-  {
-    id: 'q5',
-    question: 'What does MAILTO="" in a crontab do?',
-    options: [
-      'Sets the email address to receive job notifications',
-      'Disables all email output from cron — prevents emails being sent to root or the local user for every cron job that produces output',
-      'Sends an email when cron starts',
-      'Enables SMTP authentication for cron notifications',
-    ],
-    correct: 1,
-    explanation: 'By default, cron sends any stdout/stderr output as email to the user who owns the crontab (usually root). MAILTO="" at the top of a crontab disables all email output. This is usually what you want in production — redirect output to log files instead. MAILTO=admin@company.com would send to a specific address. Without MAILTO="" and without output redirection, failed jobs silently accumulate in the local mail queue.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

@@ -124,63 +124,7 @@ Remove-VMCheckpoint -Name "Before-Update" -VMName "WEB01"
 Export-VM -Name "WEB01" -Path "D:\\\\VM-Exports"
 Import-VM -Path "D:\\\\VM-Exports\\\\WEB01\\\\*.vmcx"`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the key difference between a Type-1 and Type-2 hypervisor?',
-    options: [
-      'Type-1 runs on bare metal directly on hardware; Type-2 runs on top of a host OS',
-      'Type-1 supports more VMs; Type-2 supports fewer but with better performance',
-      'Type-1 is software-only; Type-2 requires dedicated hardware',
-      'Type-1 is for Windows VMs only; Type-2 supports Linux too',
-    ],
-    correct: 0,
-    explanation: 'Type-1 (bare-metal) hypervisors like Hyper-V, VMware ESXi, and Xen run directly on hardware — there is no host OS between them and the hardware. Type-2 (hosted) hypervisors like VMware Workstation and VirtualBox run as an application on top of a host OS, adding overhead.',
-  },
-  {
-    id: 'q2',
-    question: 'What is a Hyper-V Virtual Switch and which type allows VMs to communicate with the external physical network?',
-    options: [
-      'A software firewall; Internal type',
-      'A software network switch; External type',
-      'A hardware NIC; Bridge type',
-      'A VLAN trunk; Private type',
-    ],
-    correct: 1,
-    explanation: 'A Hyper-V Virtual Switch is a software-defined Layer-2 switch. External switches bind to a physical NIC and allow VMs to communicate with the external network and other hosts. Internal switches allow VM-to-VM and VM-to-host communication. Private switches allow only VM-to-VM communication.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the purpose of a Hyper-V checkpoint (snapshot)?',
-    options: [
-      'To back up VM files to an external server',
-      'To capture the state of a VM at a point in time so you can revert if something goes wrong',
-      'To clone a VM for deployment to multiple hosts',
-      'To compress VM disk files to save storage space',
-    ],
-    correct: 1,
-    explanation: 'A checkpoint (formerly called a snapshot) captures the VM\'s memory state, disk state, and device state at a specific point in time. You can revert to it if a change breaks something. Production checkpoints use VSS/checkpoint technology for application-consistent captures. Avoid keeping checkpoints long-term as they fragment VHD files.',
-  },
-  {
-    id: 'q4',
-    question: 'What is Generation 2 in Hyper-V?',
-    options: [
-      'The second version of Hyper-V released with Windows Server 2012',
-      'A VM firmware type using UEFI instead of BIOS, supporting Secure Boot and faster boot',
-      'A high-availability feature for VMs that failover between hosts',
-      'A VM replication technology for disaster recovery',
-    ],
-    correct: 1,
-    explanation: 'Generation 2 VMs use UEFI firmware instead of legacy BIOS, support Secure Boot, PXE boot from a synthetic network adapter, and generally boot faster. Generation 1 uses legacy BIOS and is needed for older operating systems. Use Generation 2 for all modern Windows and Linux VMs.',
-  },
-  {
-    id: 'q5',
-    question: 'What PowerShell cmdlet creates a new virtual machine in Hyper-V?',
-    options: ['Add-VM', 'Create-VM', 'New-VM', 'Set-VM'],
-    correct: 2,
-    explanation: 'New-VM creates a new Hyper-V virtual machine. Example: New-VM -Name "WEB01" -Generation 2 -MemoryStartupBytes 2GB -SwitchName "External". You then add a VHD with New-VHD and Add-VMHardDiskDrive, and attach an ISO with Add-VMDvdDrive.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', danger: 'callout-danger', success: 'callout-success' }

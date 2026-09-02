@@ -231,63 +231,7 @@ const CODE_LINUXSHELL_11 = `Log Summary:
   ERROR: 6
   WARN: 4`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does the pipe operator (|) do in bash?',
-    options: [
-      'Runs two commands in parallel',
-      'Sends the stdout of the left command as stdin to the right command',
-      'Redirects output to a file',
-      'Runs the second command only if the first fails',
-    ],
-    correct: 1,
-    explanation: 'The pipe | passes the standard output (stdout) of the left command as standard input (stdin) to the right command. For example: ls -la | grep ".log" — ls produces output, grep filters it. Pipes are how you chain commands together to build complex data processing pipelines from simple tools.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the difference between > and >> when redirecting output?',
-    options: [
-      '> appends to a file; >> creates a new file',
-      '> overwrites (truncates) the file; >> appends to the end without truncating',
-      '> redirects stderr; >> redirects stdout',
-      'There is no difference — both append to files',
-    ],
-    correct: 1,
-    explanation: '> redirects stdout to a file, overwriting (truncating) it completely if it exists. >> redirects stdout to a file, appending to the end if it exists. For log files you almost always want >>. Accidental use of > instead of >> on a log file will destroy its contents.',
-  },
-  {
-    id: 'q3',
-    question: 'What does "grep -r \'error\' /var/log/" do?',
-    options: [
-      'Counts the number of files containing "error" in /var/log/',
-      'Searches recursively through all files in /var/log/ for lines containing "error"',
-      'Removes all files named "error" from /var/log/',
-      'Lists files in /var/log/ that were modified recently',
-    ],
-    correct: 1,
-    explanation: 'grep searches files for matching patterns. -r (recursive) makes it descend into subdirectories. So grep -r "error" /var/log/ searches every file in /var/log/ and all its subdirectories for lines containing "error". Very useful for log analysis. Add -i for case-insensitive, -l to list filenames only, -n to show line numbers.',
-  },
-  {
-    id: 'q4',
-    question: 'What does $? contain in bash?',
-    options: [
-      'The current process ID',
-      'The exit code (return status) of the last executed command',
-      'The current user\'s home directory',
-      'The number of arguments passed to the current script',
-    ],
-    correct: 1,
-    explanation: '$? holds the exit status of the last command. 0 means success; any non-zero value means failure (the specific value often indicates the error type). This is used in scripts to check if a command succeeded: if [ $? -eq 0 ]; then echo "success"; fi. Or more idiomatically: if command; then echo "success"; fi.',
-  },
-  {
-    id: 'q5',
-    question: 'Which command shows the last 50 lines of a log file AND follows new lines as they are written?',
-    options: ['cat -n 50 /var/log/syslog', 'tail -f -n 50 /var/log/syslog', 'head -50f /var/log/syslog', 'less +50F /var/log/syslog'],
-    correct: 1,
-    explanation: 'tail -f -n 50 /var/log/syslog: -n 50 shows the last 50 lines, -f follows the file (keeps the terminal open and prints new lines as they arrive). This is the standard way to monitor a live log. Ctrl+C to stop. less +F is an alternative that lets you scroll up while still following. tail -f is the most common.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

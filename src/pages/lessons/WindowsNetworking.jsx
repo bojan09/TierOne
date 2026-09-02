@@ -88,68 +88,7 @@ const CODE_WINDOWSNETWORKING_6 = `  LDAP     port 389   OPEN
   RDP      port 3389  OPEN
   WinRM    port 5985  OPEN`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does "ipconfig /all" show that plain "ipconfig" does not?',
-    options: [
-      'It shows only IPv6 addresses instead of IPv4',
-      'It shows MAC address, DHCP server, lease times, DNS servers, and whether DHCP is enabled — full adapter configuration vs just IP/subnet/gateway',
-      'It displays the routing table',
-      'It shows all open network connections',
-    ],
-    correct: 1,
-    explanation: 'ipconfig shows basic IP, subnet, and gateway. ipconfig /all adds: physical (MAC) address, DHCP enabled/disabled, DHCP server IP, IP lease obtained and expiry times, DNS servers, WINS servers, and whether autoconfiguration is enabled. Useful for: confirming DHCP assignment, finding DNS servers in use, verifying MAC for firewall rules. Also: ipconfig /flushdns (clear DNS cache), ipconfig /release and /renew (release and get a new DHCP lease).',
-  },
-  {
-    id: 'q2',
-    question: 'What does "netstat -ano" display and what does the -o flag add?',
-    options: [
-      '-o sorts output alphabetically by process name',
-      'netstat -ano lists all TCP/UDP connections and listening ports with numeric addresses (-n) and the owning Process ID (-o) — -o lets you map each connection to a specific process via tasklist or Task Manager',
-      '-o shows only outbound connections',
-      '-o displays the connection duration in seconds',
-    ],
-    correct: 1,
-    explanation: 'netstat -ano: -a = all connections and listening ports, -n = numeric (no DNS resolution, faster), -o = show owning PID. The PID lets you cross-reference with tasklist /FI "PID eq <pid>" or Task Manager Details tab to find which process owns each connection. Essential for: finding which process is listening on a port, identifying suspicious outbound connections, and verifying service bindings.',
-  },
-  {
-    id: 'q3',
-    question: 'What does the "Test-NetConnection -ComputerName host -Port 443" PowerShell command verify?',
-    options: [
-      'It only checks if the hostname resolves to an IP address',
-      'It tests TCP connectivity to port 443 on the target host, confirming both DNS resolution and that the TCP port is open and accepting connections',
-      'It sends an HTTPS request and validates the SSL certificate',
-      'It checks if the Windows Firewall rule for port 443 exists',
-    ],
-    correct: 1,
-    explanation: 'Test-NetConnection is the modern PowerShell replacement for telnet as a port tester. It: resolves the hostname, attempts a TCP connection to the port, and reports TcpTestSucceeded (True/False). It also shows PingSucceeded, RemoteAddress, and RemotePort. Without -Port, it just pings. Other useful: Test-NetConnection -ComputerName host -TraceRoute (traceroute). Much more informative than raw ping.',
-  },
-  {
-    id: 'q4',
-    question: 'What is the Windows DNS client cache and why would you flush it?',
-    options: [
-      'A file that stores browser history',
-      'A local cache of recently resolved DNS names and their IP addresses — flush it when DNS records have changed and you need to resolve to the new IP immediately, or when troubleshooting DNS resolution issues',
-      'The DNS server database on a domain controller',
-      'A list of trusted DNS servers configured by Group Policy',
-    ],
-    correct: 1,
-    explanation: 'Windows caches DNS responses locally in memory for the TTL duration. If a DNS record changes (server moves, new IP), cached entries return the old IP until TTL expires. ipconfig /flushdns clears this cache, forcing fresh lookups. Also view cache: ipconfig /displaydns. In PowerShell: Clear-DnsClientCache. On domain-joined machines where resolution is broken, flushing the DNS cache and renewing DHCP is often the first fix to try.',
-  },
-  {
-    id: 'q5',
-    question: 'What does "route print" show on a Windows system?',
-    options: [
-      'All network printers and their IP addresses',
-      'The routing table — all routes the system uses to forward packets, including the default gateway, interface-specific routes, and static routes',
-      'The current TCP connection routing path',
-      'Network interface driver information',
-    ],
-    correct: 1,
-    explanation: 'route print displays the IPv4 and IPv6 routing tables. Each entry: Network Destination (what range), Netmask, Gateway (next hop), Interface (local IP), Metric (preference — lower is preferred). The default route (0.0.0.0) points to your gateway. Read it like: "to reach destination, send packets via gateway, out of interface, with this metric." Add routes: route add 10.20.0.0 mask 255.255.0.0 192.168.1.1. PowerShell: Get-NetRoute.',
-  },
-]
+
 
 function LabStep({ number, description, command, language = 'powershell', output }) {
   return (

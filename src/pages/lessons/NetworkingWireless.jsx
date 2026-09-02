@@ -71,68 +71,7 @@ EOF`
 const CODE_NETWORKINGWIRELESS_5 = `wpa_supplicant v2.10
 EAP methods: EAP-TLS EAP-PEAP EAP-TTLS EAP-PWD EAP-SIM`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the difference between WPA2-Personal and WPA2-Enterprise?',
-    options: [
-      'WPA2-Personal is older and less secure; WPA2-Enterprise is newer',
-      'WPA2-Personal uses a shared pre-shared key (PSK) known to all users; WPA2-Enterprise authenticates each user individually via RADIUS/802.1X with unique credentials — no shared secret',
-      'WPA2-Personal is for home networks; WPA2-Enterprise only works in offices',
-      'They use different encryption algorithms — AES vs TKIP',
-    ],
-    correct: 1,
-    explanation: 'WPA2-Personal (PSK): one password for the whole network — compromise it and anyone can join. WPA2-Enterprise: each user authenticates with their own credentials (domain username/password, certificate, or token) via an 802.1X authentication server (RADIUS). The AP never sees credentials — it just passes them to RADIUS. Revoke one user without changing the network password. Required for SOC2/HIPAA/PCI-DSS enterprise environments.',
-  },
-  {
-    id: 'q2',
-    question: 'What is the 2.4 GHz vs 5 GHz tradeoff in Wi-Fi?',
-    options: [
-      '2.4 GHz is always better — it has more channels',
-      '2.4 GHz has greater range but lower throughput and more interference (only 3 non-overlapping channels, shared with microwaves/Bluetooth); 5 GHz has shorter range but higher throughput and 23+ non-overlapping channels',
-      '5 GHz penetrates walls better than 2.4 GHz',
-      '2.4 GHz supports Wi-Fi 6; 5 GHz only supports Wi-Fi 5',
-    ],
-    correct: 1,
-    explanation: '2.4 GHz: longer wavelength = better wall penetration and range, but: only 3 non-overlapping channels (1, 6, 11), heavily congested in dense environments (apartments, offices), shared with Bluetooth and microwave ovens. 5 GHz: shorter range but 23 non-overlapping channels and much higher maximum throughput. 6 GHz (Wi-Fi 6E): even more channels, zero legacy interference, but shortest range. Enterprise networks deploy both and let clients connect to the appropriate band.',
-  },
-  {
-    id: 'q3',
-    question: 'What is a "deauthentication attack" against Wi-Fi networks?',
-    options: [
-      'Attempting to guess the Wi-Fi password by brute force',
-      'Sending forged 802.11 deauthentication frames to force clients to disconnect, often used to capture the WPA2 4-way handshake for offline password cracking',
-      'Physically stealing the wireless access point',
-      'Intercepting unencrypted HTTP traffic on public Wi-Fi',
-    ],
-    correct: 1,
-    explanation: 'In legacy 802.11 (pre-WPA3), deauthentication frames are unauthenticated — any device can send them. An attacker sends forged deauth frames forcing clients to disconnect. When the client reconnects, it performs the WPA2 4-way handshake which the attacker captures. The handshake is then cracked offline using dictionary attacks. WPA3 introduces PMF (Protected Management Frames) which authenticates deauth frames, preventing this attack.',
-  },
-  {
-    id: 'q4',
-    question: 'What is a "rogue access point" and how can it be detected?',
-    options: [
-      'An access point with an incorrect SSID configured',
-      'An unauthorised AP installed on the network (by an attacker or careless employee) that allows attackers to intercept traffic or bypass network controls — detected via wireless IDS, AP scanning, or 802.1X port authentication',
-      'An AP that has exceeded its user limit',
-      'A consumer AP used in an enterprise environment',
-    ],
-    correct: 1,
-    explanation: 'A rogue AP is any unauthorised access point connected to your network. Attacker-placed: creates an AP bridging the corporate network to a wireless connection the attacker controls. Employee-placed: plugging in a home router to get wireless in a room — bypasses NAC, creates security holes. Detection: WLAN controllers scan for unknown BSSIDs, compare to authorised AP list, and can automatically block client association to rogues. 802.1X on switch ports prevents unauthorised devices from connecting.',
-  },
-  {
-    id: 'q5',
-    question: 'What does SSID broadcast suppression (hiding the SSID) actually achieve for security?',
-    options: [
-      'It provides strong security by preventing discovery of the network',
-      'It provides minimal security — any Wi-Fi scanner sees probe requests from connecting clients revealing the SSID, and the AP still broadcasts it in response to directed probe requests. It only inconveniences legitimate users',
-      'It prevents the network from being seen in the device Wi-Fi list',
-      'Hidden SSIDs encrypt the network name for added privacy',
-    ],
-    correct: 1,
-    explanation: 'SSID hiding is security theatre. When a client that previously connected walks into range, it sends probe requests broadcasting the SSID name — visible to any scanner. Tools like Wireshark, airodump-ng, or even Windows "netsh wlan show networks mode=bssid" reveal hidden SSIDs trivially. The downside: legitimate users must type the SSID manually, and some devices have trouble with hidden networks. Real wireless security: WPA2/3-Enterprise, PMF, RADIUS, NAC — not SSID hiding.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

@@ -145,68 +145,7 @@ const CODE_PSREPORTING_7 = `TaskName           State
 --------           -----
 DailyHealthReport  Ready`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What does ConvertTo-Html -Fragment do and when is it useful?',
-    options: [
-      'Converts HTML back to PowerShell objects',
-      'Generates an HTML table snippet without the <html>/<body> wrapper — useful for embedding multiple tables into a single styled report file',
-      'Creates a fragment of a CSV file',
-      'Splits a large HTML report into multiple files',
-    ],
-    correct: 1,
-    explanation: 'ConvertTo-Html without -Fragment generates a complete HTML document. With -Fragment, it generates only the <table>...</table> markup — no HTML/head/body tags. This lets you generate multiple table fragments from different data sources and combine them into a single styled HTML report by concatenating the fragments with your own HTML wrapper, CSS, and headers.',
-  },
-  {
-    id: 'q2',
-    question: 'What does Register-ScheduledTask do and what are its key parameters?',
-    options: [
-      'Registers a PowerShell script as a Windows Service',
-      'Creates a Windows Task Scheduler entry that runs a PowerShell script on a defined trigger (time, event, startup) with specified credentials and settings',
-      'Adds a script to the PowerShell profile for auto-loading',
-      'Registers the task with an external monitoring system',
-    ],
-    correct: 1,
-    explanation: 'Register-ScheduledTask (with New-ScheduledTaskAction, New-ScheduledTaskTrigger, New-ScheduledTaskPrincipal, New-ScheduledTaskSettingsSet) creates Task Scheduler entries from PowerShell. Key pieces: Action = what to run (powershell.exe -File script.ps1), Trigger = when (daily at 06:00, at startup, on event), Principal = who it runs as (SYSTEM, a service account), Settings = restart on failure, run if missed, execution time limit.',
-  },
-  {
-    id: 'q3',
-    question: 'What is the correct way to send email from PowerShell in a corporate environment?',
-    options: [
-      'Use Invoke-WebRequest to the mail server API',
-      'Use Send-MailMessage (legacy) or [System.Net.Mail.SmtpClient] with your internal SMTP relay — never send directly from a server to the internet',
-      'Write the email to a .msg file and call Outlook.exe',
-      'Use the Windows built-in mail client via COM automation',
-    ],
-    correct: 1,
-    explanation: 'Send-MailMessage is marked obsolete (no TLS 1.2+ support) but works for internal relay. For production use [System.Net.Mail.SmtpClient] or the newer Send-MgUserMail (Microsoft Graph). Always use an internal SMTP relay server — never configure a server to send directly to the internet (blocked by most ISPs, blacklisted, requires complex SPF/DKIM setup). Set the relay to the internal Exchange or SMTP gateway IP.',
-  },
-  {
-    id: 'q4',
-    question: 'What does Export-Csv -NoTypeInformation do?',
-    options: [
-      'Exports only column headers, not data rows',
-      'Omits the #TYPE header line that PowerShell normally adds as the first line of CSV output — making the file compatible with Excel and other CSV consumers',
-      'Exports without column names, only values',
-      'Prevents overwriting if the file already exists',
-    ],
-    correct: 1,
-    explanation: 'By default, Export-Csv adds a first line like #TYPE System.Management.Automation.PSCustomObject which confuses Excel and most CSV parsers. -NoTypeInformation removes this line, producing a clean CSV with only the header row and data rows. In PowerShell 6+, NoTypeInformation is the default. Also useful: -Append (add rows to existing file), -Encoding UTF8, -Delimiter ";" (for European locales that use semicolons).',
-  },
-  {
-    id: 'q5',
-    question: 'How do you output different coloured text in a PowerShell report to the console?',
-    options: [
-      'Write-Host "text" -ForegroundColor Red — but note Write-Host bypasses the pipeline and cannot be redirected to a file',
-      'Set-ConsoleColor -Foreground Red before each Write-Output statement',
-      'Use ANSI escape codes: "`e[31mRed Text`e[0m"',
-      'Both A and C are correct — Write-Host for simple scripts, ANSI for pipeline-safe output',
-    ],
-    correct: 3,
-    explanation: 'Write-Host "text" -ForegroundColor Red colours console output but the text cannot be captured with > or piped to Out-File — it bypasses the success stream. For pipeline-safe coloured output in PS 5.1+, use ANSI escape codes: "`e[31m$text`e[0m" (Red). In PS 7+, ANSI sequences work natively. For reports written to files, use ConvertTo-Html with CSS styling instead of console colours.',
-  },
-]
+
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info:'callout-info', warning:'callout-warning', success:'callout-success' }

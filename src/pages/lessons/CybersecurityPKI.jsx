@@ -80,68 +80,6 @@ Issuer: CN=Lab Internal CA, O=TierOne Lab, C=US
 Not After : Jan 15 11:00:00 2026 GMT
 DNS:dc01.lab.local, DNS:dc01, IP Address:192.168.100.10`
 
-const QUIZ_QUESTIONS = [
-  {
-    id: 'q1',
-    question: 'What is the role of a Certificate Authority (CA) in PKI?',
-    options: [
-      'It encrypts all network traffic passing through it',
-      'It is a trusted third party that digitally signs certificates, vouching for the identity of the certificate holder — clients trust certificates signed by CAs they recognise',
-      'It stores the private keys for all certificates it issues',
-      'It provides the encryption algorithm used in TLS connections',
-    ],
-    correct: 1,
-    explanation: 'A CA is a trusted entity that issues digital certificates. When a CA signs a certificate, it is vouching: "we have verified this entity owns this domain/identity." Clients (browsers, OS) have a built-in list of trusted Root CAs. If your certificate chains up to a trusted root, clients accept it without warnings. Internal/enterprise CAs can be distributed to devices via GPO/MDM so they trust internal certificates.',
-  },
-  {
-    id: 'q2',
-    question: 'What happens during the TLS handshake before encrypted data transfer begins?',
-    options: [
-      'The client and server exchange passwords to authenticate each other',
-      'The client and server negotiate cipher suites, the server presents its certificate, they establish a shared secret (via key exchange), and derive symmetric keys for the session',
-      'The server encrypts all subsequent traffic with the client\'s public key',
-      'The certificate authority directly negotiates the session on behalf of the server',
-    ],
-    correct: 1,
-    explanation: 'TLS handshake: (1) ClientHello — client sends supported TLS versions and cipher suites, (2) ServerHello — server selects version/cipher, sends its certificate, (3) Key Exchange — client verifies cert, performs key exchange (ECDH or similar) to establish shared pre-master secret, (4) Both sides derive session keys from the shared secret, (5) Finished — both send encrypted "Finished" message to confirm handshake integrity, (6) Symmetric encryption begins. The asymmetric crypto (certificate) is only used for authentication and key exchange — not data encryption.',
-  },
-  {
-    id: 'q3',
-    question: 'What is certificate pinning and when should it be used?',
-    options: [
-      'Physically securing certificate files in a locked directory',
-      'Hardcoding the expected certificate or public key in an application so it rejects any other certificate — even one signed by a trusted CA — preventing MITM attacks via rogue CA',
-      'Pinning a certificate to a specific IP address in DNS',
-      'Marking a certificate as permanent so it never needs renewal',
-    ],
-    correct: 1,
-    explanation: 'Certificate pinning hardcodes the expected certificate fingerprint or public key in the application. Even if an attacker compromises a trusted CA and issues a fake certificate for your domain, pinning rejects it because it doesn\'t match the expected pin. Used in high-value mobile apps and internal systems. Downside: if you rotate your certificate without updating pins, the application breaks — maintenance complexity is high.',
-  },
-  {
-    id: 'q4',
-    question: 'What does a TLS certificate\'s Subject Alternative Name (SAN) field contain?',
-    options: [
-      'The names of the certificate holders who are authorised to use it',
-      'Additional domain names, IP addresses, or email addresses the certificate is valid for — the replacement for the deprecated Common Name (CN) field for hostname verification',
-      'Alternative CA signatures for cross-certification',
-      'Backup contact information if the primary domain is unavailable',
-    ],
-    correct: 1,
-    explanation: 'SAN (Subject Alternative Name) lists every hostname, IP address, or wildcard the certificate is valid for: DNS:example.com, DNS:www.example.com, DNS:*.api.example.com, IP:192.168.1.10. Modern browsers and tools require SAN — the old CN field is no longer used for hostname verification (RFC 6125). A wildcard (*.example.com) covers one level of subdomain. Multi-SAN certificates can cover dozens of hostnames.',
-  },
-  {
-    id: 'q5',
-    question: 'What is OCSP stapling and what problem does it solve?',
-    options: [
-      'A method for automatically renewing certificates before they expire',
-      'The server proactively fetches and caches its certificate\'s revocation status from the CA, attaching it to the TLS handshake — eliminating the privacy leak and latency of clients querying the CA directly',
-      'A technique for compressing certificate chains to speed up handshakes',
-      'A protocol for distributing certificates to multiple servers simultaneously',
-    ],
-    correct: 1,
-    explanation: 'Without OCSP stapling, clients query the CA\'s OCSP responder on every connection to check revocation status — leaking which sites you visit to the CA and adding latency. OCSP stapling has the server fetch the signed OCSP response from the CA and include ("staple") it in the TLS handshake. The client gets fresh revocation info without contacting the CA. Enable in nginx: ssl_stapling on; ssl_stapling_verify on;',
-  },
-]
 
 function Callout({ type = 'info', icon, title, children }) {
   const s = { info: 'callout-info', warning: 'callout-warning', success: 'callout-success' }

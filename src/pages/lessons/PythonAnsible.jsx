@@ -129,26 +129,7 @@ ok: [localhost] => {
 }
 PLAY RECAP: localhost : ok=1  changed=0  failed=0`
 
-const QUIZ_QUESTIONS = [
-  {
-    question: 'Which Python module is used to run ansible-playbook as a subprocess?',
-    options: ['os.system', 'subprocess', 'ansible_runner', 'paramiko'],
-    correct: 1,
-    explanation: 'subprocess.run() provides full control over the child process, capturing stdout/stderr and return codes — far superior to os.system().',
-  },
-  {
-    question: 'What must a dynamic inventory script output when called with --list?',
-    options: ['A YAML file', 'A JSON object with host groups', 'A CSV of hostnames', 'An Ansible playbook'],
-    correct: 1,
-    explanation: 'Ansible expects a JSON object keyed by group names, with optional _meta.hostvars for per-host variables.',
-  },
-  {
-    question: 'What does the check=True flag do when passed to ansible-playbook?',
-    options: ['Validates YAML syntax only', 'Performs a dry-run without making changes', 'Checks SSH connectivity', 'Verifies module versions'],
-    correct: 1,
-    explanation: '--check mode simulates the run — Ansible reports what would change without actually applying any changes.',
-  },
-]
+
 
 export default function PythonAnsible() {
   return (
@@ -242,8 +223,6 @@ export default function PythonAnsible() {
           </div>
         </div>
       </section>
-
-      {/* ── Quiz ── */}
 
     </>
   )
