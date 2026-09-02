@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { fireXPToast } from './XPToast.jsx'
-import { useProgress } from '../hooks/useProgress.js'
 
 // ─── Timer presets ────────────────────────────────────────────────────────────
+// No XP here — this is a standalone focus/Pomodoro timer with its own local
+// session history, not tied to the server-authoritative Academy progress.
+// (It used to claim XP via a legacy client-side hook that's now a no-op —
+// "server owns XP" — which meant every completed session showed a fake
+// "+30 XP earned!" toast that had no effect on the user's real total.)
 const PRESETS = [
-  { label: '25 min',  seconds: 25 * 60, xp: 30, type: 'focus',  desc: 'Classic Pomodoro' },
-  { label: '50 min',  seconds: 50 * 60, xp: 60, type: 'focus',  desc: 'Deep work session' },
-  { label: '5 min',   seconds:  5 * 60, xp:  0, type: 'break',  desc: 'Short break' },
-  { label: '15 min',  seconds: 15 * 60, xp:  0, type: 'break',  desc: 'Long break' },
+  { label: '25 min',  seconds: 25 * 60, type: 'focus',  desc: 'Classic Pomodoro' },
+  { label: '50 min',  seconds: 50 * 60, type: 'focus',  desc: 'Deep work session' },
+  { label: '5 min',   seconds:  5 * 60, type: 'break',  desc: 'Short break' },
+  { label: '15 min',  seconds: 15 * 60, type: 'break',  desc: 'Long break' },
 ]
 
 // ─── Format seconds → MM:SS ───────────────────────────────────────────────────
@@ -62,8 +65,6 @@ function SessionDot({ type, completed }) {
 
 // ─── Main StudyTimer component ────────────────────────────────────────────────
 export default function StudyTimer({ onClose }) {
-  const { addXP } = useProgress()
-
   // Preset state
   const [presetIdx, setPresetIdx] = useState(0)
   const preset   = PRESETS[presetIdx]
@@ -119,11 +120,9 @@ export default function StudyTimer({ onClose }) {
     // Add session to history
     setSessions(prev => [...prev.slice(-7), { type: preset.type, done: true }])
 
-    // Award XP and update stats for focus sessions
-    if (isFocus && preset.xp > 0) {
-      addXP(preset.xp)
-      fireXPToast(preset.xp, `Focus session complete — ${preset.label}!`)
-
+    // Track cumulative focus time locally (this timer is a standalone tool,
+    // not tied to Academy XP — no server call here).
+    if (isFocus) {
       const focusMins = totalFocusMins + Math.floor(preset.seconds / 60)
       setTotalFocusMins(focusMins)
       try { localStorage.setItem('tierzero_focus_mins', String(focusMins)) } catch {}
@@ -133,9 +132,9 @@ export default function StudyTimer({ onClose }) {
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('TierOne ⏱️', {
         body: isFocus
-          ? `Focus session done! +${preset.xp} XP earned. Time for a break.`
+          ? `Focus session done — ${preset.label}! Time for a break.`
           : 'Break over — ready to focus again!',
-        icon: '/favicon.ico',
+        icon: '/favicon.svg',
       })
     }
   }, [completed]) // eslint-disable-line
@@ -235,15 +234,15 @@ export default function StudyTimer({ onClose }) {
           </span>
         </TimerRing>
 
-        {/* XP reward badge (focus sessions only) */}
-        {isFocus && preset.xp > 0 && (
+        {/* Focus-session status badge — local to this timer, no XP claim */}
+        {isFocus && (
           <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-[11px] font-mono
                             transition-all duration-300
                             ${completed
-                              ? 'bg-accent-amber/20 border-accent-amber/40 text-accent-amber'
+                              ? 'bg-accent-green/15 border-accent-green/40 text-accent-green'
                               : 'bg-surface-700 border-surface-600 text-slate-500'}`}>
-            <span>⚡</span>
-            <span>{completed ? `+${preset.xp} XP earned!` : `+${preset.xp} XP on completion`}</span>
+            <span>{completed ? '✓' : '⏱'}</span>
+            <span>{completed ? 'Focus session logged' : 'In progress'}</span>
           </div>
         )}
       </div>
