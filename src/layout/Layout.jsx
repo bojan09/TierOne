@@ -15,7 +15,7 @@ import SkipLink from '../components/SkipLink.jsx'
 const CommandPalette = lazy(() => import('../components/CommandPalette.jsx'))
 
 export default function Layout() {
-  const { pathname } = useLocation()
+  const { pathname, hash } = useLocation()
   const navigate = useNavigate()
   const { session, profile, loading } = useAuth()
   const [paletteOpen, setPaletteOpen] = useState(false)
@@ -39,13 +39,18 @@ export default function Layout() {
     }
   }, [session, profile, loading, pathname, navigate])
 
-  // Scroll to top on route change
+  // Scroll to top on route change — unless the URL carries a #hash (e.g.
+  // /learn#track-comptia from the Academy mega-menu's "Browse all" links),
+  // in which case the target page is responsible for scrolling to that
+  // section instead. Without this guard, this effect ran on every pathname
+  // change regardless of hash and always won the race back to the top.
   useEffect(() => {
+    if (hash) return
     const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
     // A11y: move keyboard/SR focus to the new page's main content.
     mainRef.current?.focus({ preventScroll: true })
-  }, [pathname])
+  }, [pathname, hash])
 
   // Keyboard shortcut: Ctrl/Cmd+K opens command palette
   useEffect(() => {

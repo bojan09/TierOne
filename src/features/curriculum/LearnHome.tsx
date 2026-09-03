@@ -1,9 +1,27 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import LearningPath from './LearningPath';
 import NextStep from './NextStep';
 import { TRACK_META, TRACK_LABELS, TRACK_ORDER } from './trackMeta';
 import { useSeo } from '@/shared/lib/seo';
 
 export default function LearnHome() {
+  const { hash } = useLocation();
+
+  // Jumps to a track section for links like /learn#track-comptia (the
+  // Academy mega-menu's "Browse all N courses" links). A browser's native
+  // scroll-to-hash-on-load only works if the target element already exists
+  // at parse time — it doesn't for a client-rendered id, so this does it
+  // manually once the section is actually in the DOM. Layout's own
+  // scroll-to-top effect defers to this when a hash is present.
+  useEffect(() => {
+    if (!hash) return;
+    const el = document.querySelector(hash);
+    if (!el) return;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }, [hash]);
+
   useSeo({
     title: 'Academy — All Courses & Tracks',
     description:
@@ -41,7 +59,9 @@ export default function LearnHome() {
       </div>
 
       {TRACK_ORDER.map((track) => (
-        <section key={track} className="mb-12">
+        // id lets nav/guide links jump straight to a track (e.g. /learn#track-helpdesk)
+        // instead of dumping the visitor at the top of a long, all-tracks page.
+        <section key={track} id={`track-${track}`} className="mb-12 scroll-mt-20">
           <h2 className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-widest mb-5">
             <span
               className="w-2 h-2 rounded-full flex-shrink-0"

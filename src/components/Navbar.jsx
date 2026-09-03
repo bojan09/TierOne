@@ -4,96 +4,92 @@ import AuthButton from './AuthButton.jsx'
 import Logo from './Logo.jsx'
 import ThemeToggle from '@/features/theme/ThemeToggle'
 import { useAcademyProgress } from '@/features/progress/useAcademyProgress'
+import { curriculum } from '@/content/curriculum'
+import { TRACK_META, TRACK_LABELS, TRACK_ORDER } from '@/features/curriculum/trackMeta'
 
-// ─── Consolidated nav — 3 top-level dropdowns + right cluster ─────────────────
-// Pattern: Logo | [Courses ▾] [IT Models ▾] [Tools ▾]   →   [Search] [XP] [CTA]
-// Everything fits without overflow at any reasonable desktop width.
+// ─── Nav structure ─────────────────────────────────────────────────────────
+// Deliberately mirrors /guide's own grouping (Learn / Practice / Prove it /
+// Reference tools) so the nav and the page that explains the site tell the
+// SAME story — before this, "Academy" (a flat 11-item feature list) and
+// "Courses" (a separate hand-curated mega-menu organised by technology, with
+// stale hardcoded links and no Help Desk column at all) were two competing,
+// overlapping mental models for browsing the exact same curriculum. One
+// entry point per concept now:
+//   Academy   — browse the curriculum, by track (the natural axis — matches
+//               onboarding's track picker and the Guide's own framing)
+//   Practice  — the "do it" tools
+//   Career    — turn progress into proof
+//   Resources — reference lookups, not curriculum
+
+// Academy mega-menu columns — built from the live curriculum spine, not
+// hand-typed, so it can't go stale the way the old "Courses" menu did
+// (several of its links pointed at courses/tracks that no longer matched
+// the actual spine). Shows each track's first few courses in order, plus a
+// "Browse all" link straight to that track's section on /learn.
+const COURSES_PER_TRACK_COLUMN = 4
+const ACADEMY_COLUMNS = TRACK_ORDER.map((track) => {
+  const meta = TRACK_META[track]
+  const courses = curriculum.courses
+    .filter((c) => c.track === track)
+    .slice()
+    .sort((a, b) => a.order - b.order)
+  const shown = courses.slice(0, COURSES_PER_TRACK_COLUMN)
+  const items = shown.map((c) => ({
+    label: c.title,
+    href: `/learn/${c.slug}`,
+    desc: `${curriculum.lessons.filter((l) => l.courseId === c.id).length} lessons`,
+  }))
+  if (courses.length > shown.length) {
+    items.push({
+      label: `Browse all ${courses.length} courses →`,
+      href: `/learn#track-${track}`,
+      desc: null,
+    })
+  }
+  return {
+    heading: TRACK_LABELS[track],
+    icon: shown[0]?.icon ?? '📘',
+    color: meta.color,
+    items,
+  }
+})
 
 const NAV_ITEMS = [
+  { label: 'Guide', href: '/guide' },
   {
     label: 'Academy',
-    mega: false,
-    children: [
-      { label: 'How TierOne works',      href: '/guide',                       desc: 'Map of every feature · start here' },
-      { label: 'IT Support Foundations', href: '/learn/it-support-foundations', desc: 'Help Desk track · new' },
-      { label: 'Browse all tracks',      href: '/learn',                        desc: 'The full Academy' },
-      { label: 'Virtual Help Desk',      href: '/simulator',                    desc: 'Practice on real tickets · new' },
-      { label: 'Simulated Labs',         href: '/labs',                         desc: 'Hands-on terminal practice · new' },
-      { label: 'Spaced Review',          href: '/review',                       desc: 'Review passed lessons · new' },
-      { label: 'Practice Exam',          href: '/exam',                         desc: 'Timed cert-style exam · new' },
-      { label: 'Interview Prep',         href: '/interview',                    desc: 'Practice interview questions · new' },
-      { label: 'Documentation Practice', href: '/practice',                     desc: 'Write docs, get AI feedback · new' },
-      { label: 'Career Readiness',       href: '/analytics',                    desc: 'Your employability snapshot · new' },
-      { label: 'Certificates',           href: '/certificates',                 desc: 'Earn proof of your skills · new' },
-    ],
-  },
-  {
-    label: 'Courses',
     mega: true,
-    columns: [
-      {
-        heading: 'Windows',
-        icon: '🖥️',
-        color: '#8b5cf6',
-        items: [
-          { label: 'Windows Desktop',     href: '/windows',             desc: 'OS fundamentals & Registry' },
-          { label: 'Windows Server 2025', href: '/windows-server-2025', desc: 'AD, DNS, DHCP, Hyper-V' },
-          { label: 'PowerShell',          href: '/powershell',          desc: 'Scripting & automation' },
-        ],
-      },
-      {
-        heading: 'Linux / Unix',
-        icon: '🐧',
-        color: '#fb923c',
-        items: [
-          { label: 'Linux Fundamentals', href: '/linux',                desc: 'Shell, filesystem, permissions, SSH' },
-          { label: 'Linux Hardening',    href: '/learn/linux/hardening', desc: 'Firewalls, SSH lockdown, auditing' },
-          { label: 'Unix',               href: '/unix',                 desc: 'POSIX, BSD, Solaris' },
-        ],
-      },
-      {
-        heading: 'Infrastructure',
-        icon: '🌐',
-        color: '#22d3ee',
-        items: [
-          { label: 'Networking',    href: '/networking',    desc: 'TCP/IP, VLANs, routing' },
-          { label: 'Cybersecurity', href: '/cybersecurity', desc: 'Hardening, firewalls, IR' },
-          { label: 'Python',        href: '/python',        desc: 'Automation scripting' },
-        ],
-      },
-      {
-        heading: 'Certifications & Tracks',
-        icon: '🎓',
-        color: '#34d399',
-        items: [
-          { label: 'CompTIA A+',        href: '/learn/ca-hardware',            desc: '6 courses · cert prep · new' },
-          { label: 'PowerShell Track',  href: '/learn/sc-powershell-scripting', desc: '25 lessons · real automation · new' },
-          { label: 'Python Track',      href: '/learn/sc-python-scripting',     desc: '25 lessons · IT automation · new' },
-        ],
-      },
+    columns: ACADEMY_COLUMNS,
+  },
+  {
+    label: 'Practice',
+    mega: false,
+    children: [
+      { label: 'Virtual Help Desk',      href: '/simulator', desc: 'Work real support tickets' },
+      { label: 'Simulated Labs',         href: '/labs',      desc: 'Hands-on terminal practice' },
+      { label: 'Documentation Practice', href: '/practice',  desc: 'Write docs, get AI feedback' },
+      { label: 'Spaced Review',          href: '/review',    desc: 'Keep passed lessons fresh' },
+      { label: 'Practice Exam',          href: '/exam',      desc: 'Timed, cert-style test' },
     ],
   },
   {
-    label: 'IT Models',
+    label: 'Career',
     mega: false,
     children: [
-      { label: 'OSI Model',        href: '/it-models/osi', desc: '7-layer network reference' },
-      { label: 'TCP/IP Model',     href: '/it-models/tcpip', desc: 'Internet protocol suite' },
-      { label: 'ITIL Framework',   href: '/it-models/itil', desc: 'Service management' },
-      { label: 'CIA Triad',        href: '/it-models/cia', desc: 'Core security model' },
-      { label: 'Zero Trust',       href: '/it-models/zero-trust', desc: 'Never trust, always verify' },
-      { label: 'DevOps Lifecycle', href: '/it-models/devops', desc: 'Plan → build → deploy' },
+      { label: 'Interview Prep',   href: '/interview',    desc: 'Rehearse real interview questions' },
+      { label: 'Career Readiness', href: '/analytics',    desc: 'Your employability snapshot' },
+      { label: 'Certificates',     href: '/certificates', desc: 'Earn proof of your skills' },
     ],
   },
   {
-    label: 'Tools',
+    label: 'Resources',
     mega: false,
     children: [
-      { label: 'Cheat Sheets',     href: '/cheatsheets',    desc: 'Linux, PS, Networking' },
-      { label: 'Port Lookup',      href: '/port-lookup',    desc: 'Search 35+ ports' },
-      { label: 'Glossary',         href: '/glossary',       desc: '70+ IT terms defined' },
-      { label: 'VMware Lab Setup', href: '/vmware-setup',   desc: 'Configure your lab' },
-      { label: 'Troubleshooting',  href: '/troubleshooting', desc: 'Diagnostic methodology' },
+      { label: 'IT Models',        href: '/it-models',    desc: 'OSI, TCP/IP, ITIL, CIA, Zero Trust, DevOps' },
+      { label: 'Cheat Sheets',     href: '/cheatsheets',  desc: 'Linux, PowerShell, networking' },
+      { label: 'Port Lookup',      href: '/port-lookup',  desc: 'Search 35+ common ports' },
+      { label: 'Glossary',         href: '/glossary',     desc: '70+ IT terms defined' },
+      { label: 'VMware Lab Setup', href: '/vmware-setup', desc: 'Configure your lab' },
     ],
   },
 ]
@@ -138,10 +134,12 @@ function MegaPanel({ item, onClose }) {
                                    group-hover/item:text-white transition-colors">
                     {child.label}
                   </span>
-                  <span className="text-[11px] text-slate-500 mt-0.5
-                                   group-hover/item:text-slate-400 transition-colors leading-tight">
-                    {child.desc}
-                  </span>
+                  {child.desc && (
+                    <span className="text-[11px] text-slate-500 mt-0.5
+                                     group-hover/item:text-slate-400 transition-colors leading-tight">
+                      {child.desc}
+                    </span>
+                  )}
                 </Link>
               ))}
             </div>
@@ -159,11 +157,11 @@ function MegaPanel({ item, onClose }) {
           Every course includes hands-on labs &amp; quizzes
         </span>
         <Link
-          to="/vmware-setup"
+          to="/guide"
           onClick={onClose}
           className="relative text-[11px] font-semibold text-brand-300 hover:text-brand-200 transition-colors"
         >
-          Set up your lab →
+          New here? See how it all fits →
         </Link>
       </div>
     </div>
@@ -318,9 +316,12 @@ function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
     return () => window.removeEventListener('keydown', onKeyDown)
   }, [open, onClose])
 
-  // Flatten mega columns into one list per top-level item
+  // Flatten mega columns into one list per top-level item. Plain links (no
+  // mega/children — e.g. "Guide") pass through with href set instead, so
+  // they render as a direct link rather than an accordion with nothing in it.
   const mobileItems = NAV_ITEMS.map(item => ({
-    label:    item.label,
+    label: item.label,
+    href: !item.mega && !item.children ? item.href : undefined,
     children: item.mega
       ? item.columns.flatMap(col => col.items)
       : item.children ?? [],
@@ -403,6 +404,21 @@ function MobileMenu({ open, onClose, onOpenSearch, xp = 0 }) {
           </NavLink>
 
           {mobileItems.map((item) => {
+            if (item.href) {
+              return (
+                <NavLink
+                  key={item.label}
+                  to={item.href}
+                  onClick={onClose}
+                  className={({ isActive }) =>
+                    `block px-4 py-3 rounded-xl text-sm font-medium transition-colors
+                     ${isActive ? 'text-white bg-surface-700' : 'text-slate-200 hover:bg-surface-700'}`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              )
+            }
             const isExp = expanded === item.label
             return (
               <div key={item.label}>
