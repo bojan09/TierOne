@@ -166,12 +166,19 @@ export default function Home() {
                 TierOne turns real IT work into hands-on practice — {TOTAL_LESSONS} lessons, live support tickets,
                 terminal labs, and AI feedback — so you learn the job, not just the theory.
               </p>
-              <div className="flex flex-wrap gap-3 justify-center lg:justify-start fade-up mb-10">
+              <div className="flex flex-wrap gap-3 justify-center lg:justify-start fade-up mb-3">
                 <Link to="/learn" className="btn-primary">
                   {hasStarted ? 'Resume learning →' : 'Start learning free →'}
                 </Link>
                 <Link to="/learn" className="btn-secondary">Explore the Academy</Link>
               </div>
+              <p className="text-sm text-slate-500 fade-up mb-10">
+                New here?{' '}
+                <Link to="/guide" className="text-brand-300 hover:text-brand-200 underline underline-offset-2">
+                  See how TierOne works
+                </Link>{' '}
+                — a 2-minute map of the whole platform.
+              </p>
               {/* Real spine stats */}
               <div className="grid grid-cols-4 gap-3 max-w-md mx-auto lg:mx-0 fade-up">
                 {HERO_STATS.map((s) => (

@@ -68,10 +68,13 @@ export default function App() {
           <Route path=":courseSlug/:lessonSlug" element={<LessonView />} />
         </Route>
 
+        {/* Public — this is the map new visitors need before they've signed
+            up for anything. Gating it behind auth defeated its own purpose. */}
+        <Route path="guide" element={<Guide />} />
+
         {/* Everything else needs a signed-in user (writes progress/XP, or is inherently personal) */}
         <Route element={<RequireAuth />}>
           <Route path="welcome" element={<Onboarding />} />
-          <Route path="guide" element={<Guide />} />
           <Route path="review" element={<Review />} />
           <Route path="exam" element={<Exam />} />
           <Route path="simulator" element={<SimulatorHome />} />

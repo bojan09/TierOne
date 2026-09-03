@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSeo } from '@/shared/lib/seo';
+import { useAuth } from '@/features/auth/useAuth';
 
 interface GuideItem {
   icon: string;
@@ -82,20 +83,51 @@ const GROUPS: GuideGroup[] = [
 ];
 
 export default function Guide() {
+  const { session } = useAuth();
+
   useSeo({
     title: 'Guide — How TierOne Works',
     description: 'A map of every TierOne feature — Academy, practice tools, review, exams, and career prep — and how they fit together.',
     path: '/guide',
-    noindex: true,
   });
 
   return (
     <div className="max-w-screen-lg mx-auto px-4 sm:px-6 lg:px-10 py-10">
       <h1 className="text-2xl font-bold text-white mb-1">How TierOne works</h1>
-      <p className="text-sm text-slate-400 mb-10 max-w-2xl">
-        A map of everything on the platform, grouped by what it&rsquo;s for. Nothing here is
-        required in order — jump to whatever&rsquo;s useful right now.
+      <p className="text-sm text-slate-400 mb-6 max-w-2xl">
+        A map of everything on the platform, grouped by what it&rsquo;s for. Start with the
+        typical path below if you&rsquo;re not sure where to begin, or jump straight to
+        whatever&rsquo;s useful right now.
       </p>
+
+      {/* Save-state callout — the single most important thing a new visitor
+          needs to know before they start clicking around. */}
+      {session ? (
+        <div className="flex items-center gap-3 rounded-xl border border-accent-green/30 bg-accent-green/5 px-4 py-3 mb-10">
+          <span className="text-lg flex-shrink-0" aria-hidden="true">✓</span>
+          <p className="text-sm text-slate-300">
+            <span className="font-semibold text-white">You&rsquo;re signed in.</span> Every lesson,
+            quiz, and XP you earn saves to your account automatically — across any device you sign
+            in on.
+          </p>
+        </div>
+      ) : (
+        <div className="flex items-center gap-3 flex-wrap rounded-xl border border-accent-amber/30 bg-accent-amber/5 px-4 py-3 mb-10">
+          <span className="text-lg flex-shrink-0" aria-hidden="true">👀</span>
+          <p className="text-sm text-slate-300 flex-1 min-w-0">
+            <span className="font-semibold text-white">You&rsquo;re browsing without an account.</span>{' '}
+            Explore freely — but nothing is saved. Progress, XP, and quiz results only start
+            counting once you sign in.
+          </p>
+          <Link
+            to="/login"
+            state={{ mode: 'signup' }}
+            className="btn-primary text-xs flex-shrink-0"
+          >
+            Sign in — it&rsquo;s free
+          </Link>
+        </div>
+      )}
 
       {/* Suggested path */}
       <section className="mb-12">
